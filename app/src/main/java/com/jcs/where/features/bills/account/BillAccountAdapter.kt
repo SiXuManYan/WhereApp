@@ -15,7 +15,7 @@ class BillAccountAdapter : BaseQuickAdapter<BillAccount, BaseViewHolder>(R.layou
 
 
     override fun convert(holder: BaseViewHolder, item: BillAccount) {
-        holder.setText(R.id.first_tv, item.first_field)
+        holder.setText(R.id.first_field_tv, item.first_field)
         holder.setText(R.id.second_field_tv, item.second_field)
 
         val defaultTv = holder.getView<TextView>(R.id.default_tv)

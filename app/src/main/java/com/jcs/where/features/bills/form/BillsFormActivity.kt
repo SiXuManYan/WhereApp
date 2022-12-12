@@ -172,7 +172,7 @@ class BillsFormActivity : BaseMvpActivity<BillsFormPresenter>(), BillsFormView {
     override fun initData() {
         presenter = BillsFormPresenter(this)
         presenter.getDiscountList(billsType)
-//        presenter.getDefaultAccount(billsType)
+        presenter.getDefaultAccount(billsType)
     }
 
     override fun bindDiscountList(response: ArrayList<String>) {

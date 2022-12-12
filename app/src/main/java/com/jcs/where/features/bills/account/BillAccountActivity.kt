@@ -32,6 +32,8 @@ class BillAccountActivity : BaseMvpActivity<BillAccountPresenter>(), BillAccount
 
     private lateinit var mAdapter: BillAccountAdapter
 
+    override fun isStatusDark() = true
+
     override fun getLayoutId() = R.layout.activity_bills_account
 
     override fun initView() {
@@ -65,7 +67,9 @@ class BillAccountActivity : BaseMvpActivity<BillAccountPresenter>(), BillAccount
 
     override fun bindListener() {
         add_tv.setOnClickListener {
-
+            startActivity(BillAccountEditActivity::class.java, Bundle().apply {
+                putInt(Constant.PARAM_TYPE , billsType)
+            })
         }
     }
 
@@ -75,7 +79,6 @@ class BillAccountActivity : BaseMvpActivity<BillAccountPresenter>(), BillAccount
 
     override fun onItemClick(adapter: BaseQuickAdapter<*, *>, view: View, position: Int) {
         val billAccount = mAdapter.data[position]
-
         setResult(Activity.RESULT_OK, Intent()
             .putExtra(Constant.PARAM_FIRST, billAccount.first_field)
             .putExtra(Constant.PARAM_SECOND, billAccount.second_field)

@@ -30,6 +30,8 @@ class BillAccountEditActivity : BaseMvpActivity<BillAccountPresenter>(), BillAcc
 
     private var allEditView: ArrayList<AppCompatEditText> = ArrayList()
 
+    override fun isStatusDark() = true
+
     override fun getLayoutId() = R.layout.activity_bills_account_edit
 
     override fun initView() {
@@ -44,17 +46,21 @@ class BillAccountEditActivity : BaseMvpActivity<BillAccountPresenter>(), BillAcc
         allEditView.add(accountEt)
         allEditView.add(accountNameEt)
 
-
     }
 
     override fun initData() {
         presenter = BillAccountPresenter(this)
-        cacheData?.let {
+
+        if (cacheData!=null) {
             delete_tv.visibility = View.VISIBLE
-            account_et.setText(it.first_field)
-            account_name_et.setText(it.second_field)
-            select_tv.isChecked = it.status == 1
+            account_et.setText(cacheData!!.first_field)
+            account_name_et.setText(cacheData!!.second_field)
+            select_tv.isChecked = cacheData!!.status == 1
+            title_tv.setText(R.string.edit_account)
+        }else {
+            title_tv.setText(R.string.add_account)
         }
+
     }
 
 

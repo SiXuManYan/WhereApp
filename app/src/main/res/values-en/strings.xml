@@ -1165,4 +1165,6 @@ Gentleman must let go</string>
     <string name="bill_account_name">Account Name</string>
     <string name="set_as_default">Set as default account</string>
     <string name="confirm_delete_account">Are you sure to delete this payment account?</string>
+    <string name="edit_account">Edit Account</string>
+    <string name="add_account">Add Account</string>
 </resources>

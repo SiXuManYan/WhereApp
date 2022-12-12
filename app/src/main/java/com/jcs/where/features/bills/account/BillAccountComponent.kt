@@ -22,14 +22,15 @@ interface BillAccountView : BaseMvpView {
 class BillAccountPresenter(private var view: BillAccountView) : BaseMvpPresenter(view) {
 
     fun getBillAccount(module: Int) {
-        requestApi(mRetrofit.getBillsAccountHistory(module - 1), object : BaseMvpObserver<ArrayList<BillAccount>>(view) {
-            override fun onSuccess(response: ArrayList<BillAccount>) {
-                view.bindAccount(response)
+        requestApi(mRetrofit.getBillsAccountHistory(module), object : BaseMvpObserver<ArrayList<BillAccount>?>(view) {
+            override fun onSuccess(response: ArrayList<BillAccount>?) {
+                if (!response.isNullOrEmpty()) {
+                    view.bindAccount(response)
+                }
             }
 
         })
     }
-
 
 
     fun addAccount(billType: Int, first: String, second: String, isDefault: Boolean) {
@@ -42,7 +43,7 @@ class BillAccountPresenter(private var view: BillAccountView) : BaseMvpPresenter
             } else {
                 0
             }
-            module = billType - 1
+            module = billType
         }
 
         requestApi(mRetrofit.addBillsAccount(apply), object : BaseMvpObserver<JsonElement>(view) {
@@ -54,7 +55,7 @@ class BillAccountPresenter(private var view: BillAccountView) : BaseMvpPresenter
     }
 
 
-    fun editAccount(billType: Int, first: String, second: String, isDefault: Boolean , id:Int) {
+    fun editAccount(billType: Int, first: String, second: String, isDefault: Boolean, id: Int) {
 
         val apply = BillAccountEdit().apply {
             first_field = first
@@ -64,10 +65,10 @@ class BillAccountPresenter(private var view: BillAccountView) : BaseMvpPresenter
             } else {
                 0
             }
-            module = billType - 1
+            module = billType
         }
 
-        requestApi(mRetrofit.editBillsAccount(id , apply), object : BaseMvpObserver<JsonElement>(view) {
+        requestApi(mRetrofit.editBillsAccount(id, apply), object : BaseMvpObserver<JsonElement>(view) {
             override fun onSuccess(response: JsonElement) {
                 view.handleSuccess(response)
             }
@@ -76,9 +77,8 @@ class BillAccountPresenter(private var view: BillAccountView) : BaseMvpPresenter
     }
 
 
-
-    fun deleteAccount(id :Int){
-        requestApi(mRetrofit.deleteBillsAccount(id ), object : BaseMvpObserver<JsonElement>(view) {
+    fun deleteAccount(id: Int) {
+        requestApi(mRetrofit.deleteBillsAccount(id), object : BaseMvpObserver<JsonElement>(view) {
             override fun onSuccess(response: JsonElement) {
                 view.handleSuccess(response)
             }

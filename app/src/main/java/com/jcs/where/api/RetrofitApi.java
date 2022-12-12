@@ -2518,7 +2518,7 @@ public interface RetrofitApi {
      *
      * @param module 1 自来水 2电力公司 3互联网
      */
-    @GET("billsapi/v2/bills/default_account")
+    @GET("billsapi/v2/bills/account")
     Observable<JcsResponse<ArrayList<BillAccount>>> getBillsAccountHistory(@Query("module") int module);
 
     /**

@@ -1185,6 +1185,8 @@ Gentleman must let go</string>
     <string name="bill_account_name">账号名称</string>
     <string name="set_as_default">设为默认账号</string>
     <string name="confirm_delete_account">确定删除该账号？</string>
+    <string name="edit_account">编辑缴费账号</string>
+    <string name="add_account">添加缴费账号</string>
 
 
 </resources>

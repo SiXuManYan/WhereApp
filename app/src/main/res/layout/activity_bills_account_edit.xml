@@ -111,7 +111,7 @@
         android:background="@null"
         android:gravity="center_vertical"
         android:hint="@string/please_enter"
-        android:imeOptions="actionNext"
+        android:imeOptions="actionDone"
         android:lineSpacingMultiplier="1.2"
         android:maxLines="1"
         android:paddingStart="@dimen/dp_15"

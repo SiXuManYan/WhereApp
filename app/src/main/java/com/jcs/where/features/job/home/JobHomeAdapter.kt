@@ -4,6 +4,7 @@ import android.view.View
 import android.widget.ImageView
 import android.widget.LinearLayout
 import androidx.recyclerview.widget.RecyclerView
+import com.blankj.utilcode.util.ToastUtils
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.module.LoadMoreModule
 import com.chad.library.adapter.base.viewholder.BaseViewHolder
@@ -46,6 +47,9 @@ class JobHomeAdapter : BaseQuickAdapter<Job, BaseViewHolder>(R.layout.item_job_h
             } else {
                 if (item.status == 1) {
                     JobDetailActivity.navigation(context, item.job_id)
+                }
+                if (item.status == 0) {
+                    ToastUtils.showShort(R.string.job_closed)
                 }
             }
 

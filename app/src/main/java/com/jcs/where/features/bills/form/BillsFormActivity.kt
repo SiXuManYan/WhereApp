@@ -8,6 +8,7 @@ import android.graphics.Color
 import android.os.Bundle
 import android.os.Handler
 import android.view.View
+import android.view.ViewTreeObserver
 import android.view.animation.Animation
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AlertDialog
@@ -37,7 +38,7 @@ import java.math.BigDecimal
  * Created by Wangsw  2022/6/8 17:33.
  * 水电表单
  */
-class BillsFormActivity : BaseMvpActivity<BillsFormPresenter>(), BillsFormView {
+class BillsFormActivity : BaseMvpActivity<BillsFormPresenter>(), BillsFormView, AfterEditChanged {
 
 
     /** 渠道名称 */
@@ -59,7 +60,6 @@ class BillsFormActivity : BaseMvpActivity<BillsFormPresenter>(), BillsFormView {
     private lateinit var mAdapter: BillsFormAdapter
     private lateinit var mDiscountAdapter: BillsDiscountAdapter
 
-    private var allListEditView: ArrayList<AppCompatEditText> = ArrayList()
 
     private var firstMax = 100
     private var secondMax = 100
@@ -153,6 +153,7 @@ class BillsFormActivity : BaseMvpActivity<BillsFormPresenter>(), BillsFormView {
 
         mAdapter = BillsFormAdapter().apply {
             setNewInstance(fieldDetail)
+            afterEditChanged = this@BillsFormActivity
             fieldDetail.forEachIndexed { index, it ->
                 if (index == 0) {
                     firstMax = it.Width
@@ -161,7 +162,6 @@ class BillsFormActivity : BaseMvpActivity<BillsFormPresenter>(), BillsFormView {
                     secondMax = it.Width
                 }
             }
-
         }
 
         channel_rv.apply {
@@ -172,17 +172,6 @@ class BillsFormActivity : BaseMvpActivity<BillsFormPresenter>(), BillsFormView {
                 SizeUtils.dp2px(15f),
                 0))
         }
-
-        // 获取输入框
-        val manager = channel_rv.layoutManager as LinearLayoutManager
-        mAdapter.data.forEachIndexed { index, _ ->
-            val itemView = manager.findViewByPosition(index)
-            itemView?.let {
-                val edit = it.findViewById<AppCompatEditText>(R.id.content_et)
-                allListEditView.add(edit)
-            }
-        }
-        allListEditView.add(findViewById<AppCompatEditText>(R.id.amount_et))
 
         // 折扣
         mDiscountAdapter = BillsDiscountAdapter()
@@ -232,34 +221,10 @@ class BillsFormActivity : BaseMvpActivity<BillsFormPresenter>(), BillsFormView {
     override fun bindListener() {
 
 
-        allListEditView.forEachIndexed { index, it ->
-
-            it.addTextChangedListener(
-                afterTextChanged = { edit ->
-                    val input = edit.toString().trim()
-
-                    var result = false
-
-                    val isNotBlank = !BusinessUtils.checkEditBlank(allListEditView)
-
-                    result = when (index) {
-                        0 -> (isNotBlank && input.length <= firstMax)
-                        1 -> (isNotBlank && input.length <= secondMax)
-                        else -> isNotBlank
-                    }
-
-                    BusinessUtils.setViewClickable(result , next_tv)
-
-                }
-            )
-
-        }
-
-
-
         amount_et.addTextChangedListener(
             afterTextChanged = {
                 val input = it.toString()
+                checkAlpha(input)
                 userInputMoney = BusinessUtils.getSafeBigDecimal(input)
             }
         )
@@ -310,7 +275,6 @@ class BillsFormActivity : BaseMvpActivity<BillsFormPresenter>(), BillsFormView {
 
                     return@setOnClickListener
                 }
-
             }
 
             BillsPlaceOrderActivity.navigation(this,
@@ -327,6 +291,21 @@ class BillsFormActivity : BaseMvpActivity<BillsFormPresenter>(), BillsFormView {
             }))
         }
 
+    }
+
+    private fun checkAlpha(input: String) {
+        var lengthOverCount = 0
+        mAdapter.data.forEach { item ->
+            if (item.lengthOver) {
+                lengthOverCount++
+            }
+        }
+
+        if (input.isNotBlank() && lengthOverCount == 0) {
+            BusinessUtils.setViewClickable(true, next_tv)
+        } else {
+            BusinessUtils.setViewClickable(false, next_tv)
+        }
     }
 
 
@@ -361,6 +340,10 @@ class BillsFormActivity : BaseMvpActivity<BillsFormPresenter>(), BillsFormView {
             }
         }
 
+    }
+
+    override fun afterTextChanged(trim: String) {
+        checkAlpha(amount_et.text.toString().trim())
     }
 
 }

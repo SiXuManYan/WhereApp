@@ -17,7 +17,7 @@ import com.jcs.where.api.response.bills.FieldDetail
  */
 class BillsFormAdapter : BaseQuickAdapter<FieldDetail, BaseViewHolder>(R.layout.item_form_bills) {
 
-    private var fieldDetail = ArrayList<FieldDetail>()
+    var afterEditChanged :AfterEditChanged? = null
 
     override fun convert(holder: BaseViewHolder, item: FieldDetail) {
         val title = holder.getView<TextView>(R.id.title_tv)
@@ -28,7 +28,10 @@ class BillsFormAdapter : BaseQuickAdapter<FieldDetail, BaseViewHolder>(R.layout.
         form.filters = arrayOf<InputFilter>(LengthFilter(item.Width))
         form.addTextChangedListener(
             afterTextChanged = {
-                item.nativeUserInput = it.toString().trim()
+                val trim = it.toString().trim()
+                item.nativeUserInput = trim
+                item.lengthOver = trim.length> item.Width
+                afterEditChanged?.afterTextChanged(trim)
             }
         )
 
@@ -41,4 +44,9 @@ class BillsFormAdapter : BaseQuickAdapter<FieldDetail, BaseViewHolder>(R.layout.
 
 
     }
+}
+
+interface AfterEditChanged {
+    fun afterTextChanged(trim: String)
+
 }

@@ -77,6 +77,8 @@ class FieldDetail() :Parcelable {
 
     var nativeCache = ""
 
+    var lengthOver = false
+
     constructor(parcel: Parcel) : this() {
         Tag = parcel.readString().toString()
         Caption = parcel.readString().toString()

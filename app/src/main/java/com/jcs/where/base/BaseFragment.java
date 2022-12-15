@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -59,12 +60,13 @@ public abstract class BaseFragment extends Fragment {
         lazyLoad();
     }
 
+    // view pager
     @Override
     public void setUserVisibleHint(boolean isVisibleToUser) {
         super.setUserVisibleHint(isVisibleToUser);
         changeStatusTextColor();
         isViewVisible = isVisibleToUser;
-
+//        Log.d("BaseFragment", "setUserVisibleHint isVisibleToUser == " + isVisibleToUser);
         lazyLoad();
 
     }
@@ -77,10 +79,15 @@ public abstract class BaseFragment extends Fragment {
     }
 
 
+    // hide show
     @Override
     public void onHiddenChanged(boolean hidden) {
         super.onHiddenChanged(hidden);
         changeStatusTextColor();
+//        Log.d("BaseFragment", "onHiddenChanged hidden == " + hidden);
+
+        isViewVisible = !hidden;
+        lazyLoad();
     }
 
     private void changeStatusTextColor() {

@@ -55,6 +55,10 @@ class CategoryFragment2 : BaseMvpFragment<CategoryPresenter>(), CategoryView {
 
     override fun initData() {
         presenter = CategoryPresenter(this)
+
+    }
+
+    override fun loadOnVisible() {
         presenter.getCategoryList()
     }
 

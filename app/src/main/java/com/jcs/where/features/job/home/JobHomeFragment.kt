@@ -3,6 +3,8 @@ package com.jcs.where.features.job.home
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
+import android.view.View
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
@@ -12,22 +14,21 @@ import com.google.gson.Gson
 import com.jcs.where.R
 import com.jcs.where.api.response.job.FilterData
 import com.jcs.where.api.response.job.Job
-import com.jcs.where.base.BaseEvent
-import com.jcs.where.base.mvp.BaseMvpActivity
-import com.jcs.where.features.job.cv.CvHomeActivity
+import com.jcs.where.base.mvp.BaseMvpFragment
 import com.jcs.where.features.job.filter.JobFilterActivity
 import com.jcs.where.features.search.SearchAllActivity
 import com.jcs.where.utils.Constant
 import com.jcs.where.view.empty.EmptyView
 import com.jcs.where.widget.list.DividerDecoration
-import kotlinx.android.synthetic.main.activity_job_home.*
+import kotlinx.android.synthetic.main.fragment_job_home.*
 
 /**
- * Created by Wangsw  2022/9/27 16:03.
- * 招聘首页
+ * Created by Wangsw  2022/12/15 10:47.
+ * 新版招聘首页
+ *
  */
-@Deprecated("2022-12-15 不再使用", replaceWith = ReplaceWith("JobHomeFragment"))
-class JobHomeActivity : BaseMvpActivity<JobHomePresenter>(), JobHomeView, SwipeRefreshLayout.OnRefreshListener {
+class JobHomeFragment : BaseMvpFragment<JobHomePresenter>(), JobHomeView, SwipeRefreshLayout.OnRefreshListener {
+
 
     private var page = Constant.DEFAULT_FIRST_PAGE
     private lateinit var mAdapter: JobHomeAdapter
@@ -39,7 +40,7 @@ class JobHomeActivity : BaseMvpActivity<JobHomePresenter>(), JobHomeView, SwipeR
     private var selectedData: FilterData? = null
     private var selectedFilterJson = ""
 
-    override fun getLayoutId() = R.layout.activity_job_home
+    override fun getLayoutId() = R.layout.fragment_job_home
 
 
     /** 处理选择地址 */
@@ -67,9 +68,8 @@ class JobHomeActivity : BaseMvpActivity<JobHomePresenter>(), JobHomeView, SwipeR
         }
     }
 
-    override fun initView() {
+    override fun initView(view: View?) {
         initContent()
-        initTag()
     }
 
 
@@ -77,7 +77,7 @@ class JobHomeActivity : BaseMvpActivity<JobHomePresenter>(), JobHomeView, SwipeR
 
         swipe_layout.setOnRefreshListener(this)
         swipe_layout.setColorSchemeColors(ColorUtils.getColor(R.color.color_1c1380))
-        emptyView = EmptyView(this)
+        emptyView = EmptyView(requireContext())
         emptyView.showEmptyDefault()
         addEmptyList(emptyView)
 
@@ -92,7 +92,7 @@ class JobHomeActivity : BaseMvpActivity<JobHomePresenter>(), JobHomeView, SwipeR
         }
 
 
-        val manager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
+        val manager = LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
         recycler_view.apply {
             adapter = mAdapter
             layoutManager = manager
@@ -105,29 +105,34 @@ class JobHomeActivity : BaseMvpActivity<JobHomePresenter>(), JobHomeView, SwipeR
     }
 
 
-    private fun initTag() {
 
-
-    }
 
     override fun initData() {
         presenter = JobHomePresenter(this)
+
+    }
+
+    override fun loadOnVisible() {
         onRefresh()
     }
 
     override fun bindListener() {
+
+        back_iv.setOnClickListener {
+            activity?.finish()
+        }
         search_ll.setOnClickListener {
             startActivity(SearchAllActivity::class.java, Bundle().apply {
                 putInt(Constant.PARAM_TYPE, 9)
                 putBoolean(Constant.PARAM_HIDE, true)
             })
         }
-        cv_iv.setOnClickListener {
-            startActivityAfterLogin(CvHomeActivity::class.java)
-        }
+//        cv_iv.setOnClickListener {
+//            startActivityAfterLogin(CvHomeActivity::class.java)
+//        }
 
         filter_iv.setOnClickListener {
-            searchLauncher.launch(Intent(this, JobFilterActivity::class.java)
+            searchLauncher.launch(Intent(requireContext(), JobFilterActivity::class.java)
                 .putExtras(Bundle().apply {
                     putString(Constant.PARAM_DATA, selectedFilterJson)
                 }))
@@ -169,11 +174,5 @@ class JobHomeActivity : BaseMvpActivity<JobHomePresenter>(), JobHomeView, SwipeR
         }
     }
 
-
-    override fun onEventReceived(baseEvent: BaseEvent<*>?) {
-        super.onEventReceived(baseEvent)
-
-
-    }
 
 }

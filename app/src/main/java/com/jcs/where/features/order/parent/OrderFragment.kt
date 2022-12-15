@@ -57,6 +57,9 @@ class OrderFragment : BaseMvpFragment<OrderPresenter>(), OrderView {
 
     override fun initData() {
         presenter = OrderPresenter(this)
+    }
+
+    override fun loadOnVisible() {
         presenter.getTabs(true)
     }
 

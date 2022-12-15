@@ -63,11 +63,11 @@ class MineFragment : BaseMvpFragment<MinePresenter>(), MineView {
 
     override fun initData() {
         presenter = MinePresenter(this)
-        presenter.getUserInfo()
     }
 
 
     override fun loadOnVisible() {
+        presenter.getUserInfo()
         presenter.getUnreadMessageCount()
     }
 

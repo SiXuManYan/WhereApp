@@ -12,40 +12,38 @@ import com.jcs.where.api.response.job.JobExperience
 import com.jcs.where.api.response.job.ProfileDetail
 import com.jcs.where.base.BaseEvent
 import com.jcs.where.base.EventCode
-import com.jcs.where.base.mvp.BaseMvpActivity
-import com.jcs.where.features.job.collection.JobCollectionActivity
+import com.jcs.where.base.mvp.BaseMvpFragment
 import com.jcs.where.features.job.form.edu.CvFormEduActivity
 import com.jcs.where.features.job.form.experience.CvFormJobExperienceActivity
 import com.jcs.where.features.job.form.profile.CvFormProfileActivity
 import com.jcs.where.utils.Constant
 import com.jcs.where.widget.list.DividerDecoration
-import kotlinx.android.synthetic.main.activity_job_cv_home.*
+import kotlinx.android.synthetic.main.fragment_job_cv_home.*
 
 /**
- * Created by Wangsw  2022/9/28 15:25.
- * 简历首页
+ * Created by Wangsw  2022/12/15 11:18.
+ * 个人简历
  */
-@Deprecated("2022-12-15 不再使用", replaceWith = ReplaceWith("CvHomeFragment"))
-class CvHomeActivity : BaseMvpActivity<CvHomePresenter>(), CvHomeView, OnItemClickListener {
+class CvHomeFragment  : BaseMvpFragment<CvHomePresenter>(), CvHomeView, OnItemClickListener {
 
     private lateinit var mAdapter: JobExperienceEduAdapter
 
     /** 个人信息 */
     private var profileDetail: ProfileDetail? = null
 
-    override fun getLayoutId() = R.layout.activity_job_cv_home
+    override fun getLayoutId() = R.layout.fragment_job_cv_home
 
-    override fun initView() {
+    override fun initView(view: View?) {
         initContent()
     }
 
     private fun initContent() {
 
         mAdapter = JobExperienceEduAdapter().apply {
-            setOnItemClickListener(this@CvHomeActivity)
+            setOnItemClickListener(this@CvHomeFragment)
         }
 
-        val gridLayoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
+        val gridLayoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
         content_rv.apply {
             adapter = mAdapter
             layoutManager = gridLayoutManager
@@ -59,11 +57,17 @@ class CvHomeActivity : BaseMvpActivity<CvHomePresenter>(), CvHomeView, OnItemCli
 
     override fun initData() {
         presenter = CvHomePresenter(this)
+    }
+
+    override fun loadOnVisible() {
         presenter.getProfile()
         presenter.getJobExperience()
     }
 
     override fun bindListener() {
+        back_iv.setOnClickListener {
+            activity?.finish()
+        }
         create_cv_iv.setOnClickListener {
             startActivity(CvFormProfileActivity::class.java, Bundle().apply {
                 putParcelable(Constant.PARAM_DATA, profileDetail)
@@ -72,10 +76,6 @@ class CvHomeActivity : BaseMvpActivity<CvHomePresenter>(), CvHomeView, OnItemCli
         name_tv.setOnClickListener {
             create_cv_iv.performClick()
         }
-        job_collection_ll.setOnClickListener {
-            startActivityAfterLogin(JobCollectionActivity::class.java)
-        }
-
     }
 
     override fun getProfile(response: ProfileDetail?) {
@@ -152,12 +152,12 @@ class CvHomeActivity : BaseMvpActivity<CvHomePresenter>(), CvHomeView, OnItemCli
             EventCode.EVENT_DELETE_CV_EXPERIENCE -> {
                 // 删除工作经历
                 val draftExperienceId = baseEvent.data as Int
-                deleteTypeItem(draftExperienceId,JobExperience.TYPE_JOB_EXPERIENCE)
+                deleteTypeItem(draftExperienceId, JobExperience.TYPE_JOB_EXPERIENCE)
             }
             EventCode.EVENT_DELETE_CV_EDU -> {
                 // 删除教育背景
                 val draftEduId = baseEvent.data as Int
-                deleteTypeItem(draftEduId,JobExperience.TYPE_EDU_BACKGROUND)
+                deleteTypeItem(draftEduId, JobExperience.TYPE_EDU_BACKGROUND)
             }
             else -> {}
         }
@@ -165,7 +165,7 @@ class CvHomeActivity : BaseMvpActivity<CvHomePresenter>(), CvHomeView, OnItemCli
 
     }
 
-    private fun deleteTypeItem(deleteId: Int,itemViewType :Int) {
+    private fun deleteTypeItem(deleteId: Int, itemViewType: Int) {
         var position = -1
         mAdapter.data.forEachIndexed { index, it ->
             if (it.nativeItemViewType == itemViewType && it.id == deleteId) {
@@ -177,5 +177,4 @@ class CvHomeActivity : BaseMvpActivity<CvHomePresenter>(), CvHomeView, OnItemCli
             mAdapter.removeAt(position)
         }
     }
-
 }

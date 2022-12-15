@@ -105,11 +105,9 @@ class MainActivity : BaseMvpActivity<MainPresenter>(), MainView {
         tabs_navigator.setOnTabSelectListener(object : OnTabSelectListener {
             override fun onTabSelect(position: Int) {
                 tabs_navigator.currentTab = position
-                Log.d("tab" ,"onTabSelect position ==" + position)
             }
 
             override fun onTabReselect(position: Int) {
-                Log.d("tab" ,"onTabReselect  ==" + position)
                 if (position == 0) {
                     EventBus.getDefault().post(BaseEvent<Any>(EventCode.EVENT_SCROLL_TO_TOP))
                 }

@@ -777,18 +777,11 @@
             android:name=".features.integral.order.IntegralOrderDetailActivity"
             android:configChanges="keyboardHidden|screenSize|orientation" />
         <activity
-            android:name=".features.job.home.JobHomeActivity"
-            android:configChanges="keyboardHidden|screenSize|orientation" />
-
-        <activity
             android:name=".features.job.result.JobSearchResultActivity"
             android:configChanges="keyboardHidden|screenSize|orientation"
             android:windowSoftInputMode="stateAlwaysHidden" />
         <activity
             android:name=".features.job.detail.JobDetailActivity"
-            android:configChanges="keyboardHidden|screenSize|orientation" />
-        <activity
-            android:name=".features.job.cv.CvHomeActivity"
             android:configChanges="keyboardHidden|screenSize|orientation" />
         <activity
             android:name=".features.job.form.profile.CvFormProfileActivity"
@@ -818,9 +811,7 @@
         <activity
             android:name=".features.feedback.record.FeedbackRecordActivity"
             android:configChanges="keyboardHidden|screenSize|orientation" />
-        <activity
-            android:name=".features.job.collection.JobCollectionActivity"
-            android:configChanges="keyboardHidden|screenSize|orientation" />
+
         <activity
             android:name=".features.job.form.edu.CvFormEduActivity"
             android:configChanges="keyboardHidden|screenSize|orientation"
@@ -851,6 +842,7 @@
             android:configChanges="keyboardHidden|screenSize|orientation" />
         <activity android:name=".features.bills.account.BillAccountActivity" />
         <activity android:name=".features.bills.account.edit.BillAccountEditActivity" />
+        <activity android:name=".features.job.main.JobMainActivity" />
 
     </application>
 

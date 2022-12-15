@@ -1189,6 +1189,12 @@ Gentleman must let go</string>
     <string name="add_account">添加缴费账号</string>
     <string name="confirm_job_filter">确定</string>
     <string name="job_closed">该职位已关闭</string>
+    <string name="job_tab_home">Jobs</string>
+    <string name="job_tab_collection">Saved Jobs</string>
+    <string name="job_tab_apply">Applied Jobs</string>
+    <string name="job_tab_mine">My Profile</string>
+    <string name="job_applied">已申请</string>
+    <string name="job_interviews">面试</string>
 
 
 </resources>

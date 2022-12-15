@@ -36,7 +36,7 @@ import com.jcs.where.features.enterprise.EnterprisePageActivity
 import com.jcs.where.features.gourmet.restaurant.list.RestaurantHomeActivity
 import com.jcs.where.features.home.child.ComplexChildFragment
 import com.jcs.where.features.home.child.HomeMallFragment
-import com.jcs.where.features.job.home.JobHomeActivity
+import com.jcs.where.features.job.main.JobMainActivity
 import com.jcs.where.features.mall.home.MallHomeActivity
 import com.jcs.where.features.map.government.GovernmentActivity
 import com.jcs.where.features.message.MessageCenterActivity
@@ -179,7 +179,7 @@ class HomeFragment : BaseMvpFragment<HomePresenter>(), HomeView, SwipeRefreshLay
                         startActivity(MallHomeActivity::class.java)
                     }
                     11 -> {
-                        startActivity(JobHomeActivity::class.java)
+                        startActivity(JobMainActivity::class.java)
                     }
 
                     else -> showComing()
@@ -282,6 +282,11 @@ class HomeFragment : BaseMvpFragment<HomePresenter>(), HomeView, SwipeRefreshLay
         presenter = HomePresenter(this)
         initCity()
         rxTimer = RxTimer()
+
+    }
+
+
+    override fun loadOnVisible() {
         requestData()
     }
 

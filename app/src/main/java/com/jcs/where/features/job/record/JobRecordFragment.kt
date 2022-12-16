@@ -9,6 +9,7 @@ import com.jcs.where.R
 import com.jcs.where.base.BaseFragment
 import com.jcs.where.features.job.record.applied.AppliedFragment
 import com.jcs.where.features.job.record.interviews.InterviewsFragment
+import com.jcs.where.features.message.MessageCenterActivity
 import kotlinx.android.synthetic.main.fragment_job_apply.*
 
 /**
@@ -24,12 +25,12 @@ class JobRecordFragment : BaseFragment() {
 
     override fun initView(view: View?) {
         pager.offscreenPageLimit = TAB_TITLES.size
-
+        val adapter = InnerPagerAdapter(childFragmentManager, 0)
+        pager.adapter = adapter;
+        tabs_type.setViewPager(pager, TAB_TITLES);
     }
 
-    override fun initData() {
-
-    }
+    override fun initData() = Unit
 
     override fun bindListener() {
         back_iv.setOnClickListener {
@@ -51,6 +52,10 @@ class JobRecordFragment : BaseFragment() {
 
         override fun getCount(): Int {
             return 2
+        }
+
+        override fun getPageTitle(position: Int): CharSequence? {
+            return super.getPageTitle(position)
         }
     }
 

@@ -1175,4 +1175,5 @@ Gentleman must let go</string>
     <string name="job_tab_mine">My Profile</string>
     <string name="job_applied">Applied</string>
     <string name="job_interviews">Interviews</string>
+    <string name="jobs_offline">Jobs Offline</string>
 </resources>

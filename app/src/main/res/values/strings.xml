@@ -1195,6 +1195,7 @@ Gentleman must let go</string>
     <string name="job_tab_mine">My Profile</string>
     <string name="job_applied">已申请</string>
     <string name="job_interviews">面试</string>
+    <string name="jobs_offline">职位已下线</string>
 
 
 </resources>

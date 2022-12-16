@@ -115,4 +115,22 @@
         tools:text="2018.04.11" />
 
 
+    <TextView
+        android:id="@+id/job_closed_tv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dp_8"
+        android:ellipsize="end"
+        android:lineSpacingMultiplier="1.2"
+        android:visibility="gone"
+        tools:visibility="visible"
+        android:maxLines="1"
+        android:paddingStart="@dimen/dp_16"
+        android:textStyle="bold"
+        android:paddingEnd="@dimen/dp_16"
+        android:textColor="@color/grey_999999"
+        android:textSize="@dimen/sp_14"
+        android:text="@string/jobs_offline" />
+
+
 </LinearLayout>

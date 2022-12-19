@@ -31,6 +31,7 @@ import com.jcs.where.utils.GlideUtil
 import com.jcs.where.utils.MobUtil
 import com.jcs.where.utils.image.GlideRoundedCornersTransform
 import kotlinx.android.synthetic.main.activity_job_detail.*
+import org.greenrobot.eventbus.EventBus
 
 /**
  * Created by Wangsw  2022/9/28 14:04.
@@ -169,6 +170,7 @@ class JobDetailActivity : BaseMvpActivity<JobDetailPresenter>(), JobDetailView {
 
     override fun sendSuccess(response: JsonElement) {
         ToastUtils.showShort(R.string.successful_delivery)
+        EventBus.getDefault().post(BaseEvent<Any>(EventCode.EVENT_CV_SEND_SUCCESS))
         setSendSuccessUi()
     }
 

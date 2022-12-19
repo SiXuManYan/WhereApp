@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/grey_F5F5F5"
+    android:gravity="center_horizontal"
+    android:orientation="vertical">
+
+    <com.jcs.where.widget.JcsTitle
+        android:id="@+id/jcsTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        app:middleTitle="@string/application_progress" />
+
+
+    <ImageView
+        android:id="@+id/status_iv"
+        android:layout_width="@dimen/dp_160"
+        android:layout_height="@dimen/dp_160"
+        android:layout_marginTop="@dimen/dp_49" />
+
+    <TextView
+        android:id="@+id/message_tv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dp_8"
+        android:gravity="center"
+        android:lineSpacingMultiplier="1.2"
+        android:paddingStart="@dimen/dp_42"
+        android:paddingEnd="@dimen/dp_42"
+        android:textColor="@color/color_3d3d3d"
+        android:textSize="@dimen/sp_16"
+        android:textStyle="bold"
+        tools:text="This position has been applied" />
+
+    <TextView
+        android:id="@+id/hint_tv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dp_4"
+        android:gravity="center"
+        android:lineSpacingMultiplier="1.2"
+        android:paddingStart="@dimen/dp_42"
+        android:paddingEnd="@dimen/dp_42"
+        android:textColor="@color/grey_666666"
+        android:textSize="@dimen/sp_14"
+        tools:text="Pay attention to check the email information and keep the call open" />
+
+</LinearLayout>

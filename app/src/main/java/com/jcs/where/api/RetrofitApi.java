@@ -2269,6 +2269,17 @@ public interface RetrofitApi {
 
 
     /**
+     * 投递和面试列表
+     * @param status  0 默认列表 1 面试列表
+     */
+    @GET("jobapi/v2/send_records")
+    Observable<JcsResponse<PageResponse<Job>>> jobCollectionList(
+            @Query("page") int page,
+            @Query("status") int status
+    );
+
+
+    /**
      * 职位详情
      */
     @GET("jobapi/v2/jobs/{job_id}")

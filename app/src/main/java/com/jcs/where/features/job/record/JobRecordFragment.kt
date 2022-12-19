@@ -1,15 +1,15 @@
 package com.jcs.where.features.job.record
 
+import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
 import com.blankj.utilcode.util.StringUtils
 import com.jcs.where.R
+import com.jcs.where.api.response.job.Job
 import com.jcs.where.base.BaseFragment
-import com.jcs.where.features.job.record.applied.AppliedFragment
-import com.jcs.where.features.job.record.interviews.InterviewsFragment
-import com.jcs.where.features.message.MessageCenterActivity
+import com.jcs.where.utils.Constant
 import kotlinx.android.synthetic.main.fragment_job_apply.*
 
 /**
@@ -18,7 +18,7 @@ import kotlinx.android.synthetic.main.fragment_job_apply.*
  */
 class JobRecordFragment : BaseFragment() {
 
-    private val TAB_TITLES =
+     val TAB_TITLES =
         arrayOf(StringUtils.getString(R.string.job_applied), StringUtils.getString(R.string.job_interviews))
 
     override fun getLayoutId() = R.layout.fragment_job_apply
@@ -42,20 +42,21 @@ class JobRecordFragment : BaseFragment() {
     private class InnerPagerAdapter(fm: FragmentManager, behavior: Int) : FragmentPagerAdapter(fm, behavior) {
 
         override fun getItem(position: Int): Fragment {
-            return if (position == 0) {
 
-                AppliedFragment()
-            } else {
-                InterviewsFragment()
+            var type = 0
+            if (position == 0) type = Job.REQUEST_APPLIED
+            if (position == 1) type = Job.REQUEST_INTERVIEWS
+
+            val apply = Bundle().apply {
+                putInt(Constant.PARAM_TYPE, type)
             }
+            val fragment = JobRecordChildFragment()
+            fragment.arguments = apply
+            return fragment
         }
 
         override fun getCount(): Int {
             return 2
-        }
-
-        override fun getPageTitle(position: Int): CharSequence? {
-            return super.getPageTitle(position)
         }
     }
 

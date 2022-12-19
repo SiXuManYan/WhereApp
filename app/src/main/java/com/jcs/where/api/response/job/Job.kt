@@ -3,13 +3,70 @@ package com.jcs.where.api.response.job
 import android.os.Parcel
 import android.os.Parcelable
 import com.chad.library.adapter.base.entity.MultiItemEntity
-import com.jcs.where.api.response.bills.CallChargeChannelItem
 
 /**
  * Created by Wangsw  2022/9/27 16:49.
  * 职位列表
  */
-class Job {
+class Job : MultiItemEntity {
+
+
+    companion object {
+
+
+        // 列表类型
+
+        /** 简历列表 */
+        val TYPE_COMMON_JOB = 0
+
+        /** 收藏列表 */
+        val TYPE_COLLETION_JOB = 1
+
+        /** 申请列表 */
+        val TYPE_RECORD_APPLIED = 3
+
+        /** 面试列表 */
+        val TYPE_RECORD_INTERVIEWS = 4
+
+        /** 标题 */
+        val TYPE_TITLE = 5
+
+
+        // **** 列表请求类型 ***
+        /** 投递列表 */
+        var REQUEST_APPLIED = 0
+
+        /** 面试列表 */
+        var REQUEST_INTERVIEWS = 1
+
+        // *** 列表状态 ***
+        /** 职位正常 */
+        val STATUS_NORMAL = 1
+
+        /** 职位关闭 */
+        val STATUS_CLOSED = 0
+
+        /** 1已申请 */
+        val STATUS_APPLIED = 1
+
+        /** 2申请失败 */
+        val STATUS_APPLIED_FAILED = 2
+
+        /** 3待面试 */
+        val STATUS_TO_INTERVIEWS = 3
+
+        /** 4面试成功 */
+        val STATUS_INTERVIEWS_SUCCEED = 4
+
+
+        /** 5面试失败 */
+        val STATUS_INTERVIEWS_FAILED = 5
+
+
+
+
+    }
+
 
     var id = 0
     var company = ""
@@ -21,8 +78,25 @@ class Job {
     var logo = ""
     var tag = ArrayList<String>()
 
-    /** 1正常 0 关闭 */
+    /**
+     *  简历列表、收藏列表：
+     *  1正常 0 关闭
+     *
+     *
+     *  申请列表，面试列表
+     *  1已申请 2申请失败 3待面试 4面试成功 5面试失败
+     */
     var status = 0
+
+
+    /**
+     * 列表类型
+     */
+    var nativeListType = 0
+
+    override val itemType: Int
+        get() = nativeListType
+
 }
 
 /**
@@ -403,7 +477,7 @@ class CompanyInfo {
     var address = ""
     var images: ArrayList<String>? = ArrayList()
 
-    var website :String? = ""
+    var website: String? = ""
 }
 
 
@@ -417,8 +491,6 @@ class JobTag {
 }
 
 
-
-
 class JobFilter {
 
     var area = ArrayList<FilterItem>()
@@ -429,7 +501,7 @@ class JobFilter {
 
 class FilterItem {
     var id = 0
-    var name  = ""
+    var name = ""
     var nativeSelected = false
 }
 
@@ -437,25 +509,25 @@ class FilterItem {
 class FilterData {
 
     /** 薪资类型 0不限 1月薪 2年薪 3时薪*/
-     var salaryType = 0
+    var salaryType = 0
 
     /** 最低薪水 */
-     var minSalary = ""
+    var minSalary = ""
 
     /** 最高薪水 */
-     var maxSalary = ""
+    var maxSalary = ""
 
     /** 地区 */
-     var areas = ArrayList<Int>()
+    var areas = ArrayList<Int>()
 
     /** 公司类型 */
-     var companyTypes = ArrayList<Int>()
+    var companyTypes = ArrayList<Int>()
 
     /** 学历 */
-     var eduLevel = ArrayList<Int>()
+    var eduLevel = ArrayList<Int>()
 
     /** 工作经验 */
-     var experienceLevel = ArrayList<Int>()
+    var experienceLevel = ArrayList<Int>()
 
 
     var salaryData = ArrayList<FilterItem>()

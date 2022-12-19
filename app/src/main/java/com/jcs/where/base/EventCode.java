@@ -193,4 +193,9 @@ public class EventCode {
      */
     public static final int EVENT_REFRESH_BILL_HISTORY_ACCOUNT = 1049;
 
+    /**
+     * 简历投递成功
+     */
+    public static final int EVENT_CV_SEND_SUCCESS = 1050;
+
 }

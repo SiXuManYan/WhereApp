@@ -4,6 +4,7 @@ import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.ImageView
 import androidx.fragment.app.Fragment
@@ -84,6 +85,7 @@ class HomeFragment : BaseMvpFragment<HomePresenter>(), HomeView, SwipeRefreshLay
     /** 新闻列表数据 */
     private val mNewsAdapterDataList: ArrayList<HomeNewsResponse> = ArrayList()
 
+     var appBarStateChangeListener: AppBarStateChanged? = null
 
     private var mType: ArrayList<HomeChild> = ArrayList()
 
@@ -254,22 +256,28 @@ class HomeFragment : BaseMvpFragment<HomePresenter>(), HomeView, SwipeRefreshLay
         moduleRecycler.isNestedScrollingEnabled = false
 
         child_abl.addOnOffsetChangedListener(object : AppBarStateChangeListener() {
+
             override fun onStateChanged(appBarLayout: AppBarLayout, expanded: State, verticalOffset: Int) {
+                Log.e("onStateChanged", "verticalOffset == $verticalOffset")
+
+
                 when (expanded) {
                     State.EXPANDED -> {
-
                         swipeLayout?.isEnabled = true
+                        appBarStateChangeListener?.expanded()
                     }
 
                     State.COLLAPSED -> {
-
                         swipeLayout?.isEnabled = false
                     }
 
                     State.IDLE -> {
                         swipeLayout?.isEnabled = false
+                        appBarStateChangeListener?.scrolling()
                     }
                 }
+
+
             }
         })
 

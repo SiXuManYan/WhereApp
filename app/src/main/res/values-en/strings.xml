@@ -1190,4 +1190,5 @@ Gentleman must let go</string>
     <string name="status_interviews_succeed_message">Congratulations on passing the interview</string>
     <string name="status_interviews_succeed_hint">Pay attention to check the email information and keep the call open</string>
     <string name="application_progress">Application Progress</string>
+    <string name="main_tab_title_home_top">Top</string>
 </resources>

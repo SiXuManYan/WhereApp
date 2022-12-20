@@ -50,11 +50,17 @@ class Publisher {
 
 class TabEntity(var title: String, var selectedIcon: Int, var unSelectedIcon: Int) : CustomTabEntity {
 
-    override fun getTabTitle() = title
 
-    override fun getTabSelectedIcon() = selectedIcon
+    var titleStr = title
+    var selectedResId = selectedIcon
+    var unSelectedResId = unSelectedIcon
 
-    override fun getTabUnselectedIcon() = unSelectedIcon
+
+    override fun getTabTitle() = titleStr
+
+    override fun getTabSelectedIcon() = selectedResId
+
+    override fun getTabUnselectedIcon() = unSelectedResId
 
 }
 

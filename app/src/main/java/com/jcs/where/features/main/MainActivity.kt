@@ -2,7 +2,6 @@ package com.jcs.where.features.main
 
 
 import android.content.Intent
-import android.util.Log
 import androidx.fragment.app.Fragment
 import com.blankj.utilcode.util.SPUtils
 import com.blankj.utilcode.util.ToastUtils
@@ -14,6 +13,7 @@ import com.jcs.where.base.BaseEvent
 import com.jcs.where.base.EventCode
 import com.jcs.where.base.mvp.BaseMvpActivity
 import com.jcs.where.features.category.CategoryFragment2
+import com.jcs.where.features.home.AppBarStateChanged
 import com.jcs.where.features.home.HomeFragment
 import com.jcs.where.features.mine.MineFragment
 import com.jcs.where.features.order.parent.OrderFragment
@@ -27,7 +27,7 @@ import org.greenrobot.eventbus.EventBus
  * Created by Wangsw  2021/8/12 15:25.
  *
  */
-class MainActivity : BaseMvpActivity<MainPresenter>(), MainView {
+class MainActivity : BaseMvpActivity<MainPresenter>(), MainView, AppBarStateChanged {
 
     private var mTapTime = 0L
 
@@ -38,6 +38,8 @@ class MainActivity : BaseMvpActivity<MainPresenter>(), MainView {
     private var tabIndex = 0
 
     private val tabs = ArrayList<CustomTabEntity>()
+
+    private lateinit var homeTab: TabEntity
 
     override fun getLayoutId() = R.layout.activity_main
 
@@ -87,14 +89,19 @@ class MainActivity : BaseMvpActivity<MainPresenter>(), MainView {
     private fun initTabs() {
 
         tabs.apply {
-            add(TabEntity(getString(R.string.main_tab_title_home), R.mipmap.ic_home_press, R.mipmap.ic_home_normal))
-            add(TabEntity(getString(R.string.main_tab_title_category), R.mipmap.ic_home_category_selected, R.mipmap.ic_home_category_normal))
+            homeTab = TabEntity(getString(R.string.main_tab_title_home), R.mipmap.ic_home_press, R.mipmap.ic_home_normal)
+            add(homeTab)
+            add(TabEntity(getString(R.string.main_tab_title_category),
+                R.mipmap.ic_home_category_selected,
+                R.mipmap.ic_home_category_normal))
             add(TabEntity(getString(R.string.main_tab_title_order), R.mipmap.ic_home_order_selected, R.mipmap.ic_home_order_normal))
             add(TabEntity(getString(R.string.main_tab_title_mine), R.mipmap.ic_mine_press, R.mipmap.ic_mine_normal))
         }
 
         frList.apply {
-            add(HomeFragment())
+            val homeFragment = HomeFragment()
+            homeFragment.appBarStateChangeListener = this@MainActivity
+            add(homeFragment)
             add(CategoryFragment2())
             add(OrderFragment())
             add(MineFragment())
@@ -109,7 +116,9 @@ class MainActivity : BaseMvpActivity<MainPresenter>(), MainView {
 
             override fun onTabReselect(position: Int) {
                 if (position == 0) {
+
                     EventBus.getDefault().post(BaseEvent<Any>(EventCode.EVENT_SCROLL_TO_TOP))
+                    setTopStyle(true)
                 }
             }
         })
@@ -121,6 +130,24 @@ class MainActivity : BaseMvpActivity<MainPresenter>(), MainView {
         }
 
     }
+
+    private fun setTopStyle(isTopStyle: Boolean) {
+        val iconView = tabs_navigator.getIconView(0)
+        val titleView = tabs_navigator.getTitleView(0)
+        if (isTopStyle) {
+
+            iconView.setImageResource(R.mipmap.ic_home_press_top)
+            titleView.setText(R.string.main_tab_title_home_top)
+        } else {
+            iconView.setImageResource(R.mipmap.ic_home_press)
+            titleView.setText(R.string.main_tab_title_home)
+        }
+
+    }
+
+    override fun scrolling() = setTopStyle(true)
+
+    override fun expanded() = setTopStyle(false)
 
 
 }

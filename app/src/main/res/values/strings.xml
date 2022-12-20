@@ -1201,15 +1201,14 @@ Gentleman must let go</string>
     <string name="job_status_to_interviews">待面试</string>
     <string name="job_status_interviews_succeed">面试成功</string>
     <string name="job_status_interviews_failed">面试失败</string>
-    <string name="status_applied_message">This position has been applied</string>
-    <string name="status_applied_failed_message">Unfortunately, the job application failed</string>
-    <string name="status_to_interviews_message">Your resume has been screened</string>
-    <string name="status_interviews_failed">Sorry, your interview failed</string>
-    <string name="status_applied_hint">Pay attention to check the email information and keep the call open</string>
-    <string name="status_to_interviews_hint">Pay attention to check email messages and keep the phone open</string>
-    <string name="status_interviews_failed_hint">Pay attention to check the email information and keep the call open</string>
-    <string name="status_interviews_succeed_message">"Congratulations on passing the interview "</string>
-    <string name="status_interviews_succeed_hint">Pay attention to check the email information and keep the call open</string>
+    <string name="status_applied_message">该职位已申请</string>
+    <string name="status_applied_failed_message">很遗憾，该职位申请失败</string>
+    <string name="status_to_interviews_message">您的简历通过筛选</string>
+    <string name="status_interviews_failed">很遗憾，您的面试未通过</string>
+    <string name="status_applied_hint">注意查收邮件信息和保持通话畅通</string>
+    <string name="status_to_interviews_hint">注意查收邮件信息和保持通话畅通</string>
+    <string name="status_interviews_succeed_message">恭喜您通过面试</string>
+    <string name="status_interviews_succeed_hint">注意查收邮件信息和保持通话畅通</string>
     <string name="application_progress">申请进展</string>
 
 

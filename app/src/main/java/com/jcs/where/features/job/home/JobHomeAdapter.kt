@@ -39,28 +39,30 @@ class JobHomeAdapter : BaseMultiItemQuickAdapter<Job, BaseViewHolder>(), LoadMor
 
     override fun convert(holder: BaseViewHolder, item: Job) {
 
-        holder.setText(R.id.company_tv, item.company)
-        holder.setText(R.id.job_tv, item.job_title)
-        holder.setText(R.id.salary_tv, item.salary)
-        holder.setText(R.id.city_tv, item.city)
-        holder.setText(R.id.create_time_tv, item.created_at)
-        val tag_rv = holder.getView<RecyclerView>(R.id.tag_rv)
+        if (holder.itemViewType!= Job.TYPE_TITLE){
+            holder.setText(R.id.company_tv, item.company)
+            holder.setText(R.id.job_tv, item.job_title)
+            holder.setText(R.id.salary_tv, item.salary)
+            holder.setText(R.id.city_tv, item.city)
+            holder.setText(R.id.create_time_tv, item.created_at)
+            val tag_rv = holder.getView<RecyclerView>(R.id.tag_rv)
 
-        val logoIv = holder.getView<ImageView>(R.id.logo_iv)
-        GlideUtil.load(context, item.logo, logoIv, 24, GlideRoundedCornersTransform.CornerType.ALL, R.mipmap.ic_company_default_logo)
+            val logoIv = holder.getView<ImageView>(R.id.logo_iv)
+            GlideUtil.load(context, item.logo, logoIv, 24, GlideRoundedCornersTransform.CornerType.ALL, R.mipmap.ic_company_default_logo)
 
-        val mTagAdapter = JobTagAdapter()
-        tag_rv.apply {
-            adapter = mTagAdapter
-            layoutManager = MyLayoutManager()
+            val mTagAdapter = JobTagAdapter()
+            tag_rv.apply {
+                adapter = mTagAdapter
+                layoutManager = MyLayoutManager()
+            }
+            val nativeTag = item.tag
+            if (nativeTag.isNullOrEmpty()) {
+                tag_rv.visibility = View.GONE
+            } else {
+                tag_rv.visibility = View.VISIBLE
+            }
+            mTagAdapter.setNewInstance(nativeTag)
         }
-        val nativeTag = item.tag
-        if (nativeTag.isNullOrEmpty()) {
-            tag_rv.visibility = View.GONE
-        } else {
-            tag_rv.visibility = View.VISIBLE
-        }
-        mTagAdapter.setNewInstance(nativeTag)
 
         // 收藏列表
         when (holder.itemViewType) {
@@ -98,7 +100,7 @@ class JobHomeAdapter : BaseMultiItemQuickAdapter<Job, BaseViewHolder>(), LoadMor
         val jobClosedTv = holder.getView<TextView>(R.id.job_closed_tv)
         val jobRoot = holder.getView<LinearLayout>(R.id.job_root_ll)
 
-        jobClosedTv.visibility = View.VISIBLE
+
 
         val status = item.status
         jobRoot.setOnClickListener {
@@ -112,12 +114,14 @@ class JobHomeAdapter : BaseMultiItemQuickAdapter<Job, BaseViewHolder>(), LoadMor
 
         when (status) {
             Job.STATUS_NORMAL -> {
+                jobClosedTv.visibility = View.GONE
                 companyTv.setTextColor(ColorUtils.getColor(R.color.black_333333))
                 jobTv.setTextColor(ColorUtils.getColor(R.color.color_1c1380))
                 salaryTv.setTextColor(ColorUtils.getColor(R.color.black_333333))
                 cityTv.setTextColor(ColorUtils.getColor(R.color.grey_666666))
             }
             Job.STATUS_CLOSED -> {
+                jobClosedTv.visibility = View.VISIBLE
                 companyTv.setTextColor(ColorUtils.getColor(R.color.grey_999999))
                 jobTv.setTextColor(ColorUtils.getColor(R.color.grey_999999))
                 salaryTv.setTextColor(ColorUtils.getColor(R.color.grey_999999))
@@ -146,26 +150,31 @@ class JobHomeAdapter : BaseMultiItemQuickAdapter<Job, BaseViewHolder>(), LoadMor
                 statusRl.setBackgroundResource(R.drawable.gradient_job_blue)
                 statusIv.setImageResource(R.mipmap.ic_job_blue_applied)
                 statusTv.setText(R.string.job_status_applied)
+                statusTv.setTextColor(ColorUtils.getColor(R.color.blue_377BFF))
             }
             Job.STATUS_APPLIED_FAILED -> {
                 statusRl.setBackgroundResource(R.drawable.gradient_job_red)
                 statusIv.setImageResource(R.mipmap.ic_job_failed)
                 statusTv.setText(R.string.job_status_applied_failed)
+                statusTv.setTextColor(ColorUtils.getColor(R.color.orange_FF5837))
             }
             Job.STATUS_TO_INTERVIEWS -> {
                 statusRl.setBackgroundResource(R.drawable.gradient_job_blue)
                 statusIv.setImageResource(R.mipmap.ic_job_blue)
                 statusTv.setText(R.string.job_status_to_interviews)
+                statusTv.setTextColor(ColorUtils.getColor(R.color.blue_377BFF))
             }
             Job.STATUS_INTERVIEWS_SUCCEED -> {
                 statusRl.setBackgroundResource(R.drawable.gradient_job_green)
                 statusIv.setImageResource(R.mipmap.ic_job_green)
                 statusTv.setText(R.string.job_status_interviews_succeed)
+                statusTv.setTextColor(ColorUtils.getColor(R.color.color_green_2FD878))
             }
             Job.STATUS_INTERVIEWS_FAILED -> {
                 statusRl.setBackgroundResource(R.drawable.gradient_job_red)
                 statusIv.setImageResource(R.mipmap.ic_job_failed)
                 statusTv.setText(R.string.job_status_interviews_failed)
+                statusTv.setTextColor(ColorUtils.getColor(R.color.orange_FF5837))
             }
         }
 

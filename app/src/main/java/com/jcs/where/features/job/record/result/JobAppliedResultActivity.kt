@@ -58,7 +58,7 @@ class JobAppliedResultActivity  :BaseActivity(){
             Job.STATUS_APPLIED -> {
                 status_iv.setImageResource(R.mipmap.ic_status_applied)
                 message_tv.setText(R.string.status_applied_message)
-                message_tv.setText(R.string.status_applied_hint)
+                hint_tv.setText(R.string.status_applied_hint)
             }
             Job.STATUS_APPLIED_FAILED -> {
                 status_iv.setImageResource(R.mipmap.ic_status_applied_failed)
@@ -67,17 +67,16 @@ class JobAppliedResultActivity  :BaseActivity(){
             Job.STATUS_TO_INTERVIEWS -> {
                 status_iv.setImageResource(R.mipmap.ic_status_to_interviews)
                 message_tv.setText(R.string.status_to_interviews_message)
-                message_tv.setText(R.string.status_to_interviews_hint)
+                hint_tv.setText(R.string.status_to_interviews_hint)
             }
             Job.STATUS_INTERVIEWS_SUCCEED -> {
                 status_iv.setImageResource(R.mipmap.ic_status_interviews_succeed)
                 message_tv.setText(R.string.status_interviews_succeed_message)
-                message_tv.setText(R.string.status_interviews_succeed_hint)
+                hint_tv.setText(R.string.status_interviews_succeed_hint)
             }
             Job.STATUS_INTERVIEWS_FAILED -> {
                 status_iv.setImageResource(R.mipmap.ic_status_interviews_failed)
                 message_tv.setText(R.string.status_interviews_failed)
-                message_tv.setText(R.string.status_interviews_failed_hint)
             }
         }
 

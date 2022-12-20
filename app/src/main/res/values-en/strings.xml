@@ -1186,9 +1186,8 @@ Gentleman must let go</string>
     <string name="status_to_interviews_message">Your resume has been screened</string>
     <string name="status_interviews_failed">Sorry, your interview failed</string>
     <string name="status_applied_hint">Pay attention to check the email information and keep the call open</string>
-    <string name="status_to_interviews_hint">Pay attention to check email messages and keep the phone open</string>
-    <string name="status_interviews_failed_hint">Pay attention to check the email information and keep the call open</string>
-    <string name="status_interviews_succeed_message">"Congratulations on passing the interview "</string>
+    <string name="status_to_interviews_hint">Pay attention to check the email information and keep the call open</string>
+    <string name="status_interviews_succeed_message">Congratulations on passing the interview</string>
     <string name="status_interviews_succeed_hint">Pay attention to check the email information and keep the call open</string>
     <string name="application_progress">Application Progress</string>
 </resources>

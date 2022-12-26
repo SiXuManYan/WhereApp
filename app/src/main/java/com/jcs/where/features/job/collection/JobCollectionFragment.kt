@@ -7,10 +7,14 @@ import com.blankj.utilcode.util.ColorUtils
 import com.blankj.utilcode.util.SizeUtils
 import com.jcs.where.R
 import com.jcs.where.api.response.job.Job
+import com.jcs.where.base.BaseEvent
+import com.jcs.where.base.EventCode
 import com.jcs.where.base.mvp.BaseMvpFragment
+import com.jcs.where.features.account.login.LoginActivity
 import com.jcs.where.features.job.home.JobHomeAdapter
 import com.jcs.where.features.job.home.JobHomePresenter
 import com.jcs.where.features.job.home.JobHomeView
+import com.jcs.where.storage.entity.User
 import com.jcs.where.utils.Constant
 import com.jcs.where.view.empty.EmptyView
 import com.jcs.where.widget.list.DividerDecoration
@@ -75,6 +79,9 @@ class JobCollectionFragment : BaseMvpFragment<JobHomePresenter>(), JobHomeView, 
     }
 
     override fun onRefresh() {
+        if (!User.isLogon()) {
+            return
+        }
         page = Constant.DEFAULT_FIRST_PAGE
         presenter.getJobCollectionList(page)
     }
@@ -106,4 +113,17 @@ class JobCollectionFragment : BaseMvpFragment<JobHomePresenter>(), JobHomeView, 
             }
         }
     }
+
+    override fun onEventReceived(baseEvent: BaseEvent<*>) {
+        when (baseEvent.code) {
+            EventCode.EVENT_LOGIN_SUCCESS -> {
+                if (isViewCreated) {
+                    onRefresh()
+                }
+            }
+            else -> {}
+        }
+    }
+
+
 }

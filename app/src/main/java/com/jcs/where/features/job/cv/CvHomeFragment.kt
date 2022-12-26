@@ -13,9 +13,11 @@ import com.jcs.where.api.response.job.ProfileDetail
 import com.jcs.where.base.BaseEvent
 import com.jcs.where.base.EventCode
 import com.jcs.where.base.mvp.BaseMvpFragment
+import com.jcs.where.features.account.login.LoginActivity
 import com.jcs.where.features.job.form.edu.CvFormEduActivity
 import com.jcs.where.features.job.form.experience.CvFormJobExperienceActivity
 import com.jcs.where.features.job.form.profile.CvFormProfileActivity
+import com.jcs.where.storage.entity.User
 import com.jcs.where.utils.Constant
 import com.jcs.where.widget.list.DividerDecoration
 import kotlinx.android.synthetic.main.fragment_job_cv_home.*
@@ -60,6 +62,9 @@ class CvHomeFragment  : BaseMvpFragment<CvHomePresenter>(), CvHomeView, OnItemCl
     }
 
     override fun loadOnVisible() {
+        if (!User.isLogon()) {
+            return
+        }
         presenter.getProfile()
         presenter.getJobExperience()
     }
@@ -69,7 +74,7 @@ class CvHomeFragment  : BaseMvpFragment<CvHomePresenter>(), CvHomeView, OnItemCl
             activity?.finish()
         }
         create_cv_iv.setOnClickListener {
-            startActivity(CvFormProfileActivity::class.java, Bundle().apply {
+            startActivityAfterLogin(CvFormProfileActivity::class.java, Bundle().apply {
                 putParcelable(Constant.PARAM_DATA, profileDetail)
             })
         }
@@ -132,6 +137,11 @@ class CvHomeFragment  : BaseMvpFragment<CvHomePresenter>(), CvHomeView, OnItemCl
                     startActivity(CvFormEduActivity::class.java)
                 }
 
+            }
+            EventCode.EVENT_LOGIN_SUCCESS -> {
+                if (isViewCreated) {
+                    loadOnVisible()
+                }
             }
 
             else -> {}

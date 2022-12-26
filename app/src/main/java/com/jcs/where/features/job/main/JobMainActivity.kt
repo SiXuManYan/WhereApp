@@ -8,10 +8,12 @@ import com.jcs.where.api.response.home.TabEntity
 import com.jcs.where.base.BaseEvent
 import com.jcs.where.base.EventCode
 import com.jcs.where.base.mvp.BaseMvpActivity
+import com.jcs.where.features.account.login.LoginActivity
 import com.jcs.where.features.job.record.JobRecordFragment
 import com.jcs.where.features.job.collection.JobCollectionFragment
 import com.jcs.where.features.job.cv.CvHomeFragment
 import com.jcs.where.features.job.home.JobHomeFragment
+import com.jcs.where.storage.entity.User
 import kotlinx.android.synthetic.main.activity_job_main.*
 import org.greenrobot.eventbus.EventBus
 
@@ -44,7 +46,12 @@ class JobMainActivity :BaseMvpActivity<JobMainPresenter>(),JobMainView {
         tabs_navigator.setTabData(tabs, this, R.id.fl_content, frList)
         tabs_navigator.setOnTabSelectListener(object : OnTabSelectListener {
             override fun onTabSelect(position: Int) {
-                tabs_navigator.currentTab = position
+
+                if (!User.isLogon()) {
+                    tabs_navigator.currentTab = 0
+                    startActivity(LoginActivity::class.java)
+                }
+
             }
 
             override fun onTabReselect(position: Int) {

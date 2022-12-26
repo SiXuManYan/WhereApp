@@ -269,6 +269,7 @@ class HomeFragment : BaseMvpFragment<HomePresenter>(), HomeView, SwipeRefreshLay
 
                     State.COLLAPSED -> {
                         swipeLayout?.isEnabled = false
+                        appBarStateChangeListener?.scrolling()
                     }
 
                     State.IDLE -> {

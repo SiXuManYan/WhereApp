@@ -41,6 +41,8 @@ class MainActivity : BaseMvpActivity<MainPresenter>(), MainView, AppBarStateChan
 
     private lateinit var homeTab: TabEntity
 
+    private var isTopStyle = false
+
     override fun getLayoutId() = R.layout.activity_main
 
     override fun initView() = initTabs()
@@ -112,13 +114,19 @@ class MainActivity : BaseMvpActivity<MainPresenter>(), MainView, AppBarStateChan
         tabs_navigator.setOnTabSelectListener(object : OnTabSelectListener {
             override fun onTabSelect(position: Int) {
                 tabs_navigator.currentTab = position
+                val titleView = tabs_navigator.getTitleView(0)
+
+                if (isTopStyle || position == 0) {
+                    titleView.setText(R.string.main_tab_title_home_top)
+                } else {
+                    titleView.setText(R.string.main_tab_title_home)
+                }
+
             }
 
             override fun onTabReselect(position: Int) {
                 if (position == 0) {
-
                     EventBus.getDefault().post(BaseEvent<Any>(EventCode.EVENT_SCROLL_TO_TOP))
-                    setTopStyle(true)
                 }
             }
         })
@@ -131,18 +139,16 @@ class MainActivity : BaseMvpActivity<MainPresenter>(), MainView, AppBarStateChan
 
     }
 
+
     private fun setTopStyle(isTopStyle: Boolean) {
-        val iconView = tabs_navigator.getIconView(0)
-        val titleView = tabs_navigator.getTitleView(0)
         if (isTopStyle) {
-
-            iconView.setImageResource(R.mipmap.ic_home_press_top)
-            titleView.setText(R.string.main_tab_title_home_top)
+            homeTab.selectedResId = R.mipmap.ic_home_press_top
+            homeTab.titleStr = getString(R.string.main_tab_title_home_top)
         } else {
-            iconView.setImageResource(R.mipmap.ic_home_press)
-            titleView.setText(R.string.main_tab_title_home)
+            homeTab.selectedResId = R.mipmap.ic_home_press
+            homeTab.titleStr = getString(R.string.main_tab_title_home)
         }
-
+        tabs_navigator.notifyDataSetChanged()
     }
 
     override fun scrolling() = setTopStyle(true)

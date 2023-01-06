@@ -198,4 +198,9 @@ public class EventCode {
      */
     public static final int EVENT_CV_SEND_SUCCESS = 1050;
 
+    /**
+     * 统计停留时长
+     */
+    public static final int EVENT_MTJ_DURATION = 1051;
+
 }

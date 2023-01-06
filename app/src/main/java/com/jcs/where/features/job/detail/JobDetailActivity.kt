@@ -141,10 +141,6 @@ class JobDetailActivity : BaseMvpActivity<JobDetailPresenter>(), JobDetailView {
                         .setTitle(R.string.hint)
                         .setMessage(R.string.completing_cv)
                         .setPositiveButton(R.string.confirm) { dialog: DialogInterface, which: Int ->
-                            startActivityAfterLogin(CvHomeActivity::class.java)
-                            dialog.dismiss()
-                        }
-                        .setNegativeButton(R.string.cancel) { dialog: DialogInterface, which: Int ->
                             dialog.dismiss()
                         }
                         .create().show()

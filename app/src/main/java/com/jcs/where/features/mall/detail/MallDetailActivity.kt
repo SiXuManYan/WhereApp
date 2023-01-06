@@ -17,6 +17,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.blankj.utilcode.util.SizeUtils
 import com.blankj.utilcode.util.ToastUtils
 import com.jcs.where.R
+import com.jcs.where.api.request.MtjDuration
 import com.jcs.where.api.response.mall.MallAttribute
 import com.jcs.where.api.response.mall.MallGoodDetail
 import com.jcs.where.api.response.mall.MallSpecs
@@ -43,6 +44,7 @@ import com.jcs.where.utils.MobUtil
 import com.jcs.where.view.empty.EmptyView
 import com.shuyu.gsyvideoplayer.GSYVideoManager
 import kotlinx.android.synthetic.main.activity_mall_good_detail.*
+import org.greenrobot.eventbus.EventBus
 
 
 /**
@@ -76,6 +78,9 @@ class MallDetailActivity : BaseMvpActivity<MallDetailPresenter>(), MallDetailVie
 
     private lateinit var emptyView: EmptyView
 
+
+    private var duration = 0L
+
     companion object {
 
         fun navigation(context: Context, goodId: Int, couponId: Int? = 0) {
@@ -107,6 +112,7 @@ class MallDetailActivity : BaseMvpActivity<MallDetailPresenter>(), MallDetailVie
         initMedia()
         initComment()
         initWeb()
+        duration = System.currentTimeMillis()
     }
 
 
@@ -307,6 +313,8 @@ class MallDetailActivity : BaseMvpActivity<MallDetailPresenter>(), MallDetailVie
                 BusinessUtils.startRongCloudConversationActivity(this, response.mer_uuid, response.mer_name, null, Bundle().apply {
                     putInt(Constant.PARAM_TYPE, 1)
                     putParcelable(Constant.PARAM_GOOD_DATA, customMessage)
+                    putInt(Constant.PARAM_GOOD_ID , goodId)
+                    putInt(Constant.PARAM_SHOP_ID , shopId)
                 })
             }
         }
@@ -363,12 +371,6 @@ class MallDetailActivity : BaseMvpActivity<MallDetailPresenter>(), MallDetailVie
         presenter?.getCartCount()
     }
 
-    override fun onDestroy() {
-
-//        mAgentWeb.webLifeCycle.onDestroy()
-        super.onDestroy()
-        GSYVideoManager.releaseAllVideos()
-    }
 
     private fun setLikeImage() {
 
@@ -451,6 +453,28 @@ class MallDetailActivity : BaseMvpActivity<MallDetailPresenter>(), MallDetailVie
             else -> {}
         }
 
+    }
+
+    override fun onDestroy() {
+
+
+        duration = System.currentTimeMillis() - duration
+
+        if (User.isLogon()) {
+            val mtj = MtjDuration().apply {
+                goods_id = goodId
+                time = duration
+                shop_id = shopId
+                user_id = User.getInstance().id
+            }
+            EventBus.getDefault().post(BaseEvent<MtjDuration>(EventCode.EVENT_MTJ_DURATION,mtj))
+        }
+
+
+
+
+        super.onDestroy()
+        GSYVideoManager.releaseAllVideos()
     }
 
 

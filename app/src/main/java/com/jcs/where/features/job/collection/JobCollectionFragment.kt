@@ -72,6 +72,13 @@ class JobCollectionFragment : BaseMvpFragment<JobHomePresenter>(), JobHomeView, 
         onRefresh()
     }
 
+    override fun onHiddenChanged(hidden: Boolean) {
+        super.onHiddenChanged(hidden)
+        if (isViewVisible) {
+            onRefresh()
+        }
+    }
+
     override fun bindListener() {
         back_iv.setOnClickListener {
             activity?.finish()

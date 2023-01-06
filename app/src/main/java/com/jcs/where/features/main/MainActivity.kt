@@ -8,6 +8,7 @@ import com.blankj.utilcode.util.ToastUtils
 import com.flyco.tablayout.listener.CustomTabEntity
 import com.flyco.tablayout.listener.OnTabSelectListener
 import com.jcs.where.R
+import com.jcs.where.api.request.MtjDuration
 import com.jcs.where.api.response.home.TabEntity
 import com.jcs.where.base.BaseEvent
 import com.jcs.where.base.EventCode
@@ -47,7 +48,9 @@ class MainActivity : BaseMvpActivity<MainPresenter>(), MainView, AppBarStateChan
 
     override fun initView() = initTabs()
 
-    override fun initData() = Unit
+    override fun initData() {
+        presenter = MainPresenter(this)
+    }
 
     override fun bindListener() = Unit
 
@@ -74,19 +77,7 @@ class MainActivity : BaseMvpActivity<MainPresenter>(), MainView, AppBarStateChan
         }
     }
 
-    override fun onEventReceived(baseEvent: BaseEvent<*>) {
-        super.onEventReceived(baseEvent)
-        val code = baseEvent.code
-//        if (code == EventCode.EVENT_SIGN_OUT) {
-//            finish()
-//        }
-        if (code == EventCode.EVENT_REFRESH_LANGUAGE) {
-            SPUtils.getInstance().put(SPKey.K_LANGUAGE_TAB, 3)
-            recreate()
-        }
 
-
-    }
 
     private fun initTabs() {
 
@@ -154,6 +145,27 @@ class MainActivity : BaseMvpActivity<MainPresenter>(), MainView, AppBarStateChan
     override fun scrolling() = setTopStyle(true)
 
     override fun expanded() = setTopStyle(false)
+
+    override fun onEventReceived(baseEvent: BaseEvent<*>) {
+        super.onEventReceived(baseEvent)
+        val code = baseEvent.code
+
+        when (code) {
+            EventCode.EVENT_REFRESH_LANGUAGE  -> {
+                SPUtils.getInstance().put(SPKey.K_LANGUAGE_TAB, 3)
+                recreate()
+            }
+            EventCode.EVENT_MTJ_DURATION ->{
+                val mtjDuration = baseEvent.data as MtjDuration
+//                presenter.mtjDuration(mtjDuration)
+
+            }
+            else -> {}
+        }
+
+
+    }
+
 
 
 }

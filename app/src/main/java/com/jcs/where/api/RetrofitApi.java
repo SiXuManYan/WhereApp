@@ -12,6 +12,8 @@ import com.jcs.where.api.request.IdRequest;
 import com.jcs.where.api.request.IntegralPlaceOrder;
 import com.jcs.where.api.request.MallShopCollection;
 import com.jcs.where.api.request.MallShopUnCollection;
+import com.jcs.where.api.request.MtjClickService;
+import com.jcs.where.api.request.MtjDuration;
 import com.jcs.where.api.request.SendCodeRequest;
 import com.jcs.where.api.request.StoreOrderCommit;
 import com.jcs.where.api.request.TravelCollectionRequest;
@@ -2553,6 +2555,19 @@ public interface RetrofitApi {
     @DELETE("billsapi/v2/bills/account")
     Observable<JcsResponse<JsonElement>> deleteBillsAccount(@Query("id") int id);
 
+
+
+    /**
+     * 商品停留时间
+     */
+    @POST("estoreapi/v2/dwell_time")
+    Observable<JcsResponse<JsonElement>> mtjDuration(@Body MtjDuration request);
+
+    /**
+     * 统计咨询客服，发送商品
+     */
+    @POST("estoreapi/v2/consultation")
+    Observable<JcsResponse<JsonElement>> mtjClickService(@Body MtjClickService request);
 
 
 }

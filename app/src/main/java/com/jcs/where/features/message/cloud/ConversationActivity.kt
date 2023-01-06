@@ -14,7 +14,7 @@ import android.widget.TextView
 import com.blankj.utilcode.util.StringUtils
 import com.blankj.utilcode.util.ToastUtils
 import com.jcs.where.R
-import com.jcs.where.base.BaseActivity
+import com.jcs.where.base.mvp.BaseMvpActivity
 import com.jcs.where.features.mall.detail.MallDetailActivity
 import com.jcs.where.features.message.custom.CustomMessage
 import com.jcs.where.utils.Constant
@@ -35,7 +35,7 @@ import kotlinx.android.synthetic.main.activity_conversation.*
  * Created by Wangsw  2021/2/24 10:49.
  * 融云会话聊天页面
  */
-class ConversationActivity : BaseActivity() {
+class ConversationActivity : BaseMvpActivity<ConversationPresenter>(), ConversationView {
 
     /**
      * 0 内置会话
@@ -49,6 +49,8 @@ class ConversationActivity : BaseActivity() {
     private lateinit var mallGoodMessageData: CustomMessage
     private lateinit var conversationFragment: ConversationFragment
 
+    private var goodId = 0
+    private var shopId = 0
 
     override fun isStatusDark() = true
 
@@ -82,6 +84,9 @@ class ConversationActivity : BaseActivity() {
                 mallGoodMessageData = it.getParcelable<CustomMessage>(Constant.PARAM_GOOD_DATA)!!
             }
 
+            goodId = it.getInt(Constant.PARAM_GOOD_ID, 0)
+            shopId = it.getInt(Constant.PARAM_SHOP_ID, 0)
+
         }
 
 
@@ -89,6 +94,8 @@ class ConversationActivity : BaseActivity() {
 
 
     override fun initData() {
+        presenter = ConversationPresenter(this)
+
         // 添加会话界面
         conversationFragment = ConversationFragment()
 
@@ -227,6 +234,9 @@ class ConversationActivity : BaseActivity() {
 
         })
 
+
+        // 统计
+//        presenter.mtjSendGood(goodId, shopId)
 
     }
 }

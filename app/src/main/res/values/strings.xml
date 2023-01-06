@@ -1056,7 +1056,7 @@ Gentleman must let go</string>
     <string name="company_name">公司名称</string>
     <string name="apply_now">申请职位</string>
     <string name="applied">已申请</string>
-    <string name="completing_cv">你的简历需要补充完整</string>
+    <string name="completing_cv">在&#160;简历&#160;页面完善简历信息\n才能申请职位哦</string>
     <string name="successful_delivery">投递成功</string>
     <string name="my_cv">我的简历</string>
     <string name="create_profile">立即创建简历</string>
@@ -1189,10 +1189,10 @@ Gentleman must let go</string>
     <string name="add_account">添加缴费账号</string>
     <string name="confirm_job_filter">确定</string>
     <string name="job_closed">该职位已关闭</string>
-    <string name="job_tab_home">Jobs</string>
-    <string name="job_tab_collection">Saved Jobs</string>
-    <string name="job_tab_apply">Applied Jobs</string>
-    <string name="job_tab_mine">My Profile</string>
+    <string name="job_tab_home">工作</string>
+    <string name="job_tab_collection">收藏职位</string>
+    <string name="job_tab_apply">申请职位</string>
+    <string name="job_tab_mine">简历</string>
     <string name="job_applied">已申请</string>
     <string name="job_interviews">面试</string>
     <string name="jobs_offline">职位已下线</string>

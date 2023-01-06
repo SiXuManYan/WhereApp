@@ -32,7 +32,7 @@ class MallOrderDetail {
     /** 订单总额 */
     var price = BigDecimal.ZERO
 
-    /** 订单状态（1-待付款，2-支付审核中，3-待发货，4-待收货/待使用，5-交易成功，6-订单取消（未支付时取消），7-交易关闭，8-退款中，9-退款成功，10-退款审核中（商家），11-商家待收货，12-商家拒绝退货） */
+    /** 订单状态（1-待付款，2-支付审核中，3-待发货，4-待收货/待使用，5-交易成功，6-订单取消（未支付时取消），7-交易关闭，8-退款中，9-退款成功，10-退款审核中（商家），11-商家待收货，12-商家拒绝退货） 13 交易失败 */
     var order_status = 0
 
     /** 地址信息（配送时） */
@@ -80,12 +80,13 @@ class MallOrderDetail {
     /** 商家优惠金额 */
     var shop_coupon_money = ""
 
-
+    /** 物流单号 */
+    var wl_url = ""
 
 
 }
 
-class MallOrderGood :Serializable {
+class MallOrderGood : Serializable {
     var order_id = 0
     var good_id = 0
     var good_title = ""

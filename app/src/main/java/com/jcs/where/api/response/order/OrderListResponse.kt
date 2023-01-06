@@ -2,8 +2,6 @@ package com.jcs.where.api.response.order
 
 import com.chad.library.adapter.base.entity.MultiItemEntity
 import java.math.BigDecimal
-import java.util.*
-import kotlin.collections.ArrayList
 
 /**
  * create by zyf on 2020/12/11 7:57 PM
@@ -17,14 +15,13 @@ class OrderListResponse : MultiItemEntity {
     var order_type = 0
 
     override val itemType: Int
-        get() =  order_type
-
+        get() = order_type
 
 
     /**
      * 订单号
      */
-    var trade_no: String= ""
+    var trade_no: String = ""
 
     /**
      * 模块ID,如酒店模块，则为hotel_id
@@ -50,7 +47,7 @@ class OrderListResponse : MultiItemEntity {
      * 模块数据
      */
     //    public ModelDataDTO model_data;
-    var model_data: OrderModelData ? = null
+    var model_data: OrderModelData? = null
 
     /**
      * 订单图片
@@ -65,7 +62,9 @@ class OrderListResponse : MultiItemEntity {
     var num = 0
 
 
-    var pay_time  = 0L
+    var pay_time = 0L
+
+    var wl_url = ""
 
 
     companion object {

@@ -34,6 +34,7 @@ import com.jcs.where.features.payment.WebPayActivity
 import com.jcs.where.features.store.comment.detail.StoreCommentDetailActivity
 import com.jcs.where.features.store.comment.post.StoreCommentPostActivity
 import com.jcs.where.features.store.detail.StoreDetailActivity
+import com.jcs.where.features.web.WebViewActivity
 import com.jcs.where.utils.BusinessUtils
 import com.jcs.where.utils.CacheUtil
 import com.jcs.where.utils.Constant
@@ -525,6 +526,7 @@ open class OrderListAdapter : BaseMultiItemQuickAdapter<OrderListResponse, BaseV
 
         // 底部
         val right_tv = holder.getView<TextView>(R.id.right_tv)
+        val left_tv = holder.getView<TextView>(R.id.left_tv)
         /**
          * 订单状态，
          *
@@ -557,10 +559,20 @@ open class OrderListAdapter : BaseMultiItemQuickAdapter<OrderListResponse, BaseV
                 }
             }
             4 -> {
+
                 right_tv.text = context.getString(R.string.confirm_receipt)
                 right_tv.visibility = View.VISIBLE
                 right_tv.setOnClickListener {
                     confirmReceipt?.onConfirmReceiptClick(item.id)
+                }
+                if (item.wl_url.isNotBlank()) {
+                    left_tv.visibility = View.VISIBLE
+                    left_tv.setText(R.string.express_check)
+                    left_tv.setOnClickListener {
+                        WebViewActivity.goTo(context , item.wl_url)
+                    }
+                }else {
+                    left_tv.visibility = View.GONE
                 }
 
             }

@@ -1,7 +1,6 @@
 package com.jcs.where.features.mall.order
 
 import android.graphics.Color
-import android.os.Bundle
 import android.text.TextUtils
 import android.view.View
 import androidx.appcompat.app.AlertDialog
@@ -18,7 +17,7 @@ import com.jcs.where.base.mvp.BaseMvpActivity
 import com.jcs.where.features.comment.batch.BatchCommentActivity
 import com.jcs.where.features.mall.detail.MallDetailActivity
 import com.jcs.where.features.payment.WebPayActivity
-import com.jcs.where.features.store.pay.StorePayActivity
+import com.jcs.where.features.web.WebViewActivity
 import com.jcs.where.utils.BusinessUtils
 import com.jcs.where.utils.Constant
 import com.jcs.where.widget.list.DividerDecoration
@@ -194,7 +193,7 @@ class MallOrderDetailActivity : BaseMvpActivity<MallOrderDetailPresenter>(), Mal
             }
             4 -> {
                 bottom_container_rl.visibility = View.VISIBLE
-                left_tv.visibility = View.GONE
+
                 right_tv.visibility = View.VISIBLE
                 right_tv.text = getString(R.string.confirm_receipt)
                 right_tv.setOnClickListener {
@@ -209,14 +208,14 @@ class MallOrderDetailActivity : BaseMvpActivity<MallOrderDetailPresenter>(), Mal
                         }
                         .setNegativeButton(R.string.cancel) { dialogInterface, i -> dialogInterface.dismiss() }
                         .create().show()
-
                 }
+                handleLogistics(data.wl_url)
             }
             5 -> {
 
                 val commentStatus = data.comment_status
                 val orderCommentStatus = data.order_comment_status
-                if (commentStatus == 1 && orderCommentStatus ==1) {
+                if (commentStatus == 1 && orderCommentStatus == 1) {
                     // 去评价
                     bottom_container_rl.visibility = View.VISIBLE
                     right_tv.visibility = View.VISIBLE
@@ -228,8 +227,7 @@ class MallOrderDetailActivity : BaseMvpActivity<MallOrderDetailPresenter>(), Mal
                 } else {
                     bottom_container_rl.visibility = View.GONE
                 }
-                left_tv.visibility = View.GONE
-
+                handleLogistics(data.wl_url)
             }
             8, 9, 10, 11, 12 -> {
                 // 新增了单独的售后详情页，订单详情不处理售后相关
@@ -242,6 +240,21 @@ class MallOrderDetailActivity : BaseMvpActivity<MallOrderDetailPresenter>(), Mal
             }
         }
         bottom_v.visibility = bottom_container_rl.visibility
+
+    }
+
+    private fun handleLogistics(wlUrl: String) {
+
+        if (wlUrl.isNotBlank()) {
+            left_tv.visibility = View.VISIBLE
+            left_tv.setText(R.string.express_check)
+            left_tv.setOnClickListener {
+                WebViewActivity.goTo(this,wlUrl)
+            }
+        } else {
+            left_tv.visibility = View.GONE
+        }
+
 
     }
 
@@ -264,11 +277,11 @@ class MallOrderDetailActivity : BaseMvpActivity<MallOrderDetailPresenter>(), Mal
     private fun handlePay(orderId: Int, price: BigDecimal) {
         val orderIds = ArrayList<Int>()
         orderIds.add(orderId)
-       /* startActivityAfterLogin(StorePayActivity::class.java, Bundle().apply {
-            putDouble(Constant.PARAM_TOTAL_PRICE, price.toDouble())
-            putIntegerArrayList(Constant.PARAM_ORDER_IDS, orderIds)
-            putInt(Constant.PARAM_TYPE, Constant.PAY_INFO_MALL)
-        })*/
+        /* startActivityAfterLogin(StorePayActivity::class.java, Bundle().apply {
+             putDouble(Constant.PARAM_TOTAL_PRICE, price.toDouble())
+             putIntegerArrayList(Constant.PARAM_ORDER_IDS, orderIds)
+             putInt(Constant.PARAM_TYPE, Constant.PAY_INFO_MALL)
+         })*/
         WebPayActivity.navigation(this, Constant.PAY_INFO_MALL, orderIds)
     }
 

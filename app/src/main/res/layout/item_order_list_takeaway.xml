@@ -136,7 +136,7 @@
 
         <TextView
             android:id="@+id/right_tv"
-            android:layout_width="@dimen/dp_118"
+            android:layout_width="@dimen/dp_130"
             android:layout_height="@dimen/dp_28"
             android:layout_alignParentEnd="true"
             android:layout_marginStart="@dimen/dp_10"

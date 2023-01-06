@@ -16,17 +16,18 @@
 
     <TextView
         android:id="@+id/message_count_tv"
-        android:layout_width="@dimen/dp_13"
+        android:layout_width="wrap_content"
         android:layout_height="@dimen/dp_13"
         android:layout_alignParentEnd="true"
         android:background="@drawable/bg_messagenumber"
         android:gravity="center"
         android:paddingStart="@dimen/dp_2"
+        android:minWidth="@dimen/dp_13"
         android:paddingEnd="@dimen/dp_2"
         android:textColor="#ffffffff"
         android:textSize="@dimen/sp_9"
         android:visibility="gone"
-        tools:text="3"
+        tools:text="31"
         tools:visibility="visible" />
 
 

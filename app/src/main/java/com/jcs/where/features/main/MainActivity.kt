@@ -157,7 +157,7 @@ class MainActivity : BaseMvpActivity<MainPresenter>(), MainView, AppBarStateChan
             }
             EventCode.EVENT_MTJ_DURATION ->{
                 val mtjDuration = baseEvent.data as MtjDuration
-//                presenter.mtjDuration(mtjDuration)
+                presenter.mtjDuration(mtjDuration)
 
             }
             else -> {}

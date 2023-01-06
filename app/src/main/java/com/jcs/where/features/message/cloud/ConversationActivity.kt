@@ -236,7 +236,7 @@ class ConversationActivity : BaseMvpActivity<ConversationPresenter>(), Conversat
 
 
         // 统计
-//        presenter.mtjSendGood(goodId, shopId)
+        presenter.mtjSendGood(goodId, shopId)
 
     }
 }

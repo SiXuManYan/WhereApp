@@ -634,6 +634,7 @@ open class OrderListAdapter : BaseMultiItemQuickAdapter<OrderListResponse, BaseV
         }
 
 
+
     }
 
     private fun startActivity(target: Class<*>, bundle: Bundle?) {

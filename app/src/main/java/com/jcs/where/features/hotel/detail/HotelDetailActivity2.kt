@@ -347,7 +347,7 @@ class HotelDetailActivity2 : BaseMvpActivity<HotelDetailPresenter>(), HotelDetai
             FeaturesUtil.startNaviGoogle(this, mLat.toFloat(), mLng.toFloat())
         }
         facebook_tv.setOnClickListener {
-            WebViewActivity.goTo(this, facebook)
+            WebViewActivity.navigation(this, facebook)
         }
         share_iv.setOnClickListener {
             val url = String.format(Html5Url.SHARE_FACEBOOK, Html5Url.MODEL_HOTEL, hotelId)

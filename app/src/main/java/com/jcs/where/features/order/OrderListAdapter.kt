@@ -139,11 +139,11 @@ open class OrderListAdapter : BaseMultiItemQuickAdapter<OrderListResponse, BaseV
                     if (System.currentTimeMillis() <= payTime) {
                         val orderIds = ArrayList<Int>()
                         orderIds.add(item.id)
-              /*          startActivityAfterLogin(StorePayActivity::class.java, Bundle().apply {
-                            putDouble(Constant.PARAM_TOTAL_PRICE, item.price.toDouble())
-                            putIntegerArrayList(Constant.PARAM_ORDER_IDS, orderIds)
-                            putInt(Constant.PARAM_TYPE, Constant.PAY_INFO_HOTEL)
-                        })*/
+                        /*          startActivityAfterLogin(StorePayActivity::class.java, Bundle().apply {
+                                      putDouble(Constant.PARAM_TOTAL_PRICE, item.price.toDouble())
+                                      putIntegerArrayList(Constant.PARAM_ORDER_IDS, orderIds)
+                                      putInt(Constant.PARAM_TYPE, Constant.PAY_INFO_HOTEL)
+                                  })*/
                         WebPayActivity.navigation(context, Constant.PAY_INFO_HOTEL, orderIds)
                     } else {
                         ToastUtils.showShort(R.string.order_time_out)
@@ -247,7 +247,7 @@ open class OrderListAdapter : BaseMultiItemQuickAdapter<OrderListResponse, BaseV
 
             6 -> {
                 // 交易成功待评价
-                if (modelData.comment_status == 1){
+                if (modelData.comment_status == 1) {
                     right_tv.visibility = View.VISIBLE
                     right_tv.text = StringUtils.getString(R.string.to_review)
                     right_tv.setOnClickListener {
@@ -257,7 +257,7 @@ open class OrderListAdapter : BaseMultiItemQuickAdapter<OrderListResponse, BaseV
                             putInt(Constant.PARAM_TYPE, 1)
                         })
                     }
-                }else {
+                } else {
                     right_tv.visibility = View.GONE
                 }
 
@@ -569,9 +569,9 @@ open class OrderListAdapter : BaseMultiItemQuickAdapter<OrderListResponse, BaseV
                     left_tv.visibility = View.VISIBLE
                     left_tv.setText(R.string.express_check)
                     left_tv.setOnClickListener {
-                        WebViewActivity.goTo(context , item.wl_url)
+                        WebViewActivity.navigation(context, item.wl_url, true)
                     }
-                }else {
+                } else {
                     left_tv.visibility = View.GONE
                 }
 
@@ -632,7 +632,6 @@ open class OrderListAdapter : BaseMultiItemQuickAdapter<OrderListResponse, BaseV
                 addItemDecoration(DividerDecoration(Color.TRANSPARENT, SizeUtils.dp2px(8f), 0, 0))
             }
         }
-
 
 
     }

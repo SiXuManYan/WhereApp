@@ -4,7 +4,6 @@ import android.content.DialogInterface
 import android.content.Intent
 import android.graphics.Color
 import android.net.Uri
-import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.text.TextPaint
@@ -27,18 +26,9 @@ import com.blankj.utilcode.util.SpanUtils
 import com.jcs.where.BuildConfig
 import com.jcs.where.R
 import com.jcs.where.base.mvp.BaseMvpActivity
-import com.jcs.where.features.gourmet.restaurant.detail.RestaurantDetailActivity
-import com.jcs.where.features.hotel.detail.HotelDetailActivity2
 import com.jcs.where.features.main.MainActivity
-import com.jcs.where.features.mall.detail.MallDetailActivity
-import com.jcs.where.features.mall.shop.home.MallShopHomeActivity
-import com.jcs.where.features.mechanism.MechanismActivity
-import com.jcs.where.features.travel.detail.TravelDetailActivity
 import com.jcs.where.features.web.WebViewActivity
-import com.jcs.where.frames.common.Html5Url
-import com.jcs.where.news.NewsDetailActivity
 import com.jcs.where.utils.*
-import com.jcs.where.widget.calendar.JcsCalendarDialog
 import com.mob.MobSDK
 import com.umeng.commonsdk.UMConfigure
 import kotlinx.android.synthetic.main.activity_splash.*
@@ -160,7 +150,7 @@ class SplashActivity : BaseMvpActivity<SplashPresenter>(), SplashView {
         val builder = spanUtils.append(getString(R.string.use_agreement_content_0))
             .append(getString(R.string.use_agreement_content_1))
             .setClickSpan(object : ClickableSpan() {
-                override fun onClick(widget: View) = WebViewActivity.goTo(this@SplashActivity, FeaturesUtil.getUserAgreement())
+                override fun onClick(widget: View) = WebViewActivity.navigation(this@SplashActivity, FeaturesUtil.getUserAgreement())
                 override fun updateDrawState(ds: TextPaint) {
                     ds.color = getColor(R.color.blue_4C9EF2)
                     ds.isUnderlineText = true
@@ -169,7 +159,7 @@ class SplashActivity : BaseMvpActivity<SplashPresenter>(), SplashView {
             .append(getString(R.string.use_agreement_content_2))
             .append(getString(R.string.use_agreement_content_3))
             .setClickSpan(object : ClickableSpan() {
-                override fun onClick(widget: View) = WebViewActivity.goTo(this@SplashActivity, FeaturesUtil.getPrivacyPolicy())
+                override fun onClick(widget: View) = WebViewActivity.navigation(this@SplashActivity, FeaturesUtil.getPrivacyPolicy())
 
                 override fun updateDrawState(ds: TextPaint) {
                     ds.color = getColor(R.color.blue_4C9EF2)
@@ -181,7 +171,7 @@ class SplashActivity : BaseMvpActivity<SplashPresenter>(), SplashView {
             .append(getString(R.string.use_agreement_content_6))
             .setClickSpan(object : ClickableSpan() {
                 override fun onClick(widget: View) {
-                    WebViewActivity.goTo(this@SplashActivity, "https://www.mob.com/about/policy")
+                    WebViewActivity.navigation(this@SplashActivity, "https://www.mob.com/about/policy")
                 }
 
                 override fun updateDrawState(ds: TextPaint) {
@@ -193,7 +183,7 @@ class SplashActivity : BaseMvpActivity<SplashPresenter>(), SplashView {
             .append(getString(R.string.use_agreement_content_9))
             .setClickSpan(object : ClickableSpan() {
                 override fun onClick(widget: View) {
-                    WebViewActivity.goTo(this@SplashActivity, "https://www.comm100.com/platform/security/")
+                    WebViewActivity.navigation(this@SplashActivity, "https://www.comm100.com/platform/security/")
                 }
 
                 override fun updateDrawState(ds: TextPaint) {
@@ -205,7 +195,7 @@ class SplashActivity : BaseMvpActivity<SplashPresenter>(), SplashView {
             .append(getString(R.string.use_agreement_content_11))
             .setClickSpan(object : ClickableSpan() {
                 override fun onClick(widget: View) {
-                    WebViewActivity.goTo(this@SplashActivity, "https://www.jiguang.cn/license/privacy")
+                    WebViewActivity.navigation(this@SplashActivity, "https://www.jiguang.cn/license/privacy")
                 }
 
                 override fun updateDrawState(ds: TextPaint) {
@@ -218,7 +208,7 @@ class SplashActivity : BaseMvpActivity<SplashPresenter>(), SplashView {
             .append(getString(R.string.use_agreement_content_13))
             .setClickSpan(object : ClickableSpan() {
                 override fun onClick(widget: View) {
-                    WebViewActivity.goTo(this@SplashActivity, "https://www.umeng.com/page/policy")
+                    WebViewActivity.navigation(this@SplashActivity, "https://www.umeng.com/page/policy")
                 }
 
                 override fun updateDrawState(ds: TextPaint) {

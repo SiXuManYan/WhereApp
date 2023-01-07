@@ -20,7 +20,6 @@ import com.jcs.where.features.job.company.info.CompanyInfoActivity
 import com.jcs.where.features.media.MediaDetailActivity
 import com.jcs.where.features.web.WebViewActivity
 import com.jcs.where.utils.Constant
-import com.jcs.where.utils.FeaturesUtil
 import com.jcs.where.utils.GlideUtil
 import com.jcs.where.utils.image.GlideRoundedCornersTransform
 import com.jcs.where.widget.list.DividerDecoration
@@ -155,7 +154,7 @@ class CompanyActivity : BaseMvpActivity<CompanyPresenter>(), CompanyView {
             media_ll.visibility = View.VISIBLE
 
             SpanUtils.with(media_tv).append(website).setClickSpan(object :ClickableSpan(){
-                override fun onClick(widget: View) = WebViewActivity.goTo(this@CompanyActivity, website)
+                override fun onClick(widget: View) = WebViewActivity.navigation(this@CompanyActivity, website)
                 override fun updateDrawState(ds: TextPaint) {
                     ds.color = getColor(R.color.blue_4C9EF2)
                     ds.isUnderlineText = true

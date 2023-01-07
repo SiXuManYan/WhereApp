@@ -110,8 +110,6 @@ class QuestionDetActivity : BaseMvpActivity<QuestionPresenter>(), QuestionView, 
 
     override fun initData() {
         presenter = QuestionPresenter(this)
-
-
     }
 
     override fun bindListener() {

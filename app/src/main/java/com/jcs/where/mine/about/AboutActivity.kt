@@ -40,7 +40,7 @@ class AboutActivity : BaseMvpActivity<AboutPresenter>(), AboutView {
             .append(getString(R.string.office_address_home_page_2))
             .setClickSpan(object : ClickableSpan() {
                 override fun onClick(widget: View) =
-                    WebViewActivity.goTo(this@AboutActivity, getString(R.string.office_address_home_page_2))
+                    WebViewActivity.navigation(this@AboutActivity, getString(R.string.office_address_home_page_2))
 
                 override fun updateDrawState(ds: TextPaint) {
                     ds.color = getColor(R.color.blue_377BFF)

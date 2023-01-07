@@ -681,7 +681,7 @@ object BusinessUtils {
             return
         }
         if (data.redirect_type == 1 && data.h5_link.isNotBlank()) {
-            WebViewActivity.goTo(context, data.h5_link)
+            WebViewActivity.navigation(context, data.h5_link)
             return
         }
 

@@ -9,7 +9,6 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.blankj.utilcode.util.ColorUtils
-import com.blankj.utilcode.util.ScreenUtils
 import com.blankj.utilcode.util.SizeUtils
 import com.google.android.material.appbar.AppBarLayout
 import com.jcs.where.R
@@ -27,7 +26,6 @@ import com.jcs.where.features.travel.detail.TravelDetailActivity
 import com.jcs.where.features.travel.map.TravelMapActivity
 import com.jcs.where.features.web.WebViewActivity
 import com.jcs.where.frames.common.Html5Url
-import com.jcs.where.news.NewsDetailActivity
 import com.jcs.where.utils.BusinessUtils
 import com.jcs.where.utils.Constant
 import com.jcs.where.utils.GlideUtil
@@ -77,7 +75,7 @@ class TravelHomeActivity : BaseMvpActivity<TravelHomePresenter>(), TravelHomeVie
                 val category = mModuleAdapter.data[position]
                 val childId = category.id
                 if (category.nativeIsWebType) {
-                    WebViewActivity.goTo(this@TravelHomeActivity, Html5Url.TOURISM_MANAGEMENT_URL)
+                    WebViewActivity.navigation(this@TravelHomeActivity, Html5Url.TOURISM_MANAGEMENT_URL)
                 } else {
 
                     when (category.type) {

@@ -359,7 +359,7 @@ class RestaurantDetailActivity : BaseMvpActivity<RestaurantDetailPresenter>(), R
         }
 
         facebook_tv.setOnClickListener {
-            WebViewActivity.goTo(this, facebook)
+            WebViewActivity.navigation(this, facebook)
         }
         share_iv.setOnClickListener {
             val url = String.format(Html5Url.SHARE_FACEBOOK, Html5Url.MODEL_RESTAURANT, mRestaurantId)

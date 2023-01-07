@@ -153,7 +153,7 @@ public class LoginActivity extends BaseMvpActivity<LoginPresenter> implements Lo
                 .setClickSpan(new ClickableSpan() {
                     @Override
                     public void onClick(@NonNull View widget) {
-                        WebViewActivity.goTo(LoginActivity.this, FeaturesUtil.getUserAgreement());
+                        WebViewActivity.Companion.navigation(LoginActivity.this, FeaturesUtil.getUserAgreement(),false);
                     }
 
                     @Override
@@ -167,7 +167,7 @@ public class LoginActivity extends BaseMvpActivity<LoginPresenter> implements Lo
                 .setClickSpan(new ClickableSpan() {
                     @Override
                     public void onClick(@NonNull View widget) {
-                        WebViewActivity.goTo(LoginActivity.this, FeaturesUtil.getPrivacyPolicy());
+                        WebViewActivity.Companion.navigation(LoginActivity.this, FeaturesUtil.getPrivacyPolicy(),false);
                     }
 
                     @Override

@@ -249,7 +249,7 @@ class MallOrderDetailActivity : BaseMvpActivity<MallOrderDetailPresenter>(), Mal
             left_tv.visibility = View.VISIBLE
             left_tv.setText(R.string.express_check)
             left_tv.setOnClickListener {
-                WebViewActivity.goTo(this,wlUrl)
+                WebViewActivity.navigation(this, wlUrl, true)
             }
         } else {
             left_tv.visibility = View.GONE

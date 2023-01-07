@@ -120,10 +120,10 @@ class MechanismActivity : BaseMvpActivity<MechanismPresenter>(), MechanismView {
             FeaturesUtil.startNaviGoogle(this, mLat.toFloat(), mLng.toFloat())
         }
         web_tv.setOnClickListener {
-            WebViewActivity.goTo(this, webUrl)
+            WebViewActivity.navigation(this, webUrl)
         }
         facebook_tv.setOnClickListener {
-            WebViewActivity.goTo(this, facebook)
+            WebViewActivity.navigation(this, facebook)
         }
         share_iv.setOnClickListener {
             val url = String.format(Html5Url.SHARE_FACEBOOK, Html5Url.MODEL_GENERAL, infoId)

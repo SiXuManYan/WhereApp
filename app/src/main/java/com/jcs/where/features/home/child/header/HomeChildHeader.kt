@@ -11,7 +11,6 @@ import android.widget.ImageView
 import android.widget.LinearLayout
 import androidx.fragment.app.FragmentActivity
 import androidx.recyclerview.widget.RecyclerView
-import com.blankj.utilcode.util.ScreenUtils
 import com.blankj.utilcode.util.SizeUtils
 import com.jcs.where.R
 import com.jcs.where.api.response.BannerResponse
@@ -151,7 +150,7 @@ class HomeChildHeader(val mActContext: FragmentActivity) : LinearLayout(mActCont
                     return
                 }
                 if (data.redirect_type == 1 && data.h5_link.isNotBlank()) {
-                    WebViewActivity.goTo(context, data.h5_link)
+                    WebViewActivity.navigation(context, data.h5_link)
                     return
                 }
 

@@ -118,7 +118,7 @@ public class SettingActivity extends BaseActivity {
             startActivity(ModifyPhoneActivity.class);
         });
         findViewById(R.id.privacy_policy_rl).setOnClickListener(v -> {
-            WebViewActivity.goTo(this, FeaturesUtil.getPrivacyPolicy());
+            WebViewActivity.Companion.navigation(this, FeaturesUtil.getPrivacyPolicy(),false);
         });
         findViewById(R.id.about_rl).setOnClickListener(v -> {
             startActivity(AboutActivity.class);

@@ -61,7 +61,7 @@ class SystemNoticeFragment : BaseMvpFragment<SystemNoticePresenter?>(), SystemNo
                 if (TextUtils.isEmpty(link)) {
                     return@setOnItemClickListener
                 }
-                WebViewActivity.goTo(activity, link)
+                WebViewActivity.navigation(requireContext(), link)
             } else {
                 SystemMessageDetailActivity.goTo(activity, data.title, data.message, data.created_at)
             }

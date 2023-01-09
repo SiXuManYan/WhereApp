@@ -64,9 +64,13 @@ class WebViewActivity : BaseActivity() {
 
             if (isFromLogistics) {
                 bottom_ll.visibility = View.VISIBLE
+                mJcsTitle.setMiddleTitle(R.string.express_details)
             }else {
                 bottom_ll.visibility = View.GONE
             }
+
+
+
         }
 
         mLinearLayout = findViewById(R.id.web_parent)
@@ -85,7 +89,9 @@ class WebViewActivity : BaseActivity() {
             .setWebChromeClient(object : WebChromeClient() {
                 override fun onReceivedTitle(view: WebView, title: String) {
                     super.onReceivedTitle(view, title)
-                    mJcsTitle.setMiddleTitle(title)
+                    if (!isFromLogistics) {
+                        mJcsTitle.setMiddleTitle(title)
+                    }
                 }
             })
             .setWebViewClient(object : WebViewClient() {

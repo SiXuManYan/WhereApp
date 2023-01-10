@@ -5,7 +5,7 @@ import android.util.AttributeSet;
 import android.view.View;
 import android.widget.ScrollView;
 
-import com.jcs.where.features.mall.sku.utils.ScreenUtils;
+import com.blankj.utilcode.util.SizeUtils;
 
 
 /**
@@ -36,12 +36,11 @@ public class SkuMaxHeightScrollView extends ScrollView {
             if (h > height)
                 height = h;
         }
-        float heightDp = ScreenUtils.px2Dp(getContext(), height);
-        if (heightDp > 500) {
-            int maxHeight = ScreenUtils.dp2PxInt(getContext(), 500);
-            setMeasuredDimension(width, maxHeight);
-        } else if (heightDp < 100) {
-            int minHeight = ScreenUtils.dp2PxInt(getContext(), 100);
+        float heightDp = SizeUtils.px2dp(height);
+
+
+        if (heightDp < 100) {
+            int minHeight = SizeUtils.dp2px(100f);
             setMeasuredDimension(width, minHeight);
         } else {
             super.onMeasure(widthMeasureSpec, heightMeasureSpec);

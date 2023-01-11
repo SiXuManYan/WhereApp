@@ -12,6 +12,7 @@ import com.jcs.where.api.request.IdRequest;
 import com.jcs.where.api.request.IntegralPlaceOrder;
 import com.jcs.where.api.request.MallShopCollection;
 import com.jcs.where.api.request.MallShopUnCollection;
+import com.jcs.where.api.request.MtjClickHomeJob;
 import com.jcs.where.api.request.MtjClickService;
 import com.jcs.where.api.request.MtjDuration;
 import com.jcs.where.api.request.SendCodeRequest;
@@ -2272,7 +2273,8 @@ public interface RetrofitApi {
 
     /**
      * 投递和面试列表
-     * @param status  0 默认列表 1 面试列表
+     *
+     * @param status 0 默认列表 1 面试列表
      */
     @GET("jobapi/v2/send_records")
     Observable<JcsResponse<PageResponse<Job>>> jobCollectionList(
@@ -2556,7 +2558,6 @@ public interface RetrofitApi {
     Observable<JcsResponse<JsonElement>> deleteBillsAccount(@Query("id") int id);
 
 
-
     /**
      * 商品停留时间
      */
@@ -2568,6 +2569,12 @@ public interface RetrofitApi {
      */
     @POST("estoreapi/v2/consultation")
     Observable<JcsResponse<JsonElement>> mtjClickService(@Body MtjClickService request);
+
+    /**
+     * 统计点击首页职位列表进入职位详情
+     */
+    @POST("jobapi/v2/jobs/collection/daus")
+    Observable<JcsResponse<JsonElement>> mtjClickHomeJob(@Body MtjClickHomeJob request);
 
 
 }

@@ -37,8 +37,6 @@ public class SkuMaxHeightScrollView extends ScrollView {
                 height = h;
         }
         float heightDp = SizeUtils.px2dp(height);
-
-
         if (heightDp < 100) {
             int minHeight = SizeUtils.dp2px(100f);
             setMeasuredDimension(width, minHeight);

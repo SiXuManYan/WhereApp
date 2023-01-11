@@ -14,6 +14,7 @@ import com.jcs.where.R
 import com.jcs.where.api.network.BaseMvpObserver
 import com.jcs.where.api.network.BaseMvpPresenter
 import com.jcs.where.api.network.BaseMvpView
+import com.jcs.where.api.request.MtjClickHomeJob
 import com.jcs.where.api.response.job.JobCollection
 import com.jcs.where.api.response.job.JobDetail
 import com.jcs.where.api.response.job.JobSendCv
@@ -22,7 +23,6 @@ import com.jcs.where.base.EventCode
 import com.jcs.where.base.mvp.BaseMvpActivity
 import com.jcs.where.features.account.login.LoginActivity
 import com.jcs.where.features.job.company.CompanyActivity
-import com.jcs.where.features.job.cv.CvHomeActivity
 import com.jcs.where.features.job.report.ReportActivity
 import com.jcs.where.frames.common.Html5Url
 import com.jcs.where.storage.entity.User
@@ -46,16 +46,23 @@ class JobDetailActivity : BaseMvpActivity<JobDetailPresenter>(), JobDetailView {
     /** 添加简历后，刷新本页状态 */
     private var needRefreshForCv = false
 
+    /** 是否通过招聘首页点击 */
+    private var isFromJobHome = false
+
     override fun isStatusDark() = true
 
     override fun getLayoutId() = R.layout.activity_job_detail
 
 
     companion object {
-        fun navigation(context: Context, jobId: Int) {
+        fun navigation(context: Context, jobId: Int, fromJobHome: Boolean? = false) {
 
             val bundle = Bundle().apply {
                 putInt(Constant.PARAM_ID, jobId)
+
+                fromJobHome?.let {
+                    putBoolean(Constant.PARAM_TYPE, it)
+                }
             }
             val intent = Intent(context, JobDetailActivity::class.java)
                 .putExtras(bundle)
@@ -72,11 +79,15 @@ class JobDetailActivity : BaseMvpActivity<JobDetailPresenter>(), JobDetailView {
     override fun initView() {
         BarUtils.setStatusBarColor(this, Color.WHITE)
         jobId = intent.getIntExtra(Constant.PARAM_ID, 0)
+        isFromJobHome = intent.getBooleanExtra(Constant.PARAM_TYPE, false)
     }
 
     override fun initData() {
         presenter = JobDetailPresenter(this)
         presenter.getData(jobId)
+        if (isFromJobHome) {
+            presenter.mtjClickHomeJob(jobId)
+        }
     }
 
     override fun bindListener() {
@@ -149,7 +160,7 @@ class JobDetailActivity : BaseMvpActivity<JobDetailPresenter>(), JobDetailView {
         }
 
         response.company_info?.let {
-            GlideUtil.load(this, it.logo, logo_iv, 24 ,GlideRoundedCornersTransform.CornerType.ALL ,R.mipmap.ic_company_default_logo )
+            GlideUtil.load(this, it.logo, logo_iv, 24, GlideRoundedCornersTransform.CornerType.ALL, R.mipmap.ic_company_default_logo)
             company_name_tv.text = it.company_title
             company_desc_tv.text = it.profile
         }
@@ -261,6 +272,9 @@ class JobDetailPresenter(var view: JobDetailView) : BaseMvpPresenter(view) {
         })
     }
 
+    /**
+     * 统计从招聘首页职位列表入口点击
+     */
     fun handleCollection(collect: Boolean, jobId: Int) {
         val apply = JobCollection().apply {
             job_id = jobId
@@ -280,6 +294,18 @@ class JobDetailPresenter(var view: JobDetailView) : BaseMvpPresenter(view) {
             })
         }
 
+
+    }
+
+    fun mtjClickHomeJob(jobId: Int) {
+        val apply = MtjClickHomeJob().apply {
+            job_id = jobId
+        }
+        requestApi(mRetrofit.mtjClickHomeJob(apply), object : BaseMvpObserver<JsonElement>(view) {
+            override fun onSuccess(response: JsonElement) {
+
+            }
+        })
 
     }
 

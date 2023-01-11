@@ -26,8 +26,6 @@ import com.jcs.where.view.MyLayoutManager
  */
 class JobHomeAdapter : BaseMultiItemQuickAdapter<Job, BaseViewHolder>(), LoadMoreModule {
 
-
-
     init {
         addItemType(Job.TYPE_COMMON_JOB, R.layout.item_job_home)
         addItemType(Job.TYPE_COLLETION_JOB, R.layout.item_job_home)
@@ -39,7 +37,7 @@ class JobHomeAdapter : BaseMultiItemQuickAdapter<Job, BaseViewHolder>(), LoadMor
 
     override fun convert(holder: BaseViewHolder, item: Job) {
 
-        if (holder.itemViewType!= Job.TYPE_TITLE){
+        if (holder.itemViewType != Job.TYPE_TITLE) {
             holder.setText(R.id.company_tv, item.company)
             holder.setText(R.id.job_tv, item.job_title)
             holder.setText(R.id.salary_tv, item.salary)
@@ -48,7 +46,12 @@ class JobHomeAdapter : BaseMultiItemQuickAdapter<Job, BaseViewHolder>(), LoadMor
             val tag_rv = holder.getView<RecyclerView>(R.id.tag_rv)
 
             val logoIv = holder.getView<ImageView>(R.id.logo_iv)
-            GlideUtil.load(context, item.logo, logoIv, 24, GlideRoundedCornersTransform.CornerType.ALL, R.mipmap.ic_company_default_logo)
+            GlideUtil.load(context,
+                item.logo,
+                logoIv,
+                24,
+                GlideRoundedCornersTransform.CornerType.ALL,
+                R.mipmap.ic_company_default_logo)
 
             val mTagAdapter = JobTagAdapter()
             tag_rv.apply {
@@ -85,7 +88,7 @@ class JobHomeAdapter : BaseMultiItemQuickAdapter<Job, BaseViewHolder>(), LoadMor
         jobClosedTv.visibility = View.GONE
         val jobRoot = holder.getView<LinearLayout>(R.id.job_root_ll)
         jobRoot.setOnClickListener {
-            JobDetailActivity.navigation(context, item.id)
+            JobDetailActivity.navigation(context, item.id, true)
         }
 
     }
@@ -99,7 +102,6 @@ class JobHomeAdapter : BaseMultiItemQuickAdapter<Job, BaseViewHolder>(), LoadMor
         val cityTv = holder.getView<TextView>(R.id.city_tv)
         val jobClosedTv = holder.getView<TextView>(R.id.job_closed_tv)
         val jobRoot = holder.getView<LinearLayout>(R.id.job_root_ll)
-
 
 
         val status = item.status
@@ -187,9 +189,6 @@ class JobHomeAdapter : BaseMultiItemQuickAdapter<Job, BaseViewHolder>(), LoadMor
     private fun convertTitle(holder: BaseViewHolder, item: Job) {
         holder.setText(R.id.title_tv, item.created_at)
     }
-
-
-
 
 
 }

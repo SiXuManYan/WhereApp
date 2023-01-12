@@ -3,10 +3,17 @@ package com.jcs.where.features.home
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.util.Log
+import android.view.LayoutInflater
 import android.view.View
+import android.view.Window
+import android.view.WindowManager
+import android.widget.Button
 import android.widget.ImageView
+import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
@@ -85,7 +92,7 @@ class HomeFragment : BaseMvpFragment<HomePresenter>(), HomeView, SwipeRefreshLay
     /** 新闻列表数据 */
     private val mNewsAdapterDataList: ArrayList<HomeNewsResponse> = ArrayList()
 
-     var appBarStateChangeListener: AppBarStateChanged? = null
+    var appBarStateChangeListener: AppBarStateChanged? = null
 
     private var mType: ArrayList<HomeChild> = ArrayList()
 
@@ -565,6 +572,41 @@ class HomeFragment : BaseMvpFragment<HomePresenter>(), HomeView, SwipeRefreshLay
 
         }
 
+    }
+
+    override fun showJobNotice() {
+        val builder: AlertDialog.Builder = AlertDialog.Builder(requireContext())
+        val inflater = LayoutInflater.from(requireContext())
+        val view: View = inflater.inflate(R.layout.dialog_job_notice, null)
+
+        val cancelTv = view.findViewById<ImageView>(R.id.close_iv)
+        val confirmTv = view.findViewById<Button>(R.id.view_now_bt)
+
+        val alertDialog: AlertDialog = builder.create()
+        alertDialog.setCancelable(false)
+        alertDialog.show()
+        val window: Window? = alertDialog.window
+        if (window != null) {
+            window.clearFlags(WindowManager.LayoutParams.FLAG_ALT_FOCUSABLE_IM)
+            window.setContentView(view)
+            window.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+
+            // 更改默认宽度
+            val lp = WindowManager.LayoutParams()
+            lp.copyFrom(window.attributes)
+            lp.width = ScreenUtils.getScreenWidth() - SizeUtils.dp2px(80f)
+            window.attributes = lp
+        }
+        cancelTv.setOnClickListener {
+            alertDialog.dismiss()
+        }
+
+        confirmTv.setOnClickListener {
+            startActivityAfterLogin(JobMainActivity::class.java , Bundle().apply {
+                putBoolean(Constant.PARAM_FROM_NOTICE , true)
+            })
+            alertDialog.dismiss()
+        }
     }
 
 

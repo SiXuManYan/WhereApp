@@ -42,11 +42,14 @@ interface HomeView : BaseMvpView {
      */
     fun bindNewsData(newsData: List<HomeNewsResponse>?)
 
-    /**
-     *
-     */
+
     fun bindHomeChild(response: ArrayList<HomeChild>, titles: ArrayList<String>)
 
     fun bindDefaultCity(cityName:String)
+
+    /**
+     * 展示简历投递状态更新通知
+     */
+    fun showJobNotice()
 
 }

@@ -63,8 +63,6 @@ class Job : MultiItemEntity {
         val STATUS_INTERVIEWS_FAILED = 5
 
 
-
-
     }
 
 
@@ -537,4 +535,8 @@ class FilterData {
     var experienceData = ArrayList<FilterItem>()
 
 
+}
+
+class JobNotice {
+    var status = false
 }

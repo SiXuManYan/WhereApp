@@ -134,6 +134,7 @@ import com.jcs.where.api.response.job.JobCollection;
 import com.jcs.where.api.response.job.JobDetail;
 import com.jcs.where.api.response.job.JobExperience;
 import com.jcs.where.api.response.job.JobFilter;
+import com.jcs.where.api.response.job.JobNotice;
 import com.jcs.where.api.response.job.JobSendCv;
 import com.jcs.where.api.response.job.ProfileDetail;
 import com.jcs.where.api.response.job.Report;
@@ -2576,5 +2577,12 @@ public interface RetrofitApi {
     @POST("jobapi/v2/jobs/collection/daus")
     Observable<JcsResponse<JsonElement>> mtjClickHomeJob(@Body MtjClickHomeJob request);
 
+
+    /**
+     * 获取简历状态更新通知
+     *
+     */
+    @GET("jobapi/v2/jobs/inform")
+    Observable<JcsResponse<JobNotice>> getJobNotification();
 
 }

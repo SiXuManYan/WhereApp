@@ -46,8 +46,17 @@ class JobRecordChildFragment : BaseMvpFragment<JobHomePresenter>(), JobHomeView,
         swipe_layout.setOnRefreshListener(this)
         swipe_layout.setColorSchemeColors(ColorUtils.getColor(R.color.color_1c1380))
         swipe_layout.setBackgroundColor(ColorUtils.getColor(R.color.grey_F5F5F5))
-        emptyView = EmptyView(requireContext())
-        emptyView.showEmptyDefault()
+        emptyView = EmptyView(requireContext()).apply {
+           setEmptyImage(R.mipmap.ic_empty_job_applied)
+            if (type == 0) {
+                setEmptyMessage(R.string.empty_applied)
+            }else {
+                setEmptyMessage(R.string.empty_interviews)
+            }
+           setEmptyHint(R.string.empty_applied_hint)
+
+        }
+
         addEmptyList(emptyView)
 
         mAdapter = JobHomeAdapter().apply {

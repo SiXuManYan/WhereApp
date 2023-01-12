@@ -40,8 +40,11 @@ class JobCollectionFragment : BaseMvpFragment<JobHomePresenter>(), JobHomeView, 
     private fun initContent() {
         swipe_layout.setOnRefreshListener(this)
         swipe_layout.setColorSchemeColors(ColorUtils.getColor(R.color.color_1c1380))
-        emptyView = EmptyView(requireContext())
-        emptyView.showEmptyDefault()
+        emptyView = EmptyView(requireContext()).apply {
+            setEmptyImage(R.mipmap.ic_empty_job_collection)
+            setEmptyHint(R.string.empty_data_default)
+        }
+
         addEmptyList(emptyView)
 
         mAdapter = JobHomeAdapter().apply {

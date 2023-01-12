@@ -140,8 +140,7 @@
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/dp_12"
-                    android:layout_marginBottom="@dimen/dp_16">
+                  >
 
                     <TextView
                         android:id="@+id/logistics_number_tv"
@@ -150,6 +149,7 @@
                         android:layout_toStartOf="@+id/copy_tv"
                         android:gravity="center_vertical"
                         android:paddingStart="@dimen/dp_15"
+                        android:layout_centerVertical="true"
                         android:paddingEnd="@dimen/dp_15"
                         android:textColor="@color/grey_666666"
                         android:textSize="@dimen/sp_14"
@@ -161,10 +161,13 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentEnd="true"
+                        android:background="?android:attr/selectableItemBackground"
                         android:drawablePadding="@dimen/dp_4"
                         android:gravity="center_vertical"
                         android:paddingStart="@dimen/dp_15"
+                        android:paddingTop="@dimen/dp_12"
                         android:paddingEnd="@dimen/dp_15"
+                        android:paddingBottom="@dimen/dp_16"
                         android:text="@string/copy"
                         android:textColor="@color/grey_999999"
                         android:textSize="@dimen/sp_14"

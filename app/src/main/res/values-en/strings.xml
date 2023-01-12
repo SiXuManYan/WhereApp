@@ -1195,4 +1195,10 @@ Gentleman must let go</string>
     <string name="logistics_jt">Reminder: The current page is from the official website of J&#38;T EXPRESS</string>
     <string name="ok">OK</string>
     <string name="express_details">Express Details</string>
+    <string name="job_notice">The position you are\napplying for has changed</string>
+    <string name="job_notice_hint">Please check the job information</string>
+    <string name="view_now">View Now</string>
+    <string name="empty_applied">No application record yet</string>
+    <string name="empty_applied_hint">Go and apply for the position you want</string>
+    <string name="empty_interviews">No interview invitation yet</string>
 </resources>

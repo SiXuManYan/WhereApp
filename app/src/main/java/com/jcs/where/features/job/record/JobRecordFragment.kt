@@ -18,19 +18,28 @@ import kotlinx.android.synthetic.main.fragment_job_apply.*
  */
 class JobRecordFragment : BaseFragment() {
 
-     val TAB_TITLES =
-        arrayOf(StringUtils.getString(R.string.job_applied), StringUtils.getString(R.string.job_interviews))
+     val TAB_TITLES = arrayOf(StringUtils.getString(R.string.job_applied), StringUtils.getString(R.string.job_interviews))
+
+    private var isFromNotice = false
 
     override fun getLayoutId() = R.layout.fragment_job_apply
 
     override fun initView(view: View?) {
+         arguments?.let {
+             isFromNotice = it.getBoolean(Constant.PARAM_FROM_NOTICE , false)
+        }
+
         pager.offscreenPageLimit = TAB_TITLES.size
         val adapter = InnerPagerAdapter(childFragmentManager, 0)
         pager.adapter = adapter;
         tabs_type.setViewPager(pager, TAB_TITLES);
     }
 
-    override fun initData() = Unit
+    override fun initData(){
+        if (isFromNotice) {
+            tabs_type.currentTab = 1
+        }
+    }
 
     override fun bindListener() {
         back_iv.setOnClickListener {

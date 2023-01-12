@@ -2,6 +2,7 @@ package com.jcs.where.features.home
 
 import com.blankj.utilcode.util.SPUtils
 import com.google.gson.Gson
+import com.google.gson.JsonElement
 import com.jcs.where.BuildConfig
 import com.jcs.where.api.ErrorResponse
 import com.jcs.where.api.network.BaseMvpObserver
@@ -12,6 +13,7 @@ import com.jcs.where.api.response.ModulesResponse
 import com.jcs.where.api.response.UnReadMessage
 import com.jcs.where.api.response.home.HomeChild
 import com.jcs.where.api.response.home.HomeNewsResponse
+import com.jcs.where.api.response.job.JobNotice
 import com.jcs.where.api.response.version.VersionResponse
 import com.jcs.where.storage.entity.User
 import com.jcs.where.utils.CacheUtil
@@ -133,23 +135,6 @@ class HomePresenter(val view: HomeView) : BaseMvpPresenter(view) {
 
     }
 
-    /**
-     * 检查版本更新
-     */
-    fun checkAppVersion() {
-        requestApi(mRetrofit.checkAppVersion(BuildConfig.VERSION_NAME, "2"),
-            object : BaseMvpObserver<VersionResponse>(view, false) {
-                override fun onSuccess(response: VersionResponse) {
-                    if (!response.status) {
-                        return
-                    }
-                    view.checkAppVersion(response)
-                }
-
-                override fun onError(errorResponse: ErrorResponse?) = Unit
-            })
-
-    }
 
     /**
      * 新闻列表
@@ -234,6 +219,48 @@ class HomePresenter(val view: HomeView) : BaseMvpPresenter(view) {
                 view.bindDefaultCity(defaultCity.name)
             }
         })
+    }
+
+
+    /**
+     * 检查版本更新
+     */
+    fun checkAppVersion() {
+        requestApi(mRetrofit.checkAppVersion(BuildConfig.VERSION_NAME, "2"), object : BaseMvpObserver<VersionResponse>(view, false) {
+            override fun onSuccess(response: VersionResponse) {
+                if (!response.status) {
+                    checkJobNotice()
+                    return
+                }
+                view.checkAppVersion(response)
+            }
+
+            override fun onError(errorResponse: ErrorResponse?){
+                checkJobNotice()
+            }
+        })
+
+    }
+
+
+    /**
+     * 检查简历投递状态更新通知
+     */
+   private  fun checkJobNotice() {
+        if (!User.isLogon()) {
+            return
+        }
+        requestApi(mRetrofit.jobNotification, object : BaseMvpObserver<JobNotice>(view) {
+            override fun onSuccess(response: JobNotice) {
+                val status = response.status
+                if (status) {
+                    view.showJobNotice()
+                }
+
+            }
+
+        })
+
     }
 
 }

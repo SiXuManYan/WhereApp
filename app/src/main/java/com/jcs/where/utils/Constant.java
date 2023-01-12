@@ -116,6 +116,7 @@ public class Constant {
     public static final String PARAM_PLATFORM_NAME = "param_platform_name";
     public static final String PARAM_FIRST = "param_first";
     public static final String PARAM_SECOND = "param_second";
+    public static final String PARAM_FROM_NOTICE = "param_from_notice";
 
     /**
      * 打款id

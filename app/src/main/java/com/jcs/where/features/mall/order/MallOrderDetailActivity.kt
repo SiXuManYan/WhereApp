@@ -5,10 +5,7 @@ import android.text.TextUtils
 import android.view.View
 import androidx.appcompat.app.AlertDialog
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.blankj.utilcode.util.BarUtils
-import com.blankj.utilcode.util.ColorUtils
-import com.blankj.utilcode.util.SizeUtils
-import com.blankj.utilcode.util.ToastUtils
+import com.blankj.utilcode.util.*
 import com.jcs.where.R
 import com.jcs.where.api.response.mall.MallOrderDetail
 import com.jcs.where.base.BaseEvent
@@ -34,6 +31,7 @@ class MallOrderDetailActivity : BaseMvpActivity<MallOrderDetailPresenter>(), Mal
 
     override fun getLayoutId() = R.layout.activity_mall_order_detail
 
+    private var logistics = ""
     private var orderId = 0
 
     private var totalPrice = 0.0
@@ -87,7 +85,13 @@ class MallOrderDetailActivity : BaseMvpActivity<MallOrderDetailPresenter>(), Mal
 
     }
 
-    override fun bindListener() = Unit
+    override fun bindListener() {
+        copy_tv.setOnClickListener {
+            if (logistics.isNotBlank()) {
+                ClipboardUtils.copyText(logistics)
+            }
+        }
+    }
 
 
     override fun bindData(data: MallOrderDetail) {
@@ -147,7 +151,8 @@ class MallOrderDetailActivity : BaseMvpActivity<MallOrderDetailPresenter>(), Mal
         if (companyName.isNotBlank()) {
             logistics_container_ll.visibility = View.VISIBLE
             logistics_company_tv.text = getString(R.string.logistics_company_format, companyName)
-            logistics_number_tv.text = getString(R.string.logistics_number_format, data.logistics)
+            this. logistics = data.logistics
+            logistics_number_tv.text = getString(R.string.logistics_number_format, logistics)
 
         } else {
             logistics_container_ll.visibility = View.GONE

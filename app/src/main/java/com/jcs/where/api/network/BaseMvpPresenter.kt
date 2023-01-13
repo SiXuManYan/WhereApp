@@ -4,6 +4,7 @@ import com.blankj.utilcode.util.LogUtils
 import com.jcs.where.api.BaseModel
 import com.jcs.where.api.JcsResponse
 import com.jcs.where.base.event.RxBus
+import com.jcs.where.features.account.password.PasswordResetActivity
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.functions.Consumer
@@ -12,6 +13,7 @@ import io.reactivex.functions.Consumer
  * Created by Wangsw  2021/1/26 11:31.
  */
 open class BaseMvpPresenter(private var mBaseMvpView: BaseMvpView?) : BaseModel() {
+
 
 
     protected fun <T> requestApi(observable: Observable<JcsResponse<T>>, observer: BaseMvpObserver<T>) {

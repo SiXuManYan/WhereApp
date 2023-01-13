@@ -1,10 +1,13 @@
 package com.jcs.where.features.account.register
 
+import android.content.Context
 import android.text.TextUtils
+import cn.jpush.android.api.JPushInterface
 import com.blankj.utilcode.util.SPUtils
 import com.blankj.utilcode.util.ToastUtils
 import com.blankj.utilcode.util.Utils
 import com.jcs.where.BaseApplication
+import com.jcs.where.BuildConfig
 import com.jcs.where.R
 import com.jcs.where.api.network.BaseMvpObserver
 import com.jcs.where.api.network.BaseMvpPresenter
@@ -21,6 +24,9 @@ import com.jcs.where.utils.SPKey
  * Created by Wangsw  2021/1/29 16:51.
  */
 class RegisterPresenter(private val mView: RegisterView) : BaseMvpPresenter(mView) {
+
+    lateinit var context: Context
+
     /**
      * 注册
      * @param account     账号

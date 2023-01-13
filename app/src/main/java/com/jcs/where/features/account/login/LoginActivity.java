@@ -137,6 +137,7 @@ public class LoginActivity extends BaseMvpActivity<LoginPresenter> implements Lo
     @Override
     protected void initData() {
         presenter = new LoginPresenter(this);
+        presenter.context  = this;
 
 
         // 默认菲律宾前缀

@@ -203,4 +203,6 @@ public class EventCode {
      */
     public static final int EVENT_MTJ_DURATION = 1051;
 
+    public static final int EVENT_NAVIGATION_TO_JOB_INTERVIEWS = 1052;
+
 }

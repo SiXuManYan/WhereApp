@@ -1,5 +1,8 @@
 package com.jcs.where.features.account.password;
 
+import static com.jcs.where.api.request.account.ResetPasswordRequest.TYPE_PHONE;
+
+import android.content.Context;
 import android.text.TextUtils;
 import android.widget.TextView;
 
@@ -19,8 +22,6 @@ import java.util.concurrent.TimeUnit;
 
 import io.reactivex.Flowable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
-
-import static com.jcs.where.api.request.account.ResetPasswordRequest.TYPE_PHONE;
 
 /**
  * Created by Wangsw  2021/1/30 10:33.

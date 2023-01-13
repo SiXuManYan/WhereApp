@@ -40,7 +40,7 @@ android {
                 JPUSH_CHANNEL: "default_developer"
 
                 /*
-                申请各个厂商推送通道后可填入
+                若不集成厂商通道，可直接跳过以下配置
                 MEIZU_APPKEY : "MZ-魅族的APPKEY",
                 MEIZU_APPID : "MZ-魅族的APPID",
                 XIAOMI_APPID : "MI-小米的APPID",

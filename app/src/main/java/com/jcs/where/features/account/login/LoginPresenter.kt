@@ -1,8 +1,10 @@
 package com.jcs.where.features.account.login
 
+import android.content.Context
 import android.text.TextUtils
 import android.util.Log
 import android.widget.TextView
+import cn.jpush.android.api.JPushInterface
 import cn.sharesdk.facebook.Facebook
 import cn.sharesdk.framework.Platform
 import cn.sharesdk.framework.PlatformDb
@@ -14,6 +16,7 @@ import com.blankj.utilcode.util.ToastUtils
 import com.blankj.utilcode.util.Utils
 import com.google.gson.JsonElement
 import com.jcs.where.BaseApplication
+import com.jcs.where.BuildConfig
 import com.jcs.where.R
 import com.jcs.where.api.ErrorResponse
 import com.jcs.where.api.network.BaseMvpObserver
@@ -33,6 +36,9 @@ import java.util.concurrent.TimeUnit
  * Created by Wangsw  2021/1/28 16:43.
  */
 class LoginPresenter(private val mView: LoginView) : BaseMvpPresenter(mView) {
+
+    lateinit var context: Context
+
     /**
      * 处理登录
      *
@@ -273,7 +279,6 @@ class LoginPresenter(private val mView: LoginView) : BaseMvpPresenter(mView) {
 
                 // 友盟
                 BusinessUtils.umengOnProfileSignIn(platformName, response.id)
-
 
                 // 登录成功
                 mView.LoginSuccess()

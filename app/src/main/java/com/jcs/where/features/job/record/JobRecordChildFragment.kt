@@ -130,7 +130,8 @@ class JobRecordChildFragment : BaseMvpFragment<JobHomePresenter>(), JobHomeView,
                     onRefresh()
                 }
             }
-            EventCode.EVENT_LOGIN_SUCCESS -> {
+            EventCode.EVENT_LOGIN_SUCCESS,
+            EventCode.EVENT_NAVIGATION_TO_JOB_INTERVIEWS -> {
                 if (isViewCreated) {
                     onRefresh()
                 }

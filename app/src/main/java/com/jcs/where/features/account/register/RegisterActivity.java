@@ -74,6 +74,7 @@ public class RegisterActivity extends BaseMvpActivity<RegisterPresenter> impleme
     @Override
     protected void initData() {
         presenter = new RegisterPresenter(this);
+        presenter.context = this;
         mAccount = getIntent().getStringExtra(Constant.PARAM_ACCOUNT);
         mVerifyCode = getIntent().getStringExtra(Constant.PARAM_VERIFY_CODE);
         mCountryCode = getIntent().getStringExtra(Constant.PARAM_COUNTRY_CODE);

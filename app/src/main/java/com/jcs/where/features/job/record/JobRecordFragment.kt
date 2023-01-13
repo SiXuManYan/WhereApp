@@ -8,9 +8,14 @@ import androidx.fragment.app.FragmentPagerAdapter
 import com.blankj.utilcode.util.StringUtils
 import com.jcs.where.R
 import com.jcs.where.api.response.job.Job
+import com.jcs.where.base.BaseEvent
 import com.jcs.where.base.BaseFragment
+import com.jcs.where.base.EventCode
 import com.jcs.where.utils.Constant
 import kotlinx.android.synthetic.main.fragment_job_apply.*
+import org.greenrobot.eventbus.EventBus
+import org.greenrobot.eventbus.Subscribe
+import org.greenrobot.eventbus.ThreadMode
 
 /**
  * Created by Wangsw  2022/12/15 11:25.
@@ -23,6 +28,23 @@ class JobRecordFragment : BaseFragment() {
     private var isFromNotice = false
 
     override fun getLayoutId() = R.layout.fragment_job_apply
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        val eventBus = EventBus.getDefault()
+        if (!eventBus.isRegistered(this)) {
+            eventBus.register(this)
+        }
+    }
+
+
+    override fun onDestroy() {
+        super.onDestroy()
+        val eventBus = EventBus.getDefault()
+        if (eventBus.isRegistered(this)) {
+            eventBus.unregister(this)
+        }
+    }
 
     override fun initView(view: View?) {
          arguments?.let {
@@ -44,6 +66,17 @@ class JobRecordFragment : BaseFragment() {
     override fun bindListener() {
         back_iv.setOnClickListener {
             activity?.finish()
+        }
+    }
+
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    fun onEventReceived(baseEvent: BaseEvent<*>) {
+        when (baseEvent.code) {
+            EventCode.EVENT_NAVIGATION_TO_JOB_INTERVIEWS -> {
+                tabs_type.currentTab = 1
+            }
+            else -> {}
         }
     }
 

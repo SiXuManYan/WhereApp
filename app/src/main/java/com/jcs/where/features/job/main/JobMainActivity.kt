@@ -1,11 +1,14 @@
 package com.jcs.where.features.job.main
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import com.flyco.tablayout.listener.CustomTabEntity
 import com.flyco.tablayout.listener.OnTabSelectListener
 import com.jcs.where.R
 import com.jcs.where.api.response.home.TabEntity
+import com.jcs.where.base.BaseEvent
+import com.jcs.where.base.EventCode
 import com.jcs.where.base.mvp.BaseMvpActivity
 import com.jcs.where.features.account.login.LoginActivity
 import com.jcs.where.features.job.collection.JobCollectionFragment
@@ -15,6 +18,7 @@ import com.jcs.where.features.job.record.JobRecordFragment
 import com.jcs.where.storage.entity.User
 import com.jcs.where.utils.Constant
 import kotlinx.android.synthetic.main.activity_job_main.*
+import org.greenrobot.eventbus.EventBus
 
 /**
  * Created by Wangsw  2022/12/15 10:14.
@@ -27,6 +31,18 @@ class JobMainActivity : BaseMvpActivity<JobMainPresenter>(), JobMainView {
     private var isFromNotice = false
 
     override fun getLayoutId() = R.layout.activity_job_main
+
+
+    override fun onNewIntent(intent: Intent) {
+        super.onNewIntent(intent)
+        val bundle = intent.extras
+        if (bundle != null) {
+            // 简历状态更新，跳转至第三个tab
+            val isFromNotice = bundle.getBoolean(Constant.PARAM_FROM_NOTICE, false)
+            tabs_navigator.currentTab = 2
+            EventBus.getDefault().post(BaseEvent<Any>(EventCode.EVENT_NAVIGATION_TO_JOB_INTERVIEWS))
+        }
+    }
 
     override fun initView() {
         isFromNotice = intent.getBooleanExtra(Constant.PARAM_FROM_NOTICE, false)

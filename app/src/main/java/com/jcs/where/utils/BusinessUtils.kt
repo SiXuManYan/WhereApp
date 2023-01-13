@@ -31,6 +31,7 @@ import com.jcs.where.features.home.tag.HomeTagAdapter
 import com.jcs.where.features.hotel.detail.HotelDetailActivity2
 import com.jcs.where.features.hotel.detail.media.MediaData
 import com.jcs.where.features.job.detail.JobDetailActivity
+import com.jcs.where.features.job.main.JobMainActivity
 import com.jcs.where.features.job.time.WorkTimeAdapter
 import com.jcs.where.features.job.time.WorkTimeUtil
 import com.jcs.where.features.mall.detail.MallDetailActivity
@@ -547,14 +548,35 @@ object BusinessUtils {
                 MobclickAgent.onProfileSignIn(platformName, userId.toString())
             }
 
-            // 注册极光推送Alias
-            // sequence 用户自定义的操作序列号，同操作结果一起返回，用来标识一次操作的唯一性。
-            JPushInterface.setAlias(Utils.getApp().applicationContext, sequence++, userId.toString())
-            // 保存极光推送 sequence
+            // ## 极光推送相关 ##
+
+            // 极光设置别名
+            // https://docs.jiguang.cn/jpush/client/Android/android_api#%E5%88%AB%E5%90%8D%E4%B8%8E%E6%A0%87%E7%AD%BE-api
+            val alias = StringBuffer()
+            if (BuildConfig.FLAVOR == "dev") {
+                alias.append("develop_")
+            } else {
+                alias.append("produce_")
+            }
+            val append = alias.append(userId.toString())
+
+            val sequence = Math.abs(System.currentTimeMillis().toInt())
+
+            JPushInterface.setAlias(Utils.getApp(), sequence, append.toString())
+
+            // 保存 sequence
             SPUtils.getInstance().put(Constant.SP_PUSH_SEQUENCE, sequence)
-            val tags: HashSet<String> = HashSet()
-            tags.add("Android")
-            JPushInterface.setTags(Utils.getApp(), 0, tags)
+
+            // 根据开发环境设置tag
+            val tag = HashSet<String>()
+            if (BuildConfig.FLAVOR === "formal") {
+                tag.add("formal")
+            }
+            if (BuildConfig.FLAVOR === "dev") {
+                tag.add("develop")
+            }
+            JPushInterface.setTags(Utils.getApp(), sequence, tag)
+
         } catch (e: Exception) {
 
         }
@@ -587,7 +609,6 @@ object BusinessUtils {
                     putString(Constant.PARAM_NEWS_ID, moduleId)
                 }
                 facebookIntent = Intent(context, NewsDetailActivity::class.java).putExtras(bundle)
-
             }
             Html5Url.MODEL_TRAVEL -> {
                 bundle.apply {
@@ -604,12 +625,10 @@ object BusinessUtils {
             }
 
             Html5Url.MODEL_RESTAURANT -> {
-
                 bundle.apply {
                     putInt(Constant.PARAM_ID, moduleId.toInt())
                 }
                 facebookIntent = Intent(context, RestaurantDetailActivity::class.java).putExtras(bundle)
-
             }
 
             Html5Url.MODEL_MALL -> {
@@ -623,18 +642,25 @@ object BusinessUtils {
                 bundle.apply {
                     putInt(Constant.PARAM_SHOP_ID, moduleId.toInt())
                 }
-                facebookIntent = Intent(context, MallShopHomeActivity::class.java)
-                    .putExtras(bundle)
+                facebookIntent = Intent(context, MallShopHomeActivity::class.java).putExtras(bundle)
             }
 
             Html5Url.MODEL_JOB -> {
                 bundle.apply {
                     putInt(Constant.PARAM_ID, moduleId.toInt())
                 }
-                facebookIntent = Intent(context, JobDetailActivity::class.java)
-                    .putExtras(bundle)
+                facebookIntent = Intent(context, JobDetailActivity::class.java).putExtras(bundle)
             }
-
+            Html5Url.MODEL_JOB_APPLY_STATUS -> {
+                if (User.isLogon()) {
+                    bundle.apply {
+                        putBoolean(Constant.PARAM_FROM_NOTICE, true)
+                    }
+                    facebookIntent = Intent(context, JobMainActivity::class.java)
+                        .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                        .putExtras(bundle)
+                }
+            }
             else -> {}
         }
 
@@ -650,7 +676,7 @@ object BusinessUtils {
     fun getAllImage(data: MutableList<MediaData>): ArrayList<MediaData> {
         val source = ArrayList<MediaData>()
         data.forEach {
-            if (it.type == MediaData.IMAGE ) {
+            if (it.type == MediaData.IMAGE) {
                 source.add(it)
             }
         }
@@ -667,7 +693,6 @@ object BusinessUtils {
         }
         return source
     }
-
 
 
     /**

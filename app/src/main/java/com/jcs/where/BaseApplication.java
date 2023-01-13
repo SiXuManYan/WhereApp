@@ -29,13 +29,13 @@ import com.jcs.where.utils.BusinessUtils;
 import com.jcs.where.utils.CacheUtil;
 import com.jcs.where.utils.CrashHandler;
 import com.jcs.where.utils.LocalLanguageUtil;
-import com.jcs.where.utils.LocationUtil;
 import com.jcs.where.utils.SPUtil;
 import com.umeng.analytics.MobclickAgent;
 import com.umeng.commonsdk.UMConfigure;
 import com.umeng.umcrash.UMCrash;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 
 import cn.jpush.android.api.BasicPushNotificationBuilder;
 import cn.jpush.android.api.JPushInterface;
@@ -105,8 +105,21 @@ public class BaseApplication extends Application {
 
         // 极光推送
         if (BuildConfig.DEBUG) {
-            JPushInterface.setDebugMode(false);
+            JPushInterface.setDebugMode(true);
         }
+
+        HashSet<String> tag = new HashSet<>();
+
+        // 根据开发环境设置tag
+        if (BuildConfig.FLAVOR == "formal") {
+            tag.add("formal");
+        }
+        if (BuildConfig.FLAVOR == "dev") {
+            tag.add("develop");
+        }
+
+        int sequence = Math.abs((int) System.currentTimeMillis());
+        JPushInterface.setTags(this, sequence, tag);
 
 
         // 用户同意协议后的真正注册

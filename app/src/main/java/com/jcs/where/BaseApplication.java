@@ -142,7 +142,7 @@ public class BaseApplication extends Application {
 
         if (Build.VERSION.SDK_INT > 23) {
             // 设置保留最近通知条数 API
-            JPushInterface.setLatestNotificationNumber(this.getApplicationContext(), 1);
+            JPushInterface.setLatestNotificationNumber(this.getApplicationContext(), 5);
         }
 
         if (BuildConfig.DEBUG) {

@@ -112,7 +112,7 @@ public class UpgradeActivity extends BaseMvpActivity<UpgradePresenter> implement
 
         PermissionUtils.permissionAny(this, granted -> {
                     if (granted) {
-                        downUtil.startDownload(downloadUrl, getString(R.string.app_name), R.mipmap.ic_launcher);
+                        downUtil.startDownload(downloadUrl, getString(R.string.app_name), R.mipmap.ic_app_logo);
                         isDownload = true;
                     } else {
                         doUninhibited();

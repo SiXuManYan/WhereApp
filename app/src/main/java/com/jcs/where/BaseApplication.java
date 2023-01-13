@@ -131,7 +131,7 @@ public class BaseApplication extends Application {
         BasicPushNotificationBuilder builder =
                 new BasicPushNotificationBuilder(this.getApplicationContext());
 
-        builder.statusBarDrawable = R.drawable.icon_small;
+        builder.statusBarDrawable = R.drawable.ic_notification;
         builder.notificationFlags = Notification.FLAG_SHOW_LIGHTS;
         builder.notificationDefaults = Notification.DEFAULT_SOUND
                 | Notification.DEFAULT_VIBRATE

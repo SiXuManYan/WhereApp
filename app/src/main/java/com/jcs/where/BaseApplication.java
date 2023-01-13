@@ -137,6 +137,7 @@ public class BaseApplication extends Application {
                 | Notification.DEFAULT_VIBRATE
                 | Notification.DEFAULT_LIGHTS;
 
+
         JPushInterface.setDefaultPushNotificationBuilder(builder);
 
         if (Build.VERSION.SDK_INT > 23) {

@@ -1068,7 +1068,9 @@ Gentleman must let go</string>
     <string name="file_of_studies">专业(选填)</string>
     <string name="education">学历</string>
     <string name="first_name">姓</string>
+    <string name="first_name2">名</string>
     <string name="last_name">名</string>
+    <string name="last_name2">姓</string>
     <string name="gender">性别</string>
     <string name="work_city">工作城市</string>
     <string name="mail">邮箱</string>

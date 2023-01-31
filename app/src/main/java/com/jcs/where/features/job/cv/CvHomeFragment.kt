@@ -13,7 +13,6 @@ import com.jcs.where.api.response.job.ProfileDetail
 import com.jcs.where.base.BaseEvent
 import com.jcs.where.base.EventCode
 import com.jcs.where.base.mvp.BaseMvpFragment
-import com.jcs.where.features.account.login.LoginActivity
 import com.jcs.where.features.job.form.edu.CvFormEduActivity
 import com.jcs.where.features.job.form.experience.CvFormJobExperienceActivity
 import com.jcs.where.features.job.form.profile.CvFormProfileActivity
@@ -26,7 +25,7 @@ import kotlinx.android.synthetic.main.fragment_job_cv_home.*
  * Created by Wangsw  2022/12/15 11:18.
  * 个人简历
  */
-class CvHomeFragment  : BaseMvpFragment<CvHomePresenter>(), CvHomeView, OnItemClickListener {
+class CvHomeFragment : BaseMvpFragment<CvHomePresenter>(), CvHomeView, OnItemClickListener {
 
     private lateinit var mAdapter: JobExperienceEduAdapter
 
@@ -94,7 +93,7 @@ class CvHomeFragment  : BaseMvpFragment<CvHomePresenter>(), CvHomeView, OnItemCl
         create_cv_rl.visibility = View.GONE
         info_ll.visibility = View.VISIBLE
 
-        (response.first_name + response.last_name).also { name_tv.text = it }
+        (response.first_name + " " + response.last_name).also { name_tv.text = it }
 
         gender_tv.text = when (response.gender) {
             1 -> getString(R.string.male)

@@ -2,10 +2,13 @@ package com.jcs.where.features.job.form.experience
 
 import android.app.DatePickerDialog
 import android.content.DialogInterface
+import android.os.Handler
+import android.os.Looper
 import android.view.View
 import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.widget.AppCompatEditText
+import com.blankj.utilcode.util.ClickUtils
 import com.blankj.utilcode.util.ToastUtils
 import com.jcs.where.R
 import com.jcs.where.api.response.job.CreateJobExperience
@@ -99,32 +102,42 @@ class CvFormJobExperienceActivity : BaseMvpActivity<CvFormPresenter>(), CvFormVi
 
         }
 
-        save_tv.setOnClickListener {
 
-            requiredEdit.forEach {
-                if (it.text.isNullOrBlank()) {
-                    ToastUtils.showShort(R.string.please_enter)
-                    return@setOnClickListener
+        save_tv.setOnClickListener(object : ClickUtils.OnDebouncingClickListener(500) {
+
+            override fun onDebouncingClick(v: View?) {
+
+                save_tv.isClickable = false
+
+                requiredEdit.forEach {
+                    if (it.text.isNullOrBlank()) {
+                        ToastUtils.showShort(R.string.please_enter)
+                        return
+                    }
                 }
+
+                if (start_date_tv.text.isNullOrBlank() || end_date_tv.text.isNullOrBlank()) {
+                    ToastUtils.showShort("Please select date")
+                    return
+                }
+
+                val apply = CreateJobExperience().apply {
+                    company = company_name_et.text.toString().trim()
+                    job_title = job_title_et.text.toString().trim()
+                    start_date = start_date_tv.text.toString().trim()
+                    end_date = end_date_tv.text.toString().trim()
+                    job_desc = job_desc_et.text.toString().trim()
+                }
+
+                presenter.handleExperiences(draftExperienceId, apply)
+
+                Handler(Looper.getMainLooper()).postDelayed({
+                    save_tv.isClickable = true
+                }, 500)
             }
 
-            if (start_date_tv.text.isNullOrBlank() || end_date_tv.text.isNullOrBlank()) {
-                ToastUtils.showShort("Please select date")
-                return@setOnClickListener
-            }
+        })
 
-
-            val apply = CreateJobExperience().apply {
-                company = company_name_et.text.toString().trim()
-                job_title = job_title_et.text.toString().trim()
-                start_date = start_date_tv.text.toString().trim()
-                end_date = end_date_tv.text.toString().trim()
-                job_desc = job_desc_et.text.toString().trim()
-
-            }
-
-            presenter.handleExperiences(draftExperienceId, apply)
-        }
 
         new_experience_iv.setOnClickListener {
             startActivity(CvFormJobExperienceActivity::class.java)

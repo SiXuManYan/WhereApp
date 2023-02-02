@@ -25,6 +25,7 @@ import androidx.appcompat.widget.AppCompatCheckBox;
 import androidx.appcompat.widget.AppCompatEditText;
 
 import com.blankj.utilcode.util.BarUtils;
+import com.blankj.utilcode.util.ClickUtils;
 import com.blankj.utilcode.util.ColorUtils;
 import com.blankj.utilcode.util.SpanUtils;
 import com.blankj.utilcode.util.StringUtils;
@@ -185,7 +186,13 @@ public class LoginActivity extends BaseMvpActivity<LoginPresenter> implements Lo
     protected void bindListener() {
         country_tv.setOnClickListener(this::onCountryPrefixClick);
         login_type_tv.setOnClickListener(this::onLoginTypeClick);
-        get_verify_tv.setOnClickListener(this::onVerifyGetClick);
+        get_verify_tv.setOnClickListener(new ClickUtils.OnDebouncingClickListener() {
+            @Override
+            public void onDebouncingClick(View v) {
+                onVerifyGetClick();
+            }
+        });
+
         password_rule_iv.setOnClickListener(this::onPasswordRuleClick);
         forgot_password_tv.setOnClickListener(this::onForgotPasswordClick);
         login_tv.setOnClickListener(this::onLoginClick);
@@ -345,7 +352,7 @@ public class LoginActivity extends BaseMvpActivity<LoginPresenter> implements Lo
     /**
      * 获取验证码
      */
-    private void onVerifyGetClick(View view) {
+    private void onVerifyGetClick() {
         String phone = phone_aet.getText().toString().trim();
         presenter.getVerifyCode(mCountryPrefix, phone, get_verify_tv);
     }

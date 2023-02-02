@@ -1,10 +1,13 @@
 package com.jcs.where.features.job.form.profile
 
 import android.app.DatePickerDialog
+import android.os.Handler
+import android.os.Looper
+import android.view.View
 import android.view.WindowManager
 import android.widget.TextView
 import androidx.appcompat.widget.AppCompatEditText
-import androidx.core.widget.NestedScrollView
+import com.blankj.utilcode.util.ClickUtils
 import com.blankj.utilcode.util.StringUtils
 import com.blankj.utilcode.util.ToastUtils
 import com.jcs.where.R
@@ -151,51 +154,60 @@ class CvFormProfileActivity : BaseMvpActivity<CvFormPresenter>(), CvFormView, On
             cityDialog.show(supportFragmentManager, cityDialog.tag)
         }
 
-        save_tv.setOnClickListener {
+        save_tv.setOnClickListener(object : ClickUtils.OnDebouncingClickListener(500) {
 
-            requiredEdit.forEach {
-                if (it.text.isNullOrBlank()) {
-                    ToastUtils.showShort(R.string.please_enter)
-                    return@setOnClickListener
+            override fun onDebouncingClick(v: View?) {
+                save_tv.isClickable = false
+
+                requiredEdit.forEach {
+                    if (it.text.isNullOrBlank()) {
+                        ToastUtils.showShort(R.string.please_enter)
+                        return
+                    }
                 }
+
+                if (birth_tv.text.isNullOrBlank()) {
+                    ToastUtils.showShort("Please select Date of Birth")
+                    return
+                }
+
+                if (userGender == 0) {
+                    ToastUtils.showShort("Please select Date of Gender")
+                    return
+                }
+
+                if (civil_status_tv.text.isNullOrBlank()) {
+                    ToastUtils.showShort("Please select Civil Status")
+                    return
+                }
+
+
+                if (city_tv.text.isNullOrBlank() || cityId == 0) {
+                    ToastUtils.showShort("Please select Work City")
+                    return
+                }
+
+                val apply = CreateProfileDetail().apply {
+                    first_name = first_name_et.text.toString().trim()
+                    last_name = last_name_et.text.toString().trim()
+
+                    gender = userGender
+                    city_id = cityId
+                    email = email_et.text.toString().trim()
+                    contact_number = contact_number_et.text.toString().trim()
+                    birthday = birth_tv.text.toString().trim()
+                    civil_status = civilStatus
+
+                }
+                presenter.handleProfile(draftProfileId, apply)
+
+                Handler(Looper.getMainLooper()).postDelayed({
+                    save_tv.isClickable = true
+                }, 500)
             }
 
-            if (birth_tv.text.isNullOrBlank()) {
-                ToastUtils.showShort("Please select Date of Birth")
-                return@setOnClickListener
-            }
+        })
 
-            if (userGender == 0) {
-                ToastUtils.showShort("Please select Date of Gender")
-                return@setOnClickListener
-            }
-
-            if (civil_status_tv.text.isNullOrBlank()) {
-                ToastUtils.showShort("Please select Civil Status")
-                return@setOnClickListener
-            }
-
-
-            if (city_tv.text.isNullOrBlank() || cityId == 0) {
-                ToastUtils.showShort("Please select Work City")
-                return@setOnClickListener
-            }
-
-            val apply = CreateProfileDetail().apply {
-                first_name = first_name_et.text.toString().trim()
-                last_name = last_name_et.text.toString().trim()
-
-                gender = userGender
-                city_id = cityId
-                email = email_et.text.toString().trim()
-                contact_number = contact_number_et.text.toString().trim()
-                birthday = birth_tv.text.toString().trim()
-                civil_status = civilStatus
-
-            }
-            presenter.handleProfile(draftProfileId, apply)
-
-        }
 
     }
 

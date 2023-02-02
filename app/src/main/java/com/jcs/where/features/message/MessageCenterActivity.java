@@ -65,8 +65,10 @@ public class MessageCenterActivity extends BaseActivity {
         InnerPagerAdapter adapter = new InnerPagerAdapter(getSupportFragmentManager(), 0);
 
         adapter.emptyView = emptyView;
-        adapter.emptyView.showEmptyDefault();
+//        adapter.emptyView.showEmptyDefault();
 
+        emptyView.setEmptyImage(R.mipmap.ic_empty_un_notice);
+        emptyView.setEmptyHint(R.string.no_notice_yet);
         pager.setAdapter(adapter);
         tabs_type.setViewPager(pager, TAB_TITLES);
     }
@@ -91,9 +93,7 @@ public class MessageCenterActivity extends BaseActivity {
         @Override
         public Fragment getItem(int position) {
             if (position == 0) {
-                emptyView.setEmptyImage(R.mipmap.ic_empty_un_notice);
-                emptyView.setEmptyHint(R.string.no_notice_yet);
-
+                emptyView.showEmptyContainer();
                 ConversationListFragment listFragment = new ConversationListFragment();
                 listFragment.setEmptyView(emptyView);
 

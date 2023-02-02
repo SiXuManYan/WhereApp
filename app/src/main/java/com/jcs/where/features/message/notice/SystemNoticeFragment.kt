@@ -53,7 +53,6 @@ class SystemNoticeFragment : BaseMvpFragment<SystemNoticePresenter?>(), SystemNo
         mAdapter!!.loadMoreModule.setOnLoadMoreListener(this)
         mAdapter!!.loadMoreModule.isAutoLoadMore = false
         mAdapter!!.loadMoreModule.isEnableLoadMoreIfNotFullPage = false
-        mAdapter!!.setEmptyView(R.layout.view_empty_data_brvah_default)
         mAdapter!!.setOnItemClickListener { adapter: BaseQuickAdapter<*, *>?, view: View?, position: Int ->
             val data = mAdapter!!.data[position]
             if (data.detail_type == 1) {
@@ -102,6 +101,7 @@ class SystemNoticeFragment : BaseMvpFragment<SystemNoticePresenter?>(), SystemNo
         val loadMoreModule = mAdapter!!.loadMoreModule
         if (data.isEmpty()) {
             if (page == Constant.DEFAULT_FIRST_PAGE) {
+                emptyView.showEmptyContainer()
                 loadMoreModule.loadMoreComplete()
             } else {
                 loadMoreModule.loadMoreEnd()

@@ -11,6 +11,7 @@ import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
 import androidx.core.widget.addTextChangedListener
 import androidx.recyclerview.widget.RecyclerView
+import com.blankj.utilcode.util.ClickUtils
 import com.blankj.utilcode.util.ColorUtils
 import com.blankj.utilcode.util.SizeUtils
 import com.google.android.material.bottomsheet.BottomSheetDialog
@@ -124,9 +125,12 @@ class CvFormEduActivity : BaseMvpActivity<CvFormPresenter>(), CvFormView {
             }
         }
 
-        save_tv.setOnClickListener {
-            presenter.handleSaveEdu(draftEduId, eduRequest)
-        }
+        save_tv.setOnClickListener(object : ClickUtils.OnDebouncingClickListener(500) {
+            override fun onDebouncingClick(v: View?) {
+                presenter.handleSaveEdu(draftEduId, eduRequest)
+            }
+        })
+
 
         delete_tv.setOnClickListener {
             AlertDialog.Builder(this, R.style.JobAlertDialogTheme)
@@ -265,7 +269,7 @@ class CvFormEduActivity : BaseMvpActivity<CvFormPresenter>(), CvFormView {
     }
 
     override fun deleteEducationSuccess() {
-        EventBus.getDefault().post(BaseEvent(EventCode.EVENT_DELETE_CV_EDU , draftEduId))
+        EventBus.getDefault().post(BaseEvent(EventCode.EVENT_DELETE_CV_EDU, draftEduId))
         finish()
     }
 

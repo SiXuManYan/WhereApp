@@ -226,7 +226,7 @@ class ProfileDetail() : Parcelable {
 }
 
 /**
- * 工作经历列表
+ * 工作经历、教育背景、资格证书
  */
 class JobExperience() : Parcelable, MultiItemEntity {
 
@@ -554,4 +554,22 @@ class FilterData {
 
 class JobNotice {
     var status = false
+}
+
+
+
+
+/**
+ * 创建简历资格证书
+ */
+class CreateCertificate {
+
+    var title = ""
+
+    /**
+     * "["ssssss","xxxxx"]"
+     */
+    var images = ""
+
+
 }

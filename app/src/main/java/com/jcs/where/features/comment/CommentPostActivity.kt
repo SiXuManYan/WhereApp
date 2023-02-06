@@ -129,6 +129,7 @@ class CommentPostActivity : BaseMvpActivity<CommentPostPresenter>(), CommentView
             adapter = mImageAdapter
             layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
         }
+
         if (name.isNotBlank()) {
             target_user_ll.visibility = View.VISIBLE
             name_tv.text = name

@@ -73,7 +73,7 @@ class CvFormPresenter(private var view: CvFormView) : BaseMvpPresenter(view) {
 
 
     /**
-     * 处理工作经历
+     * 处理工作经历 创建和编辑
      */
     fun handleExperiences(lastId: Int, apply: CreateJobExperience) {
 
@@ -95,7 +95,6 @@ class CvFormPresenter(private var view: CvFormView) : BaseMvpPresenter(view) {
 
             })
         }
-
     }
 
 
@@ -126,6 +125,9 @@ class CvFormPresenter(private var view: CvFormView) : BaseMvpPresenter(view) {
         })
     }
 
+    /**
+     * 处理教育背景
+     */
     fun handleSaveEdu(eduId: Int, eduRequest: EduRequest) {
 
         if (eduId == 0) {
@@ -152,7 +154,7 @@ class CvFormPresenter(private var view: CvFormView) : BaseMvpPresenter(view) {
     /**
      * 删除工作经历
      */
-    fun deleteJobExperience(draftExperienceId: Int) {
+    fun  deleteJobExperience(draftExperienceId: Int) {
         requestApi(mRetrofit.deleteExperiences(draftExperienceId), object : BaseMvpObserver<JsonElement>(view) {
             override fun onSuccess(response: JsonElement) {
                 view.deleteJobExperienceSuccess()
@@ -163,7 +165,7 @@ class CvFormPresenter(private var view: CvFormView) : BaseMvpPresenter(view) {
 
 
     /**
-     * 删除工作经历
+     * 删除教育经历
      */
     fun deleteEducation(draftEduId: Int) {
         requestApi(mRetrofit.deleteEducation(draftEduId), object : BaseMvpObserver<JsonElement>(view) {

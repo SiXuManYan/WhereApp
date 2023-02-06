@@ -125,7 +125,7 @@ class CvHomePresenter(private var view: CvHomeView) : BaseMvpPresenter(view) {
                 response.add(0, eduTitle)
 
                 experience.addAll(response)
-                 view.bindJobExperience(experience)
+                view.bindJobExperience(experience)
             }
 
             override fun onError(errorResponse: ErrorResponse?) {

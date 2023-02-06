@@ -52,7 +52,6 @@ class CvFormJobExperienceActivity : BaseMvpActivity<CvFormPresenter>(), CvFormVi
         draftData = intent.getParcelableExtra(Constant.PARAM_DATA)
         initDraft()
 
-
     }
 
     private fun initDraft() {
@@ -93,13 +92,13 @@ class CvFormJobExperienceActivity : BaseMvpActivity<CvFormPresenter>(), CvFormVi
     }
 
     override fun bindListener() {
+
         start_date_tv.setOnClickListener {
             startDialog?.show()
         }
 
         end_date_tv.setOnClickListener {
             endDialog?.show()
-
         }
 
 

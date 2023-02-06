@@ -171,6 +171,7 @@ public class EventCode {
     public static final int EVENT_REFRESH_CV_PROFILE = 1042;
     public static final int EVENT_REFRESH_CV_EXPERIENCE = 1043;
     public static final int EVENT_REFRESH_CV_EDU = 1044;
+
     /**
      * 雇主申请已提交
      */
@@ -188,6 +189,8 @@ public class EventCode {
 
     public static final int EVENT_SCROLL_TO_TOP = 1048;
 
+
+
     /**
      * 刷新账单缴费账号记录
      */
@@ -204,5 +207,17 @@ public class EventCode {
     public static final int EVENT_MTJ_DURATION = 1051;
 
     public static final int EVENT_NAVIGATION_TO_JOB_INTERVIEWS = 1052;
+
+
+
+    /**
+     * 删除资格证书
+     */
+    public static final int EVENT_DELETE_CV_CERTIFICATE = 1053;
+
+    /**
+     * 刷新资格证书
+     */
+    public static final int EVENT_REFRESH_CV_CERTIFICATE = 1054;
 
 }

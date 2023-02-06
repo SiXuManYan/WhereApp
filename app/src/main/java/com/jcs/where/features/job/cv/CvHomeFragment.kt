@@ -13,6 +13,7 @@ import com.jcs.where.api.response.job.ProfileDetail
 import com.jcs.where.base.BaseEvent
 import com.jcs.where.base.EventCode
 import com.jcs.where.base.mvp.BaseMvpFragment
+import com.jcs.where.features.job.form.certificate.CertificateFromActivity
 import com.jcs.where.features.job.form.edu.CvFormEduActivity
 import com.jcs.where.features.job.form.experience.CvFormJobExperienceActivity
 import com.jcs.where.features.job.form.profile.CvFormProfileActivity
@@ -121,16 +122,6 @@ class CvHomeFragment : BaseMvpFragment<CvHomePresenter>(), CvHomeView, OnItemCli
                 }
             }
 
-            JobExperience.TYPE_JOB_EXPERIENCE -> {
-                startActivity(CvFormJobExperienceActivity::class.java, Bundle().apply {
-                    putParcelable(Constant.PARAM_DATA, item)
-                })
-            }
-            JobExperience.TYPE_EDU_BACKGROUND -> {
-                startActivity(CvFormEduActivity::class.java, Bundle().apply {
-                    putInt(Constant.PARAM_ID, item.id)
-                })
-            }
             JobExperience.TYPE_TITLE -> {
                 val titleType = item.nativeTitleType
 
@@ -146,11 +137,26 @@ class CvHomeFragment : BaseMvpFragment<CvHomePresenter>(), CvHomeView, OnItemCli
 
                 // 添加资格证书
                 if (titleType == JobExperience.TYPE_CERTIFICATION) {
-
+                    startActivity(CertificateFromActivity::class.java)
                 }
 
             }
 
+            JobExperience.TYPE_JOB_EXPERIENCE -> {
+                startActivity(CvFormJobExperienceActivity::class.java, Bundle().apply {
+                    putParcelable(Constant.PARAM_DATA, item)
+                })
+            }
+            JobExperience.TYPE_EDU_BACKGROUND -> {
+                startActivity(CvFormEduActivity::class.java, Bundle().apply {
+                    putInt(Constant.PARAM_ID, item.id)
+                })
+            }
+            JobExperience.TYPE_CERTIFICATION -> {
+                startActivity(CertificateFromActivity::class.java, Bundle().apply {
+                    putInt(Constant.PARAM_ID, item.id)
+                })
+            }
 
             else -> {}
         }
@@ -164,9 +170,12 @@ class CvHomeFragment : BaseMvpFragment<CvHomePresenter>(), CvHomeView, OnItemCli
         when (baseEvent.code) {
             EventCode.EVENT_REFRESH_CV_PROFILE ->
                 presenter.getProfile()
+
             EventCode.EVENT_REFRESH_CV_EXPERIENCE,
             EventCode.EVENT_REFRESH_CV_EDU,
+            EventCode.EVENT_REFRESH_CV_CERTIFICATE,
             -> presenter.getJobExperience()
+
             EventCode.EVENT_DELETE_CV_EXPERIENCE -> {
                 // 删除工作经历
                 val draftExperienceId = baseEvent.data as Int
@@ -176,6 +185,11 @@ class CvHomeFragment : BaseMvpFragment<CvHomePresenter>(), CvHomeView, OnItemCli
                 // 删除教育背景
                 val draftEduId = baseEvent.data as Int
                 deleteTypeItem(draftEduId, JobExperience.TYPE_EDU_BACKGROUND)
+            }
+            EventCode.EVENT_DELETE_CV_CERTIFICATE -> {
+                // 删除资格证书
+                val draftEduId = baseEvent.data as Int
+                deleteTypeItem(draftEduId, JobExperience.TYPE_CERTIFICATION)
             }
             else -> {}
         }

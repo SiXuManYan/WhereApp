@@ -123,6 +123,7 @@ import com.jcs.where.api.response.integral.IntegralRecord;
 import com.jcs.where.api.response.integral.IntegralTag;
 import com.jcs.where.api.response.job.CompanyAlbum;
 import com.jcs.where.api.response.job.CompanyInfo;
+import com.jcs.where.api.response.job.CreateCertificate;
 import com.jcs.where.api.response.job.CreateJobExperience;
 import com.jcs.where.api.response.job.CreateProfileDetail;
 import com.jcs.where.api.response.job.Degree;
@@ -2344,7 +2345,7 @@ public interface RetrofitApi {
 
 
     /**
-     * 创建简历 工作经历
+     * 创建工作经历
      */
     @POST("jobapi/v2/resumes/experiences")
     Observable<JcsResponse<JsonElement>> createCvExperiences(
@@ -2353,7 +2354,7 @@ public interface RetrofitApi {
 
 
     /**
-     * 修改简历个人信息
+     * 修改工作经历
      *
      * @param experience_id 个人信息id
      */
@@ -2590,5 +2591,46 @@ public interface RetrofitApi {
      */
     @GET("jobapi/v2/resumes/certificate")
     Observable<JcsResponse<ArrayList<JobExperience>>> getCvCertificate();
+
+
+
+
+
+
+
+    /**
+     * 添加简历证书
+     */
+    @POST("jobapi/v2/resumes/certificate")
+    Observable<JcsResponse<JsonElement>> createCvExperiences(
+            @Body CreateCertificate request
+    );
+
+
+    /**
+     * 修改简历证书
+     *
+     * @param certificate_id 个人信息id
+     */
+    @PUT("resumes/certificates/{certificate_id}")
+    Observable<JcsResponse<JsonElement>> modifyCvCertificate(
+            @Path("certificate_id") int certificate_id,
+            @Body CreateCertificate request
+    );
+
+
+
+
+    /**
+     * 删除资格证书
+     */
+    @DELETE("jobapi/v2/resumes/certificates/{certificate_id}")
+    Observable<JcsResponse<JsonElement>> deleteCertificate(
+            @Path("certificate_id") int certificate_id
+    );
+
+
+
+
 
 }

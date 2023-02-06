@@ -114,6 +114,13 @@ class CvHomeFragment : BaseMvpFragment<CvHomePresenter>(), CvHomeView, OnItemCli
         val item = mAdapter.data[position]
 
         when (adapter.getItemViewType(position)) {
+
+            EventCode.EVENT_LOGIN_SUCCESS -> {
+                if (isViewCreated) {
+                    loadOnVisible()
+                }
+            }
+
             JobExperience.TYPE_JOB_EXPERIENCE -> {
                 startActivity(CvFormJobExperienceActivity::class.java, Bundle().apply {
                     putParcelable(Constant.PARAM_DATA, item)
@@ -127,21 +134,23 @@ class CvHomeFragment : BaseMvpFragment<CvHomePresenter>(), CvHomeView, OnItemCli
             JobExperience.TYPE_TITLE -> {
                 val titleType = item.nativeTitleType
 
+                // 添加工作经历
                 if (titleType == JobExperience.TYPE_JOB_EXPERIENCE) {
-                    // 添加工作经历
                     startActivity(CvFormJobExperienceActivity::class.java)
                 }
+
+                // 添加教育背景
                 if (titleType == JobExperience.TYPE_EDU_BACKGROUND) {
-                    // 添加教育背景
                     startActivity(CvFormEduActivity::class.java)
                 }
 
-            }
-            EventCode.EVENT_LOGIN_SUCCESS -> {
-                if (isViewCreated) {
-                    loadOnVisible()
+                // 添加资格证书
+                if (titleType == JobExperience.TYPE_CERTIFICATION) {
+
                 }
+
             }
+
 
             else -> {}
         }

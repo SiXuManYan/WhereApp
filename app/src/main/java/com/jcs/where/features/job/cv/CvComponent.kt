@@ -60,6 +60,9 @@ class CvHomePresenter(private var view: CvHomeView) : BaseMvpPresenter(view) {
     }
 
 
+    /**
+     * 工作经历
+     */
     private fun getEduBackground(experience: ArrayList<JobExperience> = ArrayList()) {
 
         // 添加工作经历标题
@@ -88,12 +91,45 @@ class CvHomePresenter(private var view: CvHomeView) : BaseMvpPresenter(view) {
 
 
                 experience.addAll(response)
-                view.bindJobExperience(experience)
+                // view.bindJobExperience(experience)
+                getCertification(experience)
+
+            }
+
+            override fun onError(errorResponse: ErrorResponse?) {
+                // view.bindJobExperience(experience)
+                getCertification(experience)
+            }
+
+        })
+
+    }
+
+    /**
+     * 获取资格证书
+     */
+    private fun getCertification(experience: ArrayList<JobExperience> = ArrayList()) {
+
+        requestApi(mRetrofit.cvCertificate, object : BaseMvpObserver<ArrayList<JobExperience>>(view) {
+            override fun onSuccess(response: ArrayList<JobExperience>) {
+                response.forEach {
+                    it.nativeItemViewType = JobExperience.TYPE_CERTIFICATION
+                }
+
+                // 添加资格证书标题
+                val eduTitle = JobExperience().apply {
+                    nativeTitleValue = StringUtils.getString(R.string.certification)
+                    nativeTitleType = JobExperience.TYPE_CERTIFICATION
+                    this.nativeItemViewType = JobExperience.TYPE_TITLE
+                }
+                response.add(0, eduTitle)
+
+                experience.addAll(response)
+                 view.bindJobExperience(experience)
             }
 
             override fun onError(errorResponse: ErrorResponse?) {
                 view.bindJobExperience(experience)
-
             }
 
         })

@@ -39,10 +39,10 @@ class CompanyPhotoAdapter : BaseMultiItemQuickAdapter<CompanyPhoto, BaseViewHold
                 }
 
                 GlideUtil.load(context, item.src, image, 4)
-                val photos = ArrayList<String>()
-                data.forEach {
-                    photos.add(it.src)
-                }
+//                val photos = ArrayList<String>()
+//                data.forEach {
+//                    photos.add(it.src)
+//                }
             }
 
             CompanyPhoto.HORIZONTAL_IMAGE_LOOK_MORE -> {

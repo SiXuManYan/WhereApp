@@ -1203,4 +1203,6 @@ Gentleman must let go</string>
     <string name="empty_applied">No application record yet</string>
     <string name="empty_applied_hint">Go and apply for the position you want</string>
     <string name="empty_interviews">No interview invitation yet</string>
+
+    <string name="certification">Licenses and Certifications</string>
 </resources>

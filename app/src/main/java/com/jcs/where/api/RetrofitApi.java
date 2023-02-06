@@ -2585,4 +2585,10 @@ public interface RetrofitApi {
     @GET("jobapi/v2/jobs/inform")
     Observable<JcsResponse<JobNotice>> getJobNotification();
 
+    /**
+     * 简历证书列表
+     */
+    @GET("jobapi/v2/resumes/certificate")
+    Observable<JcsResponse<ArrayList<JobExperience>>> getCvCertificate();
+
 }

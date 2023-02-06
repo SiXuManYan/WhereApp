@@ -266,6 +266,14 @@ class JobExperience() : Parcelable, MultiItemEntity {
     var vocational_course = ""
 
 
+    // 简历证书
+    /** 证书名称 */
+    var title = ""
+
+    /** 证书图片 数组 */
+    var images  = ArrayList<String>()
+
+
     constructor(parcel: Parcel) : this() {
         id = parcel.readInt()
         company = parcel.readString().toString()
@@ -274,6 +282,8 @@ class JobExperience() : Parcelable, MultiItemEntity {
         end_date = parcel.readString().toString()
         job_desc = parcel.readString().toString()
         city = parcel.readString().toString()
+        title = parcel.readString().toString()
+        parcel.createStringArrayList()?.let { images.addAll(it) }
     }
 
     override fun writeToParcel(parcel: Parcel, flags: Int) {
@@ -284,6 +294,8 @@ class JobExperience() : Parcelable, MultiItemEntity {
         parcel.writeString(end_date)
         parcel.writeString(job_desc)
         parcel.writeString(city)
+        parcel.writeString(title)
+        parcel.writeStringList(images)
     }
 
     override fun describeContents(): Int {
@@ -297,6 +309,9 @@ class JobExperience() : Parcelable, MultiItemEntity {
 
         /** 教育背景 */
         var TYPE_EDU_BACKGROUND = 1
+
+        /** 资格证书 */
+        var TYPE_CERTIFICATION = 3
 
         /** 标题 */
         var TYPE_TITLE = 1000

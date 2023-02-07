@@ -1,16 +1,16 @@
 package com.jcs.where.features.mine
 
-import android.graphics.Bitmap
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.LinearLayout
-import com.blankj.utilcode.util.BarUtils
-import com.blankj.utilcode.util.ImageUtils
-import com.blankj.utilcode.util.SPUtils
-import com.blankj.utilcode.util.SizeUtils
+import android.widget.TextView
+import com.blankj.utilcode.util.*
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
+import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.jcs.where.R
 import com.jcs.where.api.response.UserInfoResponse
 import com.jcs.where.base.BaseEvent
@@ -36,6 +36,7 @@ import com.jcs.where.mine.activity.LanguageActivity
 import com.jcs.where.storage.entity.User
 import com.jcs.where.utils.Constant
 import com.jcs.where.utils.LocalLanguageUtil
+import com.jcs.where.utils.MobUtil
 import com.jcs.where.utils.SPKey
 import com.jcs.where.utils.image.GlideRoundedCornersTransform
 import com.jcs.where.utils.zxing.ZxingUtil
@@ -52,6 +53,8 @@ class MineFragment : BaseMvpFragment<MinePresenter>(), MineView {
 
     private lateinit var qrBgView: LinearLayout
 
+    private var degreeDialog: BottomSheetDialog? = null
+
     override fun getLayoutId() = R.layout.fragment_mine_2
 
     override fun isStatusDark() = true
@@ -64,7 +67,7 @@ class MineFragment : BaseMvpFragment<MinePresenter>(), MineView {
         content_ll.setPaddingRelative(0, topPadding, 0, 0)
 
         initDefaultUi()
-        qrBgView = LayoutInflater.from(requireContext()).inflate(R.layout.view_qr , null) as LinearLayout
+        qrBgView = LayoutInflater.from(requireContext()).inflate(R.layout.view_qr, null) as LinearLayout
 
     }
 
@@ -128,9 +131,11 @@ class MineFragment : BaseMvpFragment<MinePresenter>(), MineView {
                 return@setOnClickListener
             }
             val inviteLink = SPUtils.getInstance().getString(SPKey.K_INVITE_LINK, "")
-//            MobUtil.shareFacebookWebPage(inviteLink, activity)
+//
 
-            ZxingUtil.saveShareQr(inviteLink,qrBgView)
+
+
+            showShareDialog(inviteLink)
         }
 
         activity_center_iv.setOnClickListener {
@@ -225,6 +230,40 @@ class MineFragment : BaseMvpFragment<MinePresenter>(), MineView {
         if (!hidden) {
             presenter.getUnreadMessageCount()
         }
+
+    }
+
+    private fun showShareDialog(inviteLink: String) {
+
+
+        val timeDialog = BottomSheetDialog(requireContext())
+        this.degreeDialog = timeDialog
+        val view = LayoutInflater.from(requireContext()).inflate(R.layout.layout_share_choose, null)
+        timeDialog.setContentView(view)
+        try {
+            val parent = view.parent as ViewGroup
+            parent.setBackgroundResource(android.R.color.transparent)
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+
+        view.findViewById<LinearLayout>(R.id.save_qr_ll).setOnClickListener {
+            ZxingUtil.saveShareQr(inviteLink, qrBgView)
+            ToastUtils.showShort(R.string.save_success)
+            timeDialog.dismiss()
+        }
+        view.findViewById<LinearLayout>(R.id.share_facebook_ll).setOnClickListener {
+            MobUtil.shareFacebookWebPage(inviteLink, activity)
+            timeDialog.dismiss()
+        }
+        view.findViewById<LinearLayout>(R.id.copy_link_ll).setOnClickListener {
+            ClipboardUtils.copyText(inviteLink)
+            ToastUtils.showShort(getString(R.string.copy_successfully))
+        }
+        view.findViewById<TextView>(R.id.cancel_tv).setOnClickListener {
+            timeDialog.dismiss()
+        }
+        timeDialog.show()
     }
 
 

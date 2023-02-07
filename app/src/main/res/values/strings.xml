@@ -1228,6 +1228,8 @@ Gentleman must let go</string>
     <string name="certification_name">证书名称</string>
     <string name="certificate_picture">证书图片</string>
     <string name="only_one">仅限一张</string>
+    <string name="choose_how_to_share">选择分享方式</string>
+    <string name="save_success">Save Success</string>
 
 
 </resources>

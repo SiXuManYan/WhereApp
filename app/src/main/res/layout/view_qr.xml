@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="@dimen/dp_287"
+    android:layout_height="wrap_content"
+    android:background="@color/white"
+    android:orientation="vertical">
+
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@mipmap/ic_qr_top" />
+
+    <FrameLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="@dimen/dp_34">
+
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@mipmap/ic_qr_scan" />
+
+
+        <ImageView
+            android:id="@+id/qr_iv"
+            android:layout_width="@dimen/dp_130"
+            android:layout_height="@dimen/dp_130"
+            android:layout_gravity="center"
+            android:scaleType="centerCrop"
+            tools:src="@tools:sample/backgrounds/scenic[3]" />
+
+    </FrameLayout>
+
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_90">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_34"
+            android:layout_gravity="center_vertical"
+            android:paddingStart="@dimen/dp_34"
+            android:paddingEnd="@dimen/dp_34">
+
+            <ImageView
+                android:id="@+id/logo_iv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@mipmap/ic_qr_logo" />
+
+
+            <View
+                android:id="@+id/split"
+                android:layout_width="@dimen/dp_1"
+                android:layout_height="match_parent"
+                android:layout_margin="@dimen/dp_8"
+                android:layout_toEndOf="@+id/logo_iv"
+                android:background="@color/color_E7E7E7" />
+
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_toEndOf="@+id/split"
+                android:text="① Save picture to camera roll"
+                android:textColor="@color/grey_666666"
+                android:textSize="@dimen/sp_12" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_toEndOf="@+id/split"
+                android:text="② Scan QR code"
+                android:textColor="@color/grey_666666"
+                android:textSize="@dimen/sp_12" />
+
+        </RelativeLayout>
+
+
+    </FrameLayout>
+
+
+</LinearLayout>

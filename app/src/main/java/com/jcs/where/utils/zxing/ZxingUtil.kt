@@ -1,12 +1,19 @@
 package com.jcs.where.utils.zxing
 
 import android.graphics.Bitmap
+import android.graphics.Canvas
 import android.graphics.Color
 import android.text.TextUtils
+import android.view.View
+import android.widget.ImageView
+import com.blankj.utilcode.util.ConvertUtils
+import com.blankj.utilcode.util.ImageUtils
+import com.blankj.utilcode.util.SizeUtils
 import com.google.zxing.BarcodeFormat
 import com.google.zxing.EncodeHintType
 import com.google.zxing.WriterException
 import com.google.zxing.qrcode.QRCodeWriter
+import com.jcs.where.R
 import java.util.*
 
 /**
@@ -17,7 +24,7 @@ object ZxingUtil {
 
 
     fun createQRCodeBitmap(content: String?): Bitmap? {
-        return createQRCodeBitmap(content, 130, 130, "UTF-8", "L", "1", Color.BLACK, Color.WHITE)
+        return createQRCodeBitmap(content, SizeUtils.dp2px(130f), SizeUtils.dp2px(130f), "UTF-8", "L", "1", Color.BLACK, Color.WHITE)
     }
 
 
@@ -89,6 +96,63 @@ object ZxingUtil {
         //调用示例代码
 //        imageView.setImageBitmap(QRCodeBitmap.newInstance().createQRCodeBitmap("test",80,80,
 //                "UTF-8","L","1", Color.BLACK,Color.WHITE));
+    }
+
+
+    /**
+     * 给二维码图片加背景
+     *
+     */
+    fun addBackground(foreground: Bitmap, background: Bitmap): Bitmap? {
+
+        val bgWidth = background.width
+        val bgHeight = background.height
+        val fgWidth = foreground.width
+        val fgHeight = foreground.height
+
+
+        val newMap = Bitmap.createBitmap(bgWidth, bgHeight, Bitmap.Config.ARGB_8888)
+        val canvas = Canvas(newMap)
+
+        canvas.drawBitmap(background, 0f, 0f, null)
+
+        canvas.drawBitmap(foreground,
+            (bgWidth - fgWidth) / 2.toFloat(),
+            ((bgHeight - fgHeight) * 3 / 5 + 10).toFloat(),
+            null)
+
+        canvas.save()
+        canvas.restore()
+        return newMap
+    }
+
+    /**
+     * 通过bitmap 合成
+     */
+    fun getShareQR(content: String?, view: View): Bitmap? {
+
+        val qrBitmap = createQRCodeBitmap(content)
+
+        val bgBitmap = ConvertUtils.view2Bitmap(view)
+
+        return if (qrBitmap != null) {
+            addBackground(qrBitmap, bgBitmap)
+        } else {
+            null
+        }
+    }
+
+
+    fun saveShareQr(content: String?, view: View) {
+
+        val qrBitmap = createQRCodeBitmap(content)
+
+        val qrIv = view.findViewById<ImageView>(R.id.qr_iv)
+        qrIv.setImageBitmap(qrBitmap)
+
+        val qrBg = ConvertUtils.view2Bitmap(view)
+
+        ImageUtils.save2Album(qrBg, Bitmap.CompressFormat.JPEG, 50, true)
     }
 
 

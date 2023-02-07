@@ -1,9 +1,12 @@
 package com.jcs.where.features.mine
 
+import android.graphics.Bitmap
 import android.os.Bundle
+import android.view.LayoutInflater
 import android.view.View
+import android.widget.LinearLayout
 import com.blankj.utilcode.util.BarUtils
-import com.blankj.utilcode.util.DeviceUtils
+import com.blankj.utilcode.util.ImageUtils
 import com.blankj.utilcode.util.SPUtils
 import com.blankj.utilcode.util.SizeUtils
 import com.bumptech.glide.Glide
@@ -33,9 +36,9 @@ import com.jcs.where.mine.activity.LanguageActivity
 import com.jcs.where.storage.entity.User
 import com.jcs.where.utils.Constant
 import com.jcs.where.utils.LocalLanguageUtil
-import com.jcs.where.utils.MobUtil
 import com.jcs.where.utils.SPKey
 import com.jcs.where.utils.image.GlideRoundedCornersTransform
+import com.jcs.where.utils.zxing.ZxingUtil
 import kotlinx.android.synthetic.main.fragment_mine_2.*
 
 /**
@@ -46,6 +49,8 @@ class MineFragment : BaseMvpFragment<MinePresenter>(), MineView {
 
     /** 雇主申请状态 */
     private var isSendEmployer = false
+
+    private lateinit var qrBgView: LinearLayout
 
     override fun getLayoutId() = R.layout.fragment_mine_2
 
@@ -59,6 +64,8 @@ class MineFragment : BaseMvpFragment<MinePresenter>(), MineView {
         content_ll.setPaddingRelative(0, topPadding, 0, 0)
 
         initDefaultUi()
+        qrBgView = LayoutInflater.from(requireContext()).inflate(R.layout.view_qr , null) as LinearLayout
+
     }
 
     override fun initData() {
@@ -121,7 +128,9 @@ class MineFragment : BaseMvpFragment<MinePresenter>(), MineView {
                 return@setOnClickListener
             }
             val inviteLink = SPUtils.getInstance().getString(SPKey.K_INVITE_LINK, "")
-            MobUtil.shareFacebookWebPage(inviteLink, activity)
+//            MobUtil.shareFacebookWebPage(inviteLink, activity)
+
+            ZxingUtil.saveShareQr(inviteLink,qrBgView)
         }
 
         activity_center_iv.setOnClickListener {

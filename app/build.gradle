@@ -304,4 +304,7 @@ dependencies {
     implementation 'com.github.chrisbanes:PhotoView:2.0.0'
 
     implementation 'me.shaohui:bottomdialog:1.1.9'
+
+//    implementation 'com.google.zxing:core:3.3.3'
+    implementation 'com.google.zxing:core:3.5.1'
 }

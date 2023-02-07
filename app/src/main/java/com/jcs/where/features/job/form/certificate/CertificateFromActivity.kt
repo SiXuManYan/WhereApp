@@ -1,14 +1,16 @@
 package com.jcs.where.features.job.form.certificate
 
+import android.app.Activity
+import android.content.Context
 import android.content.DialogInterface
 import android.content.Intent
+import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.view.View
 import androidx.appcompat.app.AlertDialog
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.blankj.utilcode.util.ClickUtils
-import com.blankj.utilcode.util.ReflectUtils
 import com.blankj.utilcode.util.RegexUtils
 import com.blankj.utilcode.util.ToastUtils
 import com.google.gson.Gson
@@ -44,6 +46,24 @@ class CertificateFromActivity : BaseMvpActivity<CertificatePresenter>(), Certifi
     override fun isStatusDark() = true
 
     override fun getLayoutId() = R.layout.activity_job_cv_certificate
+
+    companion object {
+        fun navigation(context: Context, item: JobExperience) {
+
+            val bundle = Bundle().apply {
+                putParcelable(Constant.PARAM_DATA, item)
+            }
+            val intent = Intent(context, CertificateFromActivity::class.java)
+                .putExtras(bundle)
+                .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+
+            if (context !is Activity) {
+                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+            }
+            context.startActivity(intent)
+        }
+    }
+
 
     override fun initView() {
         draftData = intent.getParcelableExtra(Constant.PARAM_DATA)
@@ -138,7 +158,7 @@ class CertificateFromActivity : BaseMvpActivity<CertificatePresenter>(), Certifi
 
                 if (!RegexUtils.isURL(imageUrl)) {
                     presenter.upLoadImage(draftId, name, ArrayList(mImageAdapter.data))
-                }else {
+                } else {
 
                     val descImages = Gson().toJson(mImageAdapter.data)
                     val apply = CreateCertificate().apply {
@@ -146,7 +166,7 @@ class CertificateFromActivity : BaseMvpActivity<CertificatePresenter>(), Certifi
                         images = descImages
                     }
 
-                  presenter.handleCertificate(draftId,apply)
+                    presenter.handleCertificate(draftId, apply)
                 }
 
 

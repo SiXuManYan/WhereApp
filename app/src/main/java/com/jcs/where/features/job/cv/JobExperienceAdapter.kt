@@ -12,6 +12,7 @@ import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.viewholder.BaseViewHolder
 import com.jcs.where.R
 import com.jcs.where.api.response.job.JobExperience
+import com.jcs.where.features.job.form.certificate.CertificateFromActivity
 import com.jcs.where.utils.GlideUtil
 import com.jcs.where.widget.list.DividerDecoration
 
@@ -88,6 +89,10 @@ class JobExperienceEduAdapter : BaseMultiItemQuickAdapter<JobExperience, BaseVie
 
         val imageAdapter = CertificationPhotoAdapter()
 
+        imageAdapter.setOnItemClickListener { _, _, _ ->
+            CertificateFromActivity.navigation(context, item)
+        }
+
         holder.setText(R.id.title_tv, item.title)
         val certificateRv = holder.getView<RecyclerView>(R.id.certificate_rv)
 
@@ -96,6 +101,7 @@ class JobExperienceEduAdapter : BaseMultiItemQuickAdapter<JobExperience, BaseVie
             layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
             addItemDecoration(DividerDecoration(Color.TRANSPARENT, SizeUtils.dp2px(16f)))
         }
+        imageAdapter.setNewInstance(item.images)
 
     }
 

@@ -2612,7 +2612,7 @@ public interface RetrofitApi {
      *
      * @param certificate_id 个人信息id
      */
-    @PUT("resumes/certificates/{certificate_id}")
+    @PUT("jobapi/v2/resumes/certificates/{certificate_id}\n")
     Observable<JcsResponse<JsonElement>> modifyCvCertificate(
             @Path("certificate_id") int certificate_id,
             @Body CreateCertificate request

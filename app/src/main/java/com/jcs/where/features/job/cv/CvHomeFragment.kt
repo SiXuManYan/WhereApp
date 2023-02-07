@@ -139,9 +139,7 @@ class CvHomeFragment : BaseMvpFragment<CvHomePresenter>(), CvHomeView, OnItemCli
                 if (titleType == JobExperience.TYPE_CERTIFICATION) {
                     startActivity(CertificateFromActivity::class.java)
                 }
-
             }
-
             JobExperience.TYPE_JOB_EXPERIENCE -> {
                 startActivity(CvFormJobExperienceActivity::class.java, Bundle().apply {
                     putParcelable(Constant.PARAM_DATA, item)
@@ -153,9 +151,7 @@ class CvHomeFragment : BaseMvpFragment<CvHomePresenter>(), CvHomeView, OnItemCli
                 })
             }
             JobExperience.TYPE_CERTIFICATION -> {
-                startActivity(CertificateFromActivity::class.java, Bundle().apply {
-                    putInt(Constant.PARAM_ID, item.id)
-                })
+                CertificateFromActivity.navigation(requireContext(), item)
             }
 
             else -> {}

@@ -40,7 +40,7 @@ public class UserInfoResponse {
     @SerializedName("avatar")
     private String avatar;
     @SerializedName("balance")
-    private String balance;
+    public String balance;
     @SerializedName("created_at")
     private String createdAt;
     @SerializedName("name")
@@ -56,7 +56,7 @@ public class UserInfoResponse {
     @SerializedName("twitter_bind_status")
     private Integer twitterBindStatus;
     @SerializedName("integral")
-    private String integral = "0";
+    public String integral = "0";
     @SerializedName("sign_status")
     private Integer signStatus;
 

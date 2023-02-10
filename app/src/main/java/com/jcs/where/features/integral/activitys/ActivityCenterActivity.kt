@@ -10,6 +10,8 @@ import androidx.viewpager.widget.ViewPager
 import com.blankj.utilcode.util.SizeUtils
 import com.jcs.where.R
 import com.jcs.where.api.response.integral.IntegralTag
+import com.jcs.where.base.BaseEvent
+import com.jcs.where.base.EventCode
 import com.jcs.where.base.mvp.BaseMvpActivity
 import com.jcs.where.features.integral.activitys.child.IntegralChildFragment
 import com.jcs.where.features.integral.record.IntegralRecordActivity
@@ -67,6 +69,7 @@ class ActivityCenterActivity : BaseMvpActivity<ActivityCenterPresenter>(), Activ
     override fun initData() {
         presenter = ActivityCenterPresenter(this)
         presenter.getTab()
+        presenter.getUserInfo()
     }
 
     @SuppressLint("NotifyDataSetChanged")
@@ -100,6 +103,21 @@ class ActivityCenterActivity : BaseMvpActivity<ActivityCenterPresenter>(), Activ
 
 
     }
+
+    override fun bindIntegral(integral: String) {
+        balance_tv.text = integral
+    }
+
+
+    override fun onEventReceived(baseEvent: BaseEvent<*>) {
+        super.onEventReceived(baseEvent)
+        if (baseEvent.code == EventCode.EVENT_REFRESH_INTEGRAL) {
+            presenter.getUserInfo()
+        }
+
+    }
+
+
 
 
     private inner class InnerPagerAdapter(fm: FragmentManager, behavior: Int) : FragmentPagerAdapter(fm, behavior) {

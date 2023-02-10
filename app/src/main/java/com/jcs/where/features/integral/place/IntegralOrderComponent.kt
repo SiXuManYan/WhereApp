@@ -4,6 +4,7 @@ import com.jcs.where.api.network.BaseMvpObserver
 import com.jcs.where.api.network.BaseMvpPresenter
 import com.jcs.where.api.network.BaseMvpView
 import com.jcs.where.api.request.IntegralPlaceOrder
+import com.jcs.where.api.response.integral.IntegralGoodDetail
 import com.jcs.where.api.response.integral.IntegralPlaceOrderResponse
 
 /**
@@ -11,14 +12,26 @@ import com.jcs.where.api.response.integral.IntegralPlaceOrderResponse
  *
  */
 interface IntegralOrderView : BaseMvpView {
-    fun submitSuccess(response: IntegralPlaceOrderResponse)
+    fun bindDetail(response: IntegralGoodDetail){}
+    fun submitSuccess(response: IntegralPlaceOrderResponse){}
 
 }
 
 
 class IntegralOrderPresenter(private var view: IntegralOrderView) : BaseMvpPresenter(view) {
 
-    fun makeOrder(goodsId: Int, addressId: String?) {
+    fun getData(goodId: Int) {
+
+        requestApi(mRetrofit.getIntegralGoodDetail(goodId),object :BaseMvpObserver<IntegralGoodDetail>(view){
+            override fun onSuccess(response: IntegralGoodDetail) {
+                view.bindDetail(response)
+            }
+
+        })
+    }
+
+
+    fun makeOrder(goodsId: Int, addressId: String? = null) {
         val apply = IntegralPlaceOrder().apply {
             goods_id = goodsId.toString()
             address_id = addressId

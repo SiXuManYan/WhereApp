@@ -848,6 +848,7 @@
 
         <activity android:name=".features.job.record.result.JobAppliedResultActivity" />
         <activity android:name=".features.job.form.certificate.CertificateFromActivity" />
+        <activity android:name=".features.integral.result.ExchangeResultActivity" />
 
     </application>
 

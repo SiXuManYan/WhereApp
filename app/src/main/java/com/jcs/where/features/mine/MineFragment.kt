@@ -131,10 +131,6 @@ class MineFragment : BaseMvpFragment<MinePresenter>(), MineView {
                 return@setOnClickListener
             }
             val inviteLink = SPUtils.getInstance().getString(SPKey.K_INVITE_LINK, "")
-//
-
-
-
             showShareDialog(inviteLink)
         }
 

@@ -4,25 +4,39 @@ import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
+import android.view.LayoutInflater
 import android.view.View
+import android.view.Window
+import android.view.WindowManager
+import android.widget.TextView
+import androidx.appcompat.app.AlertDialog
 import com.blankj.utilcode.util.BarUtils
+import com.blankj.utilcode.util.ScreenUtils
+import com.blankj.utilcode.util.SizeUtils
 import com.blankj.utilcode.util.ToastUtils
 import com.jcs.where.R
 import com.jcs.where.api.response.integral.IntegralGoodDetail
+import com.jcs.where.api.response.integral.IntegralPlaceOrderResponse
 import com.jcs.where.base.BaseEvent
 import com.jcs.where.base.EventCode
 import com.jcs.where.base.mvp.BaseMvpActivity
 import com.jcs.where.features.integral.place.IntegralOrderActivity
+import com.jcs.where.features.integral.place.IntegralOrderPresenter
+import com.jcs.where.features.integral.place.IntegralOrderView
+import com.jcs.where.features.integral.result.ExchangeResultActivity
 import com.jcs.where.utils.Constant
 import com.jcs.where.utils.GlideUtil
 import kotlinx.android.synthetic.main.activity_integral_detail.*
+import org.greenrobot.eventbus.EventBus
 
 /**
  * Created by Wangsw  2022/9/22 10:23.
  * 兑换商品详情
+ * 2023-2-10 , 普通优惠券可以直接在此页面兑换
  */
-class IntegralDetailActivity : BaseMvpActivity<IntegralDetailPresenter>(), IntegralDetailView {
+class IntegralDetailActivity : BaseMvpActivity<IntegralOrderPresenter>(), IntegralOrderView {
 
     var goodId = 0
     var goodTitle = ""
@@ -56,7 +70,7 @@ class IntegralDetailActivity : BaseMvpActivity<IntegralDetailPresenter>(), Integ
     }
 
     override fun initData() {
-        presenter = IntegralDetailPresenter(this)
+        presenter = IntegralOrderPresenter(this)
         presenter.getData(goodId)
 
     }
@@ -104,14 +118,7 @@ class IntegralDetailActivity : BaseMvpActivity<IntegralDetailPresenter>(), Integ
                 confirm_tv.isClickable = false
                 confirm_tv.text = getString(R.string.insufficient_points)
             }
-            1 -> {
-                confirm_tv.alpha = 1.0f
-                confirm_tv.isClickable = true
-                confirm_tv.text = getString(R.string.exchange)
-                confirm_tv.setOnClickListener {
-                    IntegralOrderActivity.navigation(this, goodId, goodTitle, image, price,couponType)
-                }
-            }
+
             2 -> {
                 confirm_tv.alpha = 1.0f
                 confirm_tv.isClickable = true
@@ -125,7 +132,19 @@ class IntegralDetailActivity : BaseMvpActivity<IntegralDetailPresenter>(), Integ
                 confirm_tv.isClickable = false
                 confirm_tv.text = getString(R.string.exchange)
             }
+            1 -> {
+                confirm_tv.alpha = 1.0f
+                confirm_tv.isClickable = true
+                confirm_tv.text = getString(R.string.exchange)
+                confirm_tv.setOnClickListener {
+                    if (couponType == 1) {
+                        IntegralOrderActivity.navigation(this, goodId, goodTitle, image, price, couponType)
+                    } else {
+                        showDialog()
+                    }
 
+                }
+            }
 
             else -> {}
         }
@@ -139,5 +158,47 @@ class IntegralDetailActivity : BaseMvpActivity<IntegralDetailPresenter>(), Integ
             finish()
         }
     }
+
+    private fun showDialog() {
+
+        val builder: AlertDialog.Builder = AlertDialog.Builder(this)
+        val inflater = LayoutInflater.from(this)
+        val view: View = inflater.inflate(R.layout.dialog_integral_place_order, null)
+
+        val cancelTv = view.findViewById<TextView>(R.id.cancel_tv)
+        val confirmTv = view.findViewById<TextView>(R.id.confirm_tv)
+
+        val alertDialog: AlertDialog = builder.create()
+        alertDialog.setCancelable(false)
+        alertDialog.show()
+        val window: Window? = alertDialog.window
+        if (window != null) {
+            window.clearFlags(WindowManager.LayoutParams.FLAG_ALT_FOCUSABLE_IM)
+            window.setContentView(view)
+            window.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+
+            // 更改默认宽度
+            val lp = WindowManager.LayoutParams()
+            lp.copyFrom(window.attributes)
+            lp.width = ScreenUtils.getScreenWidth() - SizeUtils.dp2px(80f)
+            window.attributes = lp
+        }
+        cancelTv.setOnClickListener {
+            alertDialog.dismiss()
+        }
+
+        confirmTv.setOnClickListener {
+            presenter.makeOrder(goodId)
+            alertDialog.dismiss()
+        }
+
+    }
+
+    override fun submitSuccess(response: IntegralPlaceOrderResponse) {
+        EventBus.getDefault().post(BaseEvent<Any>(EventCode.EVENT_REFRESH_INTEGRAL))
+        startActivity(ExchangeResultActivity::class.java)
+        finish()
+    }
+
 
 }

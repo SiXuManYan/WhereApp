@@ -84,7 +84,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="当前可用积分"
+                        android:text="@string/current_points"
                         android:textColor="@color/white"
                         android:textSize="@dimen/sp_14" />
 

@@ -259,6 +259,7 @@ class MineFragment : BaseMvpFragment<MinePresenter>(), MineView {
         view.findViewById<LinearLayout>(R.id.copy_link_ll).setOnClickListener {
             ClipboardUtils.copyText(inviteLink)
             ToastUtils.showShort(getString(R.string.copy_successfully))
+            timeDialog.dismiss()
         }
         view.findViewById<TextView>(R.id.cancel_tv).setOnClickListener {
             timeDialog.dismiss()

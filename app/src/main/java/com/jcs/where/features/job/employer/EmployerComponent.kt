@@ -4,6 +4,7 @@ import com.google.gson.JsonElement
 import com.jcs.where.api.network.BaseMvpObserver
 import com.jcs.where.api.network.BaseMvpPresenter
 import com.jcs.where.api.network.BaseMvpView
+import com.jcs.where.api.response.job.EmployerEmail
 import com.jcs.where.api.response.job.EmployerRequest
 
 /**
@@ -12,6 +13,7 @@ import com.jcs.where.api.response.job.EmployerRequest
  */
 interface  EmployerView :BaseMvpView {
     fun applySuccess()
+    fun showEmployerEmail(email: String)
 }
 
 
@@ -25,8 +27,15 @@ class  EmployerPresenter (private var view: EmployerView):BaseMvpPresenter(view)
             }
 
         })
+    }
+   fun getEmployerEmail() {
 
+        requestApi(mRetrofit.employersEmail,object : BaseMvpObserver <EmployerEmail>(view){
+            override fun onSuccess(response: EmployerEmail) {
+                view.showEmployerEmail(response.email)
+            }
 
+        })
     }
 
 }

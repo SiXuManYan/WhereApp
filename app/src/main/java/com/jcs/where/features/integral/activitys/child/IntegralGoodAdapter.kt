@@ -3,6 +3,7 @@ package com.jcs.where.features.integral.activitys.child
 import android.view.View
 import android.widget.ImageView
 import android.widget.LinearLayout
+import android.widget.RelativeLayout
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.blankj.utilcode.util.SizeUtils
@@ -21,7 +22,7 @@ import com.jcs.where.utils.GlideUtil
 class IntegralGoodAdapter : BaseQuickAdapter<IntegralGood, BaseViewHolder>(R.layout.item_integral_good), LoadMoreModule {
 
     override fun convert(holder: BaseViewHolder, item: IntegralGood) {
-        val container_ll = holder.getView<LinearLayout>(R.id.container_ll)
+        val container_ll = holder.getView<RelativeLayout>(R.id.container_ll)
         val image = holder.getView<ImageView>(R.id.image_iv)
         val title = holder.getView<TextView>(R.id.title_tv)
         val points_tv = holder.getView<TextView>(R.id.points_tv)
@@ -31,8 +32,8 @@ class IntegralGoodAdapter : BaseQuickAdapter<IntegralGood, BaseViewHolder>(R.lay
         val layoutParams = container_ll.layoutParams as RecyclerView.LayoutParams
 
         layoutParams.apply {
-            topMargin = if (adapterPosition < (2 + headerLayoutCount)) {
-                SizeUtils.dp2px(16f)
+            topMargin = if (adapterPosition == 0 ) {
+                SizeUtils.dp2px(8f)
             } else {
                 0
             }

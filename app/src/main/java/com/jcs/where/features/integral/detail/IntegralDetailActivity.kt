@@ -22,6 +22,7 @@ import com.jcs.where.api.response.integral.IntegralPlaceOrderResponse
 import com.jcs.where.base.BaseEvent
 import com.jcs.where.base.EventCode
 import com.jcs.where.base.mvp.BaseMvpActivity
+import com.jcs.where.features.coupon.user.MyCouponActivity
 import com.jcs.where.features.integral.place.IntegralOrderActivity
 import com.jcs.where.features.integral.place.IntegralOrderPresenter
 import com.jcs.where.features.integral.place.IntegralOrderView
@@ -196,8 +197,9 @@ class IntegralDetailActivity : BaseMvpActivity<IntegralOrderPresenter>(), Integr
 
     override fun submitSuccess(response: IntegralPlaceOrderResponse) {
         EventBus.getDefault().post(BaseEvent<Any>(EventCode.EVENT_REFRESH_INTEGRAL))
-        startActivity(ExchangeResultActivity::class.java)
+        startActivityAfterLogin(ExchangeResultActivity::class.java)
         finish()
+
     }
 
 

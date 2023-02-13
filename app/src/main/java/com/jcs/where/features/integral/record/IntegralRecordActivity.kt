@@ -119,8 +119,13 @@ class IntegralRecordActivity : BaseMvpActivity<IntegralRecordPresenter>(), Integ
 
     override fun onEventReceived(baseEvent: BaseEvent<*>) {
         super.onEventReceived(baseEvent)
-        if (baseEvent.code == EventCode.EVENT_REFRESH_INTEGRAL) {
-            onRefresh()
+        when (baseEvent.code) {
+            EventCode.EVENT_REFRESH_INTEGRAL,
+            EventCode.EVENT_REFRESH_INTEGRAL_NOT_CLOSE,
+            -> {
+                onRefresh()
+            }
+            else -> {}
         }
     }
 

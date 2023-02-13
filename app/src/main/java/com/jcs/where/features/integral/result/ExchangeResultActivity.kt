@@ -2,6 +2,7 @@ package com.jcs.where.features.integral.result
 
 import com.jcs.where.R
 import com.jcs.where.base.BaseActivity
+import com.jcs.where.features.coupon.user.MyCouponActivity
 import com.jcs.where.features.integral.record.IntegralRecordActivity
 import kotlinx.android.synthetic.main.activity_exchange_result.*
 
@@ -23,7 +24,7 @@ class ExchangeResultActivity : BaseActivity() {
 
     override fun bindListener() {
         view_coupon_tv.setOnClickListener {
-            startActivityAfterLogin(IntegralRecordActivity::class.java)
+            startActivityAfterLogin(MyCouponActivity::class.java)
         }
     }
 }

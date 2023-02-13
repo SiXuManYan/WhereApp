@@ -167,7 +167,8 @@ public class EventCode {
     public static final int EVENT_POSITION = 1039;
 
     public static final int EVENT_REFRESH_CONVENIENCE_CHILD = 1040;
-    public static final int EVENT_REFRESH_INTEGRAL = 1041;
+    public static final int EVENT_REFRESH_INTEGRAL = 1055;
+
     public static final int EVENT_REFRESH_CV_PROFILE = 1042;
     public static final int EVENT_REFRESH_CV_EXPERIENCE = 1043;
     public static final int EVENT_REFRESH_CV_EDU = 1044;
@@ -190,7 +191,6 @@ public class EventCode {
     public static final int EVENT_SCROLL_TO_TOP = 1048;
 
 
-
     /**
      * 刷新账单缴费账号记录
      */
@@ -209,7 +209,6 @@ public class EventCode {
     public static final int EVENT_NAVIGATION_TO_JOB_INTERVIEWS = 1052;
 
 
-
     /**
      * 删除资格证书
      */
@@ -220,4 +219,5 @@ public class EventCode {
      */
     public static final int EVENT_REFRESH_CV_CERTIFICATE = 1054;
 
+    public static final int EVENT_REFRESH_INTEGRAL_NOT_CLOSE = 1041;
 }

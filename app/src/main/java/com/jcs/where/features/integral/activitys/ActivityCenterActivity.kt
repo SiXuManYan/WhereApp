@@ -111,8 +111,12 @@ class ActivityCenterActivity : BaseMvpActivity<ActivityCenterPresenter>(), Activ
 
     override fun onEventReceived(baseEvent: BaseEvent<*>) {
         super.onEventReceived(baseEvent)
-        if (baseEvent.code == EventCode.EVENT_REFRESH_INTEGRAL) {
-            presenter.getUserInfo()
+        when (baseEvent.code) {
+            EventCode.EVENT_REFRESH_INTEGRAL,
+            EventCode.EVENT_REFRESH_INTEGRAL_NOT_CLOSE -> {
+                presenter.getUserInfo()
+            }
+            else -> {}
         }
 
     }

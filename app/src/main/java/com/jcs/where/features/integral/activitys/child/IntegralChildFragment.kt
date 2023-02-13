@@ -1,6 +1,7 @@
 package com.jcs.where.features.integral.activitys.child
 
 import android.view.View
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.blankj.utilcode.util.ColorUtils
@@ -57,10 +58,9 @@ class IntegralChildFragment : BaseMvpFragment<IntegralChildPresenter>(), Integra
             setOnItemClickListener(this@IntegralChildFragment)
         }
 
-        val gridLayoutManager = StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
+        val gridLayoutManager = LinearLayoutManager(requireContext(),LinearLayoutManager.VERTICAL,false)
         val decoration = DividerDecoration(ColorUtils.getColor(R.color.transplant), SizeUtils.dp2px(16f), 0, 0)
         recycler.apply {
-            setPadding(SizeUtils.dp2px(8f), 0, SizeUtils.dp2px(8f), 0)
             adapter = mAdapter
             layoutManager = gridLayoutManager
             addItemDecoration(decoration)

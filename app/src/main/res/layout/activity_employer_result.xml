@@ -29,7 +29,7 @@
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="@dimen/dp_80"
         android:scaleType="centerInside"
-        android:src="@mipmap/ic_audit_success" />
+        android:src="@mipmap/ic_auditing" />
 
 
     <TextView
@@ -47,6 +47,8 @@
 
     <TextView
         android:layout_width="match_parent"
+        android:paddingStart="@dimen/dp_15"
+        android:paddingEnd="@dimen/dp_15"
         android:layout_height="wrap_content"
         android:layout_below="@+id/msg_tv"
         android:layout_centerHorizontal="true"

@@ -452,6 +452,10 @@ class EmployerRequest {
     var company_title = ""
 }
 
+class EmployerEmail{
+    var email = ""
+}
+
 /**
  * 举报原因列表
  */

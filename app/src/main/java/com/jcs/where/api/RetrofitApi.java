@@ -129,6 +129,7 @@ import com.jcs.where.api.response.job.CreateProfileDetail;
 import com.jcs.where.api.response.job.Degree;
 import com.jcs.where.api.response.job.EduDet;
 import com.jcs.where.api.response.job.EduRequest;
+import com.jcs.where.api.response.job.EmployerEmail;
 import com.jcs.where.api.response.job.EmployerRequest;
 import com.jcs.where.api.response.job.Job;
 import com.jcs.where.api.response.job.JobCollection;
@@ -2581,7 +2582,6 @@ public interface RetrofitApi {
 
     /**
      * 获取简历状态更新通知
-     *
      */
     @GET("jobapi/v2/jobs/inform")
     Observable<JcsResponse<JobNotice>> getJobNotification();
@@ -2591,11 +2591,6 @@ public interface RetrofitApi {
      */
     @GET("jobapi/v2/resumes/certificate")
     Observable<JcsResponse<ArrayList<JobExperience>>> getCvCertificate();
-
-
-
-
-
 
 
     /**
@@ -2619,8 +2614,6 @@ public interface RetrofitApi {
     );
 
 
-
-
     /**
      * 删除资格证书
      */
@@ -2630,6 +2623,12 @@ public interface RetrofitApi {
     );
 
 
+
+    /**
+     * 获取雇主邮箱
+     */
+    @GET("jobapi/v2/employers")
+    Observable<JcsResponse<EmployerEmail>> getEmployersEmail();
 
 
 

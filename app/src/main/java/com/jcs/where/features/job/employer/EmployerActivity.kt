@@ -31,13 +31,15 @@ class EmployerActivity : BaseMvpActivity<EmployerPresenter>(), EmployerView {
 
     private var allEditView: ArrayList<AppCompatEditText> = ArrayList()
 
+    private var isSendEmployer = false
+
     override fun isStatusDark() = true
 
     override fun getLayoutId() = R.layout.activity_employer
 
     override fun initView() {
         BarUtils.setStatusBarColor(this, Color.WHITE)
-        val isSendEmployer = intent.getBooleanExtra(Constant.PARAM_STATUS, false)
+        isSendEmployer = intent.getBooleanExtra(Constant.PARAM_STATUS, false)
         switchContent(isSendEmployer)
     }
 
@@ -53,7 +55,9 @@ class EmployerActivity : BaseMvpActivity<EmployerPresenter>(), EmployerView {
 
     override fun initData() {
         presenter = EmployerPresenter(this)
-
+        if (isSendEmployer) {
+            presenter.getEmployerEmail()
+        }
     }
 
     override fun bindListener() {
@@ -150,6 +154,10 @@ class EmployerActivity : BaseMvpActivity<EmployerPresenter>(), EmployerView {
         EventBus.getDefault().post(BaseEvent<Any>(EventCode.EVENT_EMPLOYER_SUBMIT))
         startActivity(EmployerResultActivity::class.java)
         finish()
+    }
+
+    override fun showEmployerEmail(email: String) {
+        email_tv.text = getString(R.string.application_email_format, email)
     }
 
 

@@ -23,7 +23,7 @@ import kotlinx.android.synthetic.main.activity_job_filter.*
 class JobFilterActivity : BaseMvpActivity<JobFilterPresenter>(), JobFilterView {
 
 
-    /** 薪资类型 0不限 1月薪 2年薪 3时薪*/
+    /** 薪资类型 0不限 1月薪 2年薪 3时薪 */
     private var salaryType = 0
 
     /** 最低薪水 */

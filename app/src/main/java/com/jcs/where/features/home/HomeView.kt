@@ -18,7 +18,7 @@ interface HomeView : BaseMvpView {
     /**
      * 未读消息数量
      */
-    fun setMessageCount(i: Int)
+    fun setMessageCount(i: Int, systemUnreadMessageCount: Int)
 
 
     /**

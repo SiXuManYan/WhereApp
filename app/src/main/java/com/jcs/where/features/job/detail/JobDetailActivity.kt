@@ -143,6 +143,7 @@ class JobDetailActivity : BaseMvpActivity<JobDetailPresenter>(), JobDetailView {
                     return@setOnClickListener
                 }
 
+
                 if (response.is_complete) {
                     // 申请职位
                     presenter.sendCV(jobId)

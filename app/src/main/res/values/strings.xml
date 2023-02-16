@@ -1236,6 +1236,7 @@ Gentleman must let go</string>
     <string name="view_coupons">查看卡券</string>
     <string name="current_points">当前可用积分</string>
     <string name="application_email_format">申请邮箱:&#160;%1$s</string>
+    <string name="negotiable">面议</string>
 
 
 </resources>

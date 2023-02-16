@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
 import com.blankj.utilcode.util.*
@@ -55,6 +54,9 @@ class MineFragment : BaseMvpFragment<MinePresenter>(), MineView {
 
     private var degreeDialog: BottomSheetDialog? = null
 
+
+    var systemMessageCount = 0
+
     override fun getLayoutId() = R.layout.fragment_mine_2
 
     override fun isStatusDark() = true
@@ -87,7 +89,7 @@ class MineFragment : BaseMvpFragment<MinePresenter>(), MineView {
             startActivityAfterLogin(SettingActivity::class.java)
         }
         message_view.setOnClickListener {
-            startActivityAfterLogin(MessageCenterActivity::class.java)
+            MessageCenterActivity.navigation(requireContext() , systemMessageCount)
         }
         user_info_rl.setOnClickListener {
             startActivityAfterLogin(ModifyInfoActivity::class.java)
@@ -150,8 +152,11 @@ class MineFragment : BaseMvpFragment<MinePresenter>(), MineView {
 
     }
 
-    override fun bindUnreadMessageCount(totalCount: Int) {
+
+
+    override fun bindUnreadMessageCount(totalCount: Int, systemCount: Int) {
         message_view.setMessageCount(totalCount)
+        systemMessageCount = systemCount
     }
 
     override fun bindUserInfo(response: UserInfoResponse) {

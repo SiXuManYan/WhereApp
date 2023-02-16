@@ -10,18 +10,21 @@ import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.listener.OnLoadMoreListener
 import com.jcs.where.R
 import com.jcs.where.api.response.message.SystemMessageResponse
+import com.jcs.where.base.BaseEvent
+import com.jcs.where.base.EventCode
 import com.jcs.where.base.mvp.BaseMvpFragment
 import com.jcs.where.features.message.notice.detail.SystemMessageDetailActivity
 import com.jcs.where.features.web.WebViewActivity
 import com.jcs.where.utils.Constant
 import com.jcs.where.view.empty.EmptyView
 import com.jcs.where.widget.list.DividerDecoration
+import org.greenrobot.eventbus.EventBus
 
 /**
  * Created by Wangsw  2021/2/20 15:14.
  * 系统通知
  */
-class SystemNoticeFragment : BaseMvpFragment<SystemNoticePresenter?>(), SystemNoticeView, SwipeRefreshLayout.OnRefreshListener, OnLoadMoreListener {
+class SystemNoticeFragment : BaseMvpFragment<SystemNoticePresenter>(), SystemNoticeView, SwipeRefreshLayout.OnRefreshListener, OnLoadMoreListener {
 
     private   var page = Constant.DEFAULT_FIRST_PAGE
     private lateinit var swipe_layout: SwipeRefreshLayout
@@ -51,7 +54,7 @@ class SystemNoticeFragment : BaseMvpFragment<SystemNoticePresenter?>(), SystemNo
         recycler!!.adapter = mAdapter
         mAdapter!!.setEmptyView(emptyView!!)
         mAdapter!!.loadMoreModule.setOnLoadMoreListener(this)
-        mAdapter!!.loadMoreModule.isAutoLoadMore = false
+        mAdapter!!.loadMoreModule.isAutoLoadMore = true
         mAdapter!!.loadMoreModule.isEnableLoadMoreIfNotFullPage = false
         mAdapter!!.setOnItemClickListener { adapter: BaseQuickAdapter<*, *>?, view: View?, position: Int ->
             val data = mAdapter!!.data[position]
@@ -72,6 +75,8 @@ class SystemNoticeFragment : BaseMvpFragment<SystemNoticePresenter?>(), SystemNo
                 id.add(data.id)
                 presenter!!.setMessageRead(id)
             }
+            EventBus.getDefault().post(BaseEvent<Any>(EventCode.EVENT_GET_MESSAGE_COUNT))
+
         }
     }
 

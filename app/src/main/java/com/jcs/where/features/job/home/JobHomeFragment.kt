@@ -18,6 +18,7 @@ import com.jcs.where.base.mvp.BaseMvpFragment
 import com.jcs.where.features.job.filter.JobFilterActivity
 import com.jcs.where.features.search.SearchAllActivity
 import com.jcs.where.utils.Constant
+import com.jcs.where.utils.LocalLanguageUtil
 import com.jcs.where.view.empty.EmptyView
 import com.jcs.where.widget.list.DividerDecoration
 import kotlinx.android.synthetic.main.fragment_job_home.*
@@ -101,11 +102,19 @@ class JobHomeFragment : BaseMvpFragment<JobHomePresenter>(), JobHomeView, SwipeR
                 0,
                 0))
         }
-
+        initDefaultUI()
     }
 
 
+    private fun initDefaultUI() {
+        val languageLocale = LocalLanguageUtil.getInstance().getSetLanguageLocale(requireContext())
+        if (languageLocale.language == "zh") {
+            back_iv.setImageResource(R.mipmap.ic_job_cn)
+        } else {
+            back_iv.setImageResource(R.mipmap.ic_job_en)
+        }
 
+    }
 
     override fun initData() {
         presenter = JobHomePresenter(this)

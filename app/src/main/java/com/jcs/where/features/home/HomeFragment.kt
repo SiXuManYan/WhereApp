@@ -94,6 +94,8 @@ class HomeFragment : BaseMvpFragment<HomePresenter>(), HomeView, SwipeRefreshLay
 
     var appBarStateChangeListener: AppBarStateChanged? = null
 
+    var systemMessageCount = 0
+
     private var mType: ArrayList<HomeChild> = ArrayList()
 
     override fun getLayoutId() = R.layout.fragment_home4
@@ -330,7 +332,7 @@ class HomeFragment : BaseMvpFragment<HomePresenter>(), HomeView, SwipeRefreshLay
             startActivity(SearchAllActivity::class.java)
         }
         message_view.setOnClickListener {
-            startActivityAfterLogin(MessageCenterActivity::class.java)
+            MessageCenterActivity.navigation(requireContext() ,systemMessageCount)
         }
     }
 
@@ -395,7 +397,10 @@ class HomeFragment : BaseMvpFragment<HomePresenter>(), HomeView, SwipeRefreshLay
         }
     }
 
-    override fun setMessageCount(i: Int) = message_view.setMessageCount(i)
+    override fun setMessageCount(i: Int, systemUnreadMessageCount: Int){
+        message_view.setMessageCount(i)
+        systemMessageCount = systemUnreadMessageCount
+    }
 
     override fun bindTopBannerData(bannerUrls: ArrayList<String>, response: ArrayList<BannerResponse>) {
         home_empty.visibility = View.GONE

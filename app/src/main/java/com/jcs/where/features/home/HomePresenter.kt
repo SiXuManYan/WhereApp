@@ -2,7 +2,6 @@ package com.jcs.where.features.home
 
 import com.blankj.utilcode.util.SPUtils
 import com.google.gson.Gson
-import com.google.gson.JsonElement
 import com.jcs.where.BuildConfig
 import com.jcs.where.api.ErrorResponse
 import com.jcs.where.api.network.BaseMvpObserver
@@ -39,42 +38,49 @@ class HomePresenter(val view: HomeView) : BaseMvpPresenter(view) {
     var isChildError = false
 
     /**
-     * 获取未读消息数量
+     * 获取未读消息总数
      */
     fun getMessageCount() {
         if (!User.isLogon()) {
             return
         }
-        requestApi(mRetrofit.unreadMessageCount, object : BaseMvpObserver<UnReadMessage>(view, false) {
+        requestApi(mRetrofit.unreadMessageCount, object : BaseMvpObserver<UnReadMessage>(view,false) {
             override fun onSuccess(response: UnReadMessage) {
-
                 val apiUnreadMessageCount = response.count
+
                 try {
                     // 捕获融云SKD 5.2.3.3 获取消息数量时， 在Android 12 上出现的 UnsatisfiedLinkError 异常
                     RongIMClient.getInstance().getTotalUnreadCount(object : RongIMClient.ResultCallback<Int?>() {
                         override fun onSuccess(rongMessageCount: Int?) {
 
-                            if (rongMessageCount == null) {
-                                view.setMessageCount(apiUnreadMessageCount)
-                            } else {
-                                view.setMessageCount(apiUnreadMessageCount + rongMessageCount)
+                            var rongCount = 0
+                            rongMessageCount?.let {
+                                rongCount = it
                             }
+
+                            val totalCount = apiUnreadMessageCount + rongCount
+                            view.setMessageCount(totalCount,apiUnreadMessageCount)
+
                         }
 
                         override fun onError(errorCode: RongIMClient.ErrorCode) {
-                            view.setMessageCount(apiUnreadMessageCount)
+                            view.setMessageCount(apiUnreadMessageCount,apiUnreadMessageCount)
                         }
                     })
                 } catch (e: Exception) {
-                    view.setMessageCount(apiUnreadMessageCount)
+                    view.setMessageCount(apiUnreadMessageCount,apiUnreadMessageCount)
                 }
 
+
             }
 
-            override fun onError(errorResponse: ErrorResponse?) {
-                view.setMessageCount(0)
+            override fun onError(e: Throwable) {
+                view.setMessageCount(0,0)
             }
+
         })
+
+
     }
 
     /**

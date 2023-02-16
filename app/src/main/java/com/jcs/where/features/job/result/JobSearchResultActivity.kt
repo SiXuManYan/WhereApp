@@ -75,7 +75,7 @@ class JobSearchResultActivity : BaseMvpActivity<JobHomePresenter>(), JobHomeView
     }
 
     override fun bindListener() {
-
+        search_ll.setOnClickListener { finish() }
     }
 
 

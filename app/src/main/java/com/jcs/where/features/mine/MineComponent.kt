@@ -17,7 +17,7 @@ import io.rong.imlib.RongIMClient
  *
  */
 interface MineView : BaseMvpView {
-    fun bindUnreadMessageCount(totalCount: Int)
+    fun bindUnreadMessageCount(totalCount: Int, systemCount: Int)
     fun bindUserInfo( response: UserInfoResponse)
 }
 
@@ -45,23 +45,23 @@ class MinePresenter(var view: MineView) : BaseMvpPresenter(view) {
                             }
 
                             val totalCount = apiUnreadMessageCount + rongCount
-                            view.bindUnreadMessageCount(totalCount)
+                            view.bindUnreadMessageCount(totalCount,apiUnreadMessageCount)
 
                         }
 
                         override fun onError(errorCode: RongIMClient.ErrorCode) {
-                            view.bindUnreadMessageCount(apiUnreadMessageCount)
+                            view.bindUnreadMessageCount(apiUnreadMessageCount,apiUnreadMessageCount)
                         }
                     })
                 } catch (e: Exception) {
-                    view.bindUnreadMessageCount(apiUnreadMessageCount)
+                    view.bindUnreadMessageCount(apiUnreadMessageCount,apiUnreadMessageCount)
                 }
 
 
             }
 
             override fun onError(e: Throwable) {
-                view.bindUnreadMessageCount(0)
+                view.bindUnreadMessageCount(0,0)
             }
 
         })

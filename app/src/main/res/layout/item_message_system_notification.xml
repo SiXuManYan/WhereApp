@@ -42,7 +42,6 @@
             tools:text="2020-08-02" />
 
 
-
         <ImageView
             android:id="@+id/is_read_iv"
             android:layout_width="@dimen/dp_11"

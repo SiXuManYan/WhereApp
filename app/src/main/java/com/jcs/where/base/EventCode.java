@@ -219,5 +219,9 @@ public class EventCode {
      */
     public static final int EVENT_REFRESH_CV_CERTIFICATE = 1054;
 
-    public static final int EVENT_REFRESH_INTEGRAL_NOT_CLOSE = 1041;
+    /**
+     * 获取未读消息数量
+     */
+    public static final int EVENT_GET_MESSAGE_COUNT = 1055;
+
 }

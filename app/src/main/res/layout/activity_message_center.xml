@@ -3,6 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:background="@color/white"
     android:orientation="vertical">
 
     <com.jcs.where.widget.JcsTitle
@@ -16,20 +18,40 @@
         app:showBottomLine="true" />
 
 
-    <com.flyco.tablayout.SlidingTabLayout
-        android:id="@+id/tabs_type"
+
+
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="@dimen/dp_48"
-        android:background="@color/white"
-        app:tl_indicator_color="@color/blue_377BFF"
-        app:tl_indicator_corner_radius="1.5dp"
-        app:tl_tab_space_equal="true"
-        app:tl_textBold="SELECT"
-        app:tl_textSelectColor="@color/blue_377BFF"
-        app:tl_textUnselectColor="@color/grey_666666"
-        app:tl_textsize="@dimen/sp_14"
-        app:tl_underline_color="@color/grey_F5F5F5"
-        app:tl_underline_height="1px" />
+        android:layout_height="@dimen/dp_48">
+
+        <com.flyco.tablayout.SlidingTabLayout
+            android:id="@+id/tabs_type"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/white"
+            app:tl_indicator_color="@color/blue_377BFF"
+            app:tl_indicator_corner_radius="1.5dp"
+            app:tl_tab_space_equal="true"
+            app:tl_textBold="SELECT"
+            app:tl_textSelectColor="@color/blue_377BFF"
+            app:tl_textUnselectColor="@color/grey_666666"
+            app:tl_textsize="@dimen/sp_14"
+            app:tl_underline_color="@color/grey_F5F5F5"
+            app:tl_underline_height="1px" />
+
+        <ImageView
+            android:id="@+id/is_read_iv"
+            android:layout_width="@dimen/dp_6"
+            android:layout_height="@dimen/dp_6"
+            android:layout_alignParentEnd="true"
+            android:layout_marginEnd="@dimen/dp_10"
+            android:layout_centerVertical="true"
+            android:alpha="0.9"
+            android:src="@drawable/shape_oval_red_6"
+            android:visibility="gone"
+            tools:visibility="visible" />
+
+    </RelativeLayout>
 
     <androidx.viewpager.widget.ViewPager
         android:id="@+id/pager"

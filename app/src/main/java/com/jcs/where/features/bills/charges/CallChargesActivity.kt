@@ -218,6 +218,7 @@ class CallChargesActivity : BaseMvpActivity<CallChargesPresenter>(), CallCharges
         }
     }
 
+    @SuppressLint("Range")
     private fun getPhoneContacts(uri: Uri): Array<String?>? {
 
         val contact = arrayOfNulls<String>(2)

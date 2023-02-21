@@ -122,6 +122,9 @@ class JobDetail {
     /** 是否完善简历（true、false） */
     var is_complete = false
 
+    /** 是否完善附件简历（true、false） */
+    var is_complete_pdf = false
+
     /** 职责和责任 */
     var duty = ""
 

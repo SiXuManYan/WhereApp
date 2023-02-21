@@ -15,7 +15,6 @@ import com.jcs.where.base.mvp.BaseBottomSheetDialogFragment
 import com.jcs.where.base.mvp.FixedHeightBottomSheetDialog
 import com.jcs.where.features.mall.buy.coupon.OrderCouponHomePresenter
 import com.jcs.where.features.mall.buy.coupon.OrderCouponHomeView
-import com.jcs.where.features.mall.buy.coupon.child.OrderCouponFragment
 import kotlinx.android.synthetic.main.fragment_order_coupon_home.*
 
 /**

@@ -1217,4 +1217,9 @@ Gentleman must let go</string>
     <string name="current_points">Currently Available Points</string>
     <string name="application_email_format">Application email:&#160;%1$s</string>
     <string name="negotiable">Negotiable</string>
+    <string name="to_apply_for_job">To apply for job</string>
+    <string name="complete_online_resume">Complete Online Resume</string>
+    <string name="complete_online_resume_desc">Online resumes can be edited on the Where jobs section - resume page</string>
+    <string name="generate_attached_resume">Generate Attached Resume</string>
+    <string name="generate_attached_resume_desc">Attached resumes can be generated on the Where jobs section-resume page</string>
 </resources>

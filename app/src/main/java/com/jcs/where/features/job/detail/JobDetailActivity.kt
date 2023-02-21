@@ -2,13 +2,15 @@ package com.jcs.where.features.job.detail
 
 import android.app.Activity
 import android.content.Context
-import android.content.DialogInterface
 import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
-import androidx.appcompat.app.AlertDialog
+import android.view.LayoutInflater
+import android.view.ViewGroup
+import android.widget.Button
 import com.blankj.utilcode.util.BarUtils
 import com.blankj.utilcode.util.ToastUtils
+import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.gson.JsonElement
 import com.jcs.where.R
 import com.jcs.where.api.network.BaseMvpObserver
@@ -48,6 +50,8 @@ class JobDetailActivity : BaseMvpActivity<JobDetailPresenter>(), JobDetailView {
 
     /** 是否通过招聘首页点击 */
     private var isFromJobHome = false
+
+    private var degreeDialog: BottomSheetDialog? = null
 
     override fun isStatusDark() = true
 
@@ -142,20 +146,15 @@ class JobDetailActivity : BaseMvpActivity<JobDetailPresenter>(), JobDetailView {
                     startActivity(LoginActivity::class.java)
                     return@setOnClickListener
                 }
-
-
-                if (response.is_complete) {
+                if (response.is_complete && response.is_complete_pdf) {
                     // 申请职位
                     presenter.sendCV(jobId)
                 } else {
-                    AlertDialog.Builder(this, R.style.JobAlertDialogTheme)
-                        .setCancelable(false)
-                        .setTitle(R.string.hint)
-                        .setMessage(R.string.completing_cv)
-                        .setPositiveButton(R.string.confirm) { dialog: DialogInterface, which: Int ->
-                            dialog.dismiss()
-                        }
-                        .create().show()
+                    if (degreeDialog != null) {
+                        degreeDialog?.show()
+                    } else {
+                        showDegree()
+                    }
                 }
             }
         }
@@ -232,6 +231,25 @@ class JobDetailActivity : BaseMvpActivity<JobDetailPresenter>(), JobDetailView {
                 R.mipmap.ic_like_normal_night
             }
         )
+    }
+
+
+    private fun showDegree() {
+        val timeDialog = BottomSheetDialog(this)
+        this.degreeDialog = timeDialog
+        val view = LayoutInflater.from(this).inflate(R.layout.dialog_complete_cv, null)
+        timeDialog.setContentView(view)
+        try {
+            val parent = view.parent as ViewGroup
+            parent.setBackgroundResource(android.R.color.transparent)
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+
+        view.findViewById<Button>(R.id.ok).setOnClickListener {
+            timeDialog.dismiss()
+        }
+        timeDialog.show()
     }
 
 

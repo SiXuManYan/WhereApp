@@ -1243,6 +1243,8 @@ Gentleman must let go</string>
     <string name="complete_online_resume_desc">可在where招聘版块-简历页面编辑在线简历</string>
     <string name="generate_attached_resume">生成附件简历</string>
     <string name="generate_attached_resume_desc">可在where招聘版块-简历页面生成附件简历</string>
-
+    <string name="cv_avatar">头像</string>
+    <string name="photo_album">从相册选择照片</string>
+    <string name="photograph">拍照</string>
 
 </resources>

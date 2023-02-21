@@ -4,6 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white"
+    xmlns:tools="http://schemas.android.com/tools"
     android:fitsSystemWindows="true"
     android:orientation="vertical">
 
@@ -39,6 +40,33 @@
                 android:textColor="@color/color_1c1380"
                 android:textSize="@dimen/sp_19"
                 android:textStyle="bold" />
+
+
+            <RelativeLayout
+                android:id="@+id/change_avatar_rl"
+                android:paddingStart="@dimen/dp_15"
+                android:paddingEnd="@dimen/dp_15"
+                android:layout_width="match_parent"
+                android:background="?android:attr/selectableItemBackground"
+                android:layout_height="@dimen/dp_64">
+
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:text="@string/cv_avatar"
+                    android:textSize="@dimen/sp_16"
+                    android:textColor="@color/black_333333"
+                    android:layout_centerVertical="true"
+                    android:layout_height="wrap_content"/>
+
+                <ImageView
+                    android:id="@+id/avatar_iv"
+                    android:layout_width="@dimen/dp_48"
+                    android:layout_centerVertical="true"
+                    android:layout_height="@dimen/dp_48"
+                    android:layout_alignParentEnd="true"
+                    tools:src="@tools:sample/avatars" />
+            </RelativeLayout>
 
 
             <TextView

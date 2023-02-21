@@ -1,15 +1,20 @@
 package com.jcs.where.features.job.form.profile
 
+import android.Manifest
 import android.app.DatePickerDialog
+import android.content.Intent
+import android.net.Uri
 import android.os.Handler
 import android.os.Looper
 import android.view.View
 import android.view.WindowManager
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.widget.AppCompatEditText
 import com.blankj.utilcode.util.ClickUtils
 import com.blankj.utilcode.util.StringUtils
 import com.blankj.utilcode.util.ToastUtils
+import com.bumptech.glide.Glide
 import com.jcs.where.R
 import com.jcs.where.api.response.CityPickerResponse
 import com.jcs.where.api.response.job.CreateProfileDetail
@@ -21,12 +26,11 @@ import com.jcs.where.features.job.form.CvFormPresenter
 import com.jcs.where.features.job.form.CvFormView
 import com.jcs.where.features.job.form.city.CvCityFragment
 import com.jcs.where.features.job.form.city.OnSelectedCity
-import com.jcs.where.utils.BusinessUtils
-import com.jcs.where.utils.Constant
-import com.jcs.where.utils.OnBottomSelectedIndex
+import com.jcs.where.utils.*
 import kotlinx.android.synthetic.main.activity_job_cv_profile.*
 import org.greenrobot.eventbus.EventBus
 import java.util.*
+
 
 /**
  * Created by Wangsw  2022/9/29 14:58.
@@ -34,12 +38,13 @@ import java.util.*
  */
 class CvFormProfileActivity : BaseMvpActivity<CvFormPresenter>(), CvFormView, OnSelectedCity {
 
-    private var draftData: ProfileDetail? = null
 
     /**
      * 个人信息id， 不为0时为修改
      */
     private var draftProfileId = 0
+
+    private var draftData: ProfileDetail? = null
 
     /** 性别（0-未知，1-男，2-女） */
     private var userGender = 0
@@ -54,11 +59,18 @@ class CvFormProfileActivity : BaseMvpActivity<CvFormPresenter>(), CvFormView, On
 
     private lateinit var cityDialog: CvCityFragment
 
-
     private var genderData = StringUtils.getStringArray(R.array.gender)
     private var civilData = StringUtils.getStringArray(R.array.civil)
-
+    private var avatarSource = StringUtils.getStringArray(R.array.avatarSource)
     private var mCityData = ArrayList<CityPickerResponse.CityChild>()
+
+    private lateinit var avatarIv: ImageView
+
+    var mImageUri: Uri? = null
+    val maxNumPhotosAndVideos = 10
+    val REQUEST_IMAGE_CAPTURE = 1
+    val PHOTO_PICKER_MULTI_SELECT_REQUEST_CODE = 2
+
 
     override fun isStatusDark() = true
 
@@ -70,6 +82,7 @@ class CvFormProfileActivity : BaseMvpActivity<CvFormPresenter>(), CvFormView, On
             isCancelable = false
             onSelectedCity = this@CvFormProfileActivity
         }
+        avatarIv = findViewById(R.id.avatar_iv)
         initDraft()
     }
 
@@ -102,6 +115,7 @@ class CvFormProfileActivity : BaseMvpActivity<CvFormPresenter>(), CvFormView, On
                 1 -> civil_status_tv.text = getString(R.string.married)
             }
 
+            GlideUtil.load(this, it.avatar, avatarIv, 24)
 
         }
     }
@@ -115,16 +129,40 @@ class CvFormProfileActivity : BaseMvpActivity<CvFormPresenter>(), CvFormView, On
 
     }
 
+
     override fun bindListener() {
 
 
-        sex_tv.setOnClickListener {
+        change_avatar_rl.setOnClickListener {
+            BusinessUtils.createBottomDialog(this, 1, avatarSource, object : OnBottomSelectedIndex {
+                override fun onIndexSelect(selectedIndex: Int) {
 
+                    PermissionUtils.permissionAny(this@CvFormProfileActivity, { granted: Boolean ->
+                        if (granted) {
+
+                            if (selectedIndex == 0) {
+                                mImageUri = FeaturesUtil.takePicture(this@CvFormProfileActivity, REQUEST_IMAGE_CAPTURE)
+                            } else {
+
+                            }
+
+
+                        } else {
+                            ToastUtils.showShort(R.string.open_permission)
+                        }
+                    }, Manifest.permission.CAMERA,
+                        Manifest.permission.READ_EXTERNAL_STORAGE,
+                        Manifest.permission.WRITE_EXTERNAL_STORAGE)
+
+                }
+            })
+        }
+
+        sex_tv.setOnClickListener {
             val index = when (userGender) {
                 2 -> 1
                 else -> 0
             }
-
             BusinessUtils.createBottomDialog(this, index, genderData, object : OnBottomSelectedIndex {
                 override fun onIndexSelect(selectedIndex: Int) {
                     userGender = selectedIndex + 1
@@ -245,6 +283,20 @@ class CvFormProfileActivity : BaseMvpActivity<CvFormPresenter>(), CvFormView, On
         // 上限
         datePicker.maxDate = ca.timeInMillis
         datePickerDialog.show()
+    }
+
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode == REQUEST_IMAGE_CAPTURE) {
+            if (resultCode == RESULT_OK) {
+                // 这里就不要用data.getData()了，有可能返回空。
+                // 直接用之前的mUri
+                // 低版本需要绝对地址的，直接拿方法中的path
+//                mImageUri.path
+                Glide.with(this).load(mImageUri).into(avatarIv)
+            }
+        }
     }
 
 

@@ -121,6 +121,11 @@
         <item>@string/married</item>
     </string-array>
 
+    <string-array name="avatarSource">
+        <item>@string/photo_album</item>
+        <item>@string/photograph</item>
+    </string-array>
+
 
     <!-- 自定义验证码输入框-->
     <declare-styleable name="vericationCodeView">
@@ -329,7 +334,7 @@
         <item>0997</item>
 
     </string-array>
-    
+
     <string-array name="GLOBE_BAN">
         <item>09173</item>
         <item>09175</item>
@@ -342,5 +347,6 @@
         <item>09258</item>
 
     </string-array>
-    
+
+
 </resources>

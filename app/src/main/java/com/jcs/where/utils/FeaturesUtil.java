@@ -3,11 +3,15 @@ package com.jcs.where.utils;
 import android.Manifest;
 import android.app.Activity;
 import android.content.ActivityNotFoundException;
+import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.net.Uri;
+import android.os.Build;
+import android.os.Environment;
+import android.provider.MediaStore;
 import android.text.SpannableString;
 import android.text.Spanned;
 import android.text.TextUtils;
@@ -23,6 +27,7 @@ import android.widget.TextView;
 
 import androidx.annotation.DrawableRes;
 import androidx.annotation.Nullable;
+import androidx.core.content.FileProvider;
 import androidx.fragment.app.Fragment;
 
 import com.blankj.utilcode.constant.RegexConstants;
@@ -41,6 +46,7 @@ import com.zhihu.matisse.MimeType;
 
 import org.jetbrains.annotations.NotNull;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -227,7 +233,7 @@ public class FeaturesUtil {
             }
 
 
-        }, Manifest.permission.READ_EXTERNAL_STORAGE);
+        }, Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE);
     }
 
 
@@ -258,7 +264,7 @@ public class FeaturesUtil {
             }
 
 
-        }, Manifest.permission.READ_EXTERNAL_STORAGE);
+        }, Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE);
     }
 
     /**
@@ -634,5 +640,40 @@ public class FeaturesUtil {
         return packageNames.contains(packageName);
     }
 
+
+    //假设拍照片保存在DCIM公共目录,为了查看方便，尽可能的将逻辑写在一个方法里
+    public static Uri takePicture(Activity activity, int requestCode) {
+
+        Uri mImageUri;
+
+        String path = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM).getAbsolutePath();
+        String name = System.currentTimeMillis() + ".jpg";
+        File file = new File(path, name);
+
+        Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+
+        /**
+         *  主要适配的点在mImageUri赋值这里
+         */
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+            // Android Q得用MediaStore先存一下
+            ContentValues values = new ContentValues();
+            values.put(MediaStore.Images.Media.DISPLAY_NAME, name);
+            values.put(MediaStore.Images.Media.RELATIVE_PATH, Environment.DIRECTORY_DCIM);
+            values.put(MediaStore.Images.Media.MIME_TYPE, "image/jpeg");
+            mImageUri = activity.getContentResolver().insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values);
+        } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            // Android N版本需要用FileProvider
+            mImageUri = FileProvider.getUriForFile(activity, BuildConfig.APPLICATION_ID + "fileProvider", file);
+        } else {
+            // 古老的版本用这个
+            mImageUri = Uri.fromFile(file);
+        }
+        // 指定图片保存的位置
+        intent.putExtra(MediaStore.EXTRA_OUTPUT, mImageUri);
+        activity.startActivityForResult(intent, requestCode);
+
+        return mImageUri;
+    }
 
 }

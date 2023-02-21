@@ -741,7 +741,12 @@ object BusinessUtils {
     }
 
 
-    fun createBottomDialog(context: Context, oldIndex: Int, array: Array<String>, onCountryCodeSelectListener: OnBottomSelectedIndex) {
+    fun createBottomDialog(
+        context: Context,
+        oldIndex: Int? = 0,
+        array: Array<String>,
+        onCountryCodeSelectListener: OnBottomSelectedIndex
+    ) {
 
         val dialog = BottomSheetDialog(context)
         val view = LayoutInflater.from(context).inflate(R.layout.dialog_job_prefix, null)
@@ -766,6 +771,7 @@ object BusinessUtils {
             onCountryCodeSelectListener.onIndexSelect(1)
             dialog.dismiss()
         }
+
         when (oldIndex) {
             0 -> {
                 first.isChecked = true

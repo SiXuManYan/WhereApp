@@ -180,6 +180,9 @@ class ProfileDetail() : Parcelable {
     /** 婚姻状况（0-未婚，1-已婚） */
     var civil_status = 0
 
+    /** 头像 */
+    var avatar = ""
+
     constructor(parcel: Parcel) : this() {
         id = parcel.readInt()
         gender = parcel.readInt()
@@ -194,6 +197,7 @@ class ProfileDetail() : Parcelable {
         city_id = parcel.readInt()
         birthday = parcel.readString().toString()
         civil_status = parcel.readInt()
+        avatar = parcel.readString().toString()
     }
 
     override fun writeToParcel(parcel: Parcel, flags: Int) {
@@ -210,6 +214,7 @@ class ProfileDetail() : Parcelable {
         parcel.writeInt(city_id)
         parcel.writeString(birthday)
         parcel.writeInt(civil_status)
+        parcel.writeString(avatar)
     }
 
     override fun describeContents(): Int {

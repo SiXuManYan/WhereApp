@@ -2,6 +2,7 @@ package com.jcs.where.features.job.cv
 
 import android.os.Bundle
 import android.view.View
+import android.widget.ImageView
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.blankj.utilcode.util.ColorUtils
 import com.blankj.utilcode.util.SizeUtils
@@ -19,6 +20,7 @@ import com.jcs.where.features.job.form.experience.CvFormJobExperienceActivity
 import com.jcs.where.features.job.form.profile.CvFormProfileActivity
 import com.jcs.where.storage.entity.User
 import com.jcs.where.utils.Constant
+import com.jcs.where.utils.GlideUtil
 import com.jcs.where.widget.list.DividerDecoration
 import kotlinx.android.synthetic.main.fragment_job_cv_home.*
 
@@ -33,14 +35,17 @@ class CvHomeFragment : BaseMvpFragment<CvHomePresenter>(), CvHomeView, OnItemCli
     /** 个人信息 */
     private var profileDetail: ProfileDetail? = null
 
+    private lateinit var avatarIv: ImageView
+
     override fun getLayoutId() = R.layout.fragment_job_cv_home
 
-    override fun initView(view: View?) {
-        initContent()
+    override fun initView(view: View) {
+        initContent(view)
     }
 
-    private fun initContent() {
+    private fun initContent(view: View) {
 
+        avatarIv = view.findViewById(R.id.avatar_iv)
         mAdapter = JobExperienceEduAdapter().apply {
             setOnItemClickListener(this@CvHomeFragment)
         }
@@ -73,13 +78,10 @@ class CvHomeFragment : BaseMvpFragment<CvHomePresenter>(), CvHomeView, OnItemCli
         back_iv.setOnClickListener {
             activity?.finish()
         }
-        create_cv_iv.setOnClickListener {
+        profile_rl.setOnClickListener {
             startActivityAfterLogin(CvFormProfileActivity::class.java, Bundle().apply {
                 putParcelable(Constant.PARAM_DATA, profileDetail)
             })
-        }
-        name_tv.setOnClickListener {
-            create_cv_iv.performClick()
         }
     }
 
@@ -96,13 +98,16 @@ class CvHomeFragment : BaseMvpFragment<CvHomePresenter>(), CvHomeView, OnItemCli
 
         (response.first_name + " " + response.last_name).also { name_tv.text = it }
 
-        gender_tv.text = when (response.gender) {
+        val gender = when (response.gender) {
             1 -> getString(R.string.male)
             2 -> getString(R.string.female)
             else -> ""
         }
-        city_tv.text = response.city
-        email_tv.text = response.email
+
+        (gender + " | " + response.city).also { gender_and_city_tv.text = it }
+
+
+        GlideUtil.load(requireContext(), response.avatar, avatarIv, 24)
 
     }
 

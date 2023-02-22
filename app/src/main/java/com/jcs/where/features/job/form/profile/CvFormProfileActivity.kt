@@ -3,9 +3,11 @@ package com.jcs.where.features.job.form.profile
 import android.Manifest
 import android.app.DatePickerDialog
 import android.content.Intent
+import android.database.Cursor
 import android.net.Uri
 import android.os.Handler
 import android.os.Looper
+import android.provider.MediaStore
 import android.view.View
 import android.view.WindowManager
 import android.widget.ImageView
@@ -14,7 +16,6 @@ import androidx.appcompat.widget.AppCompatEditText
 import com.blankj.utilcode.util.ClickUtils
 import com.blankj.utilcode.util.StringUtils
 import com.blankj.utilcode.util.ToastUtils
-import com.bumptech.glide.Glide
 import com.jcs.where.R
 import com.jcs.where.api.response.CityPickerResponse
 import com.jcs.where.api.response.job.CreateProfileDetail
@@ -67,9 +68,11 @@ class CvFormProfileActivity : BaseMvpActivity<CvFormPresenter>(), CvFormView, On
     private lateinit var avatarIv: ImageView
 
     var mImageUri: Uri? = null
-    val maxNumPhotosAndVideos = 10
     val REQUEST_IMAGE_CAPTURE = 1
+    val REQUEST_SELECT_IMAGE = 2
+    val maxNumPhotosAndVideos = 10
     val PHOTO_PICKER_MULTI_SELECT_REQUEST_CODE = 2
+    var currentAvatarUrlOrUriPath: String? = ""
 
 
     override fun isStatusDark() = true
@@ -115,7 +118,9 @@ class CvFormProfileActivity : BaseMvpActivity<CvFormPresenter>(), CvFormView, On
                 1 -> civil_status_tv.text = getString(R.string.married)
             }
 
-            GlideUtil.load(this, it.avatar, avatarIv, 24)
+            val avatar = it.avatar
+            currentAvatarUrlOrUriPath = avatar
+            GlideUtil.load(this, avatar, avatarIv, 24)
 
         }
     }
@@ -141,9 +146,13 @@ class CvFormProfileActivity : BaseMvpActivity<CvFormPresenter>(), CvFormView, On
                         if (granted) {
 
                             if (selectedIndex == 0) {
-                                mImageUri = FeaturesUtil.takePicture(this@CvFormProfileActivity, REQUEST_IMAGE_CAPTURE)
-                            } else {
+                                val uri = FeaturesUtil.takePicture(this@CvFormProfileActivity, REQUEST_IMAGE_CAPTURE)
+                                mImageUri = uri
+                                currentAvatarUrlOrUriPath = uri.path
 
+                            } else {
+                                val intent = Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
+                                startActivityForResult(intent, REQUEST_SELECT_IMAGE)
                             }
 
 
@@ -194,8 +203,15 @@ class CvFormProfileActivity : BaseMvpActivity<CvFormPresenter>(), CvFormView, On
 
         save_tv.setOnClickListener(object : ClickUtils.OnDebouncingClickListener(500) {
 
+
             override fun onDebouncingClick(v: View?) {
+
                 save_tv.isClickable = false
+                Handler(Looper.getMainLooper()).postDelayed({
+                    save_tv.isClickable = true
+                }, 500)
+
+
 
                 requiredEdit.forEach {
                     if (it.text.isNullOrBlank()) {
@@ -235,13 +251,12 @@ class CvFormProfileActivity : BaseMvpActivity<CvFormPresenter>(), CvFormView, On
                     contact_number = contact_number_et.text.toString().trim()
                     birthday = birth_tv.text.toString().trim()
                     civil_status = civilStatus
-
                 }
-                presenter.handleProfile(draftProfileId, apply)
 
-                Handler(Looper.getMainLooper()).postDelayed({
-                    save_tv.isClickable = true
-                }, 500)
+
+                presenter.handleAvatar(draftProfileId, apply, currentAvatarUrlOrUriPath)
+
+
             }
 
         })
@@ -288,15 +303,36 @@ class CvFormProfileActivity : BaseMvpActivity<CvFormPresenter>(), CvFormView, On
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        if (requestCode == REQUEST_IMAGE_CAPTURE) {
-            if (resultCode == RESULT_OK) {
-                // 这里就不要用data.getData()了，有可能返回空。
-                // 直接用之前的mUri
-                // 低版本需要绝对地址的，直接拿方法中的path
-//                mImageUri.path
-                Glide.with(this).load(mImageUri).into(avatarIv)
-            }
+        if (resultCode != RESULT_OK) {
+            return
         }
+        when (requestCode) {
+            REQUEST_IMAGE_CAPTURE -> {
+                GlideUtil.load(this ,mImageUri ,avatarIv ,24   )
+            }
+            REQUEST_SELECT_IMAGE -> {
+                if (data == null) {
+                    return
+                }
+                try {
+                    val imageUri: Uri = data.data ?: return
+                    GlideUtil.load(this ,imageUri ,avatarIv ,24   )
+                    val filePathColumn = arrayOf(MediaStore.Images.Media.DATA)
+                    val cursor: Cursor =
+                        contentResolver.query(imageUri, filePathColumn, null, null, null) ?: return //从系统表中查询指定Uri对应的照片
+
+                    cursor.moveToFirst()
+                    val columnIndex: Int = cursor.getColumnIndex(filePathColumn[0])
+                    val path = cursor.getString(columnIndex) //获取照片路径
+                    cursor.close()
+                    currentAvatarUrlOrUriPath = path
+                } catch (e: Exception) {
+                    e.printStackTrace()
+                }
+            }
+            else -> {}
+        }
+
     }
 
 

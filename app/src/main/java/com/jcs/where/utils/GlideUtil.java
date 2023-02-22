@@ -1,6 +1,7 @@
 package com.jcs.where.utils;
 
 import android.content.Context;
+import android.net.Uri;
 import android.os.Looper;
 import android.widget.ImageView;
 
@@ -35,6 +36,8 @@ public class GlideUtil {
     public static void load(Context context, String url, ImageView imageView, int radius) {
         load(context, url, imageView, radius, GlideRoundedCornersTransform.CornerType.ALL);
     }
+
+
 
 
     public static void load(Context context, String url, ImageView imageView, int radius, GlideRoundedCornersTransform.CornerType cornerType) {
@@ -131,6 +134,22 @@ public class GlideUtil {
             e.printStackTrace();
         }
     }
+
+
+    public static void load(Context context, Uri uri, ImageView imageView, int radius) {
+        load(context, uri, imageView, radius, GlideRoundedCornersTransform.CornerType.ALL);
+    }
+
+    public static void load(Context context,Uri uri, ImageView imageView, int radius, GlideRoundedCornersTransform.CornerType cornerType) {
+
+        RequestOptions options = RequestOptions.bitmapTransform(new GlideRoundedCornersTransform(radius, cornerType))
+                .error(R.mipmap.ic_empty_gray)
+                .fallback(R.mipmap.ic_empty_gray)
+                .placeholder(R.mipmap.ic_empty_gray);
+
+        Glide.with(context).load(uri).apply(options).into(imageView);
+    }
+
 
 
 }

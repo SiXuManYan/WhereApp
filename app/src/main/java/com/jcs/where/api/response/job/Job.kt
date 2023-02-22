@@ -279,7 +279,7 @@ class JobExperience() : Parcelable, MultiItemEntity {
     var title = ""
 
     /** 证书图片 数组 */
-    var images  = ArrayList<String>()
+    var images = ArrayList<String>()
 
 
     constructor(parcel: Parcel) : this() {
@@ -374,6 +374,8 @@ class CreateProfileDetail {
     /** 0未婚 1已婚 */
     var civil_status = 0
 
+    var avatar :String?= ""
+
 }
 
 
@@ -460,7 +462,7 @@ class EmployerRequest {
     var company_title = ""
 }
 
-class EmployerEmail{
+class EmployerEmail {
     var email = ""
 }
 
@@ -567,8 +569,6 @@ class FilterData {
 class JobNotice {
     var status = false
 }
-
-
 
 
 /**

@@ -1,11 +1,19 @@
 package com.jcs.where.features.job.form
 
+import com.blankj.utilcode.util.RegexUtils
+import com.google.gson.Gson
 import com.google.gson.JsonElement
+import com.jcs.where.api.ErrorResponse
 import com.jcs.where.api.network.BaseMvpObserver
 import com.jcs.where.api.network.BaseMvpPresenter
 import com.jcs.where.api.network.BaseMvpView
+import com.jcs.where.api.response.UploadFileResponse
+import com.jcs.where.api.response.UploadFileResponse2
 import com.jcs.where.api.response.job.*
-import java.util.ArrayList
+import okhttp3.MediaType
+import okhttp3.MultipartBody
+import okhttp3.RequestBody
+import java.io.File
 
 /**
  * Created by Wangsw  2022/9/29 15:01.
@@ -22,22 +30,22 @@ interface CvFormView : BaseMvpView {
     /**
      * 设置教育背景
      */
-    fun bindEduDet(response: EduDet){}
+    fun bindEduDet(response: EduDet) {}
 
     /**
      * 设置学历列表
      */
-    fun bindDegreeList(response: ArrayList<Degree>){}
+    fun bindDegreeList(response: ArrayList<Degree>) {}
 
     /**
      * 工作经历删除成功
      */
-    fun deleteJobExperienceSuccess(){}
+    fun deleteJobExperienceSuccess() {}
 
     /**
      * 教育背景删除成功
      */
-    fun deleteEducationSuccess(){}
+    fun deleteEducationSuccess() {}
 
 }
 
@@ -48,8 +56,40 @@ class CvFormPresenter(private var view: CvFormView) : BaseMvpPresenter(view) {
     /**
      * 处理个人信息
      */
-    fun handleProfile(lastProfileId: Int, apply: CreateProfileDetail) {
+    fun handleAvatar(lastProfileId: Int, apply: CreateProfileDetail, currentAvatarUrlOrUriPath: String?) {
 
+        if (!currentAvatarUrlOrUriPath.isNullOrBlank() && !RegexUtils.isURL(currentAvatarUrlOrUriPath)) {
+
+
+            val file: File = File(currentAvatarUrlOrUriPath)
+            val requestFile = RequestBody.create(MediaType.parse("image/jpg"), file)
+            val body = MultipartBody.Part.createFormData("file", file.name, requestFile)
+            val type = "1"
+            val description = RequestBody.create(MediaType.parse("multipart/form-data"), type)
+
+
+            requestApi(mRetrofit.uploadFile(description, body), object : BaseMvpObserver<UploadFileResponse>(view) {
+                override fun onSuccess(response: UploadFileResponse) {
+                    val link = response.link
+                    apply.avatar = link
+                    handleProfile(lastProfileId,apply)
+                }
+
+                override fun onError(errorResponse: ErrorResponse?) {
+                    handleProfile(lastProfileId,apply)
+                }
+            })
+
+
+
+        } else {
+            apply.avatar = currentAvatarUrlOrUriPath
+            handleProfile(lastProfileId, apply)
+        }
+
+    }
+
+    private fun handleProfile(lastProfileId: Int, apply: CreateProfileDetail) {
         if (lastProfileId == 0) {
             // 创建
             requestApi(mRetrofit.createCvProfile(apply), object : BaseMvpObserver<JsonElement>(view) {
@@ -68,7 +108,6 @@ class CvFormPresenter(private var view: CvFormView) : BaseMvpPresenter(view) {
 
             })
         }
-
     }
 
 
@@ -154,7 +193,7 @@ class CvFormPresenter(private var view: CvFormView) : BaseMvpPresenter(view) {
     /**
      * 删除工作经历
      */
-    fun  deleteJobExperience(draftExperienceId: Int) {
+    fun deleteJobExperience(draftExperienceId: Int) {
         requestApi(mRetrofit.deleteExperiences(draftExperienceId), object : BaseMvpObserver<JsonElement>(view) {
             override fun onSuccess(response: JsonElement) {
                 view.deleteJobExperienceSuccess()

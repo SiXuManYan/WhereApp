@@ -24,9 +24,13 @@ import com.jcs.where.base.EventCode
 import com.jcs.where.base.mvp.BaseMvpActivity
 import com.jcs.where.features.job.form.CvFormPresenter
 import com.jcs.where.features.job.form.CvFormView
+import com.jcs.where.utils.BusinessUtils
 import com.jcs.where.utils.Constant
+import com.jcs.where.utils.OnWorkTimeSelected
 import com.jcs.where.widget.list.DividerDecoration
 import kotlinx.android.synthetic.main.activity_job_cv_edu.*
+
+import me.shaohui.bottomdialog.BottomDialog
 import org.greenrobot.eventbus.EventBus
 
 /**
@@ -51,6 +55,9 @@ class CvFormEduActivity : BaseMvpActivity<CvFormPresenter>(), CvFormView {
     private var degreeDialog: BottomSheetDialog? = null
 
     private lateinit var mDegreeAdapter: DegreeAdapter
+
+    private var startDialog: BottomDialog? = null
+    private var endDialog: BottomDialog? = null
 
     override fun isStatusDark() = true
 
@@ -103,6 +110,20 @@ class CvFormEduActivity : BaseMvpActivity<CvFormPresenter>(), CvFormView {
         presenter = CvFormPresenter(this)
         presenter.getEduDet(draftEduId)
         presenter.getDegreeList()
+
+        startDialog = BusinessUtils.showYearDialog(this, object : OnWorkTimeSelected {
+            override fun onWorkTimeSelected(string: String) {
+                start_date_tv.text = string
+            }
+        })
+
+        endDialog = BusinessUtils.showYearDialog(this, object : OnWorkTimeSelected {
+            override fun onWorkTimeSelected(string: String) {
+                end_date_tv.text = string
+            }
+        })
+
+
     }
 
     override fun bindListener() {
@@ -115,9 +136,17 @@ class CvFormEduActivity : BaseMvpActivity<CvFormPresenter>(), CvFormView {
             eduRequest.vocational_course = it.toString().trim()
             handleClickable()
         })
+        start_date_tv.addTextChangedListener(afterTextChanged = {
+            eduRequest.start_date = it.toString().trim()
+            handleClickable()
+        })
+
+        end_date_tv.addTextChangedListener(afterTextChanged = {
+            eduRequest.end_date = it.toString().trim()
+            handleClickable()
+        })
+
         degree_tv.setOnClickListener {
-
-
             if (degreeDialog != null) {
                 degreeDialog?.show()
             } else {
@@ -130,7 +159,6 @@ class CvFormEduActivity : BaseMvpActivity<CvFormPresenter>(), CvFormView {
                 presenter.handleSaveEdu(draftEduId, eduRequest)
             }
         })
-
 
         delete_tv.setOnClickListener {
             AlertDialog.Builder(this, R.style.JobAlertDialogTheme)
@@ -146,6 +174,16 @@ class CvFormEduActivity : BaseMvpActivity<CvFormPresenter>(), CvFormView {
                 }
                 .create().show()
         }
+
+
+        start_date_tv.setOnClickListener {
+            startDialog?.show()
+        }
+
+        end_date_tv.setOnClickListener {
+            endDialog?.show()
+        }
+
     }
 
 
@@ -178,12 +216,19 @@ class CvFormEduActivity : BaseMvpActivity<CvFormPresenter>(), CvFormView {
             extend_title_ll.visibility = View.VISIBLE
         }
 
+        val startDate = response.start_date
+        val endDate = response.end_date
+        start_date_tv.text = startDate
+        end_date_tv.text = endDate
+
 
         // 修改备用
         eduRequest.apply {
             this.educational_attainment = schoolName
             this.educational_level_id = degree.id
             this.vocational_course = vocationalCourse
+            this.start_date = startDate
+            this.end_date = endDate
         }
 
         // 处理历史数据是否可提交
@@ -196,29 +241,42 @@ class CvFormEduActivity : BaseMvpActivity<CvFormPresenter>(), CvFormView {
         val school = eduRequest.educational_attainment
         val levelId = eduRequest.educational_level_id
         val course = eduRequest.vocational_course
+        val startDate = eduRequest.start_date
+        val endDate = eduRequest.end_date
 
         if (school.isNotBlank() && levelId != 0) {
 
-
             if (TextUtils.isEmpty(extendTitle)) {
-                save_tv.isClickable = true
-                save_tv.alpha = 1.0f
+                checkDate(startDate, endDate)
+                return
             } else {
                 if (course.isNullOrBlank()) {
                     save_tv.isClickable = false
                     save_tv.alpha = 0.5f
+                    return
                 } else {
-                    save_tv.isClickable = true
-                    save_tv.alpha = 1.0f
+                    checkDate(startDate, endDate)
+                    return
                 }
             }
 
         } else {
             save_tv.isClickable = false
             save_tv.alpha = 0.5f
+            return
         }
 
 
+    }
+
+    private fun checkDate(startDate: String, endDate: String) {
+        if (startDate.isNotBlank() && endDate.isNotBlank()) {
+            save_tv.isClickable = true
+            save_tv.alpha = 1.0f
+        } else {
+            save_tv.isClickable = false
+            save_tv.alpha = 0.5f
+        }
     }
 
 

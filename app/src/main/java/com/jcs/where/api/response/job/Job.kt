@@ -374,7 +374,7 @@ class CreateProfileDetail {
     /** 0未婚 1已婚 */
     var civil_status = 0
 
-    var avatar :String?= ""
+    var avatar: String? = ""
 
 }
 
@@ -415,6 +415,12 @@ class EduDet {
     /** 专业值 */
     var vocational_course: String? = ""
 
+    /** 开始时间 */
+    var start_date = ""
+
+    /** 结束时间 */
+    var end_date = ""
+
 }
 
 /**
@@ -447,6 +453,12 @@ class EduRequest {
 
     /** 专业 */
     var vocational_course: String? = null
+
+    /** 开始时间 */
+    var start_date = ""
+
+    /** 结束时间 */
+    var end_date = ""
 }
 
 /**

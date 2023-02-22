@@ -16,7 +16,7 @@
         android:textAlignment="center"
         android:paddingEnd="@dimen/dp_15"
         android:gravity="center"
-        android:textColor="@color/selector_black_blue"
+        android:textColor="@color/selector_black_pruple"
         android:textSize="@dimen/sp_20"
         tools:text="本科" />
 

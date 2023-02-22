@@ -745,7 +745,7 @@ object BusinessUtils {
         context: Context,
         oldIndex: Int? = 0,
         array: Array<String>,
-        onCountryCodeSelectListener: OnBottomSelectedIndex
+        onCountryCodeSelectListener: OnBottomSelectedIndex,
     ) {
 
         val dialog = BottomSheetDialog(context)
@@ -835,12 +835,7 @@ object BusinessUtils {
                     addItemDecoration(DividerDecoration(ColorUtils.getColor(R.color.grey_F5F5F5), 1, 0, SizeUtils.dp2px(40f)))
                     layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
                 }
-//
-//                val helper1 = PagerSnapHelper()
-//                helper1.attachToRecyclerView(monthRv)
-//
-//                val helper2 = PagerSnapHelper()
-//                helper2.attachToRecyclerView(yearRv)
+
 
                 yearAdapter.setNewInstance(WorkTimeUtil.getAllYear())
                 monthAdapter.setNewInstance(WorkTimeUtil.getAllMonth())
@@ -855,6 +850,54 @@ object BusinessUtils {
                     dialog.dismiss()
 
 
+                }
+                it.findViewById<ImageView>(R.id.close_iv).setOnClickListener {
+                    dialog.dismiss()
+                }
+            }
+
+        return dialog
+
+    }
+
+    @SuppressLint("NotifyDataSetChanged")
+    fun showYearDialog(context: FragmentActivity, listener: OnWorkTimeSelected?, ): BottomDialog? {
+
+        var monthResult = ""
+        var year = ""
+
+        val yearAdapter = WorkTimeAdapter()
+
+        yearAdapter.setOnItemClickListener { _, _, position ->
+
+            yearAdapter.data.forEachIndexed { index, workTime ->
+                workTime.isSelected = index == position
+            }
+            yearAdapter.notifyDataSetChanged()
+            year = yearAdapter.data[position].name
+        }
+
+
+        val dialog = BottomDialog.create(context.supportFragmentManager)
+
+        dialog.setLayoutRes(R.layout.layout_select_year)
+            .setViewListener {
+
+                val yearRv = it.findViewById<RecyclerView>(R.id.year_rv)
+
+                yearRv.apply {
+                    adapter = yearAdapter
+                    addItemDecoration(DividerDecoration(ColorUtils.getColor(R.color.grey_F5F5F5), 1, 0, SizeUtils.dp2px(40f)))
+                    layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
+                }
+                yearAdapter.setNewInstance(WorkTimeUtil.getAllYear())
+
+                year = yearAdapter.data[0].name
+
+                it.findViewById<TextView>(R.id.confirm_tv).setOnClickListener {
+                    val result = year
+                    listener?.onWorkTimeSelected(result)
+                    dialog.dismiss()
                 }
                 it.findViewById<ImageView>(R.id.close_iv).setOnClickListener {
                     dialog.dismiss()

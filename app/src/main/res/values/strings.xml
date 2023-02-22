@@ -1246,5 +1246,7 @@ Gentleman must let go</string>
     <string name="cv_avatar">头像</string>
     <string name="photo_album">从相册选择照片</string>
     <string name="photograph">拍照</string>
+    <string name="admission_date">入学时间</string>
+    <string name="graduation_date">毕业时间</string>
 
 </resources>

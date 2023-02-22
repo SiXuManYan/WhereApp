@@ -50,12 +50,29 @@
     </RelativeLayout>
 
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/year_rv"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="@dimen/dp_222"
-        android:nestedScrollingEnabled="false"
-        tools:itemCount="1" />
+        android:background="@color/white"
+        android:orientation="horizontal">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/month_rv"
+            android:layout_width="@dimen/dp_0"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            tools:itemCount="1" />
+
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/year_rv"
+            android:layout_width="@dimen/dp_0"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:nestedScrollingEnabled="false"
+            tools:itemCount="1" />
+
+    </LinearLayout>
 
 
 </LinearLayout>

@@ -84,7 +84,6 @@ public abstract class BaseFragment extends Fragment {
     public void onHiddenChanged(boolean hidden) {
         super.onHiddenChanged(hidden);
         changeStatusTextColor();
-//        Log.d("BaseFragment", "onHiddenChanged hidden == " + hidden);
 
         isViewVisible = !hidden;
         lazyLoad();

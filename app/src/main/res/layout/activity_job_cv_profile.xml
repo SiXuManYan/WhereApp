@@ -263,6 +263,7 @@
                 android:gravity="center_vertical"
                 android:hint="@string/please_selected"
                 android:maxLines="1"
+                android:ellipsize="marquee"
                 android:paddingStart="@dimen/dp_15"
                 android:paddingEnd="@dimen/dp_15"
                 android:textColor="@color/black_333333"

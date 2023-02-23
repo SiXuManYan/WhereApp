@@ -1,11 +1,13 @@
 package com.jcs.where.features.job.cv
 
 import android.os.Bundle
+import android.view.Gravity
 import android.view.View
 import android.widget.ImageView
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.blankj.utilcode.util.ColorUtils
 import com.blankj.utilcode.util.SizeUtils
+import com.blankj.utilcode.util.ToastUtils
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.listener.OnItemClickListener
 import com.jcs.where.R
@@ -86,11 +88,25 @@ class CvHomeFragment : BaseMvpFragment<CvHomePresenter>(), CvHomeView, OnItemCli
     }
 
     override fun getProfile(response: ProfileDetail?) {
-        if (response == null) {
+
+        response?.let {
+            GlideUtil.load(requireContext(), response.avatar, avatarIv, 24)
+            if (it.pdf_time.isNullOrBlank()) {
+                refresh_time_tv.visibility = View.GONE
+            } else {
+                refresh_time_tv.text = it.pdf_time
+                refresh_time_tv.visibility = View.VISIBLE
+            }
+
+        }
+
+        if (response == null || response.id == 0) {
             create_cv_rl.visibility = View.VISIBLE
             info_ll.visibility = View.GONE
+
             return
         }
+
         profileDetail = response
 
         create_cv_rl.visibility = View.GONE
@@ -106,8 +122,6 @@ class CvHomeFragment : BaseMvpFragment<CvHomePresenter>(), CvHomeView, OnItemCli
 
         (gender + " | " + response.city).also { gender_and_city_tv.text = it }
 
-
-        GlideUtil.load(requireContext(), response.avatar, avatarIv, 24)
 
     }
 
@@ -168,6 +182,7 @@ class CvHomeFragment : BaseMvpFragment<CvHomePresenter>(), CvHomeView, OnItemCli
 
     override fun onEventReceived(baseEvent: BaseEvent<*>) {
         super.onEventReceived(baseEvent)
+
         when (baseEvent.code) {
             EventCode.EVENT_REFRESH_CV_PROFILE ->
                 presenter.getProfile()
@@ -195,6 +210,12 @@ class CvHomeFragment : BaseMvpFragment<CvHomePresenter>(), CvHomeView, OnItemCli
             else -> {}
         }
 
+        ToastUtils.make()
+            .setGravity(Gravity.CENTER, 0, 0)
+            .setBgResource(R.drawable.bg_toast)
+            .setLeftIcon(R.mipmap.ic_check_circle)
+            .setDurationIsLong(true)
+            .show(R.string.update_resume)
 
     }
 

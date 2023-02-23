@@ -206,10 +206,6 @@ class CvFormProfileActivity : BaseMvpActivity<CvFormPresenter>(), CvFormView, On
 
             override fun onDebouncingClick(v: View?) {
 
-                save_tv.isClickable = false
-                Handler(Looper.getMainLooper()).postDelayed({
-                    save_tv.isClickable = true
-                }, 500)
 
 
 
@@ -253,6 +249,10 @@ class CvFormProfileActivity : BaseMvpActivity<CvFormPresenter>(), CvFormView, On
                     civil_status = civilStatus
                 }
 
+                save_tv.isClickable = false
+                Handler(Looper.getMainLooper()).postDelayed({
+                    save_tv.isClickable = true
+                }, 500)
 
                 presenter.handleAvatar(draftProfileId, apply, currentAvatarUrlOrUriPath)
 

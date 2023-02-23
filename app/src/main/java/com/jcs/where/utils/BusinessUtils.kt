@@ -8,6 +8,7 @@ import android.os.Bundle
 import android.text.Spannable
 import android.text.SpannableStringBuilder
 import android.text.style.AbsoluteSizeSpan
+import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -861,7 +862,7 @@ object BusinessUtils {
     }
 
     @SuppressLint("NotifyDataSetChanged")
-    fun showYearDialog(context: FragmentActivity, listener: OnWorkTimeSelected?, ): BottomDialog? {
+    fun showYearDialog(context: FragmentActivity, listener: OnWorkTimeSelected?): BottomDialog? {
 
         var monthResult = ""
         var year = ""
@@ -953,6 +954,16 @@ object BusinessUtils {
         } else {
             view.alpha = 0.5f
         }
+    }
+
+    fun showWhereToas(context: Context) {
+
+        val toast = Toast(context)
+        toast.setGravity(Gravity.CENTER, 0, 0)
+        toast.duration = Toast.LENGTH_LONG
+        toast.view
+
+
 
     }
 

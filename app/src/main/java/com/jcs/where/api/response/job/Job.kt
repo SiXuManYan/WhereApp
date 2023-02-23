@@ -183,6 +183,9 @@ class ProfileDetail() : Parcelable {
     /** 头像 */
     var avatar = ""
 
+    /** pdf 生成时间 */
+    var pdf_time:String? = ""
+
     constructor(parcel: Parcel) : this() {
         id = parcel.readInt()
         gender = parcel.readInt()
@@ -198,6 +201,7 @@ class ProfileDetail() : Parcelable {
         birthday = parcel.readString().toString()
         civil_status = parcel.readInt()
         avatar = parcel.readString().toString()
+        pdf_time = parcel.readString().toString()
     }
 
     override fun writeToParcel(parcel: Parcel, flags: Int) {
@@ -215,6 +219,7 @@ class ProfileDetail() : Parcelable {
         parcel.writeString(birthday)
         parcel.writeInt(civil_status)
         parcel.writeString(avatar)
+        parcel.writeString(pdf_time)
     }
 
     override fun describeContents(): Int {

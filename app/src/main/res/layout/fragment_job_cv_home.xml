@@ -53,7 +53,7 @@
             android:paddingStart="@dimen/dp_16"
             android:paddingEnd="@dimen/dp_16"
             android:visibility="gone"
-            tools:visibility="gone"
+            tools:visibility="visible"
             android:textColor="@color/white"
             android:textSize="@dimen/sp_11"
             app:drawableStartCompat="@mipmap/ic_cv_refresh_time"

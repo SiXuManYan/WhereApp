@@ -71,7 +71,6 @@ class CvFormProfileActivity : BaseMvpActivity<CvFormPresenter>(), CvFormView, On
     val REQUEST_IMAGE_CAPTURE = 1
     val REQUEST_SELECT_IMAGE = 2
     val maxNumPhotosAndVideos = 10
-    val PHOTO_PICKER_MULTI_SELECT_REQUEST_CODE = 2
     var currentAvatarUrlOrUriPath: String? = ""
 
 
@@ -203,11 +202,7 @@ class CvFormProfileActivity : BaseMvpActivity<CvFormPresenter>(), CvFormView, On
 
         save_tv.setOnClickListener(object : ClickUtils.OnDebouncingClickListener(500) {
 
-
             override fun onDebouncingClick(v: View?) {
-
-
-
 
                 requiredEdit.forEach {
                     if (it.text.isNullOrBlank()) {

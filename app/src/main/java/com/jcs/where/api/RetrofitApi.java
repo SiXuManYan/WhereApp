@@ -121,6 +121,7 @@ import com.jcs.where.api.response.integral.IntegralOrderDetail;
 import com.jcs.where.api.response.integral.IntegralPlaceOrderResponse;
 import com.jcs.where.api.response.integral.IntegralRecord;
 import com.jcs.where.api.response.integral.IntegralTag;
+import com.jcs.where.api.response.job.CheckResume;
 import com.jcs.where.api.response.job.CompanyAlbum;
 import com.jcs.where.api.response.job.CompanyInfo;
 import com.jcs.where.api.response.job.CreateCertificate;
@@ -2629,6 +2630,13 @@ public interface RetrofitApi {
      */
     @GET("jobapi/v2/employers")
     Observable<JcsResponse<EmployerEmail>> getEmployersEmail();
+
+
+    /**
+     * 检查简历完整性
+     */
+    @GET("jobapi/v2/resumes/check_resume")
+    Observable<JcsResponse<CheckResume>> checkResume();
 
 
 

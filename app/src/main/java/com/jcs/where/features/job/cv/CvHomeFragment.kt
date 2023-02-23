@@ -2,7 +2,10 @@ package com.jcs.where.features.job.cv
 
 import android.os.Bundle
 import android.view.Gravity
+import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
+import android.widget.Button
 import android.widget.ImageView
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.blankj.utilcode.util.ColorUtils
@@ -10,6 +13,7 @@ import com.blankj.utilcode.util.SizeUtils
 import com.blankj.utilcode.util.ToastUtils
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.listener.OnItemClickListener
+import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.jcs.where.R
 import com.jcs.where.api.response.job.JobExperience
 import com.jcs.where.api.response.job.ProfileDetail
@@ -38,6 +42,7 @@ class CvHomeFragment : BaseMvpFragment<CvHomePresenter>(), CvHomeView, OnItemCli
     private var profileDetail: ProfileDetail? = null
 
     private lateinit var avatarIv: ImageView
+    private var degreeDialog: BottomSheetDialog? = null
 
     override fun getLayoutId() = R.layout.fragment_job_cv_home
 
@@ -85,6 +90,9 @@ class CvHomeFragment : BaseMvpFragment<CvHomePresenter>(), CvHomeView, OnItemCli
                 putParcelable(Constant.PARAM_DATA, profileDetail)
             })
         }
+        check_resume_ll.setOnClickListener {
+            presenter.checkResumeComplete()
+        }
     }
 
     override fun getProfile(response: ProfileDetail?) {
@@ -99,15 +107,13 @@ class CvHomeFragment : BaseMvpFragment<CvHomePresenter>(), CvHomeView, OnItemCli
             }
 
         }
+        profileDetail = response
 
         if (response == null || response.id == 0) {
             create_cv_rl.visibility = View.VISIBLE
             info_ll.visibility = View.GONE
-
             return
         }
-
-        profileDetail = response
 
         create_cv_rl.visibility = View.GONE
         info_ll.visibility = View.VISIBLE
@@ -231,4 +237,35 @@ class CvHomeFragment : BaseMvpFragment<CvHomePresenter>(), CvHomeView, OnItemCli
             mAdapter.removeAt(position)
         }
     }
+
+    override fun resumeComplete(isComplete: Boolean) {
+        if (isComplete) {
+
+        }else {
+            if (degreeDialog != null) {
+                degreeDialog?.show()
+            } else {
+                showDegree()
+            }
+        }
+    }
+
+    private fun showDegree() {
+        val timeDialog = BottomSheetDialog(requireContext())
+        this.degreeDialog = timeDialog
+        val view = LayoutInflater.from(requireContext()).inflate(R.layout.dialog_resume_complete, null)
+        timeDialog.setContentView(view)
+        try {
+            val parent = view.parent as ViewGroup
+            parent.setBackgroundResource(android.R.color.transparent)
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+
+        view.findViewById<Button>(R.id.ok).setOnClickListener {
+            timeDialog.dismiss()
+        }
+        timeDialog.show()
+    }
+
 }

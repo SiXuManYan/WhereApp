@@ -6,6 +6,7 @@ import com.jcs.where.api.ErrorResponse
 import com.jcs.where.api.network.BaseMvpObserver
 import com.jcs.where.api.network.BaseMvpPresenter
 import com.jcs.where.api.network.BaseMvpView
+import com.jcs.where.api.response.job.CheckResume
 import com.jcs.where.api.response.job.JobExperience
 import com.jcs.where.api.response.job.ProfileDetail
 
@@ -16,6 +17,7 @@ import com.jcs.where.api.response.job.ProfileDetail
 interface CvHomeView : BaseMvpView {
     fun getProfile(response: ProfileDetail?)
     fun bindJobExperience(toMutableList: MutableList<JobExperience>)
+    fun resumeComplete(isComplete: Boolean)
 
 }
 
@@ -33,9 +35,17 @@ class CvHomePresenter(private var view: CvHomeView) : BaseMvpPresenter(view) {
             }
 
         })
-
     }
 
+
+    fun checkResumeComplete(){
+        requestApi(mRetrofit.checkResume(), object : BaseMvpObserver<CheckResume>(view) {
+            override fun onSuccess(response: CheckResume) {
+                view.resumeComplete(response.is_complete)
+            }
+
+        })
+    }
 
     /**
      * 工作经历、教育背景

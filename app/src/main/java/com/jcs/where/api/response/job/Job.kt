@@ -599,6 +599,12 @@ class CreateCertificate {
      * "["ssssss","xxxxx"]"
      */
     var images = ""
+}
 
 
+/**
+ * 检查简历完整性
+ */
+class CheckResume {
+    var is_complete  = false
 }

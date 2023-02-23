@@ -1229,4 +1229,6 @@ Gentleman must let go</string>
     <string name="admission_date">Admission Date</string>
     <string name="graduation_date">Graduation Date</string>
     <string name="update_resume">Successfully, Keep your Attached Resume updated</string>
+    <string name="resume_complete_hint">Complete the Online Resume to generate the Attached Resume</string>
+    <string name="preview">预览</string>
 </resources>

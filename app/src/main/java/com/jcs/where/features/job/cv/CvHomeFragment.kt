@@ -1,5 +1,6 @@
 package com.jcs.where.features.job.cv
 
+import android.graphics.Color
 import android.os.Bundle
 import android.view.Gravity
 import android.view.LayoutInflater
@@ -215,13 +216,13 @@ class CvHomeFragment : BaseMvpFragment<CvHomePresenter>(), CvHomeView, OnItemCli
             }
             else -> {}
         }
-
         ToastUtils.make()
-            .setGravity(Gravity.CENTER, 0, 0)
-            .setBgResource(R.drawable.bg_toast)
             .setLeftIcon(R.mipmap.ic_check_circle)
+            .setMode(ToastUtils.MODE.DARK)
+            .setGravity(Gravity.CENTER, 0, 0)
             .setDurationIsLong(true)
             .show(R.string.update_resume)
+
 
     }
 

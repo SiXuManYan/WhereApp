@@ -1254,5 +1254,6 @@ Gentleman must let go</string>
     <string name="age_format">%1$s 岁</string>
     <string name="generated_successfully">生成成功</string>
     <string name="refresh_time_format">已生成附件：%1$s</string>
+    <string name="confirm2">确定</string>
 
 </resources>

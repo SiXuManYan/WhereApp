@@ -122,8 +122,8 @@
     </string-array>
 
     <string-array name="avatarSource">
-        <item>@string/photo_album</item>
         <item>@string/photograph</item>
+        <item>@string/photo_album</item>
     </string-array>
 
 

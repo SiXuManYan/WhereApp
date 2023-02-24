@@ -36,7 +36,7 @@
         android:layout_marginTop="@dimen/dp_4"
         android:background="@drawable/stock_purple_radius_22"
         android:minWidth="@dimen/dp_120"
-        android:text="@string/ok"
+        android:text="@string/confirm2"
         android:textAllCaps="false"
         android:textColor="@color/color_1c1380"
         android:textSize="@dimen/sp_17"

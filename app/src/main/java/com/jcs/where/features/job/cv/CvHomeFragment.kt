@@ -6,7 +6,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
-import android.widget.ImageView
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.blankj.utilcode.util.ColorUtils
 import com.blankj.utilcode.util.SizeUtils
@@ -29,6 +28,7 @@ import com.jcs.where.storage.entity.User
 import com.jcs.where.utils.Constant
 import com.jcs.where.utils.GlideUtil
 import com.jcs.where.widget.list.DividerDecoration
+import de.hdodenhof.circleimageview.CircleImageView
 import kotlinx.android.synthetic.main.fragment_job_cv_home.*
 
 /**
@@ -42,7 +42,7 @@ class CvHomeFragment : BaseMvpFragment<CvHomePresenter>(), CvHomeView, OnItemCli
     /** 个人信息 */
     private var profileDetail: ProfileDetail? = null
 
-    private lateinit var avatarIv: ImageView
+    private lateinit var avatarIv: CircleImageView
     private var degreeDialog: BottomSheetDialog? = null
 
     override fun getLayoutId() = R.layout.fragment_job_cv_home
@@ -103,7 +103,7 @@ class CvHomeFragment : BaseMvpFragment<CvHomePresenter>(), CvHomeView, OnItemCli
             if (it.pdf_time.isNullOrBlank()) {
                 refresh_time_tv.visibility = View.GONE
             } else {
-                refresh_time_tv.text = it.pdf_time
+                refresh_time_tv.text = getString(R.string.refresh_time_format, it.pdf_time)
                 refresh_time_tv.visibility = View.VISIBLE
             }
 
@@ -240,11 +240,11 @@ class CvHomeFragment : BaseMvpFragment<CvHomePresenter>(), CvHomeView, OnItemCli
 
     override fun resumeComplete(isComplete: Boolean) {
         if (isComplete) {
-            startActivity(CvPdfActivity::class.java , Bundle().apply {
+            startActivity(CvPdfActivity::class.java, Bundle().apply {
                 putParcelable(Constant.PARAM_DATA, profileDetail)
-                putParcelableArrayList(Constant.PARAM_CV , ArrayList(mAdapter.data))
+                putParcelableArrayList(Constant.PARAM_CV, ArrayList(mAdapter.data))
             })
-        }else {
+        } else {
             if (degreeDialog != null) {
                 degreeDialog?.show()
             } else {

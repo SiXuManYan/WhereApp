@@ -4,6 +4,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.ImageView
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.blankj.utilcode.util.ColorUtils
 import com.google.android.material.bottomsheet.BottomSheetDialog
@@ -164,11 +165,12 @@ class CvPdfActivity : BaseMvpActivity<CvPdfPresenter>(), CvPdfView {
         }
 
 
-        view.findViewById<Button>(R.id.close_iv).setOnClickListener {
+        view.findViewById<ImageView>(R.id.close_iv).setOnClickListener {
             timeDialog.dismiss()
         }
         view.findViewById<Button>(R.id.ok).setOnClickListener {
             timeDialog.dismiss()
+            finish()
         }
         timeDialog.show()
     }

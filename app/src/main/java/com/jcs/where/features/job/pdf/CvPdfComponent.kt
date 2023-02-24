@@ -18,7 +18,7 @@ class CvPdfPresenter(private var view: CvPdfView) : BaseMvpPresenter(view){
 
     fun generatePdf(){
         requestApi(mRetrofit.generatePdf() , object :BaseMvpObserver<JsonElement>(view) {
-            override fun onSuccess(response: JsonElement) {
+            override fun onSuccess(response: JsonElement?) {
                 view.generateSuccess()
             }
 

@@ -102,6 +102,7 @@ public class Constant {
     public static final String PARAM_HOTEL_TYPE_IDS = "hotelTypeIds";
     public static final String PARAM_NEWS_ID = "newsId";
     public static final String PARAM_DATA = "param_data";
+    public static final String PARAM_CV = "param_cv";
     public static final String PARAM_TOTAL_PRICE = "param_total_price";
     public static final String PARAM_NAME = "param_name";
     public static final String PARAM_BANK_SHORT_NAME = "param_bank_short_name";

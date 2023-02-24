@@ -2603,6 +2603,7 @@ public interface RetrofitApi {
     );
 
 
+
     /**
      * 修改简历证书
      *
@@ -2638,6 +2639,12 @@ public interface RetrofitApi {
     @GET("jobapi/v2/resumes/check_resume")
     Observable<JcsResponse<CheckResume>> checkResume();
 
+
+    /**
+     * 简历生成Pdf
+     */
+    @POST("jobapi/v2/resumes/pdf")
+    Observable<JcsResponse<JsonElement>> generatePdf();
 
 
 }

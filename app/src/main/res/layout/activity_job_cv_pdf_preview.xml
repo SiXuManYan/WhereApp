@@ -15,11 +15,45 @@
 
 
     <androidx.recyclerview.widget.RecyclerView
-        android:layout_below="@+id/jcsTitle"
+        android:id="@+id/content_rv"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:layout_above="@+id/bottom_v"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/jcsTitle" />
 
 
+    <View
+        android:id="@+id/bottom_v"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_4"
+        android:layout_above="@+id/bottom_container_rl"
+        android:background="@drawable/shape_navigation_bar_gray" />
 
+    <LinearLayout
+        android:id="@+id/bottom_container_rl"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:background="@color/white"
+        android:gravity="center"
+        android:paddingStart="@dimen/dp_15"
+        android:paddingTop="@dimen/dp_10"
+        android:paddingEnd="@dimen/dp_15"
+        android:paddingBottom="@dimen/dp_10">
+
+
+        <Button
+            android:id="@+id/apply_tv"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_44"
+            android:background="@drawable/shape_purple_radius_22"
+            android:gravity="center"
+            android:textAllCaps="false"
+            android:textColor="@color/white"
+            android:textSize="@dimen/sp_14"
+            android:textStyle="bold"
+            android:text="@string/generate_attached_resume" />
+
+    </LinearLayout>
 
 </RelativeLayout>

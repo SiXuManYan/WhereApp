@@ -1,67 +1,67 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/job_root_ll"
     android:layout_width="match_parent"
+    android:id="@+id/job_root_ll"
     android:layout_height="wrap_content"
     android:background="?android:attr/selectableItemBackground"
     android:orientation="vertical"
     android:padding="@dimen/dp_16">
 
     <TextView
-        android:id="@+id/school_tv"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:ellipsize="end"
-        android:maxLines="1"
-        android:textColor="@color/black_333333"
-        android:textSize="@dimen/sp_16"
-        android:textStyle="bold"
-        tools:text="金智科技" />
-
-
-    <TextView
-        android:id="@+id/degree_tv"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/dp_8"
-        android:ellipsize="end"
-        android:lineSpacingMultiplier="1.2"
-        android:maxLines="1"
-        android:textColor="@color/grey_666666"
-        android:textSize="@dimen/sp_14"
-        tools:text="@tools:sample/full_names" />
-
-
-
-    <TextView
         android:id="@+id/create_time_tv"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/dp_8"
         android:ellipsize="end"
-        android:lineSpacingMultiplier="1.2"
+        android:textStyle="bold"
         android:maxLines="1"
-        android:textColor="@color/grey_999999"
-        android:visibility="gone"
-        tools:visibility="visible"
-        android:textSize="@dimen/sp_12"
+        android:textColor="@color/black_333333"
+        android:textSize="@dimen/sp_16"
         tools:text="2018.04.11-2018.04.11" />
 
 
     <TextView
-        android:id="@+id/course_tv"
+        android:id="@+id/company_tv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dp_16"
+        android:ellipsize="end"
+        android:lineSpacingMultiplier="1.2"
+        android:textColor="@color/black_333333"
+        android:textSize="@dimen/sp_14"
+        tools:text="重庆嘻嘻哈哈科技有限公司重庆嘻嘻哈哈科技有限公司重庆嘻嘻哈哈科技有限公司重庆嘻嘻哈哈科技有限公司" />
+
+
+    <TextView
+        android:id="@+id/job_tv"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/dp_8"
         android:ellipsize="end"
-        android:visibility="gone"
-        tools:visibility="visible"
         android:lineSpacingMultiplier="1.2"
         android:maxLines="1"
         android:textColor="@color/grey_666666"
         android:textSize="@dimen/sp_14"
-        tools:text="@tools:sample/full_names" />
+        tools:text="UI Designer" />
+
+
+    <TextView
+        android:id="@+id/desc_tv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dp_8"
+        android:ellipsize="end"
+        android:lineSpacingMultiplier="1.2"
+        android:textColor="@color/grey_666666"
+        android:textSize="@dimen/sp_12"
+        tools:text="宝贝质量很好，很喜欢。经常网购，总有大量包裹收，所以在这段时间里我总是不去评价或者随便写写！但是我又觉得好像一点对不住那些辛苦工作的卖家客服，于是我写下了小段话给我觉得能拿到我五星好评的卖家的宝贝评价，里面以示感谢和尊敬！" />
+
+
+
+
+
+
+
 
 
 </LinearLayout>

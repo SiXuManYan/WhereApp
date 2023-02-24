@@ -37,7 +37,9 @@ class CvHomePresenter(private var view: CvHomeView) : BaseMvpPresenter(view) {
         })
     }
 
-
+    /**
+     * 检查简历是否完善性
+     */
     fun checkResumeComplete(){
         requestApi(mRetrofit.checkResume(), object : BaseMvpObserver<CheckResume>(view) {
             override fun onSuccess(response: CheckResume) {

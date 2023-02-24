@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/color_EDF3FF"
+    android:orientation="vertical"
+    android:paddingStart="@dimen/dp_16"
+    android:paddingTop="@dimen/dp_16"
+    android:paddingEnd="@dimen/dp_16"
+    android:paddingBottom="@dimen/dp_20">
+
+
+    <ImageView
+        android:id="@+id/avatar_iv"
+        android:layout_width="@dimen/dp_48"
+        android:layout_height="@dimen/dp_48"
+        android:layout_alignParentEnd="true"
+        android:layout_centerHorizontal="true"
+        android:layout_gravity="center_horizontal"
+        tools:src="@tools:sample/avatars" />
+
+
+    <TextView
+        android:id="@+id/name_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:textColor="@color/black_333333"
+        android:textSize="@dimen/sp_22"
+        android:textStyle="bold"
+        tools:text="锅一甩琴一弹这把我是真滴烦" />
+
+
+    <TextView
+        android:id="@+id/age_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/name_tv"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="@dimen/dp_12"
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:textColor="@color/grey_666666"
+        android:textSize="@dimen/sp_12"
+        tools:text="27 years old" />
+
+
+    <TextView
+        android:id="@+id/info_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/age_tv"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="@dimen/dp_12"
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:textColor="@color/grey_666666"
+        android:textSize="@dimen/sp_12"
+        tools:text="Female | DaLian | Married" />
+
+    <TextView
+        android:id="@+id/phone_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/info_tv"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="@dimen/dp_21"
+        android:drawablePadding="@dimen/dp_8"
+        android:ellipsize="end"
+        android:gravity="center_vertical"
+        android:includeFontPadding="false"
+        android:maxLines="1"
+        android:textColor="@color/black_333333"
+        android:textSize="@dimen/sp_12"
+        app:drawableStartCompat="@mipmap/ic_pdf_phone"
+        tools:text="0411-4654564564165" />
+
+    <TextView
+        android:id="@+id/email_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/phone_tv"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="@dimen/dp_12"
+        android:drawablePadding="@dimen/dp_8"
+        android:ellipsize="end"
+        android:gravity="center_vertical"
+        android:includeFontPadding="false"
+        android:maxLines="1"
+        android:textColor="@color/black_333333"
+        android:textSize="@dimen/sp_12"
+        app:drawableStartCompat="@mipmap/ic_pdf_email"
+        tools:text="13267856574@qq.com" />
+
+
+</RelativeLayout>

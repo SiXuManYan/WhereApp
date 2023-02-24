@@ -24,6 +24,7 @@ import com.jcs.where.features.job.form.certificate.CertificateFromActivity
 import com.jcs.where.features.job.form.edu.CvFormEduActivity
 import com.jcs.where.features.job.form.experience.CvFormJobExperienceActivity
 import com.jcs.where.features.job.form.profile.CvFormProfileActivity
+import com.jcs.where.features.job.pdf.CvPdfActivity
 import com.jcs.where.storage.entity.User
 import com.jcs.where.utils.Constant
 import com.jcs.where.utils.GlideUtil
@@ -57,10 +58,10 @@ class CvHomeFragment : BaseMvpFragment<CvHomePresenter>(), CvHomeView, OnItemCli
             setOnItemClickListener(this@CvHomeFragment)
         }
 
-        val gridLayoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
+        val manager = LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
         content_rv.apply {
             adapter = mAdapter
-            layoutManager = gridLayoutManager
+            layoutManager = manager
             addItemDecoration(DividerDecoration(ColorUtils.getColor(R.color.grey_F5F5F5),
                 1,
                 SizeUtils.dp2px(16f),
@@ -90,7 +91,7 @@ class CvHomeFragment : BaseMvpFragment<CvHomePresenter>(), CvHomeView, OnItemCli
                 putParcelable(Constant.PARAM_DATA, profileDetail)
             })
         }
-        check_resume_ll.setOnClickListener {
+        check_resume_fl.setOnClickListener {
             presenter.checkResumeComplete()
         }
     }
@@ -126,9 +127,8 @@ class CvHomeFragment : BaseMvpFragment<CvHomePresenter>(), CvHomeView, OnItemCli
             else -> ""
         }
 
-        (gender + " | " + response.city).also { gender_and_city_tv.text = it }
-
-
+        gender_tv.text = gender
+        city_tv.text = response.city
     }
 
     override fun bindJobExperience(toMutableList: MutableList<JobExperience>) {
@@ -240,7 +240,10 @@ class CvHomeFragment : BaseMvpFragment<CvHomePresenter>(), CvHomeView, OnItemCli
 
     override fun resumeComplete(isComplete: Boolean) {
         if (isComplete) {
-
+            startActivity(CvPdfActivity::class.java , Bundle().apply {
+                putParcelable(Constant.PARAM_DATA, profileDetail)
+                putParcelableArrayList(Constant.PARAM_CV , ArrayList(mAdapter.data))
+            })
         }else {
             if (degreeDialog != null) {
                 degreeDialog?.show()

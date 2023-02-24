@@ -52,15 +52,15 @@
             android:maxLines="1"
             android:paddingStart="@dimen/dp_16"
             android:paddingEnd="@dimen/dp_16"
-            android:visibility="gone"
-            tools:visibility="visible"
             android:textColor="@color/white"
             android:textSize="@dimen/sp_11"
+            android:visibility="gone"
             app:drawableStartCompat="@mipmap/ic_cv_refresh_time"
-            tools:text="Generated Attached Resume: 2023-02-16 15:21:02" />
+            tools:text="Generated Attached Resume: 2023-02-16 15:21:02"
+            tools:visibility="visible" />
 
 
-        <ImageView
+        <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/avatar_iv"
             android:layout_width="@dimen/dp_48"
             android:layout_height="@dimen/dp_48"
@@ -68,6 +68,9 @@
             android:layout_centerHorizontal="true"
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="@dimen/dp_8"
+            android:scaleType="centerCrop"
+            app:civ_border_color="@color/white"
+            app:civ_border_width="@dimen/dp_1"
             tools:src="@tools:sample/avatars" />
 
 
@@ -79,7 +82,7 @@
             android:layout_marginTop="@dimen/dp_12"
             android:layout_marginBottom="@dimen/dp_28"
             android:visibility="gone"
-            tools:visibility="visible">
+            tools:visibility="gone">
 
             <ImageView
                 android:id="@+id/create_cv_iv"
@@ -126,7 +129,7 @@
             android:paddingStart="@dimen/dp_16"
             android:paddingTop="@dimen/dp_12"
             android:paddingEnd="@dimen/dp_16"
-            android:paddingBottom="@dimen/dp_20"
+            android:paddingBottom="@dimen/dp_7"
             android:visibility="gone"
             tools:visibility="visible">
 
@@ -145,46 +148,89 @@
                 tools:text="锅一甩琴一弹这把我是真滴烦" />
 
 
-            <TextView
-                android:id="@+id/gender_and_city_tv"
+            <RelativeLayout
+                android:id="@+id/gender_and_city_rl"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dp_5">
+
+
+                <TextView
+                    android:id="@+id/gender_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_toStartOf="@+id/split_v"
+                    android:ellipsize="end"
+                    android:maxLines="1"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/sp_12"
+                    tools:text="Female" />
+
+
+                <View
+                    android:id="@+id/split_v"
+                    android:layout_width="@dimen/dp_1"
+                    android:layout_height="@dimen/dp_12"
+                    android:layout_centerInParent="true"
+                    android:layout_marginStart="@dimen/dp_5"
+                    android:layout_marginEnd="@dimen/dp_5"
+                    android:background="@color/white" />
+
+                <TextView
+                    android:id="@+id/city_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_toEndOf="@+id/split_v"
+                    android:ellipsize="end"
+                    android:maxLines="1"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/sp_12"
+                    tools:text="DaLian " />
+
+            </RelativeLayout>
+
+
+            <FrameLayout
+                android:id="@+id/check_resume_fl"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
-                android:layout_marginTop="@dimen/dp_5"
-                android:ellipsize="end"
-                android:maxLines="1"
-                android:textColor="@color/white"
-                android:textSize="@dimen/sp_12"
-                tools:text="Female | DaLian " />
+                android:background="?android:attr/selectableItemBackground"
+                android:paddingStart="@dimen/dp_5"
+                android:paddingTop="@dimen/dp_13"
+                android:paddingEnd="@dimen/dp_5"
+                android:paddingBottom="@dimen/dp_13">
 
-            <LinearLayout
-                android:id="@+id/check_resume_ll"
-                android:layout_width="wrap_content"
-                android:layout_height="@dimen/dp_24"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginTop="@dimen/dp_13"
-                android:background="@drawable/stock_white_radius_16"
-                android:gravity="center_vertical"
-                android:orientation="horizontal"
-                android:paddingStart="@dimen/dp_10"
-                android:paddingEnd="@dimen/dp_10">
+                <LinearLayout
 
-                <ImageView
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@mipmap/ic_cv_eyes" />
+                    android:layout_height="@dimen/dp_24"
+                    android:background="@drawable/stock_white_radius_16"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:paddingStart="@dimen/dp_10"
+                    android:paddingEnd="@dimen/dp_10">
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/dp_4"
-                    android:ellipsize="end"
-                    android:maxLines="1"
-                    android:text="@string/generate_attached_resume"
-                    android:textColor="@color/white"
-                    android:textSize="@dimen/sp_12" />
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@mipmap/ic_cv_eyes" />
 
-            </LinearLayout>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/dp_4"
+                        android:ellipsize="end"
+                        android:maxLines="1"
+                        android:text="@string/generate_attached_resume"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/sp_12" />
+
+                </LinearLayout>
+
+            </FrameLayout>
 
 
         </LinearLayout>

@@ -1251,5 +1251,7 @@ Gentleman must let go</string>
     <string name="update_resume">保存成功，记得更新附件简历</string>
     <string name="resume_complete_hint">生成 附件简历 需完善 在线简历</string>
     <string name="preview">预览</string>
+    <string name="age_format">%1$s 岁</string>
+    <string name="generated_successfully">生成成功</string>
 
 </resources>

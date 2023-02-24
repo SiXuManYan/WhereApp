@@ -5,6 +5,8 @@ import android.text.TextUtils;
 import com.blankj.utilcode.constant.TimeConstants;
 
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.Period;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -377,5 +379,28 @@ public class TimeUtil {
         return week;
     }
 
+
+    /**
+     * Method to extract the user's age from the entered Date of Birth.
+     *
+     *
+     * @return ageS String The user's age in years based on the supplied DoB.
+     */
+    public static String getAge(int year, int month, int day){
+        Calendar dob = Calendar.getInstance();
+        Calendar today = Calendar.getInstance();
+
+        dob.set(year, month, day);
+
+        int age = today.get(Calendar.YEAR) - dob.get(Calendar.YEAR);
+
+        if (today.get(Calendar.DAY_OF_YEAR) < dob.get(Calendar.DAY_OF_YEAR)){
+            age--;
+        }
+
+        Integer ageInt = Integer.valueOf(age);
+
+        return ageInt.toString();
+    }
 
 }

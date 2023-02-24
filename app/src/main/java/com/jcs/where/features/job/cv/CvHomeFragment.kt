@@ -128,8 +128,7 @@ class CvHomeFragment : BaseMvpFragment<CvHomePresenter>(), CvHomeView, OnItemCli
             else -> ""
         }
 
-        gender_tv.text = gender
-        city_tv.text = response.city
+        (gender + " | " + response.city).also { gender_tv.text = it }
     }
 
     override fun bindJobExperience(toMutableList: MutableList<JobExperience>) {

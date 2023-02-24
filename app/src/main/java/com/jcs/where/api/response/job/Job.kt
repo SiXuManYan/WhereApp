@@ -374,7 +374,7 @@ class JobExperience() : Parcelable, MultiItemEntity {
         var TYPE_CERTIFICATION_PDF = 6
 
         /** 标题 PDF*/
-        var TYPE_TITLE_PDF = 1000
+        var TYPE_TITLE_PDF = 2000
 
 
 

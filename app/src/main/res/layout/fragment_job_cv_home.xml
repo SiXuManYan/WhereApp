@@ -148,48 +148,17 @@
                 tools:text="锅一甩琴一弹这把我是真滴烦" />
 
 
-            <RelativeLayout
-                android:id="@+id/gender_and_city_rl"
-                android:layout_width="match_parent"
+            <TextView
+                android:id="@+id/gender_tv"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/dp_5">
-
-
-                <TextView
-                    android:id="@+id/gender_tv"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_horizontal"
-                    android:layout_toStartOf="@+id/split_v"
-                    android:ellipsize="end"
-                    android:maxLines="1"
-                    android:textColor="@color/white"
-                    android:textSize="@dimen/sp_12"
-                    tools:text="Female" />
-
-
-                <View
-                    android:id="@+id/split_v"
-                    android:layout_width="@dimen/dp_1"
-                    android:layout_height="@dimen/dp_12"
-                    android:layout_centerInParent="true"
-                    android:layout_marginStart="@dimen/dp_5"
-                    android:layout_marginEnd="@dimen/dp_5"
-                    android:background="@color/white" />
-
-                <TextView
-                    android:id="@+id/city_tv"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_horizontal"
-                    android:layout_toEndOf="@+id/split_v"
-                    android:ellipsize="end"
-                    android:maxLines="1"
-                    android:textColor="@color/white"
-                    android:textSize="@dimen/sp_12"
-                    tools:text="DaLian " />
-
-            </RelativeLayout>
+                android:layout_marginTop="@dimen/dp_5"
+                android:layout_gravity="center_horizontal"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:textColor="@color/white"
+                android:textSize="@dimen/sp_12"
+                tools:text="Female" />
 
 
             <FrameLayout

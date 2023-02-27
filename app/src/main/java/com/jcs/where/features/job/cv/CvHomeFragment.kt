@@ -1,6 +1,8 @@
 package com.jcs.where.features.job.cv
 
 import android.os.Bundle
+import android.text.SpannableStringBuilder
+import android.text.style.ForegroundColorSpan
 import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
@@ -261,12 +263,24 @@ class CvHomeFragment : BaseMvpFragment<CvHomePresenter>(), CvHomeView, OnItemCli
             e.printStackTrace()
         }
         val contentTv = view.findViewById<TextView>(R.id.content_tv)
-        contentTv.text = when (model) {
+
+        val modelStr = when (model) {
             1 -> getString(R.string.complete_personal)
             2 -> getString(R.string.complete_edu)
             3 -> getString(R.string.complete_job)
             else -> ""
         }
+
+
+        val result = getString(R.string.complete_format, modelStr)
+        val start = result.indexOf(modelStr)
+
+        val builder = SpannableStringBuilder(result)
+        builder.setSpan(ForegroundColorSpan(ColorUtils.getColor(R.color.blue_377BFF)),
+            start,
+            start + modelStr.length,
+            SpannableStringBuilder.SPAN_EXCLUSIVE_EXCLUSIVE)
+        contentTv.text = builder
 
         view.findViewById<Button>(R.id.ok).setOnClickListener {
             timeDialog.dismiss()

@@ -20,13 +20,12 @@
     <TextView
         android:id="@+id/content_tv"
         android:layout_width="match_parent"
-        android:textColor="@color/black_333333"
         android:lineSpacingMultiplier="1.2"
         android:layout_marginTop="@dimen/dp_24"
         android:layout_marginBottom="@dimen/dp_20"
         android:textSize="@dimen/sp_16"
         android:gravity="center"
-        tools:text="@string/complete_personal"
+        tools:text="@string/complete_job"
         android:layout_height="wrap_content"/>
 
 

@@ -1161,10 +1161,10 @@ Gentleman must let go</string>
     <string name="type_goods">兑换商品</string>
     <string name="pay_error_hint_system_update">系统升级中，请稍后重试</string>
 
-<!--    Please enter a DITO number
-    Please enter a Globe number
-    Please enter a Prepaid Globe number
-    Please enter a Smart number-->
+    <!--    Please enter a DITO number
+        Please enter a Globe number
+        Please enter a Prepaid Globe number
+        Please enter a Smart number-->
 
     <string name="channel_hint_format">请输入 %1$s 的号码</string>
     <string name="salary">Salary</string>
@@ -1257,9 +1257,13 @@ Gentleman must let go</string>
     <string name="confirm2">确定</string>
     <string name="legal_time">请正确填写时间</string>
     <string name="generate">生成</string>
-    <string name="complete_personal"><font color='#333333'>生成&#160;附件简历&#160;需完善&#160;</font><font color='#377BFF'>个人信息</font></string>
-    <string name="complete_job"><font color='#333333'>生成&#160;附件简历&#160;需完善&#160;</font><font color='#377BFF'>工作经历信息</font></string>
-    <string name="complete_edu"><font color='#333333'>生成&#160;附件简历&#160;需完善&#160;</font><font color='#377BFF'>教育背景信息</font></string>
+
+
+    <string name="complete_personal">个人信息</string>
+    <string name="complete_job">工作经历信息</string>
+    <string name="complete_edu">教育背景信息</string>
+
+    <string name="complete_format">生成&#160;附件简历&#160;需完善&#160;%1$s</string>
 
 
 </resources>

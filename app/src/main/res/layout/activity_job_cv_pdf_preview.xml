@@ -52,7 +52,7 @@
             android:textColor="@color/white"
             android:textSize="@dimen/sp_14"
             android:textStyle="bold"
-            android:text="@string/generate_attached_resume" />
+            android:text="@string/generate" />
 
     </LinearLayout>
 

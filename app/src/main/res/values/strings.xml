@@ -1256,5 +1256,6 @@ Gentleman must let go</string>
     <string name="refresh_time_format">已生成附件：%1$s</string>
     <string name="confirm2">确定</string>
     <string name="legal_time">请正确填写时间</string>
+    <string name="generate">生成</string>
 
 </resources>

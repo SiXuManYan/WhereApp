@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.blankj.utilcode.util.ClickUtils
 import com.blankj.utilcode.util.ColorUtils
 import com.blankj.utilcode.util.SizeUtils
+import com.blankj.utilcode.util.ToastUtils
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.jcs.where.R
 import com.jcs.where.api.response.job.Degree
@@ -154,11 +155,7 @@ class CvFormEduActivity : BaseMvpActivity<CvFormPresenter>(), CvFormView {
             }
         }
 
-        save_tv.setOnClickListener(object : ClickUtils.OnDebouncingClickListener(500) {
-            override fun onDebouncingClick(v: View?) {
-                presenter.handleSaveEdu(draftEduId, eduRequest)
-            }
-        })
+
 
         delete_tv.setOnClickListener {
             AlertDialog.Builder(this, R.style.JobAlertDialogTheme)
@@ -183,6 +180,21 @@ class CvFormEduActivity : BaseMvpActivity<CvFormPresenter>(), CvFormView {
         end_date_tv.setOnClickListener {
             endDialog?.show()
         }
+
+        save_tv.setOnClickListener(object : ClickUtils.OnDebouncingClickListener(500) {
+            override fun onDebouncingClick(v: View?) {
+
+                val startDate = eduRequest.start_date
+                val endDate = eduRequest.end_date
+
+                if (!BusinessUtils.checkDateLegal(startDate, endDate,"yyyy")) {
+                    ToastUtils.showShort(R.string.legal_time)
+                    return
+                }
+
+                presenter.handleSaveEdu(draftEduId, eduRequest)
+            }
+        })
 
     }
 

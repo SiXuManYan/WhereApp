@@ -1235,4 +1235,5 @@ Gentleman must let go</string>
     <string name="generated_successfully">Generated successfully</string>
     <string name="refresh_time_format">Generated Attached Resume:&#160;%1$s</string>
     <string name="confirm2">Sure</string>
+    <string name="legal_time">Please fill in the time correctly</string>
 </resources>

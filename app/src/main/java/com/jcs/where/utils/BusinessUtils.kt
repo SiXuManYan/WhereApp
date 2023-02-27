@@ -790,7 +790,7 @@ object BusinessUtils {
 
 
     @SuppressLint("NotifyDataSetChanged")
-    fun showWorkDialog2(context: FragmentActivity, listener: OnWorkTimeSelected?): BottomDialog? {
+    fun showWorkDialog(context: FragmentActivity, listener: OnWorkTimeSelected?): BottomDialog? {
 
         var month = ""
         var year = ""
@@ -804,7 +804,13 @@ object BusinessUtils {
                 workTime.isSelected = index == position
             }
             monthAdapter.notifyDataSetChanged()
-            month = (monthAdapter.data[position].monthIndex + 1).toString()
+            val monthIndex = monthAdapter.data[position].monthIndex + 1
+            month = if (monthIndex < 10) {
+                "0$monthIndex"
+            } else {
+                monthIndex.toString()
+            }
+
         }
 
         yearAdapter.setOnItemClickListener { _, _, position ->
@@ -819,7 +825,7 @@ object BusinessUtils {
 
         val dialog = BottomDialog.create(context.supportFragmentManager)
 
-        dialog.setLayoutRes(R.layout.layout_select_year)
+        dialog.setLayoutRes(R.layout.layout_select_year_month)
             .setViewListener {
 
                 val monthRv = it.findViewById<RecyclerView>(R.id.month_rv)
@@ -858,13 +864,27 @@ object BusinessUtils {
             }
 
         return dialog
-
     }
+
+    fun checkDateLegal(startStr: String, endStr: String, format: String): Boolean {
+        var legal = false
+
+        val start = startStr.replace(".", "-")
+        val end = endStr.replace(".", "-")
+
+        val startDate = TimeUtils.string2Date(start, format)
+        val endDate = TimeUtils.string2Date(end, format)
+
+        if (startDate <= endDate) {
+            legal = true
+        }
+        return legal
+    }
+
 
     @SuppressLint("NotifyDataSetChanged")
     fun showYearDialog(context: FragmentActivity, listener: OnWorkTimeSelected?): BottomDialog? {
 
-        var monthResult = ""
         var year = ""
 
         val yearAdapter = WorkTimeAdapter()
@@ -962,7 +982,6 @@ object BusinessUtils {
         toast.setGravity(Gravity.CENTER, 0, 0)
         toast.duration = Toast.LENGTH_LONG
         toast.view
-
 
 
     }

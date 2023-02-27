@@ -216,6 +216,7 @@ class CvHomeFragment : BaseMvpFragment<CvHomePresenter>(), CvHomeView, OnItemCli
             else -> {}
         }
         ToastUtils.make()
+            .setNotUseSystemToast()
             .setLeftIcon(R.mipmap.ic_check_circle)
             .setMode(ToastUtils.MODE.DARK)
             .setGravity(Gravity.CENTER, 0, 0)

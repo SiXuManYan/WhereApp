@@ -63,7 +63,7 @@ class CvFormJobExperienceActivity : BaseMvpActivity<CvFormPresenter>(), CvFormVi
             start_date_tv.text = it.start_date
             end_date_tv.text = it.end_date
             new_experience_iv.visibility = View.VISIBLE
-            if (draftExperienceId>0) {
+            if (draftExperienceId > 0) {
                 delete_tv.visibility = View.VISIBLE
             }
         }
@@ -76,13 +76,13 @@ class CvFormJobExperienceActivity : BaseMvpActivity<CvFormPresenter>(), CvFormVi
         requiredEdit.add(job_title_et)
         requiredEdit.add(job_desc_et)
 
-        startDialog = BusinessUtils.showWorkDialog2(this, object : OnWorkTimeSelected {
+        startDialog = BusinessUtils.showWorkDialog(this, object : OnWorkTimeSelected {
             override fun onWorkTimeSelected(string: String) {
                 start_date_tv.text = string
             }
         })
 
-        endDialog = BusinessUtils.showWorkDialog2(this, object : OnWorkTimeSelected {
+        endDialog = BusinessUtils.showWorkDialog(this, object : OnWorkTimeSelected {
             override fun onWorkTimeSelected(string: String) {
                 end_date_tv.text = string
             }
@@ -106,8 +106,6 @@ class CvFormJobExperienceActivity : BaseMvpActivity<CvFormPresenter>(), CvFormVi
 
             override fun onDebouncingClick(v: View?) {
 
-                save_tv.isClickable = false
-
                 requiredEdit.forEach {
                     if (it.text.isNullOrBlank()) {
                         ToastUtils.showShort(R.string.please_enter)
@@ -115,24 +113,34 @@ class CvFormJobExperienceActivity : BaseMvpActivity<CvFormPresenter>(), CvFormVi
                     }
                 }
 
-                if (start_date_tv.text.isNullOrBlank() || end_date_tv.text.isNullOrBlank()) {
+                val startDate = start_date_tv.text.toString().trim()
+                val endDate = end_date_tv.text.toString().trim()
+                if (startDate.isBlank() || endDate.isBlank()) {
                     ToastUtils.showShort("Please select date")
                     return
                 }
 
+                if (!BusinessUtils.checkDateLegal(startDate, endDate,"yyyy-MM")) {
+                    ToastUtils.showShort(R.string.legal_time)
+                    return
+                }
+
+
                 val apply = CreateJobExperience().apply {
                     company = company_name_et.text.toString().trim()
                     job_title = job_title_et.text.toString().trim()
-                    start_date = start_date_tv.text.toString().trim()
-                    end_date = end_date_tv.text.toString().trim()
+                    start_date = startDate
+                    end_date = endDate
                     job_desc = job_desc_et.text.toString().trim()
                 }
 
-                presenter.handleExperiences(draftExperienceId, apply)
-
+                save_tv.isClickable = false
                 Handler(Looper.getMainLooper()).postDelayed({
                     save_tv.isClickable = true
                 }, 500)
+
+                presenter.handleExperiences(draftExperienceId, apply)
+
             }
 
         })
@@ -144,7 +152,7 @@ class CvFormJobExperienceActivity : BaseMvpActivity<CvFormPresenter>(), CvFormVi
 
 
         delete_tv.setOnClickListener {
-          AlertDialog.Builder(this, R.style.JobAlertDialogTheme)
+            AlertDialog.Builder(this, R.style.JobAlertDialogTheme)
                 .setCancelable(false)
                 .setTitle(R.string.hint)
                 .setMessage(R.string.delete_hint)
@@ -186,7 +194,7 @@ class CvFormJobExperienceActivity : BaseMvpActivity<CvFormPresenter>(), CvFormVi
     }
 
     override fun deleteJobExperienceSuccess() {
-        EventBus.getDefault().post(BaseEvent(EventCode.EVENT_DELETE_CV_EXPERIENCE ,draftExperienceId ))
+        EventBus.getDefault().post(BaseEvent(EventCode.EVENT_DELETE_CV_EXPERIENCE, draftExperienceId))
         finish()
     }
 

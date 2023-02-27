@@ -7,6 +7,7 @@ import android.widget.RelativeLayout
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.blankj.utilcode.util.ColorUtils
+import com.blankj.utilcode.util.StringUtils
 import com.blankj.utilcode.util.ToastUtils
 import com.chad.library.adapter.base.BaseMultiItemQuickAdapter
 import com.chad.library.adapter.base.module.LoadMoreModule
@@ -40,7 +41,16 @@ class JobHomeAdapter : BaseMultiItemQuickAdapter<Job, BaseViewHolder>(), LoadMor
         if (holder.itemViewType != Job.TYPE_TITLE) {
             holder.setText(R.id.company_tv, item.company)
             holder.setText(R.id.job_tv, item.job_title)
-            holder.setText(R.id.salary_tv, item.salary)
+
+            val salaryTv = holder.getView<TextView>(R.id.salary_tv)
+            val salary = item.salary
+            if (salary == StringUtils.getString(R.string.negotiable)) {
+                salaryTv.visibility = View.GONE
+            }else {
+                salaryTv.text = salary
+                salaryTv.visibility = View.VISIBLE
+            }
+
             holder.setText(R.id.city_tv, item.city)
             holder.setText(R.id.create_time_tv, item.created_at)
             val tag_rv = holder.getView<RecyclerView>(R.id.tag_rv)

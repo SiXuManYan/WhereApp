@@ -86,6 +86,9 @@ class Job : MultiItemEntity {
      */
     var status = 0
 
+    /**  0不限 1月薪 2日薪 3时薪 4面议薪资 */
+    var salary_type = 0
+
 
     /**
      * 列表类型

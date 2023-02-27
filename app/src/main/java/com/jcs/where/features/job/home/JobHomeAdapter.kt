@@ -7,7 +7,6 @@ import android.widget.RelativeLayout
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.blankj.utilcode.util.ColorUtils
-import com.blankj.utilcode.util.StringUtils
 import com.blankj.utilcode.util.ToastUtils
 import com.chad.library.adapter.base.BaseMultiItemQuickAdapter
 import com.chad.library.adapter.base.module.LoadMoreModule
@@ -43,11 +42,11 @@ class JobHomeAdapter : BaseMultiItemQuickAdapter<Job, BaseViewHolder>(), LoadMor
             holder.setText(R.id.job_tv, item.job_title)
 
             val salaryTv = holder.getView<TextView>(R.id.salary_tv)
-            val salary = item.salary
-            if (salary == StringUtils.getString(R.string.negotiable)) {
+
+            if (item.salary_type == 4) {
                 salaryTv.visibility = View.GONE
-            }else {
-                salaryTv.text = salary
+            } else {
+                salaryTv.text = item.salary
                 salaryTv.visibility = View.VISIBLE
             }
 

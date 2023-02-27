@@ -37,7 +37,7 @@ class JobFilterPresenter(private var view: JobFilterView) : BaseMvpPresenter(vie
                             1 -> StringUtils.getString(R.string.monthly_salary)
                             2 -> StringUtils.getString(R.string.daily_salary)
                             3 -> StringUtils.getString(R.string.hourly_salary)
-//                            4 -> StringUtils.getString(R.string.negotiable)
+                            4 -> StringUtils.getString(R.string.negotiable)
                             else -> ""
                         }
                     }

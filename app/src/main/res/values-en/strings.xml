@@ -1216,7 +1216,7 @@ Gentleman must let go</string>
     <string name="view_coupons">View Coupons</string>
     <string name="current_points">Currently Available Points</string>
     <string name="application_email_format">Application email:&#160;%1$s</string>
-    <string name="negotiable">Negotiable</string>
+    <string name="negotiable">Undisclosed</string>
 
     <string name="to_apply_for_job">To apply for job</string>
     <string name="complete_online_resume">Complete Online Resume</string>

@@ -1237,4 +1237,8 @@ Gentleman must let go</string>
     <string name="confirm2">Sure</string>
     <string name="legal_time">Please fill in the time correctly</string>
     <string name="generate">Generate</string>
+
+    <string name="complete_personal"><font color='#333333'>Complete</font><font color='#377BFF'>&#160;the Personal Information&#160;</font><font color='#333333'>to generate the Attached Resume</font></string>
+    <string name="complete_job"><font color='#333333'>Complete</font><font color='#377BFF'>&#160;the Job Experience&#160;</font><font color='#333333'>to generate the Attached Resume</font></string>
+    <string name="complete_edu"><font color='#333333'>Complete</font><font color='#377BFF'>&#160;the Education Background &#160;</font><font color='#333333'>to generate the Attached Resume</font></string>
 </resources>

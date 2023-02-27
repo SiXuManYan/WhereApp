@@ -17,7 +17,7 @@ import com.jcs.where.api.response.job.ProfileDetail
 interface CvHomeView : BaseMvpView {
     fun getProfile(response: ProfileDetail?)
     fun bindJobExperience(toMutableList: MutableList<JobExperience>)
-    fun resumeComplete(isComplete: Boolean)
+    fun resumeComplete(model: Int)
 
 }
 
@@ -43,7 +43,7 @@ class CvHomePresenter(private var view: CvHomeView) : BaseMvpPresenter(view) {
     fun checkResumeComplete(){
         requestApi(mRetrofit.checkResume(), object : BaseMvpObserver<CheckResume>(view) {
             override fun onSuccess(response: CheckResume) {
-                view.resumeComplete(response.is_complete)
+                view.resumeComplete(response.model)
             }
 
         })

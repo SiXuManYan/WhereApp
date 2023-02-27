@@ -1,12 +1,12 @@
 package com.jcs.where.features.job.cv
 
-import android.graphics.Color
 import android.os.Bundle
 import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.TextView
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.blankj.utilcode.util.ColorUtils
 import com.blankj.utilcode.util.SizeUtils
@@ -44,7 +44,6 @@ class CvHomeFragment : BaseMvpFragment<CvHomePresenter>(), CvHomeView, OnItemCli
     private var profileDetail: ProfileDetail? = null
 
     private lateinit var avatarIv: CircleImageView
-    private var degreeDialog: BottomSheetDialog? = null
 
     override fun getLayoutId() = R.layout.fragment_job_cv_home
 
@@ -239,24 +238,20 @@ class CvHomeFragment : BaseMvpFragment<CvHomePresenter>(), CvHomeView, OnItemCli
         }
     }
 
-    override fun resumeComplete(isComplete: Boolean) {
-        if (isComplete) {
-            startActivity(CvPdfActivity::class.java, Bundle().apply {
-                putParcelable(Constant.PARAM_DATA, profileDetail)
-                putParcelableArrayList(Constant.PARAM_CV, ArrayList(mAdapter.data))
-            })
-        } else {
-            if (degreeDialog != null) {
-                degreeDialog?.show()
-            } else {
-                showDegree()
-            }
-        }
+    override fun resumeComplete(model: Int) = if (model == 0) {
+        startActivity(CvPdfActivity::class.java, Bundle().apply {
+            putParcelable(Constant.PARAM_DATA, profileDetail)
+            putParcelableArrayList(Constant.PARAM_CV, ArrayList(mAdapter.data))
+        })
+    } else {
+        showDegree(model)
     }
 
-    private fun showDegree() {
+    /**
+     * @param model 0 完整 1个人信息 不完善 2 教育经历 不完善 3工作经验 不完善
+     */
+    private fun showDegree(model: Int) {
         val timeDialog = BottomSheetDialog(requireContext())
-        this.degreeDialog = timeDialog
         val view = LayoutInflater.from(requireContext()).inflate(R.layout.dialog_resume_complete, null)
         timeDialog.setContentView(view)
         try {
@@ -264,6 +259,13 @@ class CvHomeFragment : BaseMvpFragment<CvHomePresenter>(), CvHomeView, OnItemCli
             parent.setBackgroundResource(android.R.color.transparent)
         } catch (e: Exception) {
             e.printStackTrace()
+        }
+        val contentTv = view.findViewById<TextView>(R.id.content_tv)
+        contentTv.text = when (model) {
+            1 -> getString(R.string.complete_personal)
+            2 -> getString(R.string.complete_edu)
+            3 -> getString(R.string.complete_job)
+            else -> ""
         }
 
         view.findViewById<Button>(R.id.ok).setOnClickListener {

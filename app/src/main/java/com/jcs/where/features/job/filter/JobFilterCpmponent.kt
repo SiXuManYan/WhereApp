@@ -28,7 +28,7 @@ class JobFilterPresenter(private var view: JobFilterView) : BaseMvpPresenter(vie
 
                 // 薪资类型
                 val salaryType = ArrayList<FilterItem>()
-                for (index in 0..3) {
+                for (index in 0..4) {
                     val apply = FilterItem().apply {
                         id = index
                         nativeSelected = index == 0

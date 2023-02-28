@@ -190,9 +190,9 @@ class CvHomeFragment : BaseMvpFragment<CvHomePresenter>(), CvHomeView, OnItemCli
     override fun onEventReceived(baseEvent: BaseEvent<*>) {
         super.onEventReceived(baseEvent)
 
+        var toastStr = getString(R.string.job_save_success)
         when (baseEvent.code) {
-            EventCode.EVENT_REFRESH_CV_PROFILE ->
-                presenter.getProfile()
+            EventCode.EVENT_REFRESH_CV_PROFILE -> presenter.getProfile()
 
             EventCode.EVENT_REFRESH_CV_EXPERIENCE,
             EventCode.EVENT_REFRESH_CV_EDU,
@@ -203,26 +203,27 @@ class CvHomeFragment : BaseMvpFragment<CvHomePresenter>(), CvHomeView, OnItemCli
                 // 删除工作经历
                 val draftExperienceId = baseEvent.data as Int
                 deleteTypeItem(draftExperienceId, JobExperience.TYPE_JOB_EXPERIENCE)
+                toastStr = getString(R.string.job_delete_success)
             }
             EventCode.EVENT_DELETE_CV_EDU -> {
                 // 删除教育背景
                 val draftEduId = baseEvent.data as Int
                 deleteTypeItem(draftEduId, JobExperience.TYPE_EDU_BACKGROUND)
+                toastStr = getString(R.string.job_delete_success)
             }
             EventCode.EVENT_DELETE_CV_CERTIFICATE -> {
                 // 删除资格证书
                 val draftEduId = baseEvent.data as Int
                 deleteTypeItem(draftEduId, JobExperience.TYPE_CERTIFICATION)
+                toastStr = getString(R.string.job_delete_success)
             }
             else -> {}
         }
         ToastUtils.make()
             .setNotUseSystemToast()
-            .setLeftIcon(R.mipmap.ic_check_circle)
             .setMode(ToastUtils.MODE.DARK)
             .setGravity(Gravity.CENTER, 0, 0)
-            .setDurationIsLong(true)
-            .show(R.string.update_resume)
+            .show(toastStr)
 
 
     }

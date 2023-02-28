@@ -206,7 +206,7 @@ class CertificateFromActivity : BaseMvpActivity<CertificatePresenter>(), Certifi
 
 
     override fun handleSuccess() {
-        EventBus.getDefault().post(BaseEvent<Any>(EventCode.EVENT_REFRESH_CV_EXPERIENCE))
+        EventBus.getDefault().post(BaseEvent<Any>(EventCode.EVENT_REFRESH_CV_CERTIFICATE))
         finish()
     }
 

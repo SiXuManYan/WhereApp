@@ -1229,7 +1229,7 @@ Gentleman must let go</string>
     <string name="certificate_picture">证书图片</string>
     <string name="only_one">仅限一张</string>
     <string name="choose_how_to_share">选择分享方式</string>
-    <string name="save_success">Save Success</string>
+    <string name="save_success">保存成功</string>
     <string name="save_to_album">保存到相薄</string>
     <string name="facebook">Facebook</string>
     <string name="copy_link">复制链接</string>
@@ -1264,6 +1264,8 @@ Gentleman must let go</string>
     <string name="complete_edu">教育背景信息</string>
 
     <string name="complete_format">生成&#160;附件简历&#160;需完善&#160;%1$s</string>
+    <string name="job_save_success">保存成功</string>
+    <string name="job_delete_success">删除成功</string>
 
 
 </resources>

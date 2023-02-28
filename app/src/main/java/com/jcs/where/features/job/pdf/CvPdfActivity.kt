@@ -12,6 +12,8 @@ import com.google.gson.Gson
 import com.jcs.where.R
 import com.jcs.where.api.response.job.JobExperience
 import com.jcs.where.api.response.job.ProfileDetail
+import com.jcs.where.base.BaseEvent
+import com.jcs.where.base.EventCode
 import com.jcs.where.base.mvp.BaseMvpActivity
 import com.jcs.where.features.job.cv.JobExperienceEduAdapter
 import com.jcs.where.utils.Constant
@@ -19,6 +21,7 @@ import com.jcs.where.utils.GlideUtil
 import com.jcs.where.utils.time.TimeUtil
 import com.jcs.where.widget.list.DividerDecoration
 import kotlinx.android.synthetic.main.activity_job_cv_pdf_preview.*
+import org.greenrobot.eventbus.EventBus
 
 /**
  * Created by Wangsw  2023/2/23 14:27.
@@ -150,6 +153,7 @@ class CvPdfActivity : BaseMvpActivity<CvPdfPresenter>(), CvPdfView {
         } else {
             showDegree()
         }
+        EventBus.getDefault().post(BaseEvent<Any>(EventCode.EVENT_REFRESH_CV_CERTIFICATE))
     }
 
     private fun showDegree() {
@@ -163,8 +167,6 @@ class CvPdfActivity : BaseMvpActivity<CvPdfPresenter>(), CvPdfView {
         } catch (e: Exception) {
             e.printStackTrace()
         }
-
-
         view.findViewById<ImageView>(R.id.close_iv).setOnClickListener {
             timeDialog.dismiss()
         }

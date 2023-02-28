@@ -82,6 +82,7 @@ class CvHomeFragment : BaseMvpFragment<CvHomePresenter>(), CvHomeView, OnItemCli
         }
         presenter.getProfile()
         presenter.getJobExperience()
+        presenter.checkIsNeedUpdatePdf()
     }
 
     override fun bindListener() {
@@ -187,47 +188,6 @@ class CvHomeFragment : BaseMvpFragment<CvHomePresenter>(), CvHomeView, OnItemCli
     }
 
 
-    override fun onEventReceived(baseEvent: BaseEvent<*>) {
-        super.onEventReceived(baseEvent)
-
-        var toastStr = getString(R.string.job_save_success)
-        when (baseEvent.code) {
-            EventCode.EVENT_REFRESH_CV_PROFILE -> presenter.getProfile()
-
-            EventCode.EVENT_REFRESH_CV_EXPERIENCE,
-            EventCode.EVENT_REFRESH_CV_EDU,
-            EventCode.EVENT_REFRESH_CV_CERTIFICATE,
-            -> presenter.getJobExperience()
-
-            EventCode.EVENT_DELETE_CV_EXPERIENCE -> {
-                // 删除工作经历
-                val draftExperienceId = baseEvent.data as Int
-                deleteTypeItem(draftExperienceId, JobExperience.TYPE_JOB_EXPERIENCE)
-                toastStr = getString(R.string.job_delete_success)
-            }
-            EventCode.EVENT_DELETE_CV_EDU -> {
-                // 删除教育背景
-                val draftEduId = baseEvent.data as Int
-                deleteTypeItem(draftEduId, JobExperience.TYPE_EDU_BACKGROUND)
-                toastStr = getString(R.string.job_delete_success)
-            }
-            EventCode.EVENT_DELETE_CV_CERTIFICATE -> {
-                // 删除资格证书
-                val draftEduId = baseEvent.data as Int
-                deleteTypeItem(draftEduId, JobExperience.TYPE_CERTIFICATION)
-                toastStr = getString(R.string.job_delete_success)
-            }
-            else -> {}
-        }
-        ToastUtils.make()
-            .setNotUseSystemToast()
-            .setMode(ToastUtils.MODE.DARK)
-            .setGravity(Gravity.CENTER, 0, 0)
-            .show(toastStr)
-
-
-    }
-
     private fun deleteTypeItem(deleteId: Int, itemViewType: Int) {
         var position = -1
         mAdapter.data.forEachIndexed { index, it ->
@@ -287,6 +247,69 @@ class CvHomeFragment : BaseMvpFragment<CvHomePresenter>(), CvHomeView, OnItemCli
             timeDialog.dismiss()
         }
         timeDialog.show()
+    }
+
+    override fun checkIsNeedUpdatePdf(isUpdate: Boolean) {
+
+        if (isUpdate) {
+            update_hint_ll.visibility = View.VISIBLE
+        } else {
+            update_hint_ll.visibility = View.INVISIBLE
+        }
+    }
+
+
+    override fun onEventReceived(baseEvent: BaseEvent<*>) {
+        super.onEventReceived(baseEvent)
+
+        var toastStr = getString(R.string.job_save_success)
+        when (baseEvent.code) {
+            EventCode.EVENT_REFRESH_CV_PROFILE -> {
+                presenter.getProfile()
+                presenter.checkIsNeedUpdatePdf()
+            }
+
+            EventCode.EVENT_REFRESH_CV_EXPERIENCE,
+            EventCode.EVENT_REFRESH_CV_EDU,
+            EventCode.EVENT_REFRESH_CV_CERTIFICATE,
+            -> {
+                presenter.getJobExperience()
+                presenter.checkIsNeedUpdatePdf()
+            }
+
+            EventCode.EVENT_DELETE_CV_EXPERIENCE -> {
+                // 删除工作经历
+                val draftExperienceId = baseEvent.data as Int
+                deleteTypeItem(draftExperienceId, JobExperience.TYPE_JOB_EXPERIENCE)
+                toastStr = getString(R.string.job_delete_success)
+                presenter.checkIsNeedUpdatePdf()
+            }
+            EventCode.EVENT_DELETE_CV_EDU -> {
+                // 删除教育背景
+                val draftEduId = baseEvent.data as Int
+                deleteTypeItem(draftEduId, JobExperience.TYPE_EDU_BACKGROUND)
+                toastStr = getString(R.string.job_delete_success)
+                presenter.checkIsNeedUpdatePdf()
+            }
+            EventCode.EVENT_DELETE_CV_CERTIFICATE -> {
+                // 删除资格证书
+                val draftEduId = baseEvent.data as Int
+                deleteTypeItem(draftEduId, JobExperience.TYPE_CERTIFICATION)
+                toastStr = getString(R.string.job_delete_success)
+                presenter.checkIsNeedUpdatePdf()
+            }
+            EventCode.EVENT_PDF_GENERATE_SUCCESS -> {
+                presenter.getProfile()
+                checkIsNeedUpdatePdf(true)
+            }
+            else -> {}
+        }
+        ToastUtils.make()
+            .setNotUseSystemToast()
+            .setMode(ToastUtils.MODE.DARK)
+            .setGravity(Gravity.CENTER, 0, 0)
+            .show(toastStr)
+
     }
 
 }

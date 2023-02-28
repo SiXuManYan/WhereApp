@@ -1245,6 +1245,7 @@ Gentleman must let go</string>
     <string name="complete_format">Complete&#160;%1$s&#160;to generate the Attached Resume</string>
     <string name="job_save_success">Successfully</string>
     <string name="job_delete_success">Successfully</string>
+    <string name="please_update_resume">Please update Resume</string>
 
 
 </resources>

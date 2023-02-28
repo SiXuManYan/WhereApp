@@ -121,6 +121,7 @@ import com.jcs.where.api.response.integral.IntegralOrderDetail;
 import com.jcs.where.api.response.integral.IntegralPlaceOrderResponse;
 import com.jcs.where.api.response.integral.IntegralRecord;
 import com.jcs.where.api.response.integral.IntegralTag;
+import com.jcs.where.api.response.job.CheckIsNeedUpdatePdf;
 import com.jcs.where.api.response.job.CheckResume;
 import com.jcs.where.api.response.job.CompanyAlbum;
 import com.jcs.where.api.response.job.CompanyInfo;
@@ -2646,5 +2647,10 @@ public interface RetrofitApi {
     @POST("jobapi/v2/resumes/pdf")
     Observable<JcsResponse<JsonElement>> generatePdf();
 
+    /**
+     * 检查是否需要更新PDF
+     */
+    @GET("jobapi/v2/resumes/check_pdf")
+    Observable<JcsResponse<CheckIsNeedUpdatePdf>> checkIsNeedUpdatePdf();
 
 }

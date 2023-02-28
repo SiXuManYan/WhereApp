@@ -1266,6 +1266,7 @@ Gentleman must let go</string>
     <string name="complete_format">生成&#160;附件简历&#160;需完善&#160;%1$s</string>
     <string name="job_save_success">保存成功</string>
     <string name="job_delete_success">删除成功</string>
+    <string name="please_update_resume">请更新简历</string>
 
 
 </resources>

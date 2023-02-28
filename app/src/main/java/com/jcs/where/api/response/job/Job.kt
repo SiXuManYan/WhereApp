@@ -187,7 +187,7 @@ class ProfileDetail() : Parcelable {
     var avatar = ""
 
     /** pdf 生成时间 */
-    var pdf_time:String? = ""
+    var pdf_time: String? = ""
 
     constructor(parcel: Parcel) : this() {
         id = parcel.readInt()
@@ -287,7 +287,6 @@ class JobExperience() : Parcelable, MultiItemEntity {
     var vocational_course = ""
 
 
-
     // 简历证书
     /** 证书名称 */
     var title = ""
@@ -365,8 +364,6 @@ class JobExperience() : Parcelable, MultiItemEntity {
         var TYPE_TITLE = 1000
 
 
-
-
         /** 工作经历 PDF*/
         var TYPE_JOB_EXPERIENCE_PDF = 4
 
@@ -378,9 +375,6 @@ class JobExperience() : Parcelable, MultiItemEntity {
 
         /** 标题 PDF*/
         var TYPE_TITLE_PDF = 2000
-
-
-
 
 
         override fun createFromParcel(parcel: Parcel): JobExperience {
@@ -659,8 +653,6 @@ class CreateCertificate {
  * 检查简历完整性
  */
 class CheckResume {
-    var is_complete  = false
-
 
     /**
      * 0 完整
@@ -668,5 +660,18 @@ class CheckResume {
      * 2 教育经历  不完善
      * 3工作经验 不完善
      */
-    var model  = 0
+    var model = 0
+}
+
+/**
+ * 检查是否需要更新PDF
+ */
+class CheckIsNeedUpdatePdf {
+
+    /**
+     * true 需更新 false不需要更新
+     */
+    var is_update = false
+
+
 }

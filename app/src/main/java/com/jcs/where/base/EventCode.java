@@ -224,4 +224,9 @@ public class EventCode {
      */
     public static final int EVENT_GET_MESSAGE_COUNT = 1055;
 
+    /**
+     * pdf 生成成功
+     */
+    public static final int EVENT_PDF_GENERATE_SUCCESS = 1056;
+
 }

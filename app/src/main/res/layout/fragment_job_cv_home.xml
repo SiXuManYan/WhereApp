@@ -152,8 +152,8 @@
                 android:id="@+id/gender_tv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/dp_5"
                 android:layout_gravity="center_horizontal"
+                android:layout_marginTop="@dimen/dp_5"
                 android:ellipsize="end"
                 android:maxLines="1"
                 android:textColor="@color/white"
@@ -170,7 +170,7 @@
                 android:paddingStart="@dimen/dp_5"
                 android:paddingTop="@dimen/dp_13"
                 android:paddingEnd="@dimen/dp_5"
-                android:paddingBottom="@dimen/dp_13">
+                android:paddingBottom="@dimen/dp_0">
 
                 <LinearLayout
 
@@ -200,6 +200,37 @@
                 </LinearLayout>
 
             </FrameLayout>
+
+
+            <LinearLayout
+                android:id="@+id/update_hint_ll"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:alpha="0.95"
+                android:visibility="invisible"
+                tools:visibility="visible"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="end"
+                    android:layout_marginEnd="@dimen/dp_13"
+                    android:src="@mipmap/ic_job_arrow" />
+
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/shape_blue_radius_4_1ca1ff"
+                    android:padding="@dimen/dp_8"
+                    android:text="@string/please_update_resume"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/sp_12" />
+
+
+            </LinearLayout>
 
 
         </LinearLayout>

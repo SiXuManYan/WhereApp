@@ -5,8 +5,6 @@ import android.text.TextUtils;
 import com.blankj.utilcode.constant.TimeConstants;
 
 import java.text.SimpleDateFormat;
-import java.time.LocalDate;
-import java.time.Period;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -383,20 +381,29 @@ public class TimeUtil {
     /**
      * Method to extract the user's age from the entered Date of Birth.
      *
-     *
      * @return ageS String The user's age in years based on the supplied DoB.
      */
-    public static String getAge(int year, int month, int day){
+    public static String getAge(int year, int month, int day) {
+
+//        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+
         Calendar dob = Calendar.getInstance();
         Calendar today = Calendar.getInstance();
 
-        dob.set(year, month, day);
+        dob.set(year, month - 1, day);
+        today.setTimeInMillis(System.currentTimeMillis());
 
         int age = today.get(Calendar.YEAR) - dob.get(Calendar.YEAR);
 
-        if (today.get(Calendar.DAY_OF_YEAR) < dob.get(Calendar.DAY_OF_YEAR)){
+        int todayDayOfYear = today.get(Calendar.DAY_OF_YEAR);
+        int birthdayDayOfYear = dob.get(Calendar.DAY_OF_YEAR);
+
+        if (todayDayOfYear < birthdayDayOfYear) {
             age--;
         }
+
+//        Log.d("ageaaaa", "today " + todayDayOfYear + "   日期" + sdf.format(today.getTime()));
+//        Log.d("ageaaaa", "dob " + birthdayDayOfYear + "   日期" + sdf.format(dob.getTime()));
 
         Integer ageInt = Integer.valueOf(age);
 

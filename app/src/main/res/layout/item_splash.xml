@@ -5,8 +5,7 @@
     android:layout_height="match_parent"
     android:background="@color/white_FEFEFE"
     android:gravity="center_horizontal"
-    android:orientation="vertical"
->
+    android:orientation="vertical">
 
 
     <ImageView
@@ -16,7 +15,6 @@
         android:layout_marginTop="@dimen/dp_65"
         android:scaleType="centerInside"
         tools:src="@mipmap/ic_splash_bg_0_cn" />
-
 
 
 </LinearLayout>

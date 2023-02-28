@@ -9,7 +9,6 @@ import android.os.Looper
 import android.text.TextPaint
 import android.text.method.LinkMovementMethod
 import android.text.style.ClickableSpan
-import android.text.style.ForegroundColorSpan
 import android.util.Log
 import android.view.View
 import android.view.animation.AlphaAnimation
@@ -30,6 +29,7 @@ import com.jcs.where.base.mvp.BaseMvpActivity
 import com.jcs.where.features.main.MainActivity
 import com.jcs.where.features.web.WebViewActivity
 import com.jcs.where.utils.*
+import com.jcs.where.widget.pager.OnIndicatorClickListener
 import com.mob.MobSDK
 import com.umeng.commonsdk.UMConfigure
 import kotlinx.android.synthetic.main.activity_splash.*
@@ -70,7 +70,12 @@ class SplashActivity : BaseMvpActivity<SplashPresenter>(), SplashView {
         point_view.apply {
             commonDrawableResId = R.drawable.shape_point_normal_e7e7e7
             selectedDrawableResId = R.drawable.shape_point_selected_377bff
-            setPointCount(4)
+            setPointCount(4, 15, 15, 15)
+            onClickListener = object : OnIndicatorClickListener{
+                override fun onIndicatorClick(index: Int) {
+                    pager_vp.setCurrentItem(index , true)
+                }
+            }
         }
         initPager()
         initAnimation()
@@ -125,12 +130,14 @@ class SplashActivity : BaseMvpActivity<SplashPresenter>(), SplashView {
             override fun onPageScrollStateChanged(state: Int) = Unit
 
             override fun onPageSelected(position: Int) {
-                point_view.onPageSelected(position)
-                if (position == 3) {
-                    start_tv.visibility = View.VISIBLE
+                if (position < 3) {
+                    start_tv.text = getString(R.string.splash_next)
                 } else {
-                    start_tv.visibility = View.GONE
+                    start_tv.text = getString(R.string.start_now)
                 }
+
+                point_view.onPageSelected(position)
+
             }
         })
     }
@@ -291,6 +298,7 @@ class SplashActivity : BaseMvpActivity<SplashPresenter>(), SplashView {
         if (isFirstOpen) {
             pager_vp.visibility = View.VISIBLE
             point_view.visibility = View.VISIBLE
+            start_tv.visibility = View.VISIBLE
             first_iv.visibility = View.GONE
             CacheUtil.getShareDefault().put(Constant.SP_IS_FIRST_OPEN, false)
         } else {
@@ -327,7 +335,7 @@ class SplashActivity : BaseMvpActivity<SplashPresenter>(), SplashView {
         if (module.isNullOrBlank() || moduleId.isNullOrBlank()) {
             return
         }
-        facebookIntent = BusinessUtils.getDeepLinksTargetIntent(module,moduleId,this)
+        facebookIntent = BusinessUtils.getDeepLinksTargetIntent(module, moduleId, this)
     }
 
 

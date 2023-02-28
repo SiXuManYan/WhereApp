@@ -22,6 +22,11 @@ public class IndicatorView2 extends LinearLayout {
     public int selectedDrawableResId = R.drawable.shape_point_selected_9999;
     public int commonDrawableResId = R.drawable.shape_point_normal_ffffff;
 
+    private int defaultWidth = 5;
+    private int defaultHeight = 5;
+    private int defaultMargin = 5;
+
+   public OnIndicatorClickListener onClickListener;
 
     public IndicatorView2(Context context) {
         super(context);
@@ -45,11 +50,20 @@ public class IndicatorView2 extends LinearLayout {
 
 
     public void setPointCount(int totalCount) {
+        setPointCount(totalCount, defaultWidth, defaultHeight, defaultMargin);
+    }
+
+
+    public void setPointCount(int totalCount, int width, int height, int margin) {
         container_ll.removeAllViews();
         for (int i = 0; i < totalCount; i++) {
 
-            LayoutParams params = new LayoutParams(SizeUtils.dp2px(5), SizeUtils.dp2px(5));
-            params.setMarginEnd(SizeUtils.dp2px(5));
+            LayoutParams params = new LayoutParams(SizeUtils.dp2px(width), SizeUtils.dp2px(height));
+
+            if (i < totalCount-1) {
+                params.setMarginEnd(SizeUtils.dp2px(margin));
+            }
+
             ImageView imageView = new ImageView(getContext());
             imageView.setLayoutParams(params);
 
@@ -59,6 +73,12 @@ public class IndicatorView2 extends LinearLayout {
                 imageView.setImageResource(commonDrawableResId);
             }
             container_ll.addView(imageView);
+            int finalI = i;
+            imageView.setOnClickListener(view -> {
+                if (onClickListener != null) {
+                    onClickListener.onIndicatorClick(finalI);
+                }
+            });
         }
 
         if (totalCount <= 1) {

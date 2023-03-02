@@ -250,7 +250,6 @@ class CvHomeFragment : BaseMvpFragment<CvHomePresenter>(), CvHomeView, OnItemCli
     }
 
     override fun checkIsNeedUpdatePdf(isUpdate: Boolean) {
-
         if (isUpdate) {
             update_hint_ll.visibility = View.VISIBLE
         } else {
@@ -296,16 +295,16 @@ class CvHomeFragment : BaseMvpFragment<CvHomePresenter>(), CvHomeView, OnItemCli
                 val draftEduId = baseEvent.data as Int
                 deleteTypeItem(draftEduId, JobExperience.TYPE_CERTIFICATION)
                 toastStr = getString(R.string.job_delete_success)
+
                 presenter.checkIsNeedUpdatePdf()
             }
             EventCode.EVENT_PDF_GENERATE_SUCCESS -> {
                 presenter.getProfile()
-                checkIsNeedUpdatePdf(true)
+                presenter.checkIsNeedUpdatePdf()
             }
             else -> {}
         }
         ToastUtils.make()
-            .setNotUseSystemToast()
             .setMode(ToastUtils.MODE.DARK)
             .setGravity(Gravity.CENTER, 0, 0)
             .show(toastStr)

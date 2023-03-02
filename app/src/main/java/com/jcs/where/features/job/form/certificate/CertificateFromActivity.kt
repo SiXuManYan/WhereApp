@@ -128,8 +128,8 @@ class CertificateFromActivity : BaseMvpActivity<CertificatePresenter>(), Certifi
                 .setTitle(R.string.hint)
                 .setMessage(R.string.delete_hint)
                 .setPositiveButton(R.string.confirm) { dialog: DialogInterface, which: Int ->
-                    presenter.deleteCertificate(draftId)
                     dialog.dismiss()
+                    presenter.deleteCertificate(draftId)
                 }
                 .setNegativeButton(R.string.cancel) { dialog: DialogInterface, which: Int ->
                     dialog.dismiss()
@@ -141,7 +141,6 @@ class CertificateFromActivity : BaseMvpActivity<CertificatePresenter>(), Certifi
 
             override fun onDebouncingClick(v: View?) {
 
-                save_tv.isClickable = false
 
                 val name = name_et.text.toString().trim()
                 if (name.isBlank()) {
@@ -166,16 +165,12 @@ class CertificateFromActivity : BaseMvpActivity<CertificatePresenter>(), Certifi
                         images = descImages
                     }
 
+                    save_tv.isClickable = false
+                    Handler(Looper.getMainLooper()).postDelayed({
+                        save_tv.isClickable = true
+                    }, 500)
                     presenter.handleCertificate(draftId, apply)
                 }
-
-
-
-
-
-                Handler(Looper.getMainLooper()).postDelayed({
-                    save_tv.isClickable = true
-                }, 500)
             }
 
 

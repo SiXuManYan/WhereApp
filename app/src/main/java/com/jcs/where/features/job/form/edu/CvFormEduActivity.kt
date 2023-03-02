@@ -163,8 +163,8 @@ class CvFormEduActivity : BaseMvpActivity<CvFormPresenter>(), CvFormView {
                 .setTitle(R.string.hint)
                 .setMessage(R.string.delete_hint)
                 .setPositiveButton(R.string.confirm) { dialog: DialogInterface, which: Int ->
-                    presenter.deleteEducation(draftEduId)
                     dialog.dismiss()
+                    presenter.deleteEducation(draftEduId)
                 }
                 .setNegativeButton(R.string.cancel) { dialog: DialogInterface, which: Int ->
                     dialog.dismiss()

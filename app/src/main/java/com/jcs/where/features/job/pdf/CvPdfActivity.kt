@@ -153,7 +153,7 @@ class CvPdfActivity : BaseMvpActivity<CvPdfPresenter>(), CvPdfView {
         } else {
             showDegree()
         }
-        EventBus.getDefault().post(BaseEvent<Any>(EventCode.EVENT_REFRESH_CV_CERTIFICATE))
+        EventBus.getDefault().post(BaseEvent<Any>(EventCode.EVENT_PDF_GENERATE_SUCCESS))
     }
 
     private fun showDegree() {

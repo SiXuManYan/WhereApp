@@ -71,9 +71,9 @@ class SplashActivity : BaseMvpActivity<SplashPresenter>(), SplashView {
             commonDrawableResId = R.drawable.shape_point_normal_e7e7e7
             selectedDrawableResId = R.drawable.shape_point_selected_377bff
             setPointCount(4, 15, 15, 15)
-            onClickListener = object : OnIndicatorClickListener{
+            onClickListener = object : OnIndicatorClickListener {
                 override fun onIndicatorClick(index: Int) {
-                    pager_vp.setCurrentItem(index , true)
+                    pager_vp.setCurrentItem(index, true)
                 }
             }
         }
@@ -325,7 +325,14 @@ class SplashActivity : BaseMvpActivity<SplashPresenter>(), SplashView {
     }
 
     override fun bindListener() {
-        start_tv.setOnClickListener { toHome() }
+        start_tv.setOnClickListener {
+            val currentItem = pager_vp.currentItem
+            if (currentItem < 3) {
+                pager_vp.currentItem = currentItem + 1
+            } else {
+                toHome()
+            }
+        }
     }
 
     /**

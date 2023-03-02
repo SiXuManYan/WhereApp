@@ -157,8 +157,8 @@ class CvFormJobExperienceActivity : BaseMvpActivity<CvFormPresenter>(), CvFormVi
                 .setTitle(R.string.hint)
                 .setMessage(R.string.delete_hint)
                 .setPositiveButton(R.string.confirm) { dialog: DialogInterface, which: Int ->
-                    presenter.deleteJobExperience(draftExperienceId)
                     dialog.dismiss()
+                    presenter.deleteJobExperience(draftExperienceId)
                 }
                 .setNegativeButton(R.string.cancel) { dialog: DialogInterface, which: Int ->
                     dialog.dismiss()

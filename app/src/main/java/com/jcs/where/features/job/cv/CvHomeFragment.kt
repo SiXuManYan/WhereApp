@@ -244,6 +244,7 @@ class CvHomeFragment : BaseMvpFragment<CvHomePresenter>(), CvHomeView, OnItemCli
     }
 
     override fun checkIsNeedUpdatePdf(isUpdate: Boolean) {
+
         if (isUpdate) {
             update_hint_ll.visibility = View.VISIBLE
         } else {

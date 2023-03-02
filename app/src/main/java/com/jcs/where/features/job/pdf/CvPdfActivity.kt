@@ -100,7 +100,7 @@ class CvPdfActivity : BaseMvpActivity<CvPdfPresenter>(), CvPdfView {
 
                 GlideUtil.load(this@CvPdfActivity, it.avatar, avatar, 48)
 
-                (it.first_name + it.last_name).also { name.text = it }
+                (it.first_name + " " +  it.last_name).also { name.text = it }
 
                 try {
                     val split = it.birthday.split(".")

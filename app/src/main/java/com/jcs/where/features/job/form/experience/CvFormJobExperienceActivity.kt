@@ -124,8 +124,6 @@ class CvFormJobExperienceActivity : BaseMvpActivity<CvFormPresenter>(), CvFormVi
                     ToastUtils.showShort(R.string.legal_time)
                     return
                 }
-
-
                 val apply = CreateJobExperience().apply {
                     company = company_name_et.text.toString().trim()
                     job_title = job_title_et.text.toString().trim()

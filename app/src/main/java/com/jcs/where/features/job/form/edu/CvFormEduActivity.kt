@@ -156,7 +156,6 @@ class CvFormEduActivity : BaseMvpActivity<CvFormPresenter>(), CvFormView {
         }
 
 
-
         delete_tv.setOnClickListener {
             AlertDialog.Builder(this, R.style.JobAlertDialogTheme)
                 .setCancelable(false)

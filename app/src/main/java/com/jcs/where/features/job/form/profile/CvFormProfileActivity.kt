@@ -141,26 +141,41 @@ class CvFormProfileActivity : BaseMvpActivity<CvFormPresenter>(), CvFormView, On
             BusinessUtils.createBottomDialog(this, 1, avatarSource, object : OnBottomSelectedIndex {
                 override fun onIndexSelect(selectedIndex: Int) {
 
-                    PermissionUtils.permissionAny(this@CvFormProfileActivity, { granted: Boolean ->
-                        if (granted) {
+                    if (selectedIndex == 0) {
 
-                            if (selectedIndex == 0) {
+                        PermissionUtils.permissionAny(this@CvFormProfileActivity, { granted: Boolean ->
+                            if (granted) {
+
                                 val uri = FeaturesUtil.takePicture(this@CvFormProfileActivity, REQUEST_IMAGE_CAPTURE)
                                 mImageUri = uri
                                 currentAvatarUrlOrUriPath = uri.path
 
                             } else {
+                                ToastUtils.showShort(R.string.open_permission)
+                            }
+                        }, Manifest.permission.CAMERA,
+                            Manifest.permission.READ_EXTERNAL_STORAGE,
+                            Manifest.permission.WRITE_EXTERNAL_STORAGE)
+
+
+                    } else {
+
+                        PermissionUtils.permissionAny(this@CvFormProfileActivity, { granted: Boolean ->
+                            if (granted) {
                                 val intent = Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
                                 startActivityForResult(intent, REQUEST_SELECT_IMAGE)
+
+                            } else {
+                                ToastUtils.showShort(R.string.open_permission)
                             }
+                        },
+                            Manifest.permission.READ_EXTERNAL_STORAGE,
+                            Manifest.permission.WRITE_EXTERNAL_STORAGE)
+
+                    }
 
 
-                        } else {
-                            ToastUtils.showShort(R.string.open_permission)
-                        }
-                    }, Manifest.permission.CAMERA,
-                        Manifest.permission.READ_EXTERNAL_STORAGE,
-                        Manifest.permission.WRITE_EXTERNAL_STORAGE)
+
 
                 }
             })

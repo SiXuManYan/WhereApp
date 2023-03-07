@@ -34,7 +34,7 @@ public class UserInfoResponse {
     @SerializedName("phone")
     private String phone;
     @SerializedName("country_code")
-    private String countryCode;
+    public String countryCode;
     @SerializedName("email")
     private String email;
     @SerializedName("avatar")

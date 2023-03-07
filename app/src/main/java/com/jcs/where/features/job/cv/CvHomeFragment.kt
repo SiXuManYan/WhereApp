@@ -205,7 +205,7 @@ class CvHomeFragment : BaseMvpFragment<CvHomePresenter>(), CvHomeView, OnItemCli
     }
 
     /**
-     * @param model 0 完整 1个人信息 不完善 2 教育经历 不完善 3工作经验 不完善
+         * @param model 0 完整 1个人信息 不完善 2 教育经历 不完善 3工作经验 不完善
      */
     private fun showDegree(model: Int) {
         val timeDialog = BottomSheetDialog(requireContext())

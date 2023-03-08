@@ -91,7 +91,7 @@ public class ModifyInfoActivity extends BaseMvpActivity<ModifyInfoPresenter> imp
     }
 
     private void onAvatarLayoutClick(View view) {
-        FeaturesUtil.handleMediaSelect(this, Constant.IMG,1);
+        FeaturesUtil.handleMediaSelect(this, Constant.IMG, 1);
     }
 
     @Override

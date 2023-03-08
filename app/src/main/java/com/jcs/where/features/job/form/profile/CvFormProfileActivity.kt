@@ -145,17 +145,12 @@ class CvFormProfileActivity : BaseMvpActivity<CvFormPresenter>(), CvFormView, On
 
                         PermissionUtils.permissionAny(this@CvFormProfileActivity, { granted: Boolean ->
                             if (granted) {
-
                                 val uri = FeaturesUtil.takePicture(this@CvFormProfileActivity, REQUEST_IMAGE_CAPTURE)
                                 mImageUri = uri
-                                currentAvatarUrlOrUriPath = uri.path
-
                             } else {
                                 ToastUtils.showShort(R.string.open_permission)
                             }
-                        }, Manifest.permission.CAMERA,
-                            Manifest.permission.READ_EXTERNAL_STORAGE,
-                            Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                        }, Manifest.permission.CAMERA)
 
 
                     } else {
@@ -169,12 +164,9 @@ class CvFormProfileActivity : BaseMvpActivity<CvFormPresenter>(), CvFormView, On
                                 ToastUtils.showShort(R.string.open_permission)
                             }
                         },
-                            Manifest.permission.READ_EXTERNAL_STORAGE,
-                            Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                            Manifest.permission.READ_EXTERNAL_STORAGE)
 
                     }
-
-
 
 
                 }
@@ -265,8 +257,6 @@ class CvFormProfileActivity : BaseMvpActivity<CvFormPresenter>(), CvFormView, On
                 }, 500)
 
                 presenter.handleAvatar(draftProfileId, apply, currentAvatarUrlOrUriPath)
-
-
             }
 
         })
@@ -318,31 +308,48 @@ class CvFormProfileActivity : BaseMvpActivity<CvFormPresenter>(), CvFormView, On
         }
         when (requestCode) {
             REQUEST_IMAGE_CAPTURE -> {
-                GlideUtil.load(this ,mImageUri ,avatarIv ,24   )
+
+                if (mImageUri == null) {
+                    return
+                }
+                GlideUtil.load(this, mImageUri, avatarIv, 24)
+                currentAvatarUrlOrUriPath = getImagePath(mImageUri)
             }
             REQUEST_SELECT_IMAGE -> {
                 if (data == null) {
                     return
                 }
-                try {
-                    val imageUri: Uri = data.data ?: return
-                    GlideUtil.load(this ,imageUri ,avatarIv ,24   )
-                    val filePathColumn = arrayOf(MediaStore.Images.Media.DATA)
-                    val cursor: Cursor =
-                        contentResolver.query(imageUri, filePathColumn, null, null, null) ?: return //从系统表中查询指定Uri对应的照片
+                val imageUri: Uri = data.data ?: return
+                GlideUtil.load(this, imageUri, avatarIv, 24)
+                currentAvatarUrlOrUriPath = getImagePath(imageUri)
 
-                    cursor.moveToFirst()
-                    val columnIndex: Int = cursor.getColumnIndex(filePathColumn[0])
-                    val path = cursor.getString(columnIndex) //获取照片路径
-                    cursor.close()
-                    currentAvatarUrlOrUriPath = path
-                } catch (e: Exception) {
-                    e.printStackTrace()
-                }
             }
             else -> {}
         }
 
+    }
+
+    private fun getImagePath(uri: Uri?): String {
+
+        var path = ""
+
+        if (uri == null) {
+            return path
+        }
+
+        try {
+            val filePathColumn = arrayOf(MediaStore.Images.Media.DATA)
+            val cursor: Cursor = contentResolver.query(uri, filePathColumn, null, null, null) ?: return "" //从系统表中查询指定Uri对应的照片
+
+            cursor.moveToFirst()
+            val columnIndex: Int = cursor.getColumnIndex(filePathColumn[0])
+            path = cursor.getString(columnIndex) //获取照片路径
+            cursor.close()
+        } catch (e: Exception) {
+            path = ""
+        }
+
+        return path
     }
 
 

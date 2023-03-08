@@ -465,11 +465,6 @@
         <activity
             android:name=".features.search.SearchAllActivity"
             android:configChanges="keyboardHidden|screenSize|orientation" />
-        <activity
-            android:name=".features.upgrade.UpgradeActivity"
-            android:configChanges="keyboardHidden|screenSize|orientation"
-            android:theme="@style/upgrade"
-            android:windowSoftInputMode="stateHidden|adjustPan" />
 
         <activity
             android:name=".features.address.AddressActivity"

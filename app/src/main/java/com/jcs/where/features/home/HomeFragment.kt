@@ -5,14 +5,13 @@ import android.content.Context
 import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
+import android.media.Image
 import android.os.Bundle
 import android.util.Log
-import android.view.LayoutInflater
-import android.view.View
-import android.view.Window
-import android.view.WindowManager
+import android.view.*
 import android.widget.Button
 import android.widget.ImageView
+import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
@@ -50,15 +49,11 @@ import com.jcs.where.features.map.government.GovernmentActivity
 import com.jcs.where.features.message.MessageCenterActivity
 import com.jcs.where.features.search.SearchAllActivity
 import com.jcs.where.features.travel.home.TravelHomeActivity
-import com.jcs.where.features.upgrade.UpgradeActivity
 import com.jcs.where.home.decoration.HomeModulesItemDecoration
 import com.jcs.where.news.NewsActivity
 import com.jcs.where.news.NewsDetailActivity
 import com.jcs.where.news.NewsVideoActivity
-import com.jcs.where.utils.BusinessUtils
-import com.jcs.where.utils.Constant
-import com.jcs.where.utils.GlideUtil
-import com.jcs.where.utils.SPKey
+import com.jcs.where.utils.*
 import com.jcs.where.view.XBanner.AbstractUrlLoader
 import com.jcs.where.view.XBanner.XBanner
 import kotlinx.android.synthetic.main.fragment_home4.*
@@ -332,7 +327,7 @@ class HomeFragment : BaseMvpFragment<HomePresenter>(), HomeView, SwipeRefreshLay
             startActivity(SearchAllActivity::class.java)
         }
         message_view.setOnClickListener {
-            MessageCenterActivity.navigation(requireContext() ,systemMessageCount)
+            MessageCenterActivity.navigation(requireContext(), systemMessageCount)
         }
     }
 
@@ -397,7 +392,7 @@ class HomeFragment : BaseMvpFragment<HomePresenter>(), HomeView, SwipeRefreshLay
         }
     }
 
-    override fun setMessageCount(i: Int, systemUnreadMessageCount: Int){
+    override fun setMessageCount(i: Int, systemUnreadMessageCount: Int) {
         message_view.setMessageCount(i)
         systemMessageCount = systemUnreadMessageCount
     }
@@ -473,15 +468,6 @@ class HomeFragment : BaseMvpFragment<HomePresenter>(), HomeView, SwipeRefreshLay
         }
     }
 
-    override fun checkAppVersion(response: VersionResponse) {
-        val bundle = Bundle().apply {
-            putString(Constant.PARAM_NEW_VERSION_CODE, response.new_version)
-            putString(Constant.PARAM_DOWNLOAD_URL, response.download_url)
-            putString(Constant.PARAM_UPDATE_DESC, response.update_desc)
-            putBoolean(Constant.PARAM_IS_FORCE_INSTALL, response.is_force_install)
-        }
-        startActivity(UpgradeActivity::class.java, bundle)
-    }
 
     override fun onEventReceived(baseEvent: BaseEvent<*>) {
         super.onEventReceived(baseEvent)
@@ -607,11 +593,63 @@ class HomeFragment : BaseMvpFragment<HomePresenter>(), HomeView, SwipeRefreshLay
         }
 
         confirmTv.setOnClickListener {
-            startActivityAfterLogin(JobMainActivity::class.java , Bundle().apply {
-                putBoolean(Constant.PARAM_FROM_NOTICE , true)
+            startActivityAfterLogin(JobMainActivity::class.java, Bundle().apply {
+                putBoolean(Constant.PARAM_FROM_NOTICE, true)
             })
             alertDialog.dismiss()
         }
+    }
+
+
+    override fun checkAppVersion(response: VersionResponse) {
+        val newVersion = response.new_version
+        val updateDesc = response.update_desc
+        val isForceInstall = response.is_force_install
+
+        val builder: AlertDialog.Builder = AlertDialog.Builder(requireContext())
+        val inflater = LayoutInflater.from(requireContext())
+        val view: View = inflater.inflate(R.layout.activity_upgrade, null)
+
+        val titleTv = view.findViewById<TextView>(R.id.title_tv)
+        val messageTv = view.findViewById<TextView>(R.id.message_tv)
+
+        val cancelIv = view.findViewById<ImageView>(R.id.ic_cancel)
+        val upgradeTv = view.findViewById<TextView>(R.id.upgrade_tv)
+
+        val alertDialog: AlertDialog = builder.create()
+        alertDialog.setCancelable(false)
+        alertDialog.show()
+        val window: Window? = alertDialog.window
+        if (window != null) {
+            window.clearFlags(WindowManager.LayoutParams.FLAG_ALT_FOCUSABLE_IM)
+            window.setContentView(view)
+            window.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+
+            // 更改默认宽度
+            val lp = WindowManager.LayoutParams()
+            lp.copyFrom(window.attributes)
+            lp.width = ScreenUtils.getScreenWidth()
+            window.attributes = lp
+            window.attributes.gravity = Gravity.CENTER
+        }
+
+        titleTv.text = newVersion
+        messageTv.text = updateDesc
+        messageTv.text = updateDesc
+
+        cancelIv.visibility = if (isForceInstall) {
+            View.GONE
+        } else {
+            View.VISIBLE
+        }
+        cancelIv.setOnClickListener {
+            alertDialog.dismiss()
+        }
+        upgradeTv.setOnClickListener {
+            FeaturesUtil.gotoGooglePlay(requireContext())
+        }
+
+
     }
 
 

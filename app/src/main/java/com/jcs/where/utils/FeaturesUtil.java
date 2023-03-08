@@ -233,7 +233,7 @@ public class FeaturesUtil {
             }
 
 
-        }, Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE);
+        }, Manifest.permission.READ_EXTERNAL_STORAGE);
     }
 
 
@@ -264,7 +264,7 @@ public class FeaturesUtil {
             }
 
 
-        }, Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE);
+        }, Manifest.permission.READ_EXTERNAL_STORAGE);
     }
 
     /**
@@ -656,7 +656,7 @@ public class FeaturesUtil {
          *  主要适配的点在mImageUri赋值这里
          */
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
-            // Android Q得用MediaStore先存一下
+            // Android Q得用 MediaStore 先存一下
             ContentValues values = new ContentValues();
             values.put(MediaStore.Images.Media.DISPLAY_NAME, name);
             values.put(MediaStore.Images.Media.RELATIVE_PATH, Environment.DIRECTORY_DCIM);

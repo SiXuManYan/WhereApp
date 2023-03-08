@@ -65,6 +65,6 @@ MobSDK {
     permissions {
         // ShareSDK可选权限说明 https://www.mob.com/wiki/detailed?wiki=238&id=172
         // 除Gradle自动加载的可选权限方法
-        exclude "android.permission.QUERY_ALL_PACKAGES"
+        exclude "android.permission.QUERY_ALL_PACKAGES", "android.permission.READ_PHONE_STATE", "android.permission.WRITE_EXTERNAL_STORAGE", "android.permission.ACCESS_FINE_LOCATION", "android.permission.ACCESS_COARSE_LOCATION"
     }
 }

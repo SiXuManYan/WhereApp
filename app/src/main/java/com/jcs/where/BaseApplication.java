@@ -344,10 +344,13 @@ public class BaseApplication extends Application {
             UMConfigure.init(this, BuildConfig.UMENG_APP_KEY, BusinessUtils.INSTANCE.getUmengAppChannel(), UMConfigure.DEVICE_TYPE_PHONE, "");
         }
 
-        // 崩溃回调，拼接自定义字段
+/*
+        应用性能检测，国内平台可用
+        崩溃回调，拼接自定义字段 国内平台用
         UMCrash.registerUMCrashCallback(() ->
                 BuildConfig.FLAVOR + BuildConfig.VERSION_CODE + BuildConfig.VERSION_NAME
         );
+*/
 
         // 自动采集选择
         MobclickAgent.setPageCollectionMode(MobclickAgent.PageMode.AUTO);

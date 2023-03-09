@@ -73,8 +73,8 @@
 }
 
 # 友盟 U-APM 性能监控
--keep class com.uc.** { *; }
--keep class com.efs.** { *; }
+#-keep class com.uc.** { *; }
+#-keep class com.efs.** { *; }
 
 # 极光推送
 -dontoptimize

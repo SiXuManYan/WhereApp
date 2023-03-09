@@ -1253,6 +1253,7 @@ Gentleman must let go</string>
     <string name="check_balance">check balance</string>
     <string name="to_bind">to bind</string>
     <string name="bound">BOUND</string>
+    <string name="account_balance">Account Balance</string>
 
 
 </resources>

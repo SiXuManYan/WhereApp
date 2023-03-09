@@ -25,5 +25,7 @@ class PayCounter {
      */
     var is_auth = false
 
+    var nativeIsSelected = false
+
 
 }

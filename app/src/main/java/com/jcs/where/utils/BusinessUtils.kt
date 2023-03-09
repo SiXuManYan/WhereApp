@@ -8,7 +8,6 @@ import android.os.Bundle
 import android.text.Spannable
 import android.text.SpannableStringBuilder
 import android.text.style.AbsoluteSizeSpan
-import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -976,14 +975,28 @@ object BusinessUtils {
         }
     }
 
-    fun showWhereToas(context: Context) {
 
-        val toast = Toast(context)
-        toast.setGravity(Gravity.CENTER, 0, 0)
-        toast.duration = Toast.LENGTH_LONG
-        toast.view
+    private fun showBalance(context: Context ,
+                            title: String,
+                            channelName: String,
+                            balanceTitle:String,
+                            onSureClickListener: View.OnClickListener?,
+                            onCancelClickListener: View.OnClickListener?) {
 
+        val timeDialog = BottomSheetDialog(context)
+        val view = LayoutInflater.from(context).inflate(R.layout.dialog_complete_cv, null)
+        timeDialog.setContentView(view)
+        try {
+            val parent = view.parent as ViewGroup
+            parent.setBackgroundResource(android.R.color.transparent)
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
 
+        view.findViewById<Button>(R.id.ok).setOnClickListener {
+            timeDialog.dismiss()
+        }
+        timeDialog.show()
     }
 
 
@@ -997,3 +1010,9 @@ interface OnWorkTimeSelected {
 interface OnBottomSelectedIndex {
     fun onIndexSelect(selectedIndex: Int)
 }
+
+interface OnSureClickListener : View.OnClickListener {
+
+}
+
+

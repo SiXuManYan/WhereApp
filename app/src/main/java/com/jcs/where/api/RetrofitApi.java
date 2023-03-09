@@ -180,6 +180,7 @@ import com.jcs.where.api.response.order.store.RefundDetailMall;
 import com.jcs.where.api.response.order.store.StoreOrderDetail;
 import com.jcs.where.api.response.order.tab.OrderTabResponse;
 import com.jcs.where.api.response.other.CartNumberResponse;
+import com.jcs.where.api.response.pay.PayCounter;
 import com.jcs.where.api.response.recommend.HomeRecommendResponse;
 import com.jcs.where.api.response.search.SearchResultResponse;
 import com.jcs.where.api.response.store.PayChannel;
@@ -2652,5 +2653,12 @@ public interface RetrofitApi {
      */
     @GET("jobapi/v2/resumes/check_pdf")
     Observable<JcsResponse<CheckIsNeedUpdatePdf>> checkIsNeedUpdatePdf();
+
+
+    /**
+     * 收银台支付渠道列表
+     */
+    @GET("commonapi/v2/payment_channels")
+    Observable<JcsResponse<ArrayList<PayCounter>>> getPaCounter();
 
 }

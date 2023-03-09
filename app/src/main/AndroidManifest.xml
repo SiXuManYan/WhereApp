@@ -328,7 +328,7 @@
             android:configChanges="keyboardHidden|screenSize|orientation"
             android:exported="true"
             android:process=":pushcore"
-            android:taskAffinity="jpush.custom"
+            android:taskAffinity=""
             android:theme="@style/JPushTheme">
             <intent-filter>
                 <action android:name="cn.jpush.android.intent.JNotifyActivity" />
@@ -343,7 +343,7 @@
             android:name="cn.android.service.JTransitActivity"
             android:configChanges="keyboardHidden|screenSize|orientation"
             android:exported="true"
-            android:taskAffinity="jpush.custom"
+            android:taskAffinity=""
             android:theme="@style/JPushTheme">
             <intent-filter>
                 <action android:name="cn.android.service.JTransitActivity" />
@@ -376,7 +376,7 @@
         <receiver
             android:name="cn.jpush.android.service.PushReceiver"
             android:enabled="true"
-            android:exported="true">
+            android:exported="false">
             <intent-filter android:priority="1000">
                 <action android:name="cn.jpush.android.intent.NOTIFICATION_RECEIVED_PROXY" /> <!-- Required  显示通知栏 -->
                 <category android:name="${JPUSH_PKGNAME}" />

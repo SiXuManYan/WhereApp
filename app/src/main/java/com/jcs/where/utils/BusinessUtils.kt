@@ -987,12 +987,14 @@ object BusinessUtils {
             Toast.makeText(context, context.getString(R.string.copy_successfully), Toast.LENGTH_SHORT).show()
     }
 
-    private fun showBalance(context: Context ,
-                            title: String,
-                            channelName: String,
-                            balanceTitle:String,
-                            onSureClickListener: View.OnClickListener?,
-                            onCancelClickListener: View.OnClickListener?) {
+    private fun showBalance(
+        context: Context,
+        title: String,
+        channelName: String,
+        balanceTitle: String,
+        onSureClickListener: View.OnClickListener?,
+        onCancelClickListener: View.OnClickListener?,
+    ) {
 
         val timeDialog = BottomSheetDialog(context)
         val view = LayoutInflater.from(context).inflate(R.layout.dialog_complete_cv, null)
@@ -1008,15 +1010,17 @@ object BusinessUtils {
             timeDialog.dismiss()
         }
         timeDialog.show()
-    fun copyText(context: Context, textCopied: String) {
-        val clipboardManager = context.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
-        // When setting the clip board text.
-        clipboardManager.setPrimaryClip(ClipData.newPlainText(BuildConfig.APPLICATION_ID, textCopied))
-        // Only show a toast for Android 12 and lower.
-        if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.S)
-            Toast.makeText(context, context.getString(R.string.copy_successfully), Toast.LENGTH_SHORT).show()
-    }
+        fun copyText(context: Context, textCopied: String) {
+            val clipboardManager = context.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
+            // When setting the clip board text.
+            clipboardManager.setPrimaryClip(ClipData.newPlainText(BuildConfig.APPLICATION_ID, textCopied))
+            // Only show a toast for Android 12 and lower.
+            if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.S)
+                Toast.makeText(context, context.getString(R.string.copy_successfully), Toast.LENGTH_SHORT).show()
+        }
 
+
+    }
 
 }
 

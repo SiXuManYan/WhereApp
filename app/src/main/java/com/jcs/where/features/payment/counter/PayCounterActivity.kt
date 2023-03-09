@@ -7,8 +7,10 @@ import com.blankj.utilcode.util.SizeUtils
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.listener.OnItemChildClickListener
 import com.jcs.where.R
-import com.jcs.where.api.response.pay.PayCounter
+import com.jcs.where.api.response.pay.PayCounterChannel
+import com.jcs.where.api.response.pay.PayCounterChannelDetail
 import com.jcs.where.base.mvp.BaseMvpActivity
+import com.jcs.where.utils.BusinessUtils
 import com.jcs.where.widget.list.DividerDecoration
 import kotlinx.android.synthetic.main.activity_pay_counter.*
 
@@ -50,7 +52,7 @@ class PayCounterActivity : BaseMvpActivity<PayCounterPresenter>(), PayCounterVie
         presenter.getChannel()
     }
 
-    override fun bindPayCounter(response: MutableList<PayCounter>) {
+    override fun bindPayCounter(response: MutableList<PayCounterChannel>) {
         mAdapter.setNewInstance(response)
     }
 
@@ -65,13 +67,28 @@ class PayCounterActivity : BaseMvpActivity<PayCounterPresenter>(), PayCounterVie
             }
             R.id.view_balance_tv -> {
 
+                presenter.getChannelDetail(payCounter.channel_code)
+
             }
             R.id.to_bind_tv -> {
-                
+
             }
             else -> {}
         }
     }
+
+    override fun bindChannelDetail(response: PayCounterChannelDetail) {
+
+        BusinessUtils.showBalance(this,
+            title = getString(R.string.check_balance),
+            channelName = response.channel_code,
+            balanceTitle = getString(R.string.balance),
+            balance = response.balance.toPlainString(),
+            onCancelClickListener = null,
+            onConfirmClickListener = null
+        )
+    }
+
 
     override fun bindListener() {
         view_bind_channel_tv.setOnClickListener {

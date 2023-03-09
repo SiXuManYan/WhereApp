@@ -7,17 +7,17 @@ import android.widget.TextView
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.viewholder.BaseViewHolder
 import com.jcs.where.R
-import com.jcs.where.api.response.pay.PayCounter
+import com.jcs.where.api.response.pay.PayCounterChannel
 import com.jcs.where.utils.GlideUtil
 
 /**
  * Created by Wangsw  2023/3/7 16:43.
  *
  */
-class PayCounterAdapter : BaseQuickAdapter<PayCounter, BaseViewHolder>(R.layout.item_pay_counter) {
+class PayCounterAdapter : BaseQuickAdapter<PayCounterChannel, BaseViewHolder>(R.layout.item_pay_counter) {
 
 
-    override fun convert(holder: BaseViewHolder, item: PayCounter) {
+    override fun convert(holder: BaseViewHolder, item: PayCounterChannel) {
 
         val is_bound_tv = holder.getView<TextView>(R.id.is_bound_tv)
         val view_balance_tv = holder.getView<TextView>(R.id.view_balance_tv)

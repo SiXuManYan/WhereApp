@@ -180,7 +180,8 @@ import com.jcs.where.api.response.order.store.RefundDetailMall;
 import com.jcs.where.api.response.order.store.StoreOrderDetail;
 import com.jcs.where.api.response.order.tab.OrderTabResponse;
 import com.jcs.where.api.response.other.CartNumberResponse;
-import com.jcs.where.api.response.pay.PayCounter;
+import com.jcs.where.api.response.pay.PayCounterChannel;
+import com.jcs.where.api.response.pay.PayCounterChannelDetail;
 import com.jcs.where.api.response.recommend.HomeRecommendResponse;
 import com.jcs.where.api.response.search.SearchResultResponse;
 import com.jcs.where.api.response.store.PayChannel;
@@ -2605,7 +2606,6 @@ public interface RetrofitApi {
     );
 
 
-
     /**
      * 修改简历证书
      *
@@ -2625,7 +2625,6 @@ public interface RetrofitApi {
     Observable<JcsResponse<JsonElement>> deleteCertificate(
             @Path("certificate_id") int certificate_id
     );
-
 
 
     /**
@@ -2659,6 +2658,13 @@ public interface RetrofitApi {
      * 收银台支付渠道列表
      */
     @GET("commonapi/v2/payment_channels")
-    Observable<JcsResponse<ArrayList<PayCounter>>> getPaCounter();
+    Observable<JcsResponse<ArrayList<PayCounterChannel>>> getPayCounterChannel();
+
+    /**
+     * 收银台支付渠道详情
+     */
+    @GET("commonapi/v2/payment/account_channel_details")
+    Observable<JcsResponse<PayCounterChannelDetail>> getPayCounterDetail(@Query("channel_code") String channelCode);
+
 
 }

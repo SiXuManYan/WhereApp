@@ -835,6 +835,7 @@
         <activity android:name=".features.job.form.certificate.CertificateFromActivity" />
         <activity android:name=".features.integral.result.ExchangeResultActivity" />
         <activity android:name=".features.job.pdf.CvPdfActivity" />
+        <activity android:name=".features.payment.counter.PayCounterActivity" />
 
     </application>
 

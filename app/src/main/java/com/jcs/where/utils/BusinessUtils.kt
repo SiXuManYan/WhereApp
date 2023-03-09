@@ -987,17 +987,18 @@ object BusinessUtils {
             Toast.makeText(context, context.getString(R.string.copy_successfully), Toast.LENGTH_SHORT).show()
     }
 
-    private fun showBalance(
+    fun showBalance(
         context: Context,
         title: String,
         channelName: String,
         balanceTitle: String,
-        onSureClickListener: View.OnClickListener?,
+        balance: String,
         onCancelClickListener: View.OnClickListener?,
+        onConfirmClickListener: View.OnClickListener?,
     ) {
 
         val timeDialog = BottomSheetDialog(context)
-        val view = LayoutInflater.from(context).inflate(R.layout.dialog_complete_cv, null)
+        val view = LayoutInflater.from(context).inflate(R.layout.dialog_pay_balance, null)
         timeDialog.setContentView(view)
         try {
             val parent = view.parent as ViewGroup
@@ -1006,21 +1007,41 @@ object BusinessUtils {
             e.printStackTrace()
         }
 
-        view.findViewById<Button>(R.id.ok).setOnClickListener {
-            timeDialog.dismiss()
-        }
-        timeDialog.show()
-        fun copyText(context: Context, textCopied: String) {
-            val clipboardManager = context.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
-            // When setting the clip board text.
-            clipboardManager.setPrimaryClip(ClipData.newPlainText(BuildConfig.APPLICATION_ID, textCopied))
-            // Only show a toast for Android 12 and lower.
-            if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.S)
-                Toast.makeText(context, context.getString(R.string.copy_successfully), Toast.LENGTH_SHORT).show()
+        val title_tv = view.findViewById<TextView>(R.id.title_tv)
+        val pay_channel_tv = view.findViewById<TextView>(R.id.pay_channel_tv)
+        val balance_title_tv = view.findViewById<TextView>(R.id.balance_title_tv)
+        val balance_tv = view.findViewById<TextView>(R.id.balance_tv)
+        val cancel_bt = view.findViewById<Button>(R.id.cancel_bt)
+        val confirm_bt = view.findViewById<Button>(R.id.confirm_bt)
+
+
+        title_tv.text = title
+        pay_channel_tv.text = channelName
+        balance_title_tv.text = balanceTitle
+        balance_tv.text = balance
+
+        if (onCancelClickListener != null) {
+            cancel_bt.visibility = View.VISIBLE
+            confirm_bt.setText(R.string.confirm_lifted)
+            confirm_bt.setBackgroundResource(R.drawable.shape_blue_radius_22)
+        } else {
+            cancel_bt.visibility = View.GONE
+            confirm_bt.setBackgroundResource(R.drawable.stock_blue_radius_22)
         }
 
+        cancel_bt.setOnClickListener {
+            timeDialog.dismiss()
+            onCancelClickListener?.onClick(it)
+        }
+        confirm_bt.setOnClickListener {
+            timeDialog.dismiss()
+            onConfirmClickListener?.onClick(it)
+        }
+
+        timeDialog.show()
 
     }
+
 
 }
 
@@ -1033,7 +1054,7 @@ interface OnBottomSelectedIndex {
     fun onIndexSelect(selectedIndex: Int)
 }
 
-interface OnSureClickListener : View.OnClickListener {
+interface OnBalanceClickListener {
 
 }
 

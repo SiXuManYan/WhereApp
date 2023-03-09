@@ -1,10 +1,12 @@
 package com.jcs.where.api.response.pay
 
+import java.math.BigDecimal
+
 /**
  * Created by Wangsw  2023/3/7 16:36.
  *
  */
-class PayCounter {
+class PayCounterChannel {
 
     var id = 0
     var title = ""
@@ -28,4 +30,9 @@ class PayCounter {
     var nativeIsSelected = false
 
 
+}
+
+class PayCounterChannelDetail {
+    var channel_code = ""
+    var balance: BigDecimal = BigDecimal.ZERO
 }

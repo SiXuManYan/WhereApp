@@ -1275,6 +1275,9 @@ Gentleman must let go</string>
     <string name="to_bind">去绑定</string>
     <string name="bound">已绑定</string>
     <string name="account_balance">账户余额</string>
+    <string name="confirm_lifted">确定解除</string>
+    <string name="sure_2">确定</string>
+    <string name="balance">余额</string>
 
 
 </resources>

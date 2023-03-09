@@ -72,7 +72,7 @@ allprojects {
         maven {url "https://maven.rongcloud.cn/repository/maven-releases/"}
 
         // 友盟
-        maven { url 'https://repo1.maven.org/maven2/' }
+//        maven { url 'https://repo1.maven.org/maven2/' }
     }
 }
 

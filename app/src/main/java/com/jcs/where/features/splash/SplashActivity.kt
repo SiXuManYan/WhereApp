@@ -23,7 +23,6 @@ import com.blankj.utilcode.util.AppUtils
 import com.blankj.utilcode.util.BarUtils
 import com.blankj.utilcode.util.SPUtils
 import com.blankj.utilcode.util.SpanUtils
-import com.jcs.where.BuildConfig
 import com.jcs.where.R
 import com.jcs.where.base.mvp.BaseMvpActivity
 import com.jcs.where.features.main.MainActivity
@@ -31,7 +30,6 @@ import com.jcs.where.features.web.WebViewActivity
 import com.jcs.where.utils.*
 import com.jcs.where.widget.pager.OnIndicatorClickListener
 import com.mob.MobSDK
-import com.umeng.commonsdk.UMConfigure
 import kotlinx.android.synthetic.main.activity_splash.*
 
 /**
@@ -105,6 +103,7 @@ class SplashActivity : BaseMvpActivity<SplashPresenter>(), SplashView {
 
                 val whereCode = uri.getQueryParameter("whereCode")
                 if (whereCode.isNullOrBlank()) {
+
                     // 参数为空，读取剪切板中的内容
                     Handler(Looper.myLooper()!!).postDelayed({
                         presenter.handleClipboard()
@@ -268,7 +267,7 @@ class SplashActivity : BaseMvpActivity<SplashPresenter>(), SplashView {
             .setNegativeButton(getString(R.string.not_yet)) { dialog: DialogInterface, which: Int ->
 
                 // 友盟隐私合规授权结果上传
-                UMConfigure.submitPolicyGrantResult(applicationContext, false);
+//                UMConfigure.submitPolicyGrantResult(applicationContext, false);
 
                 // 极光推送隐私确认
                 JCollectionAuth.setAuth(this, false)
@@ -285,9 +284,9 @@ class SplashActivity : BaseMvpActivity<SplashPresenter>(), SplashView {
         MobSDK.submitPolicyGrantResult(true)
 
         // 友盟隐私合规授权结果上传
-        UMConfigure.submitPolicyGrantResult(applicationContext, true)
+//        UMConfigure.submitPolicyGrantResult(applicationContext, true)
         // 友盟真正注册
-        UMConfigure.init(this, BuildConfig.UMENG_APP_KEY, BusinessUtils.getUmengAppChannel(), UMConfigure.DEVICE_TYPE_PHONE, "")
+//        UMConfigure.init(this, BuildConfig.UMENG_APP_KEY, BusinessUtils.getUmengAppChannel(), UMConfigure.DEVICE_TYPE_PHONE, "")
 
         // 极光推送隐私确认
         JCollectionAuth.setAuth(this, true)

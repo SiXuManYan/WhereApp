@@ -218,8 +218,8 @@ dependencies {
 
 
     // 极光推送核心包(GooglePlay 版)
-    implementation 'cn.jiguang.sdk:jpush-google:4.8.0'  // 此处以JPush 4.8.0 Google Play版本为例
-    implementation 'cn.jiguang.sdk:jcore-google:3.3.1'  // 此处以JCore 3.3.1 Google Play 版本为例。
+    implementation 'cn.jiguang.sdk:jpush-google:4.8.5'  // 此处以JPush 4.8.0 Google Play版本为例
+    implementation 'cn.jiguang.sdk:jcore-google:4.0.0'  // 此处以JCore 3.3.1 Google Play 版本为例。
 
     // 极光推送厂商渠道包，逐个申请appKey后，在需要时打开
 //     接入华为厂商
@@ -296,11 +296,9 @@ dependencies {
 //    implementation 'com.facebook.android:facebook-android-sdk:[8,9)'
 
     // 友盟
-    implementation 'com.umeng.umsdk:common:9.5.1'// 必选
-    implementation 'com.umeng.umsdk:asms:1.4.1'// 必选
-
-    // 错误分析模块国内平台用
-//    implementation 'com.umeng.umsdk:apm:1.7.0'
+//    implementation 'com.umeng.umsdk:common:9.5.1'// 必选
+//    implementation 'com.umeng.umsdk:asms:1.4.1'// 必选
+//    implementation 'com.umeng.umsdk:apm:1.7.0' // 可选错误分析模块国内平台用
 
     // photoview
     implementation 'com.github.chrisbanes:PhotoView:2.0.0'

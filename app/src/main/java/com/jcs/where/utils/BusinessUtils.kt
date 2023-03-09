@@ -48,7 +48,6 @@ import com.jcs.where.storage.entity.User
 import com.jcs.where.view.MyLayoutManager
 import com.jcs.where.widget.calendar.JcsCalendarDialog
 import com.jcs.where.widget.list.DividerDecoration
-import com.umeng.analytics.MobclickAgent
 import io.rong.imkit.RongIM
 import io.rong.imkit.utils.RouteUtils
 import io.rong.imlib.model.Conversation
@@ -326,7 +325,7 @@ object BusinessUtils {
             CacheUtil.saveToken("")
 
             // 登出友盟
-            MobclickAgent.onProfileSignOff()
+//            MobclickAgent.onProfileSignOff()
 
             // 删除极光推送别名
             val sequence = SPUtils.getInstance().getInt(Constant.SP_PUSH_SEQUENCE, 0)
@@ -540,14 +539,13 @@ object BusinessUtils {
      *
      */
     fun umengOnProfileSignIn(platformName: String? = null, userId: Long) {
-
         try {
             // 友盟登录
-            if (platformName.isNullOrBlank()) {
-                MobclickAgent.onProfileSignIn(userId.toString())
-            } else {
-                MobclickAgent.onProfileSignIn(platformName, userId.toString())
-            }
+//            if (platformName.isNullOrBlank()) {
+//                MobclickAgent.onProfileSignIn(userId.toString())
+//            } else {
+//                MobclickAgent.onProfileSignIn(platformName, userId.toString())
+//            }
 
             // ## 极光推送相关 ##
 

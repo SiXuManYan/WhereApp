@@ -2,13 +2,15 @@ package com.jcs.where.utils
 
 import android.annotation.SuppressLint
 import android.app.Activity
+import android.content.ClipData
+import android.content.ClipboardManager
 import android.content.Context
 import android.content.Intent
+import android.os.Build
 import android.os.Bundle
 import android.text.Spannable
 import android.text.SpannableStringBuilder
 import android.text.style.AbsoluteSizeSpan
-import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -539,6 +541,7 @@ object BusinessUtils {
      *
      */
     fun umengOnProfileSignIn(platformName: String? = null, userId: Long) {
+
         try {
             // 友盟登录
 //            if (platformName.isNullOrBlank()) {
@@ -974,14 +977,13 @@ object BusinessUtils {
         }
     }
 
-    fun showWhereToas(context: Context) {
-
-        val toast = Toast(context)
-        toast.setGravity(Gravity.CENTER, 0, 0)
-        toast.duration = Toast.LENGTH_LONG
-        toast.view
-
-
+    fun copyText(context: Context, textCopied: String) {
+        val clipboardManager = context.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
+        // When setting the clip board text.
+        clipboardManager.setPrimaryClip(ClipData.newPlainText(BuildConfig.APPLICATION_ID, textCopied))
+        // Only show a toast for Android 12 and lower.
+        if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.S)
+            Toast.makeText(context, context.getString(R.string.copy_successfully), Toast.LENGTH_SHORT).show()
     }
 
 

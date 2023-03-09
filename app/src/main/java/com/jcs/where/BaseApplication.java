@@ -25,14 +25,10 @@ import com.jcs.where.frames.common.Html5Url;
 import com.jcs.where.storage.WhereDataBase;
 import com.jcs.where.storage.entity.User;
 import com.jcs.where.storage.entity.UserRongyunData;
-import com.jcs.where.utils.BusinessUtils;
 import com.jcs.where.utils.CacheUtil;
 import com.jcs.where.utils.CrashHandler;
 import com.jcs.where.utils.LocalLanguageUtil;
 import com.jcs.where.utils.SPUtil;
-import com.umeng.analytics.MobclickAgent;
-import com.umeng.commonsdk.UMConfigure;
-import com.umeng.umcrash.UMCrash;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -335,30 +331,33 @@ public class BaseApplication extends Application {
         // 预注册
         // log
 //        UMConfigure.setLogEnabled(BuildConfig.DEBUG);
-        UMConfigure.setLogEnabled(false);
-        UMConfigure.preInit(this, BuildConfig.UMENG_APP_KEY, BusinessUtils.INSTANCE.getUmengAppChannel());
+//        UMConfigure.setLogEnabled(false);
+//        UMConfigure.preInit(this, BuildConfig.UMENG_APP_KEY, BusinessUtils.INSTANCE.getUmengAppChannel());
 
         // 用户同意协议后的真正注册
-        boolean isAgree = CacheUtil.isAgreeUserAgreement();
-        if (isAgree) {
-            UMConfigure.init(this, BuildConfig.UMENG_APP_KEY, BusinessUtils.INSTANCE.getUmengAppChannel(), UMConfigure.DEVICE_TYPE_PHONE, "");
-        }
+//        boolean isAgree = CacheUtil.isAgreeUserAgreement();
+//        if (isAgree) {
+//            UMConfigure.init(this, BuildConfig.UMENG_APP_KEY, BusinessUtils.INSTANCE.getUmengAppChannel(), UMConfigure.DEVICE_TYPE_PHONE, "");
+//        }
 
-        // 崩溃回调，拼接自定义字段
+/*
+        应用性能检测，国内平台可用，
+        崩溃回调，拼接自定义字段 国内平台用
         UMCrash.registerUMCrashCallback(() ->
                 BuildConfig.FLAVOR + BuildConfig.VERSION_CODE + BuildConfig.VERSION_NAME
         );
+*/
 
         // 自动采集选择
-        MobclickAgent.setPageCollectionMode(MobclickAgent.PageMode.AUTO);
+//        MobclickAgent.setPageCollectionMode(MobclickAgent.PageMode.AUTO);
 
     }
 
 
     @Override
     public void onTerminate() {
-
-        MobclickAgent.onKillProcess(this);
+        // 程序退出时，友盟用于保存统计数据的API。
+//        MobclickAgent.onKillProcess(this);
         super.onTerminate();
     }
 }

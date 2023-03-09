@@ -1,8 +1,6 @@
 package com.jcs.where.features.store.pay.info
 
 import android.os.Bundle
-import android.text.Editable
-import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,8 +8,6 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.widget.AppCompatEditText
 import androidx.core.widget.addTextChangedListener
-import com.blankj.utilcode.util.ClipboardUtils
-import com.blankj.utilcode.util.ToastUtils
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.jcs.where.R
 import com.jcs.where.api.response.store.PayChannel
@@ -19,6 +15,7 @@ import com.jcs.where.base.BaseEvent
 import com.jcs.where.base.EventCode
 import com.jcs.where.base.mvp.BaseMvpActivity
 import com.jcs.where.features.store.pay.result.StorePayResultActivity
+import com.jcs.where.utils.BusinessUtils
 import com.jcs.where.utils.Constant
 import kotlinx.android.synthetic.main.activity_store_pay_info.*
 import org.greenrobot.eventbus.EventBus
@@ -86,12 +83,10 @@ class PayInfoActivity : BaseMvpActivity<PayInfoPresenter>(), PayInfoView {
             showVerifyDialog()
         }
         copy_iv.setOnClickListener {
-            ClipboardUtils.copyText(payment_name_tv.text.toString().trim())
-            ToastUtils.showShort(getString(R.string.copy_successfully))
+            BusinessUtils.copyText(this, payment_name_tv.text.toString().trim())
         }
         copy2_iv.setOnClickListener {
-            ClipboardUtils.copyText(payment_account_number_tv.text.toString().trim())
-            ToastUtils.showShort(getString(R.string.copy_successfully))
+            BusinessUtils.copyText(this, payment_account_number_tv.text.toString().trim())
         }
     }
 

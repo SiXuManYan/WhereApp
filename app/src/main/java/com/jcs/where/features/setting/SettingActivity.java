@@ -16,19 +16,18 @@ import com.jcs.where.R;
 import com.jcs.where.base.BaseActivity;
 import com.jcs.where.base.BaseEvent;
 import com.jcs.where.base.EventCode;
-import com.jcs.where.features.refund.method.RefundMethodActivity;
-import com.jcs.where.features.web.WebViewActivity;
 import com.jcs.where.features.account.login.LoginActivity;
+import com.jcs.where.features.refund.method.RefundMethodActivity;
 import com.jcs.where.features.setting.information.ModifyInfoActivity;
 import com.jcs.where.features.setting.password.ModifyPasswordActivity;
 import com.jcs.where.features.setting.phone.ModifyPhoneActivity;
+import com.jcs.where.features.web.WebViewActivity;
 import com.jcs.where.mine.about.AboutActivity;
 import com.jcs.where.storage.entity.User;
 import com.jcs.where.utils.BusinessUtils;
 import com.jcs.where.utils.Constant;
 import com.jcs.where.utils.FeaturesUtil;
 import com.jcs.where.utils.GlideUtil;
-import com.umeng.analytics.MobclickAgent;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -60,7 +59,7 @@ public class SettingActivity extends BaseActivity {
         clear_cache_tv = findViewById(R.id.clear_cache_tv);
         TextView version_name_tv = findViewById(R.id.version_name_tv);
         version_name_tv.setText(BuildConfig.VERSION_NAME);
-        sequence = SPUtils.getInstance().getInt(Constant.SP_PUSH_SEQUENCE,0);
+        sequence = SPUtils.getInstance().getInt(Constant.SP_PUSH_SEQUENCE, 0);
     }
 
 
@@ -118,7 +117,7 @@ public class SettingActivity extends BaseActivity {
             startActivity(ModifyPhoneActivity.class);
         });
         findViewById(R.id.privacy_policy_rl).setOnClickListener(v -> {
-            WebViewActivity.Companion.navigation(this, FeaturesUtil.getPrivacyPolicy(),false);
+            WebViewActivity.Companion.navigation(this, FeaturesUtil.getPrivacyPolicy(), false);
         });
         findViewById(R.id.about_rl).setOnClickListener(v -> {
             startActivity(AboutActivity.class);
@@ -136,13 +135,13 @@ public class SettingActivity extends BaseActivity {
                 .setCancelable(false)
                 .setPositiveButton(R.string.ensure, (dialogInterface, i) -> {
                     // 登出友盟
-                    MobclickAgent.onProfileSignOff();
+//                    MobclickAgent.onProfileSignOff();
 
                     // 断开融云连接
                     BusinessUtils.INSTANCE.loginOut();
 
                     // 删除极光推送别名
-                    JPushInterface.deleteAlias(this,sequence);
+                    JPushInterface.deleteAlias(this, sequence);
 
                     startActivity(LoginActivity.class);
                     finish();

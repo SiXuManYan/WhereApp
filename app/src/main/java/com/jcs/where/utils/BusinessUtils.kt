@@ -2,8 +2,11 @@ package com.jcs.where.utils
 
 import android.annotation.SuppressLint
 import android.app.Activity
+import android.content.ClipData
+import android.content.ClipboardManager
 import android.content.Context
 import android.content.Intent
+import android.os.Build
 import android.os.Bundle
 import android.text.Spannable
 import android.text.SpannableStringBuilder
@@ -47,7 +50,6 @@ import com.jcs.where.storage.entity.User
 import com.jcs.where.view.MyLayoutManager
 import com.jcs.where.widget.calendar.JcsCalendarDialog
 import com.jcs.where.widget.list.DividerDecoration
-import com.umeng.analytics.MobclickAgent
 import io.rong.imkit.RongIM
 import io.rong.imkit.utils.RouteUtils
 import io.rong.imlib.model.Conversation
@@ -325,7 +327,7 @@ object BusinessUtils {
             CacheUtil.saveToken("")
 
             // 登出友盟
-            MobclickAgent.onProfileSignOff()
+//            MobclickAgent.onProfileSignOff()
 
             // 删除极光推送别名
             val sequence = SPUtils.getInstance().getInt(Constant.SP_PUSH_SEQUENCE, 0)
@@ -542,11 +544,11 @@ object BusinessUtils {
 
         try {
             // 友盟登录
-            if (platformName.isNullOrBlank()) {
-                MobclickAgent.onProfileSignIn(userId.toString())
-            } else {
-                MobclickAgent.onProfileSignIn(platformName, userId.toString())
-            }
+//            if (platformName.isNullOrBlank()) {
+//                MobclickAgent.onProfileSignIn(userId.toString())
+//            } else {
+//                MobclickAgent.onProfileSignIn(platformName, userId.toString())
+//            }
 
             // ## 极光推送相关 ##
 
@@ -976,6 +978,15 @@ object BusinessUtils {
     }
 
 
+    fun copyText(context: Context, textCopied: String) {
+        val clipboardManager = context.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
+        // When setting the clip board text.
+        clipboardManager.setPrimaryClip(ClipData.newPlainText(BuildConfig.APPLICATION_ID, textCopied))
+        // Only show a toast for Android 12 and lower.
+        if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.S)
+            Toast.makeText(context, context.getString(R.string.copy_successfully), Toast.LENGTH_SHORT).show()
+    }
+
     private fun showBalance(context: Context ,
                             title: String,
                             channelName: String,
@@ -997,6 +1008,13 @@ object BusinessUtils {
             timeDialog.dismiss()
         }
         timeDialog.show()
+    fun copyText(context: Context, textCopied: String) {
+        val clipboardManager = context.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
+        // When setting the clip board text.
+        clipboardManager.setPrimaryClip(ClipData.newPlainText(BuildConfig.APPLICATION_ID, textCopied))
+        // Only show a toast for Android 12 and lower.
+        if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.S)
+            Toast.makeText(context, context.getString(R.string.copy_successfully), Toast.LENGTH_SHORT).show()
     }
 
 

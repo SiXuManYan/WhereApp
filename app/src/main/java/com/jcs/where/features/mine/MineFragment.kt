@@ -6,7 +6,10 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
 import android.widget.TextView
-import com.blankj.utilcode.util.*
+import com.blankj.utilcode.util.BarUtils
+import com.blankj.utilcode.util.SPUtils
+import com.blankj.utilcode.util.SizeUtils
+import com.blankj.utilcode.util.ToastUtils
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.google.android.material.bottomsheet.BottomSheetDialog
@@ -33,10 +36,7 @@ import com.jcs.where.features.setting.information.ModifyInfoActivity
 import com.jcs.where.mine.about.AboutActivity
 import com.jcs.where.mine.activity.LanguageActivity
 import com.jcs.where.storage.entity.User
-import com.jcs.where.utils.Constant
-import com.jcs.where.utils.LocalLanguageUtil
-import com.jcs.where.utils.MobUtil
-import com.jcs.where.utils.SPKey
+import com.jcs.where.utils.*
 import com.jcs.where.utils.image.GlideRoundedCornersTransform
 import com.jcs.where.utils.zxing.ZxingUtil
 import kotlinx.android.synthetic.main.fragment_mine_2.*
@@ -89,7 +89,7 @@ class MineFragment : BaseMvpFragment<MinePresenter>(), MineView {
             startActivityAfterLogin(SettingActivity::class.java)
         }
         message_view.setOnClickListener {
-            MessageCenterActivity.navigation(requireContext() , systemMessageCount)
+            MessageCenterActivity.navigation(requireContext(), systemMessageCount)
         }
         user_info_rl.setOnClickListener {
             startActivityAfterLogin(ModifyInfoActivity::class.java)
@@ -151,7 +151,6 @@ class MineFragment : BaseMvpFragment<MinePresenter>(), MineView {
         }
 
     }
-
 
 
     override fun bindUnreadMessageCount(totalCount: Int, systemCount: Int) {
@@ -258,8 +257,7 @@ class MineFragment : BaseMvpFragment<MinePresenter>(), MineView {
             timeDialog.dismiss()
         }
         view.findViewById<LinearLayout>(R.id.copy_link_ll).setOnClickListener {
-            ClipboardUtils.copyText(inviteLink)
-            ToastUtils.showShort(getString(R.string.copy_successfully))
+            BusinessUtils.copyText(requireContext(), inviteLink)
             timeDialog.dismiss()
         }
         view.findViewById<TextView>(R.id.cancel_tv).setOnClickListener {

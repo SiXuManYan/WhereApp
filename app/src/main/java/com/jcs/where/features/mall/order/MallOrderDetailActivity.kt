@@ -88,7 +88,7 @@ class MallOrderDetailActivity : BaseMvpActivity<MallOrderDetailPresenter>(), Mal
     override fun bindListener() {
         copy_tv.setOnClickListener {
             if (logistics.isNotBlank()) {
-                ClipboardUtils.copyText(logistics)
+                BusinessUtils.copyText(this, logistics)
             }
         }
     }

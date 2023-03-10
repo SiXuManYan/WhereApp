@@ -23,6 +23,8 @@ class PayCounterActivity : BaseMvpActivity<PayCounterPresenter>(), PayCounterVie
     private var lastSelectIndex = -1
     private lateinit var mAdapter: PayCounterAdapter
 
+    override fun isStatusDark() = true
+
     override fun getLayoutId() = R.layout.activity_pay_counter
 
     override fun initView() {
@@ -66,7 +68,6 @@ class PayCounterActivity : BaseMvpActivity<PayCounterPresenter>(), PayCounterVie
 
             }
             R.id.view_balance_tv -> {
-
                 presenter.getChannelDetail(payCounter.channel_code)
 
             }

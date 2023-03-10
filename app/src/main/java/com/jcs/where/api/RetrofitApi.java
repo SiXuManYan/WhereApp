@@ -2661,10 +2661,15 @@ public interface RetrofitApi {
     Observable<JcsResponse<ArrayList<PayCounterChannel>>> getPayCounterChannel();
 
     /**
-     * 收银台支付渠道详情
+     * 支付渠道余额
      */
     @GET("commonapi/v2/payment/account_channel_details")
-    Observable<JcsResponse<PayCounterChannelDetail>> getPayCounterDetail(@Query("channel_code") String channelCode);
+    Observable<JcsResponse<PayCounterChannelDetail>> getChannelBalance(@Query("channel_code") String channelCode);
 
+    /**
+     * 已绑定支付渠道列表
+     */
+    @GET("commonapi/v2/auth_payment_channels")
+    Observable<JcsResponse<ArrayList<PayCounterChannel>>> getBoundChannel();
 
 }

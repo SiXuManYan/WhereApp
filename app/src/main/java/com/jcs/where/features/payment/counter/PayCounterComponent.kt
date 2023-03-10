@@ -29,7 +29,7 @@ class PayCounterPresenter(private var view: PayCounterView) : BaseMvpPresenter(v
     }
 
     fun getChannelDetail(channelCode:String) {
-        requestApi(mRetrofit.getPayCounterDetail(channelCode), object : BaseMvpObserver<PayCounterChannelDetail>(view) {
+        requestApi(mRetrofit.getChannelBalance(channelCode), object : BaseMvpObserver<PayCounterChannelDetail>(view) {
             override fun onSuccess(response: PayCounterChannelDetail) {
                 view.bindChannelDetail(response)
             }

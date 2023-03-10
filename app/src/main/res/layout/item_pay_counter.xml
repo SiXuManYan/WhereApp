@@ -23,9 +23,10 @@
 
     <LinearLayout
         android:layout_width="match_parent"
+        android:layout_marginStart="@dimen/dp_12"
         android:layout_height="wrap_content"
+        android:layout_toEndOf="@+id/icon_iv"
         android:layout_centerVertical="true"
-        android:layout_marginStart="@dimen/dp_76"
         android:layout_marginEnd="@dimen/dp_12"
         android:layout_toStartOf="@+id/check_iv"
         android:orientation="vertical">

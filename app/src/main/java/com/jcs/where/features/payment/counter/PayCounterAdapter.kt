@@ -19,6 +19,7 @@ class PayCounterAdapter : BaseQuickAdapter<PayCounterChannel, BaseViewHolder>(R.
 
     override fun convert(holder: BaseViewHolder, item: PayCounterChannel) {
 
+        val channel_title_tv = holder.getView<TextView>(R.id.channel_title_tv)
         val is_bound_tv = holder.getView<TextView>(R.id.is_bound_tv)
         val view_balance_tv = holder.getView<TextView>(R.id.view_balance_tv)
         val to_bind_tv = holder.getView<TextView>(R.id.to_bind_tv)
@@ -26,6 +27,7 @@ class PayCounterAdapter : BaseQuickAdapter<PayCounterChannel, BaseViewHolder>(R.
         val check_iv = holder.getView<ImageView>(R.id.check_iv)
         val icon_iv = holder.getView<ImageView>(R.id.icon_iv)
 
+        channel_title_tv.text = item.title
 
         GlideUtil.load(context, item.icon, icon_iv)
 

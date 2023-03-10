@@ -36,3 +36,11 @@ class PayCounterChannelDetail {
     var channel_code = ""
     var balance: BigDecimal = BigDecimal.ZERO
 }
+
+class PayChannelUnbind {
+
+    /**
+     * 渠道编码
+     */
+    var channel_code = ""
+}

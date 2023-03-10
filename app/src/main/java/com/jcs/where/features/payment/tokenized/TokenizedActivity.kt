@@ -130,5 +130,11 @@ class TokenizedActivity : BaseMvpActivity<TokenizedPresenter>(), TokenizedView, 
 
     }
 
+    override fun unBindSuccess() {
+        if (index > 0) {
+            mAdapter.removeAt(index)
+        }
+    }
+
 
 }

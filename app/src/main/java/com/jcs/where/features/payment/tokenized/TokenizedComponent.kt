@@ -1,8 +1,10 @@
 package com.jcs.where.features.payment.tokenized
 
+import com.google.gson.JsonElement
 import com.jcs.where.api.network.BaseMvpObserver
 import com.jcs.where.api.network.BaseMvpPresenter
 import com.jcs.where.api.network.BaseMvpView
+import com.jcs.where.api.response.pay.PayChannelUnbind
 import com.jcs.where.api.response.pay.PayCounterChannel
 
 /**
@@ -13,6 +15,7 @@ import com.jcs.where.api.response.pay.PayCounterChannel
 interface TokenizedView : BaseMvpView {
 
     fun bindBoundList(data: MutableList<PayCounterChannel>?)
+    fun unBindSuccess()
 }
 
 class TokenizedPresenter(private var view: TokenizedView) :BaseMvpPresenter(view){
@@ -31,6 +34,16 @@ class TokenizedPresenter(private var view: TokenizedView) :BaseMvpPresenter(view
 
     fun unbindToken(channelCode: String) {
 
+        val apply = PayChannelUnbind().apply {
+            channel_code = channelCode
+        }
+
+        requestApi(mRetrofit.unBindPayChannel(apply), object : BaseMvpObserver<JsonElement>(view) {
+            override fun onSuccess(response: JsonElement?) {
+                view.unBindSuccess()
+            }
+
+        })
 
     }
 

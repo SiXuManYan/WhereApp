@@ -180,6 +180,7 @@ import com.jcs.where.api.response.order.store.RefundDetailMall;
 import com.jcs.where.api.response.order.store.StoreOrderDetail;
 import com.jcs.where.api.response.order.tab.OrderTabResponse;
 import com.jcs.where.api.response.other.CartNumberResponse;
+import com.jcs.where.api.response.pay.PayChannelUnbind;
 import com.jcs.where.api.response.pay.PayCounterChannel;
 import com.jcs.where.api.response.pay.PayCounterChannelDetail;
 import com.jcs.where.api.response.recommend.HomeRecommendResponse;
@@ -2671,5 +2672,13 @@ public interface RetrofitApi {
      */
     @GET("commonapi/v2/auth_payment_channels")
     Observable<JcsResponse<ArrayList<PayCounterChannel>>> getBoundChannel();
+
+
+    /**
+     * 取消支付账号绑定
+     */
+    @POST("commonapi/v2/payment/account_unlinking")
+    Observable<JcsResponse<JsonElement>> unBindPayChannel(@Body PayChannelUnbind request);
+
 
 }

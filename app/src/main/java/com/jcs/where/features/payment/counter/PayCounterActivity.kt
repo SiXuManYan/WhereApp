@@ -13,6 +13,7 @@ import com.jcs.where.base.BaseEvent
 import com.jcs.where.base.EventCode
 import com.jcs.where.base.mvp.BaseMvpActivity
 import com.jcs.where.features.payment.tokenized.TokenizedActivity
+import com.jcs.where.features.web.WebViewActivity
 import com.jcs.where.utils.BusinessUtils
 import com.jcs.where.widget.list.DividerDecoration
 import kotlinx.android.synthetic.main.activity_pay_counter.*
@@ -77,9 +78,15 @@ class PayCounterActivity : BaseMvpActivity<PayCounterPresenter>(), PayCounterVie
 
             }
             R.id.to_bind_tv -> {
-                presenter.getBindTokenUrl(payCounter)
+                presenter.getBindTokenUrl(payCounter.channel_code)
             }
             else -> {}
+        }
+    }
+
+    override fun setBindTokenUrl(authH5Url: String) {
+        if (authH5Url.isNotBlank()) {
+            WebViewActivity.navigation(this, authH5Url)
         }
     }
 
@@ -106,9 +113,12 @@ class PayCounterActivity : BaseMvpActivity<PayCounterPresenter>(), PayCounterVie
     override fun onEventReceived(baseEvent: BaseEvent<*>) {
         super.onEventReceived(baseEvent)
         when (baseEvent.code) {
-            EventCode.EVENT_UNBIND_CHANNEL_TOKEN_SUCCESS -> {
+            EventCode.EVENT_UNBIND_PAY_TOKEN_SUCCESS,
+            EventCode.EVENT_REFRESH_PAY_TOKEN_BIND_STATUS,
+            -> {
                 onRefresh()
             }
+
             else -> {}
         }
 

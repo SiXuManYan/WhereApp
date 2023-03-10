@@ -44,3 +44,12 @@ class PayChannelUnbind {
      */
     var channel_code = ""
 }
+
+
+class PayChannelBindUrl {
+
+    /**
+     * 渠道编码
+     */
+    var auth_h5_url = ""
+}

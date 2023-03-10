@@ -3,6 +3,8 @@ package com.jcs.where.features.payment.counter
 import com.jcs.where.api.network.BaseMvpObserver
 import com.jcs.where.api.network.BaseMvpPresenter
 import com.jcs.where.api.network.BaseMvpView
+import com.jcs.where.api.response.pay.PayChannelBindUrl
+import com.jcs.where.api.response.pay.PayChannelUnbind
 import com.jcs.where.api.response.pay.PayCounterChannel
 import com.jcs.where.api.response.pay.PayCounterChannelDetail
 
@@ -13,6 +15,7 @@ import com.jcs.where.api.response.pay.PayCounterChannelDetail
 interface PayCounterView : BaseMvpView {
     fun bindPayCounter(response: MutableList<PayCounterChannel>)
     fun bindChannelDetail(response: PayCounterChannelDetail){}
+    fun setBindTokenUrl(authH5Url: String)
 
 }
 
@@ -42,8 +45,21 @@ class PayCounterPresenter(private var view: PayCounterView) : BaseMvpPresenter(v
         })
     }
 
-    fun getBindTokenUrl(payCounter: PayCounterChannel) {
+    /**
+     * 获取绑定渠道Token 链接
+     */
+    fun getBindTokenUrl(channelCode:String) {
 
+        val apply = PayChannelUnbind().apply {
+            channel_code = channelCode
+        }
+
+        requestApi(mRetrofit.getBindTokenUrl(apply), object : BaseMvpObserver<PayChannelBindUrl>(view) {
+            override fun onSuccess(response: PayChannelBindUrl) {
+                view.setBindTokenUrl(response.auth_h5_url)
+            }
+
+        })
     }
 
 }

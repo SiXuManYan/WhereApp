@@ -134,8 +134,9 @@ class WebViewActivity : BaseActivity() {
 
 
     override fun onDestroy() {
-        super.onDestroy()
         mAgentWeb.webLifeCycle.onDestroy()
+
+        super.onDestroy()
     }
 
 

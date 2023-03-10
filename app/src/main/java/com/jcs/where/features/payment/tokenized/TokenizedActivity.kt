@@ -137,7 +137,7 @@ class TokenizedActivity : BaseMvpActivity<TokenizedPresenter>(), TokenizedView, 
         if (index > 0) {
             mAdapter.removeAt(index)
         }
-        EventBus.getDefault().post(BaseEvent<Any>(EventCode.EVENT_UNBIND_CHANNEL_TOKEN_SUCCESS))
+        EventBus.getDefault().post(BaseEvent<Any>(EventCode.EVENT_UNBIND_PAY_TOKEN_SUCCESS))
     }
 
 

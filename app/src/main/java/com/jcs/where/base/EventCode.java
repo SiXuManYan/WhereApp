@@ -229,4 +229,9 @@ public class EventCode {
      */
     public static final int EVENT_PDF_GENERATE_SUCCESS = 1056;
 
+    /**
+     * 解绑令牌支付成功
+     */
+    public static final int EVENT_UNBIND_CHANNEL_TOKEN_SUCCESS = 1057;
+
 }

@@ -14,10 +14,13 @@ import com.chad.library.adapter.base.listener.OnItemChildClickListener
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.jcs.where.R
 import com.jcs.where.api.response.pay.PayCounterChannel
+import com.jcs.where.base.BaseEvent
+import com.jcs.where.base.EventCode
 import com.jcs.where.base.mvp.BaseMvpActivity
 import com.jcs.where.view.empty.EmptyView
 import com.jcs.where.widget.list.DividerDecoration
 import kotlinx.android.synthetic.main.activity_refresh_list.*
+import org.greenrobot.eventbus.EventBus
 
 /**
  * Created by Wangsw  2023/3/9 15:25.
@@ -134,6 +137,7 @@ class TokenizedActivity : BaseMvpActivity<TokenizedPresenter>(), TokenizedView, 
         if (index > 0) {
             mAdapter.removeAt(index)
         }
+        EventBus.getDefault().post(BaseEvent<Any>(EventCode.EVENT_UNBIND_CHANNEL_TOKEN_SUCCESS))
     }
 
 

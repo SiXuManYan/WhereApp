@@ -19,6 +19,9 @@ interface PayCounterView : BaseMvpView {
 class PayCounterPresenter(private var view: PayCounterView) : BaseMvpPresenter(view) {
 
 
+    /**
+     * 支付渠道列表
+     */
     fun getChannel() {
         requestApi(mRetrofit.payCounterChannel, object : BaseMvpObserver<ArrayList<PayCounterChannel>>(view) {
             override fun onSuccess(response: ArrayList<PayCounterChannel>) {
@@ -28,12 +31,19 @@ class PayCounterPresenter(private var view: PayCounterView) : BaseMvpPresenter(v
         })
     }
 
-    fun getChannelDetail(channelCode:String) {
+    /**
+     * 获取支付渠道余额
+     */
+    fun getChannelBalance(channelCode:String) {
         requestApi(mRetrofit.getChannelBalance(channelCode), object : BaseMvpObserver<PayCounterChannelDetail>(view) {
             override fun onSuccess(response: PayCounterChannelDetail) {
                 view.bindChannelDetail(response)
             }
         })
+    }
+
+    fun getBindTokenUrl(payCounter: PayCounterChannel) {
+
     }
 
 }

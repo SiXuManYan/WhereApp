@@ -7,7 +7,7 @@
     android:orientation="vertical">
 
 
-    <com.jcs.where.widget.JcsTitle
+    <com.jiechengsheng.city.widget.JcsTitle
         android:id="@+id/jcsTitle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />

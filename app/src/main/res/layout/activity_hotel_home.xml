@@ -160,7 +160,7 @@
                         android:textSize="@dimen/sp_15"
                         android:textStyle="bold" />
 
-                    <com.jcs.where.widget.NumberView2
+                    <com.jiechengsheng.city.widget.NumberView2
                         android:id="@+id/number_view"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"

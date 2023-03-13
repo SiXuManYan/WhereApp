@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="@color/white">
 
-    <com.jcs.where.widget.JcsTitle
+    <com.jiechengsheng.city.widget.JcsTitle
         android:id="@+id/jcsTitle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -57,7 +57,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/tab_rl" />
 
-    <com.jcs.where.view.empty.EmptyView
+    <com.jiechengsheng.city.view.empty.EmptyView
         android:id="@+id/service_empty"
         android:layout_width="match_parent"
         android:layout_height="match_parent"

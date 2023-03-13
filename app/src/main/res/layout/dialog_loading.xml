@@ -5,7 +5,7 @@
     android:background="@drawable/shape_bg_loading_dialog">
 
 
-    <com.jcs.where.base.dialog.CommonProgressBar
+    <com.jiechengsheng.city.base.dialog.CommonProgressBar
         android:id="@+id/progress_cpb"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

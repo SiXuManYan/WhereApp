@@ -74,7 +74,7 @@
 
     </LinearLayout>
 
-    <com.jcs.where.widget.NumberView
+    <com.jiechengsheng.city.widget.NumberView
         android:id="@+id/number_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

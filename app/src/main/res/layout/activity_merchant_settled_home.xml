@@ -192,7 +192,7 @@
 
         </com.google.android.material.appbar.AppBarLayout>
 
-        <com.jcs.where.widget.NoScrollViewPager
+        <com.jiechengsheng.city.widget.NoScrollViewPager
             android:id="@+id/pager_vp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

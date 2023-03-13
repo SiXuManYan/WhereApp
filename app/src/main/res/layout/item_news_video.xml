@@ -28,7 +28,7 @@
         android:layout_marginTop="@dimen/dp_7"
         android:layout_marginBottom="@dimen/dp_10">
 
-        <com.jcs.where.widget.JcsVideoPlayer
+        <com.jiechengsheng.city.widget.JcsVideoPlayer
             android:id="@+id/newsVideoPlayer"
             android:layout_width="match_parent"
             android:layout_height="match_parent"

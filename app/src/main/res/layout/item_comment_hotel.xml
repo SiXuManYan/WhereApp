@@ -57,7 +57,7 @@
                     app:rsv_strokeColor="@color/transplant"
                     app:rsv_strokeWidth="0dp" />-->
 
-        <com.jcs.where.widget.comment.StarView
+        <com.jiechengsheng.city.widget.comment.StarView
             android:id="@+id/comment_sv"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

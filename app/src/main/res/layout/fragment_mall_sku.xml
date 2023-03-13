@@ -118,7 +118,7 @@
                     tools:text="@string/stock_format" />
 
 
-                <com.jcs.where.widget.NumberView2
+                <com.jiechengsheng.city.widget.NumberView2
                     android:id="@+id/number_view"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"

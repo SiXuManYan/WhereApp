@@ -9,7 +9,7 @@
     android:orientation="vertical">
 
 
-    <com.jcs.where.widget.JcsTitle
+    <com.jiechengsheng.city.widget.JcsTitle
         android:id="@+id/jcsTitle"
         android:visibility="gone"
         tools:visibility="visible"

@@ -51,7 +51,7 @@
         android:background="@color/grey_F5F5F5" />
 
 
-    <com.jcs.where.features.com100.Common100WebView
+    <com.jiechengsheng.city.features.com100.Common100WebView
         android:id="@+id/web_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"

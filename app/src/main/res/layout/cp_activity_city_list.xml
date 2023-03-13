@@ -7,7 +7,7 @@
     android:background="@color/white"
     android:orientation="vertical">
 
-    <com.jcs.where.widget.JcsTitle
+    <com.jiechengsheng.city.widget.JcsTitle
         android:id="@+id/jcsTitle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -96,7 +96,7 @@
             android:visibility="gone"
             tools:visibility="visible" />
 
-        <com.jcs.where.widget.SideLetterBar
+        <com.jiechengsheng.city.widget.SideLetterBar
             android:id="@+id/side_letter_bar"
             android:layout_width="36dp"
             android:layout_height="match_parent"

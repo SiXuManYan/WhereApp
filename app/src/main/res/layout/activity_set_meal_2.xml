@@ -32,7 +32,7 @@
                     android:layout_height="match_parent" />
 
 
-                <com.jcs.where.widget.pager.IndicatorView2
+                <com.jiechengsheng.city.widget.pager.IndicatorView2
                     android:id="@+id/point_view"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -122,7 +122,7 @@
                         tools:text="@string/stock_format" />
 
 
-                    <com.jcs.where.widget.NumberView2
+                    <com.jiechengsheng.city.widget.NumberView2
                         android:id="@+id/number_view"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -249,7 +249,7 @@
 
 
     <!-- 2022-08-05 隐藏购物车 -->
-    <com.jcs.where.widget.MessageView
+    <com.jiechengsheng.city.widget.MessageView
         android:id="@+id/shopping_cart"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

@@ -8,7 +8,7 @@
     android:focusableInTouchMode="true"
     android:orientation="vertical">
 
-    <com.jcs.where.widget.JcsTitle
+    <com.jiechengsheng.city.widget.JcsTitle
         android:id="@+id/jcsTitle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -148,7 +148,7 @@
 
     <fragment
         android:id="@+id/categoryFragment"
-        android:name="com.jcs.where.yellow_page.CategoryToSelectedListFragment"
+        android:name="com.jiechengsheng.city.yellow_page.CategoryToSelectedListFragment"
         android:layout_width="match_parent"
         android:layout_height="@dimen/dp_286"
         android:layout_below="@+id/category_ll"

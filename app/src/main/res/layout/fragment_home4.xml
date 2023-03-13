@@ -57,7 +57,7 @@
 
 
 
-            <com.jcs.where.widget.MessageView
+            <com.jiechengsheng.city.widget.MessageView
                 android:id="@+id/message_view"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -106,7 +106,7 @@
 
     </LinearLayout>
 
-    <com.jcs.where.features.home.HomeSwipeRefreshLayout
+    <com.jiechengsheng.city.features.home.HomeSwipeRefreshLayout
         android:id="@+id/swipeLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -139,7 +139,7 @@
                         android:background="@color/white"
                         android:padding="@dimen/dp_15">
 
-                        <com.jcs.where.view.XBanner.XBanner
+                        <com.jiechengsheng.city.view.XBanner.XBanner
                             android:id="@+id/top_banner"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent" />
@@ -236,7 +236,7 @@
 
                 </LinearLayout>
 
-                <com.jcs.where.widget.tabs.SlidingTabLayout
+                <com.jiechengsheng.city.widget.tabs.SlidingTabLayout
                     android:id="@+id/recommend_tabs"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/dp_48"
@@ -267,10 +267,10 @@
         </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
 
-    </com.jcs.where.features.home.HomeSwipeRefreshLayout>
+    </com.jiechengsheng.city.features.home.HomeSwipeRefreshLayout>
 
 
-    <com.jcs.where.view.empty.EmptyView
+    <com.jiechengsheng.city.view.empty.EmptyView
         android:id="@+id/home_empty"
         android:layout_width="match_parent"
         android:layout_height="match_parent"

@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <com.jcs.where.view.XBanner.XBannerViewPager
+    <com.jiechengsheng.city.view.XBanner.XBannerViewPager
         android:id="@+id/viewpager"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />

@@ -37,7 +37,7 @@
             tools:text="糖糖" />
 
 
-        <com.jcs.where.widget.ratingstar.RatingStarView
+        <com.jiechengsheng.city.widget.ratingstar.RatingStarView
             android:id="@+id/star_rs"
             android:layout_width="wrap_content"
             android:layout_height="@dimen/dp_10"

@@ -24,7 +24,7 @@
                 android:layout_height="@dimen/dp_177"
                 android:background="@color/white">
 
-                <com.jcs.where.view.XBanner.XBanner
+                <com.jiechengsheng.city.view.XBanner.XBanner
                     android:id="@+id/top_banner"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent" />

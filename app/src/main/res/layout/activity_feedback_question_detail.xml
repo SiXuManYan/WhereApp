@@ -7,7 +7,7 @@
     android:orientation="vertical">
 
 
-    <com.jcs.where.widget.JcsTitle
+    <com.jiechengsheng.city.widget.JcsTitle
         android:id="@+id/jcsTitle"
         app:middleTitle="@string/question_detail"
         app:middleTitleColor="@color/black_333333"

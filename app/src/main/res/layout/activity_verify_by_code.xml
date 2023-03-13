@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <com.jcs.where.widget.JcsTitle
+    <com.jiechengsheng.city.widget.JcsTitle
         android:id="@+id/jcsTitle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -39,7 +39,7 @@
         tools:text="@string/verify_code_send_to_format" />
 
 
-    <com.jcs.where.widget.verify.VerificationCodeView
+    <com.jiechengsheng.city.widget.verify.VerificationCodeView
         android:id="@+id/captcha_view"
         android:layout_width="match_parent"
         android:layout_height="@dimen/dp_84"

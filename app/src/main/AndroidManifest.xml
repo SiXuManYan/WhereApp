@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="com.jcs.where"
+    package="com.jiechengsheng.city"
     tools:ignore="ProtectedPermissions,LockedOrientationActivity">
 
     <uses-permission android:name="android.permission.INTERNET" />
@@ -27,7 +27,7 @@
 
 
     <permission
-        android:name="com.jcs.where.permission.JPUSH_MESSAGE"
+        android:name="com.jiechengsheng.city.permission.JPUSH_MESSAGE"
         android:protectionLevel="signature" />
 
     <!-- 官方定义的权限，允许应用接收 JPush 内部代码发送的广播消息。 -->
@@ -92,7 +92,7 @@
 
     <!--允许程序打开网络套接字-->
     <application
-        android:name=".BaseApplication"
+        android:name="com.jiechengsheng.city.BaseApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_app_logo"
         android:label="@string/app_name"
@@ -122,7 +122,7 @@
 
         <provider
             android:name="androidx.core.content.FileProvider"
-            android:authorities="com.jcs.where.fileprovider"
+            android:authorities="com.jiechengsheng.city.fileprovider"
             android:exported="false"
             android:grantUriPermissions="true">
             <meta-data
@@ -131,7 +131,7 @@
         </provider>
 
         <activity
-            android:name=".features.splash.SplashActivity"
+            android:name="com.jiechengsheng.city.features.splash.SplashActivity"
             android:configChanges="keyboardHidden|screenSize|orientation"
             android:exported="true"
             android:fitsSystemWindows="true"
@@ -167,91 +167,91 @@
 
 
         <activity
-            android:name=".features.main.MainActivity"
+            android:name="com.jiechengsheng.city.features.main.MainActivity"
             android:configChanges="keyboardHidden|screenSize|orientation"
             android:launchMode="singleTask" />
 
         <activity
-            android:name=".features.city.CityPickerActivity"
+            android:name="com.jiechengsheng.city.features.city.CityPickerActivity"
             android:configChanges="keyboardHidden|screenSize|orientation"
             android:fitsSystemWindows="true" />
 
         <activity
-            android:name=".search.SearchActivity"
+            android:name="com.jiechengsheng.city.search.SearchActivity"
             android:configChanges="keyboardHidden|screenSize|orientation"
             android:fitsSystemWindows="true" />
 
         <activity
-            android:name=".features.web.WebViewActivity"
+            android:name="com.jiechengsheng.city.features.web.WebViewActivity"
             android:configChanges="keyboardHidden|screenSize|orientation"
             android:fitsSystemWindows="true" />
 
         <activity
-            android:name=".features.complex.ConvenienceServiceActivity"
+            android:name="com.jiechengsheng.city.features.complex.ConvenienceServiceActivity"
             android:configChanges="keyboardHidden|screenSize|orientation"
             android:windowSoftInputMode="stateHidden" />
 
         <activity
-            android:name=".news.NewsActivity"
+            android:name="com.jiechengsheng.city.news.NewsActivity"
             android:configChanges="keyboardHidden|screenSize|orientation"
             android:fitsSystemWindows="true"
             android:windowSoftInputMode="stateHidden" />
 
         <activity
-            android:name=".mine.activity.LanguageActivity"
+            android:name="com.jiechengsheng.city.mine.activity.LanguageActivity"
             android:configChanges="keyboardHidden|screenSize|orientation"
             android:fitsSystemWindows="true"
             android:windowSoftInputMode="stateHidden" />
 
         <activity
-            android:name=".news.SelectNewsChannelActivity"
+            android:name="com.jiechengsheng.city.news.SelectNewsChannelActivity"
             android:configChanges="keyboardHidden|screenSize|orientation"
             android:fitsSystemWindows="true" />
 
 
         <activity
-            android:name=".news.NewsDetailActivity"
+            android:name="com.jiechengsheng.city.news.NewsDetailActivity"
             android:configChanges="keyboardHidden|screenSize|orientation"
             android:fitsSystemWindows="true" />
 
         <activity
-            android:name=".news.NewsSearchResultActivity"
+            android:name="com.jiechengsheng.city.news.NewsSearchResultActivity"
             android:configChanges="keyboardHidden|screenSize|orientation"
             android:fitsSystemWindows="true" />
 
         <activity
-            android:name=".news.NewsVideoActivity"
+            android:name="com.jiechengsheng.city.news.NewsVideoActivity"
             android:configChanges="keyboardHidden|screenSize|orientation"
             android:fitsSystemWindows="true" />
 
         <activity
-            android:name=".features.setting.SettingActivity"
+            android:name="com.jiechengsheng.city.features.setting.SettingActivity"
             android:configChanges="keyboardHidden|screenSize|orientation"
             android:fitsSystemWindows="true" />
         <activity
-            android:name=".features.account.login.LoginActivity"
+            android:name="com.jiechengsheng.city.features.account.login.LoginActivity"
             android:configChanges="keyboardHidden|screenSize|orientation"
             android:launchMode="singleTask" />
         <activity
-            android:name=".features.account.register.RegisterActivity"
+            android:name="com.jiechengsheng.city.features.account.register.RegisterActivity"
             android:configChanges="keyboardHidden|screenSize|orientation" />
         <activity
-            android:name=".features.account.password.PasswordResetActivity"
-            android:configChanges="keyboardHidden|screenSize|orientation" />
-
-
-        <activity
-            android:name=".features.account.bind.BindPhoneActivity"
+            android:name="com.jiechengsheng.city.features.account.password.PasswordResetActivity"
             android:configChanges="keyboardHidden|screenSize|orientation" />
 
 
         <activity
-            android:name=".mine.activity.merchant_settled.SettledTypeActivity"
+            android:name="com.jiechengsheng.city.features.account.bind.BindPhoneActivity"
+            android:configChanges="keyboardHidden|screenSize|orientation" />
+
+
+        <activity
+            android:name="com.jiechengsheng.city.mine.activity.merchant_settled.SettledTypeActivity"
             android:configChanges="keyboardHidden|screenSize|orientation"
             android:fitsSystemWindows="true" />
 
         <activity
-            android:name=".government.activity.ConvenienceServiceSearchActivity"
+            android:name="com.jiechengsheng.city.government.activity.ConvenienceServiceSearchActivity"
             android:configChanges="keyboardHidden|screenSize|orientation"
             android:fitsSystemWindows="true" />
 
@@ -259,7 +259,7 @@
 
         <!-- 自定义Service -->
         <service
-            android:name=".api.push.WherePushService"
+            android:name="com.jiechengsheng.city.api.push.WherePushService"
             android:exported="false"
             android:process=":pushcore">
             <intent-filter>
@@ -269,7 +269,7 @@
 
         <!-- 自定义广播 -->
         <receiver
-            android:name=".api.push.WherePushMessageReceiver"
+            android:name="com.jiechengsheng.city.api.push.WherePushMessageReceiver"
             android:enabled="true"
             android:exported="false">
             <intent-filter>
@@ -406,37 +406,37 @@
 
 
         <activity
-            android:name=".features.com100.ExtendChatActivity"
+            android:name="com.jiechengsheng.city.features.com100.ExtendChatActivity"
             android:configChanges="keyboardHidden|screenSize|orientation" />
 
 
         <!-- ######## comm 100 end ↑ #############-->
 
         <activity
-            android:name=".mine.about.AboutActivity"
+            android:name="com.jiechengsheng.city.mine.about.AboutActivity"
             android:configChanges="keyboardHidden|screenSize|orientation" />
         <activity
-            android:name=".features.setting.information.ModifyInfoActivity"
+            android:name="com.jiechengsheng.city.features.setting.information.ModifyInfoActivity"
             android:configChanges="keyboardHidden|screenSize|orientation" />
         <activity
-            android:name=".features.setting.password.ModifyPasswordActivity"
+            android:name="com.jiechengsheng.city.features.setting.password.ModifyPasswordActivity"
             android:configChanges="keyboardHidden|screenSize|orientation" />
         <activity
-            android:name=".features.setting.phone.verify.password.PasswordVerifyActivity"
+            android:name="com.jiechengsheng.city.features.setting.phone.verify.password.PasswordVerifyActivity"
             android:configChanges="keyboardHidden|screenSize|orientation" />
         <activity
-            android:name=".features.setting.phone.verify.code.CodeVerifyActivity"
+            android:name="com.jiechengsheng.city.features.setting.phone.verify.code.CodeVerifyActivity"
             android:configChanges="keyboardHidden|screenSize|orientation" />
         <activity
-            android:name=".features.setting.phone.confirm.NewPhoneActivity"
+            android:name="com.jiechengsheng.city.features.setting.phone.confirm.NewPhoneActivity"
             android:configChanges="keyboardHidden|screenSize|orientation" />
         <activity
-            android:name=".features.setting.phone.ModifyPhoneActivity"
+            android:name="com.jiechengsheng.city.features.setting.phone.ModifyPhoneActivity"
             android:configChanges="keyboardHidden|screenSize|orientation" />
 
         <!-- 自定义融云会话列表 -->
         <activity
-            android:name=".features.message.MessageCenterActivity"
+            android:name="com.jiechengsheng.city.features.message.MessageCenterActivity"
             android:configChanges="keyboardHidden|screenSize|orientation"
             android:launchMode="singleTop"
             android:windowSoftInputMode="stateHidden|adjustResize" />
@@ -444,399 +444,399 @@
 
         <!-- 自定义融云会话页面 -->
         <activity
-            android:name=".features.message.cloud.ConversationActivity"
+            android:name="com.jiechengsheng.city.features.message.cloud.ConversationActivity"
             android:configChanges="keyboardHidden|screenSize|orientation"
             android:windowSoftInputMode="stateHidden|adjustResize" />
 
 
         <activity
-            android:name=".features.message.notice.detail.SystemMessageDetailActivity"
+            android:name="com.jiechengsheng.city.features.message.notice.detail.SystemMessageDetailActivity"
             android:configChanges="keyboardHidden|screenSize|orientation" />
         <activity
-            android:name=".features.search.SearchAllActivity"
-            android:configChanges="keyboardHidden|screenSize|orientation" />
-
-        <activity
-            android:name=".features.address.AddressActivity"
-            android:configChanges="keyboardHidden|screenSize|orientation" />
-        <activity
-            android:name=".features.address.edit.AddressEditActivity"
-            android:configChanges="keyboardHidden|screenSize|orientation" />
-        <activity
-            android:name=".features.gourmet.restaurant.list.RestaurantHomeActivity"
-            android:configChanges="keyboardHidden|screenSize|orientation" />
-        <activity
-            android:name=".features.gourmet.restaurant.detail.RestaurantDetailActivity"
-            android:configChanges="keyboardHidden|screenSize|orientation" />
-        <activity
-            android:name=".features.gourmet.restaurant.packages.SetMealActivity"
-            android:configChanges="keyboardHidden|screenSize|orientation" />
-        <activity
-            android:name=".features.gourmet.cart.ShoppingCartActivity"
-            android:configChanges="keyboardHidden|screenSize|orientation" />
-        <activity
-            android:name=".features.bills.PayBillsActivity"
-            android:configChanges="keyboardHidden|screenSize|orientation" />
-        <activity
-            android:name=".features.category.edit.CategoryEditActivity"
-            android:configChanges="keyboardHidden|screenSize|orientation" />
-        <activity
-            android:name=".features.gourmet.order.OrderSubmitActivity"
+            android:name="com.jiechengsheng.city.features.search.SearchAllActivity"
             android:configChanges="keyboardHidden|screenSize|orientation" />
 
         <activity
-            android:name=".features.qr.QRActivity"
+            android:name="com.jiechengsheng.city.features.address.AddressActivity"
             android:configChanges="keyboardHidden|screenSize|orientation" />
         <activity
-            android:name=".features.gourmet.takeaway.TakeawayActivity"
+            android:name="com.jiechengsheng.city.features.address.edit.AddressEditActivity"
             android:configChanges="keyboardHidden|screenSize|orientation" />
         <activity
-            android:name=".features.gourmet.takeaway.submit.OrderSubmitTakeawayActivity"
+            android:name="com.jiechengsheng.city.features.gourmet.restaurant.list.RestaurantHomeActivity"
             android:configChanges="keyboardHidden|screenSize|orientation" />
         <activity
-            android:name=".features.gourmet.comment.FoodCommentActivity"
+            android:name="com.jiechengsheng.city.features.gourmet.restaurant.detail.RestaurantDetailActivity"
             android:configChanges="keyboardHidden|screenSize|orientation" />
         <activity
-            android:name=".features.store.recommend.StoreRecommendActivity"
+            android:name="com.jiechengsheng.city.features.gourmet.restaurant.packages.SetMealActivity"
             android:configChanges="keyboardHidden|screenSize|orientation" />
         <activity
-            android:name=".features.store.search.StoreSearchActivity"
+            android:name="com.jiechengsheng.city.features.gourmet.cart.ShoppingCartActivity"
             android:configChanges="keyboardHidden|screenSize|orientation" />
         <activity
-            android:name=".features.store.filter.StoreFilterActivity"
+            android:name="com.jiechengsheng.city.features.bills.PayBillsActivity"
             android:configChanges="keyboardHidden|screenSize|orientation" />
         <activity
-            android:name=".features.store.detail.StoreDetailActivity"
+            android:name="com.jiechengsheng.city.features.category.edit.CategoryEditActivity"
             android:configChanges="keyboardHidden|screenSize|orientation" />
         <activity
-            android:name=".features.store.good.StoreGoodDetailActivity"
-            android:configChanges="keyboardHidden|screenSize|orientation" />
-        <activity
-            android:name=".features.store.order.StoreOrderCommitActivity"
-            android:configChanges="keyboardHidden|screenSize|orientation" />
-        <activity
-            android:name=".features.store.pay.StorePayActivity"
-            android:configChanges="keyboardHidden|screenSize|orientation" />
-        <activity
-            android:name=".features.store.pay.info.PayInfoActivity"
-            android:configChanges="keyboardHidden|screenSize|orientation" />
-        <activity
-            android:name=".features.store.pay.result.StorePayResultActivity"
-            android:configChanges="keyboardHidden|screenSize|orientation" />
-        <activity
-            android:name=".features.store.order.detail.StoreOrderDetailActivity"
-            android:configChanges="keyboardHidden|screenSize|orientation" />
-        <activity
-            android:name=".features.store.refund.StoreRefundActivity"
-            android:configChanges="keyboardHidden|screenSize|orientation" />
-        <activity
-            android:name=".features.store.refund.detail.StoreRefundDetailActivity"
-            android:configChanges="keyboardHidden|screenSize|orientation" />
-        <activity
-            android:name=".features.store.cart.StoreCartActivity"
-            android:configChanges="keyboardHidden|screenSize|orientation" />
-        <activity
-            android:name=".features.store.comment.post.StoreCommentPostActivity"
-            android:configChanges="keyboardHidden|screenSize|orientation" />
-        <activity
-            android:name=".features.store.comment.detail.StoreCommentDetailActivity"
-            android:configChanges="keyboardHidden|screenSize|orientation" />
-        <activity
-            android:name=".features.store.detail.comment.StoreCommentActivity"
-            android:configChanges="keyboardHidden|screenSize|orientation" />
-        <activity
-            android:name=".features.bills.order.BillsOrderDetailActivity"
-            android:configChanges="keyboardHidden|screenSize|orientation" />
-        <activity
-            android:name=".features.gourmet.order.detail2.DelicacyOrderDetailActivity"
-            android:configChanges="keyboardHidden|screenSize|orientation" />
-        <activity
-            android:name=".features.gourmet.takeaway.order2.TakeawayOrderDetailActivity"
-            android:configChanges="keyboardHidden|screenSize|orientation" />
-        <activity
-            android:name=".features.hotel.order.HotelOrderDetailActivity"
-            android:configChanges="keyboardHidden|screenSize|orientation" />
-        <activity
-            android:name=".features.order.parent.OrderActivity"
-            android:configChanges="keyboardHidden|screenSize|orientation" />
-        <activity
-            android:name=".features.coupon.user.MyCouponActivity"
-            android:configChanges="keyboardHidden|screenSize|orientation" />
-        <activity
-            android:name=".features.comment.CommentPostActivity"
-            android:configChanges="keyboardHidden|screenSize|orientation" />
-        <activity
-            android:name=".features.gourmet.comment.post.FoodCommentPostActivity"
-            android:configChanges="keyboardHidden|screenSize|orientation" />
-        <activity
-            android:name=".features.search.result.SearchAllResultActivity"
-            android:configChanges="keyboardHidden|screenSize|orientation"
-            android:windowSoftInputMode="stateHidden" />
-        <activity
-            android:name=".features.map.government.GovernmentActivity"
-            android:configChanges="keyboardHidden|screenSize|orientation" />
-        <activity
-            android:name=".features.search.yellow.YellowPageSearchResultActivity"
-            android:configChanges="keyboardHidden|screenSize|orientation" />
-        <activity
-            android:name=".features.mechanism.MechanismActivity"
-            android:configChanges="keyboardHidden|screenSize|orientation" />
-        <activity
-            android:name=".features.travel.home.TravelHomeActivity"
-            android:configChanges="keyboardHidden|screenSize|orientation" />
-        <activity
-            android:name=".features.hotel.home.HotelHomeActivity"
-            android:configChanges="keyboardHidden|screenSize|orientation" />
-        <activity
-            android:name=".features.hotel.map.HotelMapActivity"
-            android:configChanges="keyboardHidden|screenSize|orientation" />
-        <activity
-            android:name=".features.hotel.detail.HotelDetailActivity2"
+            android:name="com.jiechengsheng.city.features.gourmet.order.OrderSubmitActivity"
             android:configChanges="keyboardHidden|screenSize|orientation" />
 
         <activity
-            android:name=".features.hotel.book.HotelBookActivity"
+            android:name="com.jiechengsheng.city.features.qr.QRActivity"
             android:configChanges="keyboardHidden|screenSize|orientation" />
         <activity
-            android:name=".features.travel.map.TravelMapActivity"
+            android:name="com.jiechengsheng.city.features.gourmet.takeaway.TakeawayActivity"
             android:configChanges="keyboardHidden|screenSize|orientation" />
         <activity
-            android:name=".features.travel.detail.TravelDetailActivity"
+            android:name="com.jiechengsheng.city.features.gourmet.takeaway.submit.OrderSubmitTakeawayActivity"
             android:configChanges="keyboardHidden|screenSize|orientation" />
         <activity
-            android:name=".features.travel.comment.TravelCommentActivity"
+            android:name="com.jiechengsheng.city.features.gourmet.comment.FoodCommentActivity"
             android:configChanges="keyboardHidden|screenSize|orientation" />
         <activity
-            android:name=".features.collection.CollectionActivity"
+            android:name="com.jiechengsheng.city.features.store.recommend.StoreRecommendActivity"
             android:configChanges="keyboardHidden|screenSize|orientation" />
         <activity
-            android:name=".features.merchant.MerchantSettledActivity"
+            android:name="com.jiechengsheng.city.features.store.search.StoreSearchActivity"
             android:configChanges="keyboardHidden|screenSize|orientation" />
         <activity
-            android:name=".features.daily.sign.SignInActivity"
+            android:name="com.jiechengsheng.city.features.store.filter.StoreFilterActivity"
             android:configChanges="keyboardHidden|screenSize|orientation" />
         <activity
-            android:name=".features.daily.scoe.ScoreActivity"
+            android:name="com.jiechengsheng.city.features.store.detail.StoreDetailActivity"
             android:configChanges="keyboardHidden|screenSize|orientation" />
         <activity
-            android:name=".features.mall.home.MallHomeActivity"
+            android:name="com.jiechengsheng.city.features.store.good.StoreGoodDetailActivity"
             android:configChanges="keyboardHidden|screenSize|orientation" />
         <activity
-            android:name=".features.mall.second.MallSecondActivity"
+            android:name="com.jiechengsheng.city.features.store.order.StoreOrderCommitActivity"
             android:configChanges="keyboardHidden|screenSize|orientation" />
         <activity
-            android:name=".features.mall.result.MallSearchResultActivity"
+            android:name="com.jiechengsheng.city.features.store.pay.StorePayActivity"
+            android:configChanges="keyboardHidden|screenSize|orientation" />
+        <activity
+            android:name="com.jiechengsheng.city.features.store.pay.info.PayInfoActivity"
+            android:configChanges="keyboardHidden|screenSize|orientation" />
+        <activity
+            android:name="com.jiechengsheng.city.features.store.pay.result.StorePayResultActivity"
+            android:configChanges="keyboardHidden|screenSize|orientation" />
+        <activity
+            android:name="com.jiechengsheng.city.features.store.order.detail.StoreOrderDetailActivity"
+            android:configChanges="keyboardHidden|screenSize|orientation" />
+        <activity
+            android:name="com.jiechengsheng.city.features.store.refund.StoreRefundActivity"
+            android:configChanges="keyboardHidden|screenSize|orientation" />
+        <activity
+            android:name="com.jiechengsheng.city.features.store.refund.detail.StoreRefundDetailActivity"
+            android:configChanges="keyboardHidden|screenSize|orientation" />
+        <activity
+            android:name="com.jiechengsheng.city.features.store.cart.StoreCartActivity"
+            android:configChanges="keyboardHidden|screenSize|orientation" />
+        <activity
+            android:name="com.jiechengsheng.city.features.store.comment.post.StoreCommentPostActivity"
+            android:configChanges="keyboardHidden|screenSize|orientation" />
+        <activity
+            android:name="com.jiechengsheng.city.features.store.comment.detail.StoreCommentDetailActivity"
+            android:configChanges="keyboardHidden|screenSize|orientation" />
+        <activity
+            android:name="com.jiechengsheng.city.features.store.detail.comment.StoreCommentActivity"
+            android:configChanges="keyboardHidden|screenSize|orientation" />
+        <activity
+            android:name="com.jiechengsheng.city.features.bills.order.BillsOrderDetailActivity"
+            android:configChanges="keyboardHidden|screenSize|orientation" />
+        <activity
+            android:name="com.jiechengsheng.city.features.gourmet.order.detail2.DelicacyOrderDetailActivity"
+            android:configChanges="keyboardHidden|screenSize|orientation" />
+        <activity
+            android:name="com.jiechengsheng.city.features.gourmet.takeaway.order2.TakeawayOrderDetailActivity"
+            android:configChanges="keyboardHidden|screenSize|orientation" />
+        <activity
+            android:name="com.jiechengsheng.city.features.hotel.order.HotelOrderDetailActivity"
+            android:configChanges="keyboardHidden|screenSize|orientation" />
+        <activity
+            android:name="com.jiechengsheng.city.features.order.parent.OrderActivity"
+            android:configChanges="keyboardHidden|screenSize|orientation" />
+        <activity
+            android:name="com.jiechengsheng.city.features.coupon.user.MyCouponActivity"
+            android:configChanges="keyboardHidden|screenSize|orientation" />
+        <activity
+            android:name="com.jiechengsheng.city.features.comment.CommentPostActivity"
+            android:configChanges="keyboardHidden|screenSize|orientation" />
+        <activity
+            android:name="com.jiechengsheng.city.features.gourmet.comment.post.FoodCommentPostActivity"
+            android:configChanges="keyboardHidden|screenSize|orientation" />
+        <activity
+            android:name="com.jiechengsheng.city.features.search.result.SearchAllResultActivity"
             android:configChanges="keyboardHidden|screenSize|orientation"
             android:windowSoftInputMode="stateHidden" />
         <activity
-            android:name=".features.mall.detail.MallDetailActivity"
-            android:configChanges="keyboardHidden|screenSize|orientation"
-            android:windowSoftInputMode="stateHidden" />
-        <activity
-            android:name=".features.mall.buy.MallOrderCommitActivity"
+            android:name="com.jiechengsheng.city.features.map.government.GovernmentActivity"
             android:configChanges="keyboardHidden|screenSize|orientation" />
         <activity
-            android:name=".features.mall.cart.MallCartActivity"
+            android:name="com.jiechengsheng.city.features.search.yellow.YellowPageSearchResultActivity"
             android:configChanges="keyboardHidden|screenSize|orientation" />
         <activity
-            android:name=".features.mall.order.MallOrderDetailActivity"
+            android:name="com.jiechengsheng.city.features.mechanism.MechanismActivity"
             android:configChanges="keyboardHidden|screenSize|orientation" />
         <activity
-            android:name=".features.comment.CommentSuccessActivity"
+            android:name="com.jiechengsheng.city.features.travel.home.TravelHomeActivity"
             android:configChanges="keyboardHidden|screenSize|orientation" />
         <activity
-            android:name=".features.daily.sign.SignInRuleActivity"
+            android:name="com.jiechengsheng.city.features.hotel.home.HotelHomeActivity"
             android:configChanges="keyboardHidden|screenSize|orientation" />
         <activity
-            android:name=".features.merchant.record.MerchantRecordActivity"
+            android:name="com.jiechengsheng.city.features.hotel.map.HotelMapActivity"
             android:configChanges="keyboardHidden|screenSize|orientation" />
         <activity
-            android:name=".features.mall.shop.home.MallShopHomeActivity"
-            android:configChanges="keyboardHidden|screenSize|orientation" />
-        <activity
-            android:name=".features.mall.shop.home.filter.MallShopFilterGoodActivity"
-            android:configChanges="keyboardHidden|screenSize|orientation" />
-        <activity
-            android:name=".features.footprint.FootprintActivity"
-            android:configChanges="keyboardHidden|screenSize|orientation" />
-        <activity
-            android:name=".features.coupon.good.CouponGoodActivity"
-            android:configChanges="keyboardHidden|screenSize|orientation" />
-        <activity
-            android:name=".features.coupon.center.CouponCenterActivity"
-            android:configChanges="keyboardHidden|screenSize|orientation" />
-        <activity
-            android:name=".features.mall.refund.MallRefundEditActivity"
-            android:configChanges="keyboardHidden|screenSize|orientation" />
-        <activity
-            android:name=".features.mall.refund.order.MallRefundInfoActivity"
+            android:name="com.jiechengsheng.city.features.hotel.detail.HotelDetailActivity2"
             android:configChanges="keyboardHidden|screenSize|orientation" />
 
         <activity
-            android:name=".features.comment.batch.BatchCommentActivity"
+            android:name="com.jiechengsheng.city.features.hotel.book.HotelBookActivity"
+            android:configChanges="keyboardHidden|screenSize|orientation" />
+        <activity
+            android:name="com.jiechengsheng.city.features.travel.map.TravelMapActivity"
+            android:configChanges="keyboardHidden|screenSize|orientation" />
+        <activity
+            android:name="com.jiechengsheng.city.features.travel.detail.TravelDetailActivity"
+            android:configChanges="keyboardHidden|screenSize|orientation" />
+        <activity
+            android:name="com.jiechengsheng.city.features.travel.comment.TravelCommentActivity"
+            android:configChanges="keyboardHidden|screenSize|orientation" />
+        <activity
+            android:name="com.jiechengsheng.city.features.collection.CollectionActivity"
+            android:configChanges="keyboardHidden|screenSize|orientation" />
+        <activity
+            android:name="com.jiechengsheng.city.features.merchant.MerchantSettledActivity"
+            android:configChanges="keyboardHidden|screenSize|orientation" />
+        <activity
+            android:name="com.jiechengsheng.city.features.daily.sign.SignInActivity"
+            android:configChanges="keyboardHidden|screenSize|orientation" />
+        <activity
+            android:name="com.jiechengsheng.city.features.daily.scoe.ScoreActivity"
+            android:configChanges="keyboardHidden|screenSize|orientation" />
+        <activity
+            android:name="com.jiechengsheng.city.features.mall.home.MallHomeActivity"
+            android:configChanges="keyboardHidden|screenSize|orientation" />
+        <activity
+            android:name="com.jiechengsheng.city.features.mall.second.MallSecondActivity"
+            android:configChanges="keyboardHidden|screenSize|orientation" />
+        <activity
+            android:name="com.jiechengsheng.city.features.mall.result.MallSearchResultActivity"
             android:configChanges="keyboardHidden|screenSize|orientation"
             android:windowSoftInputMode="stateHidden" />
         <activity
-            android:name=".features.mall.refund.complaint.ComplaintActivity"
+            android:name="com.jiechengsheng.city.features.mall.detail.MallDetailActivity"
+            android:configChanges="keyboardHidden|screenSize|orientation"
+            android:windowSoftInputMode="stateHidden" />
+        <activity
+            android:name="com.jiechengsheng.city.features.mall.buy.MallOrderCommitActivity"
             android:configChanges="keyboardHidden|screenSize|orientation" />
         <activity
-            android:name=".features.payment.WebPayActivity"
+            android:name="com.jiechengsheng.city.features.mall.cart.MallCartActivity"
             android:configChanges="keyboardHidden|screenSize|orientation" />
         <activity
-            android:name=".features.payment.result.WebPayResultActivity"
+            android:name="com.jiechengsheng.city.features.mall.order.MallOrderDetailActivity"
             android:configChanges="keyboardHidden|screenSize|orientation" />
         <activity
-            android:name=".features.refund.method.RefundMethodActivity"
+            android:name="com.jiechengsheng.city.features.comment.CommentSuccessActivity"
             android:configChanges="keyboardHidden|screenSize|orientation" />
         <activity
-            android:name=".features.refund.add.form.bank.child.BankListActivity"
+            android:name="com.jiechengsheng.city.features.daily.sign.SignInRuleActivity"
             android:configChanges="keyboardHidden|screenSize|orientation" />
         <activity
-            android:name=".features.refund.add.verify.RefundBindVerifyActivity"
+            android:name="com.jiechengsheng.city.features.merchant.record.MerchantRecordActivity"
             android:configChanges="keyboardHidden|screenSize|orientation" />
         <activity
-            android:name=".features.refund.add.form.third.ThirdChannelFormActivity"
+            android:name="com.jiechengsheng.city.features.mall.shop.home.MallShopHomeActivity"
+            android:configChanges="keyboardHidden|screenSize|orientation" />
+        <activity
+            android:name="com.jiechengsheng.city.features.mall.shop.home.filter.MallShopFilterGoodActivity"
+            android:configChanges="keyboardHidden|screenSize|orientation" />
+        <activity
+            android:name="com.jiechengsheng.city.features.footprint.FootprintActivity"
+            android:configChanges="keyboardHidden|screenSize|orientation" />
+        <activity
+            android:name="com.jiechengsheng.city.features.coupon.good.CouponGoodActivity"
+            android:configChanges="keyboardHidden|screenSize|orientation" />
+        <activity
+            android:name="com.jiechengsheng.city.features.coupon.center.CouponCenterActivity"
+            android:configChanges="keyboardHidden|screenSize|orientation" />
+        <activity
+            android:name="com.jiechengsheng.city.features.mall.refund.MallRefundEditActivity"
+            android:configChanges="keyboardHidden|screenSize|orientation" />
+        <activity
+            android:name="com.jiechengsheng.city.features.mall.refund.order.MallRefundInfoActivity"
+            android:configChanges="keyboardHidden|screenSize|orientation" />
+
+        <activity
+            android:name="com.jiechengsheng.city.features.comment.batch.BatchCommentActivity"
+            android:configChanges="keyboardHidden|screenSize|orientation"
+            android:windowSoftInputMode="stateHidden" />
+        <activity
+            android:name="com.jiechengsheng.city.features.mall.refund.complaint.ComplaintActivity"
+            android:configChanges="keyboardHidden|screenSize|orientation" />
+        <activity
+            android:name="com.jiechengsheng.city.features.payment.WebPayActivity"
+            android:configChanges="keyboardHidden|screenSize|orientation" />
+        <activity
+            android:name="com.jiechengsheng.city.features.payment.result.WebPayResultActivity"
+            android:configChanges="keyboardHidden|screenSize|orientation" />
+        <activity
+            android:name="com.jiechengsheng.city.features.refund.method.RefundMethodActivity"
+            android:configChanges="keyboardHidden|screenSize|orientation" />
+        <activity
+            android:name="com.jiechengsheng.city.features.refund.add.form.bank.child.BankListActivity"
+            android:configChanges="keyboardHidden|screenSize|orientation" />
+        <activity
+            android:name="com.jiechengsheng.city.features.refund.add.verify.RefundBindVerifyActivity"
+            android:configChanges="keyboardHidden|screenSize|orientation" />
+        <activity
+            android:name="com.jiechengsheng.city.features.refund.add.form.third.ThirdChannelFormActivity"
             android:configChanges="keyboardHidden|screenSize|orientation"
             android:windowSoftInputMode="adjustPan" />
         <activity
-            android:name=".features.refund.add.channel.RefundChannelActivity"
+            android:name="com.jiechengsheng.city.features.refund.add.channel.RefundChannelActivity"
             android:configChanges="keyboardHidden|screenSize|orientation" />
         <activity
-            android:name=".features.gourmet.refund.ComplexRefundActivity"
+            android:name="com.jiechengsheng.city.features.gourmet.refund.ComplexRefundActivity"
             android:configChanges="keyboardHidden|screenSize|orientation" />
         <activity
-            android:name=".features.gourmet.refund.detail.FoodRefundInfoActivity"
+            android:name="com.jiechengsheng.city.features.gourmet.refund.detail.FoodRefundInfoActivity"
             android:configChanges="keyboardHidden|screenSize|orientation" />
         <activity
-            android:name=".features.mall.complex.CommentComplexActivity"
+            android:name="com.jiechengsheng.city.features.mall.complex.CommentComplexActivity"
             android:configChanges="keyboardHidden|screenSize|orientation" />
         <activity
-            android:name=".features.mall.shop.home.info.MallShopInfoActivity"
+            android:name="com.jiechengsheng.city.features.mall.shop.home.info.MallShopInfoActivity"
             android:configChanges="keyboardHidden|screenSize|orientation" />
         <activity
-            android:name=".features.mall.shop.home.info.QualificationActivity"
+            android:name="com.jiechengsheng.city.features.mall.shop.home.info.QualificationActivity"
             android:configChanges="keyboardHidden|screenSize|orientation" />
         <activity
-            android:name=".features.bills.channel.BillsChannelActivity"
+            android:name="com.jiechengsheng.city.features.bills.channel.BillsChannelActivity"
             android:configChanges="keyboardHidden|screenSize|orientation" />
         <activity
-            android:name=".features.bills.place.BillsPlaceOrderActivity"
+            android:name="com.jiechengsheng.city.features.bills.place.BillsPlaceOrderActivity"
             android:configChanges="keyboardHidden|screenSize|orientation" />
         <activity
-            android:name=".features.bills.form.BillsFormActivity"
+            android:name="com.jiechengsheng.city.features.bills.form.BillsFormActivity"
             android:configChanges="keyboardHidden|screenSize|orientation"
             android:windowSoftInputMode="adjustPan" />
         <activity
-            android:name=".features.bills.record.BillsRecordActivity"
+            android:name="com.jiechengsheng.city.features.bills.record.BillsRecordActivity"
             android:configChanges="keyboardHidden|screenSize|orientation"
             android:launchMode="singleTask" />
         <activity
-            android:name=".features.bills.record.result.BillsRecommitResultActivity"
+            android:name="com.jiechengsheng.city.features.bills.record.result.BillsRecommitResultActivity"
             android:configChanges="keyboardHidden|screenSize|orientation" />
         <activity
-            android:name=".features.bills.charges.CallChargesActivity"
+            android:name="com.jiechengsheng.city.features.bills.charges.CallChargesActivity"
             android:configChanges="keyboardHidden|screenSize|orientation" />
         <activity
-            android:name=".features.bills.place.phone.PhonePlaceOrderActivity"
+            android:name="com.jiechengsheng.city.features.bills.place.phone.PhonePlaceOrderActivity"
             android:configChanges="keyboardHidden|screenSize|orientation" />
 
         <activity
-            android:name=".features.media.MediaDetailActivity"
+            android:name="com.jiechengsheng.city.features.media.MediaDetailActivity"
             android:configChanges="keyboardHidden|screenSize|orientation" />
         <activity
-            android:name=".features.enterprise.EnterprisePageActivity"
+            android:name="com.jiechengsheng.city.features.enterprise.EnterprisePageActivity"
             android:configChanges="keyboardHidden|screenSize|orientation" />
         <activity
-            android:name=".features.integral.activitys.ActivityCenterActivity"
+            android:name="com.jiechengsheng.city.features.integral.activitys.ActivityCenterActivity"
             android:configChanges="keyboardHidden|screenSize|orientation" />
         <activity
-            android:name=".features.integral.detail.IntegralDetailActivity"
+            android:name="com.jiechengsheng.city.features.integral.detail.IntegralDetailActivity"
             android:configChanges="keyboardHidden|screenSize|orientation" />
         <activity
-            android:name=".features.integral.place.IntegralOrderActivity"
+            android:name="com.jiechengsheng.city.features.integral.place.IntegralOrderActivity"
             android:configChanges="keyboardHidden|screenSize|orientation" />
         <activity
-            android:name=".features.integral.record.IntegralRecordActivity"
+            android:name="com.jiechengsheng.city.features.integral.record.IntegralRecordActivity"
             android:configChanges="keyboardHidden|screenSize|orientation" />
         <activity
-            android:name=".features.integral.order.IntegralOrderDetailActivity"
+            android:name="com.jiechengsheng.city.features.integral.order.IntegralOrderDetailActivity"
             android:configChanges="keyboardHidden|screenSize|orientation" />
         <activity
-            android:name=".features.job.result.JobSearchResultActivity"
+            android:name="com.jiechengsheng.city.features.job.result.JobSearchResultActivity"
             android:configChanges="keyboardHidden|screenSize|orientation"
             android:windowSoftInputMode="stateAlwaysHidden" />
         <activity
-            android:name=".features.job.detail.JobDetailActivity"
+            android:name="com.jiechengsheng.city.features.job.detail.JobDetailActivity"
             android:configChanges="keyboardHidden|screenSize|orientation" />
         <activity
-            android:name=".features.job.form.profile.CvFormProfileActivity"
+            android:name="com.jiechengsheng.city.features.job.form.profile.CvFormProfileActivity"
             android:configChanges="keyboardHidden|screenSize|orientation"
             android:windowSoftInputMode="adjustPan" />
         <activity
-            android:name=".features.job.form.experience.CvFormJobExperienceActivity"
+            android:name="com.jiechengsheng.city.features.job.form.experience.CvFormJobExperienceActivity"
             android:configChanges="keyboardHidden|screenSize|orientation"
             android:windowSoftInputMode="adjustPan" />
         <activity
-            android:name=".features.feedback.home.FeedbackHomeActivity"
+            android:name="com.jiechengsheng.city.features.feedback.home.FeedbackHomeActivity"
             android:configChanges="keyboardHidden|screenSize|orientation" />
         <activity
-            android:name=".features.feedback.question.QuestionActivity"
+            android:name="com.jiechengsheng.city.features.feedback.question.QuestionActivity"
             android:configChanges="keyboardHidden|screenSize|orientation"
             android:windowSoftInputMode="stateAlwaysHidden" />
         <activity
-            android:name=".features.feedback.question.det.QuestionDetActivity"
+            android:name="com.jiechengsheng.city.features.feedback.question.det.QuestionDetActivity"
             android:configChanges="keyboardHidden|screenSize|orientation" />
         <activity
-            android:name=".features.feedback.form.FeedBackPostActivity"
+            android:name="com.jiechengsheng.city.features.feedback.form.FeedBackPostActivity"
             android:configChanges="keyboardHidden|screenSize|orientation"
             android:windowSoftInputMode="adjustPan" />
         <activity
-            android:name=".features.feedback.record.det.FeedbackDetActivity"
+            android:name="com.jiechengsheng.city.features.feedback.record.det.FeedbackDetActivity"
             android:configChanges="keyboardHidden|screenSize|orientation" />
         <activity
-            android:name=".features.feedback.record.FeedbackRecordActivity"
+            android:name="com.jiechengsheng.city.features.feedback.record.FeedbackRecordActivity"
             android:configChanges="keyboardHidden|screenSize|orientation" />
 
         <activity
-            android:name=".features.job.form.edu.CvFormEduActivity"
+            android:name="com.jiechengsheng.city.features.job.form.edu.CvFormEduActivity"
             android:configChanges="keyboardHidden|screenSize|orientation"
             android:windowSoftInputMode="adjustPan" />
         <activity
-            android:name=".features.job.employer.EmployerActivity"
+            android:name="com.jiechengsheng.city.features.job.employer.EmployerActivity"
             android:configChanges="keyboardHidden|screenSize|orientation"
             android:windowSoftInputMode="adjustPan" />
         <activity
-            android:name=".features.job.employer.EmployerResultActivity"
+            android:name="com.jiechengsheng.city.features.job.employer.EmployerResultActivity"
             android:configChanges="keyboardHidden|screenSize|orientation" />
         <activity
-            android:name=".features.job.report.ReportActivity"
+            android:name="com.jiechengsheng.city.features.job.report.ReportActivity"
             android:configChanges="keyboardHidden|screenSize|orientation" />
         <activity
-            android:name=".features.job.company.CompanyActivity"
+            android:name="com.jiechengsheng.city.features.job.company.CompanyActivity"
             android:configChanges="keyboardHidden|screenSize|orientation" />
         <activity
-            android:name=".features.job.company.info.CompanyInfoActivity"
+            android:name="com.jiechengsheng.city.features.job.company.info.CompanyInfoActivity"
             android:configChanges="keyboardHidden|screenSize|orientation" />
         <activity
-            android:name=".features.job.company.album.CompanyAlbumActivity"
+            android:name="com.jiechengsheng.city.features.job.company.album.CompanyAlbumActivity"
             android:configChanges="keyboardHidden|screenSize|orientation" />
 
 
         <activity
-            android:name=".features.job.filter.JobFilterActivity"
+            android:name="com.jiechengsheng.city.features.job.filter.JobFilterActivity"
             android:configChanges="keyboardHidden|screenSize|orientation" />
-        <activity android:name=".features.bills.account.BillAccountActivity" />
-        <activity android:name=".features.bills.account.edit.BillAccountEditActivity" />
+        <activity android:name="com.jiechengsheng.city.features.bills.account.BillAccountActivity" />
+        <activity android:name="com.jiechengsheng.city.features.bills.account.edit.BillAccountEditActivity" />
         <activity
-            android:name=".features.job.main.JobMainActivity"
+            android:name="com.jiechengsheng.city.features.job.main.JobMainActivity"
             android:launchMode="singleTask" />
 
-        <activity android:name=".features.job.record.result.JobAppliedResultActivity" />
-        <activity android:name=".features.job.form.certificate.CertificateFromActivity" />
-        <activity android:name=".features.integral.result.ExchangeResultActivity" />
-        <activity android:name=".features.job.pdf.CvPdfActivity" />
-        <activity android:name=".features.payment.counter.PayCounterActivity" />
-        <activity android:name=".features.payment.tokenized.TokenizedActivity" />
+        <activity android:name="com.jiechengsheng.city.features.job.record.result.JobAppliedResultActivity" />
+        <activity android:name="com.jiechengsheng.city.features.job.form.certificate.CertificateFromActivity" />
+        <activity android:name="com.jiechengsheng.city.features.integral.result.ExchangeResultActivity" />
+        <activity android:name="com.jiechengsheng.city.features.job.pdf.CvPdfActivity" />
+        <activity android:name="com.jiechengsheng.city.features.payment.counter.PayCounterActivity" />
+        <activity android:name="com.jiechengsheng.city.features.payment.tokenized.TokenizedActivity" />
 
     </application>
 

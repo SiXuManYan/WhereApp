@@ -55,7 +55,7 @@
             android:textSize="@dimen/sp_11"
             tools:text="4.5" />
 
-        <com.jcs.where.widget.ratingstar.RatingStarView
+        <com.jiechengsheng.city.widget.ratingstar.RatingStarView
             android:id="@+id/star_view"
             android:layout_width="wrap_content"
             android:layout_height="@dimen/dp_10"

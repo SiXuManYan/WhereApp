@@ -6,14 +6,14 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <com.jcs.where.widget.JcsVideoPlayer
+    <com.jiechengsheng.city.widget.JcsVideoPlayer
         android:id="@+id/newsVideoPlayer"
         android:layout_width="match_parent"
         android:layout_height="@dimen/dp_210"
         android:scaleType="fitXY"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <com.jcs.where.widget.JcsTitle
+    <com.jiechengsheng.city.widget.JcsTitle
         android:id="@+id/jcsTitle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

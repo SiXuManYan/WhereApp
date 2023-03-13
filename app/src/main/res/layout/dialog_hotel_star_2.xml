@@ -138,25 +138,25 @@
                 android:layout_marginTop="@dimen/dp_16"
                 android:orientation="horizontal">
 
-                <com.jcs.where.widget.DrawableTextView
+                <com.jiechengsheng.city.widget.DrawableTextView
                     android:id="@+id/starLessThan2"
                     style="@style/hotel_star_tv_2"
                     android:layout_marginEnd="@dimen/dp_9"
                     android:text="@string/start_less_than_2" />
 
-                <com.jcs.where.widget.DrawableTextView
+                <com.jiechengsheng.city.widget.DrawableTextView
                     android:id="@+id/star3"
                     style="@style/hotel_star_tv_2"
                     android:layout_marginEnd="@dimen/dp_9"
                     android:text="@string/digital_3" />
 
-                <com.jcs.where.widget.DrawableTextView
+                <com.jiechengsheng.city.widget.DrawableTextView
                     android:id="@+id/star4"
                     style="@style/hotel_star_tv_2"
                     android:layout_marginEnd="@dimen/dp_9"
                     android:text="@string/digital_4" />
 
-                <com.jcs.where.widget.DrawableTextView
+                <com.jiechengsheng.city.widget.DrawableTextView
                     android:id="@+id/star5"
                     style="@style/hotel_star_tv_2"
                     android:text="@string/digital_5" />

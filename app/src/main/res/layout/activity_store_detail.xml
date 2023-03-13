@@ -73,7 +73,7 @@
                     android:layout_height="@dimen/dp_206"
                     android:background="@color/white">
 
-                    <com.jcs.where.view.XBanner.XBanner
+                    <com.jiechengsheng.city.view.XBanner.XBanner
                         android:id="@+id/top_banner"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
@@ -305,7 +305,7 @@
 
         </com.google.android.material.appbar.AppBarLayout>
 
-        <com.jcs.where.widget.NoScrollViewPager
+        <com.jiechengsheng.city.widget.NoScrollViewPager
             android:id="@+id/pager"
             android:layout_width="match_parent"
             android:layout_height="match_parent"

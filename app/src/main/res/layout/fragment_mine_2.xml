@@ -466,7 +466,7 @@
             android:scaleType="centerInside"
             android:src="@mipmap/ic_mine_setting" />
 
-        <com.jcs.where.widget.MessageView
+        <com.jiechengsheng.city.widget.MessageView
             android:id="@+id/message_view"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

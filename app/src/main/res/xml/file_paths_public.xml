@@ -8,13 +8,13 @@
 
     <external-path
         name="files_root"
-        path="Android/data/com.jcs.where/" />
+        path="Android/data/com.jiechengsheng.where/" />
     <external-path
         name="external_storage_root"
         path="." />
     <external-path
         name="images"
-        path="Android/data/com.jcs.where/files/Pictures" />
+        path="Android/data/com.jiechengsheng.where/files/Pictures" />
     <external-path
         name="external_files"
         path="." />

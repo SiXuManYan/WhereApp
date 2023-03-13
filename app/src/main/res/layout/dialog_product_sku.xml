@@ -93,7 +93,7 @@
             android:paddingTop="@dimen/dp_5"
             android:paddingBottom="@dimen/dp_5">
 
-            <com.jcs.where.features.mall.sku.view.SkuSelectScrollView
+            <com.jiechengsheng.city.features.mall.sku.view.SkuSelectScrollView
                 android:id="@+id/scroll_sku_list"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />

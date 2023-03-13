@@ -63,7 +63,7 @@
                     android:layout_height="match_parent" />
 
 
-                <com.jcs.where.widget.pager.IndicatorView2
+                <com.jiechengsheng.city.widget.pager.IndicatorView2
                     android:id="@+id/point_view"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"

@@ -6,7 +6,7 @@
     android:layout_height="match_parent">
 
 
-    <com.jcs.where.widget.JcsTitle
+    <com.jiechengsheng.city.widget.JcsTitle
         android:id="@+id/jcsTitle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -216,7 +216,7 @@
                 android:textColor="@color/grey_666666"
                 android:textSize="@dimen/sp_14" />
 
-            <com.jcs.where.widget.NumberView2
+            <com.jiechengsheng.city.widget.NumberView2
                 android:id="@+id/number_view"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

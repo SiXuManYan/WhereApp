@@ -2,12 +2,11 @@
 <resources>
     <string name="app_name">Where</string>
 
-
     <string name="facebook_app_id">642165667008627</string>
 
-    <!--<string name="maps_api_key">AIzaSyCDraLDHx2io0NePlvh5fyR87718XEHe2Q</string>-->
+    <!-- Google 服务Api密钥 -->
     <string name="maps_api_key">AIzaSyDK-oIzSIMe0a-PEV8R2SYtMoQK2E8CwQA</string>
-    <!--	<string name="maps_api_id">559147655288-ugkgp9fg2cf4h3u9icerjapfrn8ndu57.apps.googleuserContent.com</string>-->
+
 
     <string name="permission_rationale_location">Access to the location service is required to demonstrate the \'my location\' feature, which shows your current location on the map.</string>
     <string name="location_permission_denied">This sample requires location permission to enable the \'my location\' layer. Please try again and grant access to use the location.\nIf the permission has been permanently denied, it can be enabled from the System Settings > Apps > \'Google Maps API Demos\'.</string>

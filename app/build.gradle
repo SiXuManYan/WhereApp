@@ -18,6 +18,7 @@ android {
     buildToolsVersion "30.0.3"
     defaultConfig {
         applicationId "com.jcs.where"
+//        applicationId "com.jcs.city"
         minSdkVersion 23
         targetSdkVersion 31
         versionCode 61
@@ -305,6 +306,5 @@ dependencies {
 
     implementation 'me.shaohui:bottomdialog:1.1.9'
 
-//    implementation 'com.google.zxing:core:3.3.3'
     implementation 'com.google.zxing:core:3.5.1'
 }

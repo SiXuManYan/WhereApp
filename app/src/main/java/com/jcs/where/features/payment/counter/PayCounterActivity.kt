@@ -71,7 +71,9 @@ class PayCounterActivity : BaseMvpActivity<PayCounterPresenter>(), PayCounterVie
         val payCounter = mAdapter.data[position]
         when (view.id) {
             R.id.item_container_rl -> {
+                if (payCounter.is_auth) {
 
+                }
             }
             R.id.view_balance_tv -> {
                 presenter.getChannelBalance(payCounter.channel_code)

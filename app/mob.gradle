@@ -10,7 +10,7 @@ MobSDK {
         gpp true // GooglePlay专版更新  https://www.mob.com/wiki/detailed/?wiki=ShareSDK_Google&id=14
         devInfo {
             Facebook {
-                appKey "642165667008627"
+                appKey "642165667008627"// facebook appid
                 appSecret "eba25826194279ccb7ee1b561dd9fb50"
                 callbackUri "https://mob.com"
                 officialVersion "default"
@@ -20,7 +20,10 @@ MobSDK {
             }
 
             GooglePlus {
-                appId "953359706446-u7ss0g7jub2ojv5j48f73rkka74lve7s.apps.googleusercontent.com"
+                // com.jcs.where
+//                appId "953359706446-u7ss0g7jub2ojv5j48f73rkka74lve7s.apps.googleusercontent.com"
+                // com.jiechengsheng.city
+                appId "953359706446-nssinsoj3l9d537rj3jphiqrl3rr5h6p.apps.googleusercontent.com"
                 callbackUri "1"
                 officialVersion "default"
                 shareByAppClient true

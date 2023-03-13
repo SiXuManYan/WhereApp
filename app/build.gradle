@@ -18,7 +18,6 @@ android {
     buildToolsVersion "30.0.3"
     defaultConfig {
         applicationId "com.jcs.where"
-//        applicationId "com.jcs.city"
         minSdkVersion 23
         targetSdkVersion 31
         versionCode 61

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<lint>
+    <!-- 禁用此项目中的给定检查 -->
+    <issue id="IconMissingDensityFolder" severity="ignore" />
+
+    <!-- 忽略指定文件的指定检查 -->
+    <issue id="ObsoleteLayoutParam">
+        <ignore path="res/layout/activation.xml" />
+        <ignore path="res/layout-xlarge/activation.xml" />
+    </issue>
+
+    <!-- 更改检查问题归属的严重性 -->
+    <issue id="HardcodedText" severity="error" />
+
+
+
+    <!-- 忽略指定文件中的 UselessLeaf 问题 -->
+    <issue id="UselessLeaf">
+        <ignore path="res/layout/main.xml" />
+    </issue>
+
+
+</lint>

@@ -32,3 +32,11 @@
     
 4.融云
   不需要更改
+
+
+恶意软件政策
+https://support.google.com/googleplay/android-developer/topic/9975838
+发布前测试报告
+https://play.google.com/intl/zh-CN/console/about/pre-launchreports/
+使用 Android Lint检查项目中的潜在错误
+https://blog.csdn.net/u011578734/article/details/113120173

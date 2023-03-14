@@ -2688,4 +2688,12 @@ public interface RetrofitApi {
     Observable<JcsResponse<PayChannelBindUrl>> getBindTokenUrl(@Body PayChannelUnbind request);
 
 
+
+    /**
+     * 支付接口
+     */
+    @POST("commonapi/v2/payment")
+    Observable<JcsResponse<PayUrl>> doWherePay(@Body PayUrlGet request);
+
+
 }

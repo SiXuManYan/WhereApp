@@ -254,6 +254,7 @@ public class Constant {
     public static final String PARAM_HIDE_CURRENT_LOCATION = "param_hide_current_location";
     public static final String PARAM_HIDE = "param_hide";
     public static final String PARAM_CHANNEL_NAME = "param_channel_name";
+    public static final String PARAM_CHANNEL_CODE = "param_channel_code";
     public static final String PARAM_REFUND_CHANNEL_CODE = "PARAM_REFUND_CHANNEL_CODE";
     public static final String PARAM_REFUND_CHANNEL_CATEGORY = "PARAM_REFUND_CHANNEL_category";
     public static final String PARAM_TAG = "param_tag";

@@ -1280,6 +1280,8 @@ Gentleman must let go</string>
     <string name="balance">余额</string>
     <string name="unbind_token_title_format">确定解绑 %1$s?</string>
     <string name="unbind_token_hint_format">解绑后将不能再使用%1$s</string>
+    <string name="payment_button">确定支付</string>
+    <string name="payment_confirmation_page">支付确认页面</string>
 
 
 </resources>

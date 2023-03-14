@@ -135,11 +135,13 @@ class BillsPlaceOrderActivity : BaseMvpActivity<BillsPlaceOrderPresenter>(), Bil
         presenter.billsOrderDiscount(billsType, userInputMoney.toString(), fieldDetail[0].nativeUserInput, currentCouponId)
     }
 
+    private var totalMoney: BigDecimal = BigDecimal.ZERO
+
     override fun bindOrderDiscount(response: BillsOrderDiscount) {
         val price = response.price
         userInputMoneyAfterDiscount = price
 
-        val totalMoney =
+        totalMoney =
             BigDecimalUtil.addUnNecessary(BusinessUtils.getSafeBigDecimal(userInputMoneyAfterDiscount), BigDecimal(serviceCharge))
         total_money_tv.text = totalMoney.toPlainString()
 
@@ -203,6 +205,7 @@ class BillsPlaceOrderActivity : BaseMvpActivity<BillsPlaceOrderPresenter>(), Bil
         val order = response.order
         orderIds.add(order!!.id)
         WebPayActivity.navigation(this, Constant.PAY_INFO_BILLS, orderIds)
+
     }
 
     override fun onEventReceived(baseEvent: BaseEvent<*>?) {

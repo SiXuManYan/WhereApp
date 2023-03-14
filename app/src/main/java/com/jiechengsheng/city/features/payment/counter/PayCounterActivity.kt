@@ -1,20 +1,30 @@
 package com.jiechengsheng.city.features.payment.counter
 
+import android.app.Activity
+import android.content.Context
+import android.content.Intent
 import android.graphics.Color
+import android.os.Bundle
 import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.blankj.utilcode.util.SizeUtils
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.listener.OnItemChildClickListener
 import com.jiechengsheng.city.R
+import com.jiechengsheng.city.api.request.payment.PayUrlGet
 import com.jiechengsheng.city.api.response.pay.PayCounterChannel
 import com.jiechengsheng.city.api.response.pay.PayCounterChannelDetail
 import com.jiechengsheng.city.base.BaseEvent
 import com.jiechengsheng.city.base.EventCode
 import com.jiechengsheng.city.base.mvp.BaseMvpActivity
+import com.jiechengsheng.city.features.account.login.LoginActivity
+import com.jiechengsheng.city.features.payment.result.PayResultActivity
+import com.jiechengsheng.city.features.payment.token.TokenPaymentActivity
 import com.jiechengsheng.city.features.payment.tokenized.TokenizedActivity
 import com.jiechengsheng.city.features.web.WebViewActivity
+import com.jiechengsheng.city.storage.entity.User
 import com.jiechengsheng.city.utils.BusinessUtils
+import com.jiechengsheng.city.utils.Constant
 import com.jiechengsheng.city.widget.list.DividerDecoration
 import kotlinx.android.synthetic.main.activity_pay_counter.*
 
@@ -24,6 +34,23 @@ import kotlinx.android.synthetic.main.activity_pay_counter.*
  */
 class PayCounterActivity : BaseMvpActivity<PayCounterPresenter>(), PayCounterView, OnItemChildClickListener {
 
+
+    /** 订单 Id */
+    private var orderIds = java.util.ArrayList<Int>()
+
+    /**
+     *  支付场景
+     *  @see PayUrlGet.HOTEL
+     *  @see PayUrlGet.RESTAURANT
+     *  @see PayUrlGet.TAKEAWAY
+     *  @see PayUrlGet.BILL_PAY
+     *  @see PayUrlGet.MALL
+     */
+    private var moduleType = ""
+
+    /** 客户端计算好的待支付金额 */
+    private var amountToPaid = ""
+
     private var lastSelectIndex = -1
     private lateinit var mAdapter: PayCounterAdapter
 
@@ -31,10 +58,49 @@ class PayCounterActivity : BaseMvpActivity<PayCounterPresenter>(), PayCounterVie
 
     override fun getLayoutId() = R.layout.activity_pay_counter
 
-    override fun initView() {
 
+    companion object {
+
+        fun navigation(context: Context, moduleType: String, orderIds: ArrayList<Int>, amountToPaid: String) {
+            val bundle = Bundle().apply {
+                putIntegerArrayList(Constant.PARAM_ORDER_IDS, orderIds)
+                putString(Constant.PARAM_MODULE_TYPE, moduleType)
+                putString(Constant.PARAM_AMOUNT, amountToPaid)
+            }
+
+            val intent = if (User.isLogon()) {
+                Intent(context, PayCounterActivity::class.java).putExtras(bundle)
+            } else {
+                Intent(context, LoginActivity::class.java)
+            }
+
+            if (context !is Activity) {
+                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+            }
+            context.startActivity(intent)
+        }
+    }
+
+
+    override fun initView() {
+        overridePendingTransition(R.anim.bottom_in, R.anim.bottom_silent)
+        initExtra()
         initContent()
     }
+
+    private fun initExtra() {
+
+        intent.extras?.let {
+            val ids = it.getIntegerArrayList(Constant.PARAM_ORDER_IDS)
+            if (!ids.isNullOrEmpty()) {
+                orderIds.addAll(ids)
+            }
+            moduleType = it.getString(Constant.PARAM_MODULE_TYPE, "")
+            amountToPaid = it.getString(Constant.PARAM_AMOUNT, "0")
+            amount_tv.text = amountToPaid
+        }
+    }
+
 
     private fun initContent() {
 
@@ -70,29 +136,34 @@ class PayCounterActivity : BaseMvpActivity<PayCounterPresenter>(), PayCounterVie
         lastSelectIndex = position
         val payCounter = mAdapter.data[position]
         when (view.id) {
+            R.id.view_balance_tv -> presenter.getChannelBalance(payCounter.channel_code)
+            R.id.to_bind_tv -> presenter.getBindTokenUrl(payCounter.channel_code)
             R.id.item_container_rl -> {
-                if (payCounter.is_auth) {
+                if (payCounter.is_tokenized_pay && payCounter.is_auth) {
+                    // 令牌支付
+                    TokenPaymentActivity.navigation(this,
+                        moduleType,
+                        orderIds,
+                        amountToPaid,
+                        payCounter.title,
+                        payCounter.channel_code)
 
+                } else {
+                    // h5 支付
                 }
-            }
-            R.id.view_balance_tv -> {
-                presenter.getChannelBalance(payCounter.channel_code)
-
-            }
-            R.id.to_bind_tv -> {
-                presenter.getBindTokenUrl(payCounter.channel_code)
             }
             else -> {}
         }
     }
 
     override fun setBindTokenUrl(authH5Url: String) {
+        // 绑定令牌支付
         if (authH5Url.isNotBlank()) {
             WebViewActivity.navigation(this, authH5Url)
         }
     }
 
-    override fun bindChannelDetail(response: PayCounterChannelDetail) {
+    override fun bindChannelBalance(response: PayCounterChannelDetail) {
 
         BusinessUtils.showBalance(this,
             title = getString(R.string.check_balance),
@@ -106,6 +177,10 @@ class PayCounterActivity : BaseMvpActivity<PayCounterPresenter>(), PayCounterVie
 
 
     override fun bindListener() {
+        mJcsTitle.setBackIvClickListener {
+            onBackPressed()
+        }
+
         view_bind_channel_tv.setOnClickListener {
             // 查看已绑定支付渠道列表
             startActivityAfterLogin(TokenizedActivity::class.java)
@@ -121,10 +196,30 @@ class PayCounterActivity : BaseMvpActivity<PayCounterPresenter>(), PayCounterVie
                 onRefresh()
             }
 
+            EventCode.EVENT_REFRESH_ORDER_LIST -> {
+                finish()
+            }
             else -> {}
         }
 
 
+    }
+
+
+    override fun finish() {
+        super.finish()
+        overridePendingTransition(R.anim.bottom_silent, R.anim.bottom_out)
+    }
+
+
+    override fun onBackPressed() {
+        // 支付结果页
+        startActivity(PayResultActivity::class.java, Bundle().apply {
+            putString(Constant.PARAM_MODULE_TYPE, moduleType)
+            putString(Constant.PARAM_AMOUNT, amountToPaid)
+            putIntegerArrayList(Constant.PARAM_ORDER_IDS, orderIds)
+        })
+        super.onBackPressed()
     }
 
 

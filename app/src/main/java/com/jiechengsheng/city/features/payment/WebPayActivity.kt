@@ -20,6 +20,7 @@ import kotlinx.android.synthetic.main.activity_web_pay.*
  * Created by Wangsw  2022/4/24 10:22.
  * 网页支付
  */
+@Deprecated(message = "TokenPaymentActivity")
 class WebPayActivity : BaseMvpActivity<WebParPresenter>(), WebPayView {
 
     private var orderIds = java.util.ArrayList<Int>()
@@ -173,7 +174,6 @@ class WebPayActivity : BaseMvpActivity<WebParPresenter>(), WebPayView {
         lastPayUrl = redirectUrl
         dismissLoadingDialog()
         web_view.loadUrl(redirectUrl)
-//        web_view.loadUrl("redirectUrl")
     }
 
     override fun onBackPressed() {

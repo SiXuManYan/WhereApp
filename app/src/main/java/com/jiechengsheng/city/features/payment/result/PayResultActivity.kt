@@ -1,5 +1,8 @@
 package com.jiechengsheng.city.features.payment.result
 
+import android.app.Activity
+import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import com.jiechengsheng.city.R
@@ -8,38 +11,81 @@ import com.jiechengsheng.city.api.request.payment.PayUrlGet
 import com.jiechengsheng.city.base.BaseEvent
 import com.jiechengsheng.city.base.EventCode
 import com.jiechengsheng.city.base.mvp.BaseMvpActivity
+import com.jiechengsheng.city.features.account.login.LoginActivity
 import com.jiechengsheng.city.features.bills.record.BillsRecordActivity
 import com.jiechengsheng.city.features.main.MainActivity
-import com.jiechengsheng.city.features.payment.WebPayActivity
+import com.jiechengsheng.city.storage.entity.User
 import com.jiechengsheng.city.utils.Constant
 import com.jiechengsheng.city.utils.LocalLanguageUtil
-import kotlinx.android.synthetic.main.activity_web_pay_result.*
+import kotlinx.android.synthetic.main.activity_pay_result.*
 import org.greenrobot.eventbus.EventBus
 
 /**
- * Created by Wangsw  2022/4/24 17:11.
+ * Created by Wangsw  2023/3/14 17:11.
  * 支付结果页面
  */
-@Deprecated(message = "PayResultActivity")
-class WebPayResultActivity : BaseMvpActivity<WebPayResultPresenter>(), WebPayResultView {
+class PayResultActivity : BaseMvpActivity<WebPayResultPresenter>(), WebPayResultView {
 
 
+    /** 订单 Id */
     private var orderIds = java.util.ArrayList<Int>()
 
+    /**
+     *  支付场景
+     *  @see PayUrlGet.HOTEL
+     *  @see PayUrlGet.RESTAURANT
+     *  @see PayUrlGet.TAKEAWAY
+     *  @see PayUrlGet.BILL_PAY
+     *  @see PayUrlGet.MALL
+     */
     private var moduleType = ""
 
-    private var useType = 0
+    /** 客户端计算好的待支付金额 */
+    private var amountToPaid = ""
 
-    /** 上次未完成支付的url */
-    private var lastPayUrl = ""
+
+    companion object {
+
+        fun navigation(context: Context, moduleType: String, orderIds: ArrayList<Int>, amountToPaid: String) {
+            val bundle = Bundle().apply {
+                putIntegerArrayList(Constant.PARAM_ORDER_IDS, orderIds)
+                putString(Constant.PARAM_MODULE_TYPE, moduleType)
+                putString(Constant.PARAM_AMOUNT, amountToPaid)
+            }
+
+            val intent = if (User.isLogon()) {
+                Intent(context, PayResultActivity::class.java).putExtras(bundle)
+            } else {
+                Intent(context, LoginActivity::class.java)
+            }
+
+            if (context !is Activity) {
+                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+            }
+            context.startActivity(intent)
+        }
+    }
+
 
     override fun isStatusDark() = true
 
-    override fun getLayoutId() = R.layout.activity_web_pay_result
+    override fun getLayoutId() = R.layout.activity_pay_result
 
     override fun initView() {
         initExtra()
         initDefaultUI()
+    }
+
+
+    private fun initExtra() {
+        intent.extras?.let {
+            val ids = it.getIntegerArrayList(Constant.PARAM_ORDER_IDS)
+            if (!ids.isNullOrEmpty()) {
+                orderIds.addAll(ids)
+            }
+            moduleType = it.getString(Constant.PARAM_MODULE_TYPE, "")
+            amountToPaid = it.getString(Constant.PARAM_AMOUNT, "0")
+        }
     }
 
     private fun initDefaultUI() {
@@ -68,24 +114,13 @@ class WebPayResultActivity : BaseMvpActivity<WebPayResultPresenter>(), WebPayRes
 
     }
 
-    private fun initExtra() {
-        intent.extras?.let {
-            val ids = it.getIntegerArrayList(Constant.PARAM_ORDER_IDS)
-            if (!ids.isNullOrEmpty()) {
-                orderIds.addAll(ids)
-            }
-            moduleType = it.getString(Constant.PARAM_MODULE_TYPE, "")
-            useType = it.getInt(Constant.PARAM_TYPE)
-            lastPayUrl = it.getString(Constant.PARAM_LAST_PAY_URL, "")
-        }
-    }
 
     override fun initData() {
         presenter = WebPayResultPresenter(this)
         presenter.getPayStatus(moduleType, orderIds)
     }
 
-    override fun onBackPressed() = Unit
+
 
     override fun bindListener() {
         finish_tv.setOnClickListener {
@@ -106,12 +141,10 @@ class WebPayResultActivity : BaseMvpActivity<WebPayResultPresenter>(), WebPayRes
         view_order_tv.setOnClickListener {
             finish_tv.performClick()
         }
-        continue_pay_tv.setOnClickListener {
-            WebPayActivity.navigation(this, useType, orderIds, lastPayUrl)
-            finish()
-        }
-
     }
+
+
+    override fun onBackPressed() = Unit
 
     override fun bindPayStatus(response: PayStatus) {
 
@@ -145,12 +178,8 @@ class WebPayResultActivity : BaseMvpActivity<WebPayResultPresenter>(), WebPayRes
 
         }
 
-
-
-        continue_pay_tv.visibility = View.GONE
         // 支付成功
         EventBus.getDefault().post(BaseEvent<Any>(EventCode.EVENT_REFRESH_ORDER_LIST))
-
     }
 
 

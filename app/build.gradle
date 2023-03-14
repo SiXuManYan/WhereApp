@@ -118,8 +118,8 @@ android {
         dev {
             buildConfigField "String", "SERVER_HOST", SERVER_HOST_TEST
             buildConfigField "String", "RONG_CLOUD_APP_KEY", RONG_CLOUD_APP_KEY_DEVELOP
-            buildConfigField "String", "MAPS_API_KEY", MAPS_API_KEY
-            buildConfigField "String", "MAPS_API_ID", MAPS_API_ID
+            buildConfigField "String", "GOOGLE_CLOUD_API_KEY", GOOGLE_CLOUD_API_KEY
+            buildConfigField "String", "GOOGLE_CLOUD_OAUTH_CLIENT_ID", GOOGLE_CLOUD_OAUTH_CLIENT_ID
             buildConfigField "String", "UMENG_APP_KEY", UMENG_APP_KEY
             buildConfigField "String", "UMENG_APP_CHANNEL", UMENG_APP_CHANNEL_DEV
             buildConfigField "String", "UMENG_APP_CHANNEL_DEV", UMENG_APP_CHANNEL_DEV
@@ -129,8 +129,8 @@ android {
         formal {
             buildConfigField "String", "SERVER_HOST", SERVER_HOST_RELEASE
             buildConfigField "String", "RONG_CLOUD_APP_KEY", RONG_CLOUD_APP_KEY_RELEASE
-            buildConfigField "String", "MAPS_API_KEY", MAPS_API_KEY
-            buildConfigField "String", "MAPS_API_ID", MAPS_API_ID
+            buildConfigField "String", "GOOGLE_CLOUD_API_KEY", GOOGLE_CLOUD_API_KEY
+            buildConfigField "String", "GOOGLE_CLOUD_OAUTH_CLIENT_ID", GOOGLE_CLOUD_OAUTH_CLIENT_ID
             buildConfigField "String", "UMENG_APP_KEY", UMENG_APP_KEY
             buildConfigField "String", "UMENG_APP_CHANNEL", UMENG_APP_CHANNEL_FORMAL
             buildConfigField "String", "UMENG_APP_CHANNEL_DEV", UMENG_APP_CHANNEL_DEV

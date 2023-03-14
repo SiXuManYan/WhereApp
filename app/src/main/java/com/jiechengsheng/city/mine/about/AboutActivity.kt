@@ -54,7 +54,7 @@ class AboutActivity : BaseMvpActivity<AboutPresenter>(), AboutView {
 
 
 
-
+/*
         if (BuildConfig.FLAVOR == "dev" && BuildConfig.VERSION_NAME.contains("alpha")) {
             findViewById<View>(R.id.debug_into_ll).visibility = View.VISIBLE
             val user_id_tv = findViewById<TextView>(R.id.user_id_tv)
@@ -81,6 +81,7 @@ class AboutActivity : BaseMvpActivity<AboutPresenter>(), AboutView {
             push_id_tv.append(registrationID)
             umeng_channel_tv.append(getUmengAppChannel())
         }
+        */
 
 
     }

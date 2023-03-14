@@ -1,6 +1,7 @@
 <resources>
     <string name="app_name">Where</string>
 
+    <!---->
     <string name="facebook_app_id">642165667008627</string>
 
     <!-- Google 服务Api密钥 -->

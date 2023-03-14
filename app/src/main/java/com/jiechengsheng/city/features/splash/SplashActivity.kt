@@ -105,9 +105,11 @@ class SplashActivity : BaseMvpActivity<SplashPresenter>(), SplashView {
                 if (whereCode.isNullOrBlank()) {
 
                     // 参数为空，读取剪切板中的内容
-                    Handler(Looper.myLooper()!!).postDelayed({
-                        presenter.handleClipboard()
-                    }, 1000)
+//                    Handler(Looper.myLooper()!!).postDelayed({
+//                        presenter.handleClipboard()
+//                    }, 1000)
+
+
                 } else {
                     SPUtils.getInstance().put(SPKey.K_INVITE_CODE, whereCode)
                 }

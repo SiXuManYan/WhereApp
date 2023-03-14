@@ -4,6 +4,10 @@
     package="com.jiechengsheng.city"
     tools:ignore="ProtectedPermissions,LockedOrientationActivity">
 
+
+    <!-- 获取剪切板，读取邀请码 -->
+    <uses-permission android:name="android.permission.READ_CLIPBOARD_IN_BACKGROUND" />
+
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission
         android:name="android.permission.WRITE_EXTERNAL_STORAGE"
@@ -43,11 +47,11 @@
 
 
     <!-- 适配Android13，弹出通知必须权限-->
-<!--    <uses-permission android:name="android.permission.POST_NOTIFICATIONS"/>-->
+    <!--    <uses-permission android:name="android.permission.POST_NOTIFICATIONS"/>-->
     <!--华为角标 (极光推送) -->
-<!--    <uses-permission android:name="com.huawei.android.launcher.permission.CHANGE_BADGE" />-->
+    <!--    <uses-permission android:name="com.huawei.android.launcher.permission.CHANGE_BADGE" />-->
     <!--vivo角标 (极光推送) -->
-<!--    <uses-permission android:name="com.vivo.notification.permission.BADGE_ICON" />-->
+    <!--    <uses-permission android:name="com.vivo.notification.permission.BADGE_ICON" />-->
 
     <queries>
         <intent>
@@ -154,14 +158,14 @@
             </intent-filter>
 
             <!-- 友盟集成测试，手机已注册的测试设备发送的日志，避免数据污染 -->
-<!--            <intent-filter>
-                <action android:name="android.intent.action.VIEW" />
+            <!--            <intent-filter>
+                            <action android:name="android.intent.action.VIEW" />
 
-                <category android:name="android.intent.category.DEFAULT" />
-                <category android:name="android.intent.category.BROWSABLE" />
+                            <category android:name="android.intent.category.DEFAULT" />
+                            <category android:name="android.intent.category.BROWSABLE" />
 
-                <data android:scheme="um.62fb010b88ccdf4b7e049847" />
-            </intent-filter>-->
+                            <data android:scheme="um.62fb010b88ccdf4b7e049847" />
+                        </intent-filter>-->
 
         </activity>
 

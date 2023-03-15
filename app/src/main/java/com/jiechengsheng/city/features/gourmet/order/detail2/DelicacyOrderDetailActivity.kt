@@ -13,6 +13,7 @@ import com.blankj.utilcode.util.StringUtils
 import com.blankj.utilcode.util.ToastUtils
 import com.jiechengsheng.city.R
 import com.jiechengsheng.city.api.request.hotel.ComplaintRequest
+import com.jiechengsheng.city.api.request.payment.PayUrlGet
 import com.jiechengsheng.city.api.response.gourmet.order.FoodOrderDetail
 import com.jiechengsheng.city.base.BaseEvent
 import com.jiechengsheng.city.base.EventCode
@@ -23,7 +24,7 @@ import com.jiechengsheng.city.features.gourmet.refund.ComplexRefundActivity
 import com.jiechengsheng.city.features.gourmet.refund.detail.FoodRefundInfoActivity
 import com.jiechengsheng.city.features.gourmet.refund.detail.FoodRefundInfoPresenter
 import com.jiechengsheng.city.features.mall.refund.complaint.ComplaintActivity
-import com.jiechengsheng.city.features.payment.WebPayActivity
+import com.jiechengsheng.city.features.payment.counter.PayCounterActivity
 import com.jiechengsheng.city.utils.BusinessUtils
 import com.jiechengsheng.city.utils.Constant
 import com.jiechengsheng.city.utils.GlideUtil
@@ -221,7 +222,8 @@ class DelicacyOrderDetailActivity : BaseMvpActivity<DelicacyOrderDetailPresenter
                         putInt(Constant.PARAM_TYPE, Constant.PAY_INFO_FOOD)
                     })
 */
-                    WebPayActivity.navigation(this, Constant.PAY_INFO_FOOD, orderIds)
+//                    WebPayActivity.navigation(this, Constant.PAY_INFO_FOOD, orderIds)
+                    PayCounterActivity.navigation(this, PayUrlGet.RESTAURANT, orderIds, orderPrice.toPlainString())
 
                 }
             }

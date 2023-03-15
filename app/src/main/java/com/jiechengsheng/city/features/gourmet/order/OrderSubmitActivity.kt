@@ -4,13 +4,14 @@ import android.graphics.Color
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.blankj.utilcode.util.BarUtils
 import com.jiechengsheng.city.R
+import com.jiechengsheng.city.api.request.payment.PayUrlGet
 import com.jiechengsheng.city.api.response.gourmet.cart.ShoppingCartResponse
 import com.jiechengsheng.city.api.response.gourmet.order.FoodOrderSubmitData
 import com.jiechengsheng.city.base.BaseEvent
 import com.jiechengsheng.city.base.EventCode
 import com.jiechengsheng.city.base.mvp.BaseMvpActivity
 import com.jiechengsheng.city.features.gourmet.cart.ShoppingCartAdapter
-import com.jiechengsheng.city.features.payment.WebPayActivity
+import com.jiechengsheng.city.features.payment.counter.PayCounterActivity
 import com.jiechengsheng.city.utils.Constant
 import kotlinx.android.synthetic.main.activity_order_submit.*
 
@@ -85,7 +86,8 @@ class OrderSubmitActivity : BaseMvpActivity<OrderSubmitPresenter>(), OrderSubmit
 //            putIntegerArrayList(Constant.PARAM_ORDER_IDS, orderIds)
 //            putInt(Constant.PARAM_TYPE, Constant.PAY_INFO_FOOD)
 //        })
-        WebPayActivity.navigation(this, Constant.PAY_INFO_FOOD, orderIds)
+//        WebPayActivity.navigation(this, Constant.PAY_INFO_FOOD, orderIds)
+        PayCounterActivity.navigation(this, PayUrlGet.RESTAURANT, orderIds, mTotalPrice)
         finish()
 
         finish()

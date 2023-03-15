@@ -14,6 +14,7 @@ import com.jiechengsheng.city.api.ErrorResponse
 import com.jiechengsheng.city.api.network.BaseMvpObserver
 import com.jiechengsheng.city.api.network.BaseMvpPresenter
 import com.jiechengsheng.city.api.network.BaseMvpView
+import com.jiechengsheng.city.api.request.payment.PayUrlGet
 import com.jiechengsheng.city.api.response.bills.BillsOrderDiscount
 import com.jiechengsheng.city.api.response.bills.BillsPlaceOrder
 import com.jiechengsheng.city.api.response.bills.CallChargeChannelItem
@@ -23,7 +24,7 @@ import com.jiechengsheng.city.base.BaseEvent
 import com.jiechengsheng.city.base.EventCode
 import com.jiechengsheng.city.base.mvp.BaseMvpActivity
 import com.jiechengsheng.city.features.bills.place.coupon.BillCouponHome
-import com.jiechengsheng.city.features.payment.WebPayActivity
+import com.jiechengsheng.city.features.payment.counter.PayCounterActivity
 import com.jiechengsheng.city.utils.CacheUtil
 import com.jiechengsheng.city.utils.Constant
 import kotlinx.android.synthetic.main.activity_bills_place_order_charges.*
@@ -81,7 +82,7 @@ class PhonePlaceOrderActivity : BaseMvpActivity<PhonePlacePresenter>(), PhonePla
         intent.extras?.let {
             phone = it.getString(Constant.PARAM_PHONE, "")
             phone_tv.text = phone
-            CacheUtil.getShareDefault().put(Constant.SP_CHARGES_PHONE ,phone )
+            CacheUtil.getShareDefault().put(Constant.SP_CHARGES_PHONE, phone)
 
             val data = it.getParcelable<CallChargeChannelItem>(Constant.PARAM_DATA)
 
@@ -125,7 +126,8 @@ class PhonePlaceOrderActivity : BaseMvpActivity<PhonePlacePresenter>(), PhonePla
         val orderIds = ArrayList<Int>()
         val order = response.order
         orderIds.add(order!!.id)
-        WebPayActivity.navigation(this, Constant.PAY_INFO_BILLS, orderIds)
+//        WebPayActivity.navigation(this, Constant.PAY_INFO_BILLS, orderIds)
+        PayCounterActivity.navigation(this, PayUrlGet.BILL_PAY, orderIds, finalPrice)
     }
 
 

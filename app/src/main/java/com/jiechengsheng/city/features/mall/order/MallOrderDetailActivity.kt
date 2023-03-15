@@ -5,15 +5,19 @@ import android.text.TextUtils
 import android.view.View
 import androidx.appcompat.app.AlertDialog
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.blankj.utilcode.util.*
+import com.blankj.utilcode.util.BarUtils
+import com.blankj.utilcode.util.ColorUtils
+import com.blankj.utilcode.util.SizeUtils
+import com.blankj.utilcode.util.ToastUtils
 import com.jiechengsheng.city.R
+import com.jiechengsheng.city.api.request.payment.PayUrlGet
 import com.jiechengsheng.city.api.response.mall.MallOrderDetail
 import com.jiechengsheng.city.base.BaseEvent
 import com.jiechengsheng.city.base.EventCode
 import com.jiechengsheng.city.base.mvp.BaseMvpActivity
 import com.jiechengsheng.city.features.comment.batch.BatchCommentActivity
 import com.jiechengsheng.city.features.mall.detail.MallDetailActivity
-import com.jiechengsheng.city.features.payment.WebPayActivity
+import com.jiechengsheng.city.features.payment.counter.PayCounterActivity
 import com.jiechengsheng.city.features.web.WebViewActivity
 import com.jiechengsheng.city.utils.BusinessUtils
 import com.jiechengsheng.city.utils.Constant
@@ -34,7 +38,7 @@ class MallOrderDetailActivity : BaseMvpActivity<MallOrderDetailPresenter>(), Mal
     private var logistics = ""
     private var orderId = 0
 
-    private var totalPrice = 0.0
+    private var totalPrice = BigDecimal.ZERO
 
     private lateinit var mAdapter: MallOrderDetailAdapter
 
@@ -99,8 +103,10 @@ class MallOrderDetailActivity : BaseMvpActivity<MallOrderDetailPresenter>(), Mal
         presenter.getStatusDescText(status_desc_tv, data.order_status)
         order_number_tv.text = data.trade_no
         created_date_tv.text = data.created_at
+
         val price = data.price
-        totalPrice = price.toDouble()
+
+        totalPrice = price
         price_tv.text = getString(R.string.price_unit_format, price.toPlainString())
 
 
@@ -151,7 +157,7 @@ class MallOrderDetailActivity : BaseMvpActivity<MallOrderDetailPresenter>(), Mal
         if (companyName.isNotBlank()) {
             logistics_container_ll.visibility = View.VISIBLE
             logistics_company_tv.text = getString(R.string.logistics_company_format, companyName)
-            this. logistics = data.logistics
+            this.logistics = data.logistics
             logistics_number_tv.text = getString(R.string.logistics_number_format, logistics)
 
         } else {
@@ -172,7 +178,7 @@ class MallOrderDetailActivity : BaseMvpActivity<MallOrderDetailPresenter>(), Mal
         coupon_tv.text = getString(R.string.price_unit_format, data.platform_coupon_money)
 
         // 合计
-        total_price_copy_tv.text = getString(R.string.price_unit_format, data.price.toPlainString())
+        total_price_copy_tv.text = getString(R.string.price_unit_format, price.toPlainString())
 
 
         // 底部
@@ -190,7 +196,7 @@ class MallOrderDetailActivity : BaseMvpActivity<MallOrderDetailPresenter>(), Mal
                 right_tv.text = getString(R.string.to_pay_2)
                 right_tv.setOnClickListener {
                     // 去付款
-                    handlePay(data.id, data.price)
+                    handlePay(data.id, price)
                 }
             }
             3 -> {
@@ -287,7 +293,9 @@ class MallOrderDetailActivity : BaseMvpActivity<MallOrderDetailPresenter>(), Mal
              putIntegerArrayList(Constant.PARAM_ORDER_IDS, orderIds)
              putInt(Constant.PARAM_TYPE, Constant.PAY_INFO_MALL)
          })*/
-        WebPayActivity.navigation(this, Constant.PAY_INFO_MALL, orderIds)
+//        WebPayActivity.navigation(this, Constant.PAY_INFO_MALL, orderIds)
+
+        PayCounterActivity.navigation(this, PayUrlGet.MALL, orderIds, totalPrice.toPlainString())
     }
 
 

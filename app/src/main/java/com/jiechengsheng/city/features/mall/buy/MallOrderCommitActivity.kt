@@ -10,6 +10,7 @@ import com.blankj.utilcode.util.ColorUtils
 import com.blankj.utilcode.util.SizeUtils
 import com.blankj.utilcode.util.ToastUtils
 import com.jiechengsheng.city.R
+import com.jiechengsheng.city.api.request.payment.PayUrlGet
 import com.jiechengsheng.city.api.response.address.AddressResponse
 import com.jiechengsheng.city.api.response.mall.MallCartGroup
 import com.jiechengsheng.city.api.response.mall.request.MallCommitResponse
@@ -18,7 +19,7 @@ import com.jiechengsheng.city.base.EventCode
 import com.jiechengsheng.city.base.mvp.BaseMvpActivity
 import com.jiechengsheng.city.features.address.AddressActivity
 import com.jiechengsheng.city.features.mall.buy.coupon.OrderCouponHomeFragment
-import com.jiechengsheng.city.features.payment.WebPayActivity
+import com.jiechengsheng.city.features.payment.counter.PayCounterActivity
 import com.jiechengsheng.city.utils.Constant
 import com.jiechengsheng.city.widget.list.DividerDecoration
 import kotlinx.android.synthetic.main.activity_mall_order_commit.*
@@ -59,7 +60,6 @@ class MallOrderCommitActivity : BaseMvpActivity<MallOrderCommitPresenter>(), Mal
 
     /** 当前进行更改店铺券的 店铺id */
     private var currentHandleShopId = 0
-
 
 
     private lateinit var mAdapter: MallOrderCommitAdapter
@@ -146,7 +146,7 @@ class MallOrderCommitActivity : BaseMvpActivity<MallOrderCommitPresenter>(), Mal
     override fun initData() {
         presenter = MallOrderCommitPresenter(this)
         handleTotalPrice()
-        presenter.getDefaultCoupon(mAdapter, data,isFirstRequest = true)
+        presenter.getDefaultCoupon(mAdapter, data, isFirstRequest = true)
         mSelectedCouponDialog = OrderCouponHomeFragment()
 
     }
@@ -218,8 +218,8 @@ class MallOrderCommitActivity : BaseMvpActivity<MallOrderCommitPresenter>(), Mal
             putInt(Constant.PARAM_TYPE, Constant.PAY_INFO_MALL)
         })*/
 
-        WebPayActivity.navigation(this, Constant.PAY_INFO_MALL, response.orders)
-
+//        WebPayActivity.navigation(this, Constant.PAY_INFO_MALL, response.orders)
+        PayCounterActivity.navigation(this, PayUrlGet.MALL, response.orders, totalPrice.toPlainString())
 
     }
 
@@ -252,7 +252,7 @@ class MallOrderCommitActivity : BaseMvpActivity<MallOrderCommitPresenter>(), Mal
                 // 更换店铺优惠券后，将平台券置空
                 currentPlatformCouponId = 0
                 // 更新店铺item中的 nativeShopCouponId
-                presenter.updateItemShopCouponId(mAdapter,currentHandleShopId,selectedShopCouponId)
+                presenter.updateItemShopCouponId(mAdapter, currentHandleShopId, selectedShopCouponId)
                 // 获取默认优惠券
                 presenter.getDefaultCoupon(mAdapter, data, currentPlatformCouponId)
             }

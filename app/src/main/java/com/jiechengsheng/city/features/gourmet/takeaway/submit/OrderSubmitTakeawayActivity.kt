@@ -17,6 +17,7 @@ import com.blankj.utilcode.util.ToastUtils
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.gson.Gson
 import com.jiechengsheng.city.R
+import com.jiechengsheng.city.api.request.payment.PayUrlGet
 import com.jiechengsheng.city.api.response.address.AddressResponse
 import com.jiechengsheng.city.api.response.gourmet.dish.DeliveryTimeRetouch
 import com.jiechengsheng.city.api.response.gourmet.dish.DishResponse
@@ -27,7 +28,7 @@ import com.jiechengsheng.city.base.mvp.BaseMvpActivity
 import com.jiechengsheng.city.bean.OrderSubmitChildRequest
 import com.jiechengsheng.city.bean.OrderSubmitTakeawayRequest
 import com.jiechengsheng.city.features.address.AddressActivity
-import com.jiechengsheng.city.features.payment.WebPayActivity
+import com.jiechengsheng.city.features.payment.counter.PayCounterActivity
 import com.jiechengsheng.city.utils.Constant
 import com.jiechengsheng.city.utils.time.TimeUtil
 import com.jiechengsheng.city.view.empty.EmptyView
@@ -51,7 +52,7 @@ class OrderSubmitTakeawayActivity : BaseMvpActivity<OrderSubmitTakeawayPresenter
     private var delivery_cost: String = "0"
 
     /** 总金额 */
-    private var total_price: String = "0"
+    private var totalPrice: String = "0"
 
     /** 商家名称 */
     private var restaurant_name: String = ""
@@ -88,7 +89,7 @@ class OrderSubmitTakeawayActivity : BaseMvpActivity<OrderSubmitTakeawayPresenter
         mRestaurantId = bundle.getString(Constant.PARAM_ID, "0")
         packing_charges = bundle.getString(Constant.PARAM_PACKING_CHARGES, "0")
         delivery_cost = bundle.getString(Constant.PARAM_DELIVERY_COST, "0")
-        total_price = bundle.getString(Constant.PARAM_TOTAL_PRICE, "0")
+        totalPrice = bundle.getString(Constant.PARAM_TOTAL_PRICE, "0")
         restaurant_name = bundle.getString(Constant.PARAM_NAME, "0")
         dish_list = bundle.getSerializable(Constant.PARAM_DATA) as ArrayList<DishResponse>
 
@@ -97,7 +98,7 @@ class OrderSubmitTakeawayActivity : BaseMvpActivity<OrderSubmitTakeawayPresenter
         business_name_tv.text = restaurant_name
         packing_charges_tv.text = getString(R.string.price_unit_format, packing_charges)
         delivery_cost_tv.text = getString(R.string.price_unit_format, delivery_cost)
-        val total = getString(R.string.price_unit_format, total_price)
+        val total = getString(R.string.price_unit_format, totalPrice)
         actual_payment_tv.text = total
         total_price_tv.text = total
 
@@ -106,7 +107,7 @@ class OrderSubmitTakeawayActivity : BaseMvpActivity<OrderSubmitTakeawayPresenter
     @SuppressLint("NotifyDataSetChanged")
     private fun initRecyclerView() {
 
-        emptyView = EmptyView(this).apply{
+        emptyView = EmptyView(this).apply {
             showEmptyDefault()
         }
 
@@ -275,8 +276,8 @@ class OrderSubmitTakeawayActivity : BaseMvpActivity<OrderSubmitTakeawayPresenter
             putInt(Constant.PARAM_TYPE, Constant.PAY_INFO_TAKEAWAY)
         })*/
 
-        WebPayActivity.navigation(this, Constant.PAY_INFO_TAKEAWAY, orderIds)
-
+//        WebPayActivity.navigation(this, Constant.PAY_INFO_TAKEAWAY, orderIds)
+        PayCounterActivity.navigation(this, PayUrlGet.TAKEAWAY, orderIds, totalPrice)
         finish()
     }
 

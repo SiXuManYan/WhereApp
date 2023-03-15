@@ -6,6 +6,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import com.jiechengsheng.city.R
+import com.jiechengsheng.city.api.ErrorResponse
 import com.jiechengsheng.city.api.request.payment.PayStatus
 import com.jiechengsheng.city.api.request.payment.PayUrlGet
 import com.jiechengsheng.city.base.BaseEvent
@@ -121,13 +122,11 @@ class PayResultActivity : BaseMvpActivity<WebPayResultPresenter>(), WebPayResult
     }
 
 
-
     override fun bindListener() {
         finish_tv.setOnClickListener {
             when (moduleType) {
                 PayUrlGet.BILL_PAY -> {
                     // 跳转至水电列表
-                    EventBus.getDefault().post(BaseEvent<Any>(EventCode.EVENT_REFRESH_ORDER_LIST))
                     startActivity(BillsRecordActivity::class.java)
                 }
                 else -> {
@@ -141,6 +140,9 @@ class PayResultActivity : BaseMvpActivity<WebPayResultPresenter>(), WebPayResult
         view_order_tv.setOnClickListener {
             finish_tv.performClick()
         }
+        back_iv.setOnClickListener {
+            finish_tv.performClick()
+        }
     }
 
 
@@ -148,11 +150,21 @@ class PayResultActivity : BaseMvpActivity<WebPayResultPresenter>(), WebPayResult
 
     override fun bindPayStatus(response: PayStatus) {
 
+        EventBus.getDefault().post(BaseEvent<Any>(EventCode.EVENT_REFRESH_ORDER_LIST))
+
         val payStatus = response.pay_status
 
         if (!payStatus) {
+
+            // 支付失败
+            pay_status_title_iv.setImageResource(R.mipmap.ic_pay_complete)
+            payment_hint.visibility = View.VISIBLE
+            pay_info_iv.setImageResource(R.mipmap.ic_paying_loading)
+            view_order_tv.visibility = View.VISIBLE
             return
         }
+        pay_status_title_iv.visibility = View.VISIBLE
+
 
         val languageLocale = LocalLanguageUtil.getInstance().getSetLanguageLocale(this)
 
@@ -179,7 +191,19 @@ class PayResultActivity : BaseMvpActivity<WebPayResultPresenter>(), WebPayResult
         }
 
         // 支付成功
+
+    }
+
+    override fun onError(errorResponse: ErrorResponse?) {
+        super.onError(errorResponse)
         EventBus.getDefault().post(BaseEvent<Any>(EventCode.EVENT_REFRESH_ORDER_LIST))
+        pay_status_title_iv.visibility = View.INVISIBLE
+        payment_hint.visibility = View.INVISIBLE
+        pay_info_iv.setImageResource(R.mipmap.ic_pay_info_error)
+        view_order_tv.visibility = View.GONE
+        error_ll.visibility = View.VISIBLE
+        finish_tv.visibility = View.GONE
+        back_iv.visibility = View.VISIBLE
     }
 
 

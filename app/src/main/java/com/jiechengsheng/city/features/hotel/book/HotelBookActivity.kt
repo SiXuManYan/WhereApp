@@ -9,12 +9,13 @@ import com.blankj.utilcode.util.StringUtils
 import com.blankj.utilcode.util.ToastUtils
 import com.jiechengsheng.city.R
 import com.jiechengsheng.city.api.request.HotelOrderRequest
+import com.jiechengsheng.city.api.request.payment.PayUrlGet
 import com.jiechengsheng.city.api.response.hotel.HotelOrderCommitResponse
 import com.jiechengsheng.city.base.BaseEvent
 import com.jiechengsheng.city.base.EventCode
 import com.jiechengsheng.city.base.mvp.BaseMvpActivity
 import com.jiechengsheng.city.features.account.login.LoginActivity
-import com.jiechengsheng.city.features.payment.WebPayActivity
+import com.jiechengsheng.city.features.payment.counter.PayCounterActivity
 import com.jiechengsheng.city.storage.entity.User
 import com.jiechengsheng.city.utils.BigDecimalUtil
 import com.jiechengsheng.city.utils.Constant
@@ -237,7 +238,9 @@ class HotelBookActivity : BaseMvpActivity<HotelBookPresenter>(), HotelBookView, 
         bundle.putInt(Constant.PARAM_TYPE, Constant.PAY_INFO_HOTEL)
         startActivityAfterLogin(StorePayActivity::class.java, bundle)*/
 
-        WebPayActivity.navigation(this, Constant.PAY_INFO_HOTEL, orderIds)
+//        WebPayActivity.navigation(this, Constant.PAY_INFO_HOTEL, orderIds)
+
+        PayCounterActivity.navigation(this, PayUrlGet.HOTEL, orderIds, totalPrice.toPlainString())
 
     }
 

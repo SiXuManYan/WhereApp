@@ -21,6 +21,7 @@ import com.chad.library.adapter.base.BaseMultiItemQuickAdapter
 import com.chad.library.adapter.base.module.LoadMoreModule
 import com.chad.library.adapter.base.viewholder.BaseViewHolder
 import com.jiechengsheng.city.R
+import com.jiechengsheng.city.api.request.payment.PayUrlGet
 import com.jiechengsheng.city.api.response.order.OrderListResponse
 import com.jiechengsheng.city.features.account.login.LoginActivity
 import com.jiechengsheng.city.features.comment.CommentPostActivity
@@ -30,7 +31,7 @@ import com.jiechengsheng.city.features.gourmet.restaurant.detail.RestaurantDetai
 import com.jiechengsheng.city.features.hotel.detail.HotelDetailActivity2
 import com.jiechengsheng.city.features.mall.order.MallOrderDetailActivity
 import com.jiechengsheng.city.features.mall.shop.home.MallShopHomeActivity
-import com.jiechengsheng.city.features.payment.WebPayActivity
+import com.jiechengsheng.city.features.payment.counter.PayCounterActivity
 import com.jiechengsheng.city.features.store.comment.detail.StoreCommentDetailActivity
 import com.jiechengsheng.city.features.store.comment.post.StoreCommentPostActivity
 import com.jiechengsheng.city.features.store.detail.StoreDetailActivity
@@ -144,7 +145,9 @@ open class OrderListAdapter : BaseMultiItemQuickAdapter<OrderListResponse, BaseV
                                       putIntegerArrayList(Constant.PARAM_ORDER_IDS, orderIds)
                                       putInt(Constant.PARAM_TYPE, Constant.PAY_INFO_HOTEL)
                                   })*/
-                        WebPayActivity.navigation(context, Constant.PAY_INFO_HOTEL, orderIds)
+//                        WebPayActivity.navigation(context, Constant.PAY_INFO_HOTEL, orderIds)
+
+                        PayCounterActivity.navigation(context, PayUrlGet.HOTEL, orderIds, item.price.toPlainString())
                     } else {
                         ToastUtils.showShort(R.string.order_time_out)
                         orderTimeOut?.timeOutRefresh()
@@ -235,7 +238,9 @@ open class OrderListAdapter : BaseMultiItemQuickAdapter<OrderListResponse, BaseV
 //                            putInt(Constant.PARAM_TYPE, Constant.PAY_INFO_FOOD)
 //                        })
 
-                        WebPayActivity.navigation(context, Constant.PAY_INFO_FOOD, orderIds)
+//                        WebPayActivity.navigation(context, Constant.PAY_INFO_FOOD, orderIds)
+
+                        PayCounterActivity.navigation(context, PayUrlGet.RESTAURANT, orderIds, item.price.toPlainString())
 
                     } else {
                         ToastUtils.showShort(R.string.order_time_out)
@@ -339,7 +344,8 @@ open class OrderListAdapter : BaseMultiItemQuickAdapter<OrderListResponse, BaseV
 //                            putIntegerArrayList(Constant.PARAM_ORDER_IDS, orderIds)
 //                            putInt(Constant.PARAM_TYPE, Constant.PAY_INFO_TAKEAWAY)
 //                        })
-                        WebPayActivity.navigation(context, Constant.PAY_INFO_TAKEAWAY, orderIds)
+//                        WebPayActivity.navigation(context, Constant.PAY_INFO_TAKEAWAY, orderIds)
+                        PayCounterActivity.navigation(context, PayUrlGet.TAKEAWAY, orderIds, item.price.toPlainString())
                     } else {
                         ToastUtils.showShort(R.string.order_time_out)
                         orderTimeOut?.timeOutRefresh()
@@ -435,7 +441,9 @@ open class OrderListAdapter : BaseMultiItemQuickAdapter<OrderListResponse, BaseV
 //                        putIntegerArrayList(Constant.PARAM_ORDER_IDS, orderIds)
 //                        putInt(Constant.PARAM_TYPE, Constant.PAY_INFO_ESTORE)
 //                    })
-                    WebPayActivity.navigation(context, Constant.PAY_INFO_ESTORE, orderIds)
+
+//                    WebPayActivity.navigation(context, Constant.PAY_INFO_ESTORE, orderIds)
+                    PayCounterActivity.navigation(context, PayUrlGet.MALL, orderIds, item.price.toPlainString())
                 }
             }
             5 -> {
@@ -550,7 +558,8 @@ open class OrderListAdapter : BaseMultiItemQuickAdapter<OrderListResponse, BaseV
 //                            putIntegerArrayList(Constant.PARAM_ORDER_IDS, orderIds)
 //                            putInt(Constant.PARAM_TYPE, Constant.PAY_INFO_MALL)
 //                        })
-                        WebPayActivity.navigation(context, Constant.PAY_INFO_MALL, orderIds)
+//                        WebPayActivity.navigation(context, Constant.PAY_INFO_MALL, orderIds)
+                        PayCounterActivity.navigation(context, PayUrlGet.MALL, orderIds, item.price.toPlainString())
                     } else {
                         ToastUtils.showShort(R.string.order_time_out)
                         orderTimeOut?.timeOutRefresh()

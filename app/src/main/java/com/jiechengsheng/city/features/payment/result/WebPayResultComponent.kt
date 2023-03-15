@@ -31,6 +31,7 @@ class WebPayResultPresenter(private var view: WebPayResultView) : BaseMvpPresent
                 view.bindPayStatus(response)
             }
 
+
         })
     }
 

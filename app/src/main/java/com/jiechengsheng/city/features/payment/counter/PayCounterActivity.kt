@@ -21,6 +21,7 @@ import com.jiechengsheng.city.features.account.login.LoginActivity
 import com.jiechengsheng.city.features.payment.result.PayResultActivity
 import com.jiechengsheng.city.features.payment.token.TokenPaymentActivity
 import com.jiechengsheng.city.features.payment.tokenized.TokenizedActivity
+import com.jiechengsheng.city.features.payment.web.WebPaymentActivity
 import com.jiechengsheng.city.features.web.WebViewActivity
 import com.jiechengsheng.city.storage.entity.User
 import com.jiechengsheng.city.utils.BusinessUtils
@@ -150,7 +151,16 @@ class PayCounterActivity : BaseMvpActivity<PayCounterPresenter>(), PayCounterVie
 
                 } else {
                     // h5 支付
+                    WebPaymentActivity.navigation(this,  moduleType,
+                        orderIds,
+                        amountToPaid,
+                        payCounter.title,
+                        payCounter.channel_code)
+
+
+                    finish()
                 }
+
             }
             else -> {}
         }
@@ -195,7 +205,6 @@ class PayCounterActivity : BaseMvpActivity<PayCounterPresenter>(), PayCounterVie
             -> {
                 onRefresh()
             }
-
             EventCode.EVENT_REFRESH_ORDER_LIST -> {
                 finish()
             }

@@ -12,13 +12,14 @@ import com.blankj.utilcode.util.BarUtils
 import com.blankj.utilcode.util.ColorUtils
 import com.blankj.utilcode.util.SizeUtils
 import com.jiechengsheng.city.R
+import com.jiechengsheng.city.api.request.payment.PayUrlGet
 import com.jiechengsheng.city.api.response.order.store.StoreOrderDetail
 import com.jiechengsheng.city.base.BaseEvent
 import com.jiechengsheng.city.base.EventCode
 import com.jiechengsheng.city.base.EventCode.EVENT_REFRESH_ORDER_LIST
 import com.jiechengsheng.city.base.mvp.BaseMvpActivity
 import com.jiechengsheng.city.features.com100.ExtendChatActivity
-import com.jiechengsheng.city.features.payment.WebPayActivity
+import com.jiechengsheng.city.features.payment.counter.PayCounterActivity
 import com.jiechengsheng.city.features.store.comment.detail.StoreCommentDetailActivity
 import com.jiechengsheng.city.features.store.comment.post.StoreCommentPostActivity
 import com.jiechengsheng.city.features.store.refund.StoreRefundActivity
@@ -301,7 +302,9 @@ class StoreOrderDetailActivity : BaseMvpActivity<StoreOrderDetailPresenter>(), S
 //            putIntegerArrayList(Constant.PARAM_ORDER_IDS, orderIds)
 //            putInt(Constant.PARAM_TYPE, Constant.PAY_INFO_ESTORE)
 //        })
-        WebPayActivity.navigation(this, Constant.PAY_INFO_ESTORE, orderIds)
+//        WebPayActivity.navigation(this, Constant.PAY_INFO_ESTORE, orderIds)
+
+        PayCounterActivity.navigation(this, PayUrlGet.MALL, orderIds, totalPrice.toString())
     }
 
 

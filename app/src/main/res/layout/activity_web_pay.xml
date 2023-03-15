@@ -12,6 +12,7 @@
         android:id="@+id/jcsTitle"
         app:backIcon="@mipmap/ic_back_delete"
         android:layout_width="match_parent"
+        app:backgroundRes="@mipmap/ic_back_delete"
         android:layout_height="wrap_content"
         app:middleTitle="@string/pay_order_title" />
 
@@ -25,10 +26,10 @@
 
     <com.jiechengsheng.city.view.empty.EmptyView
         android:id="@+id/empty_view"
-        android:background="@color/white"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@+id/jcsTitle"
+        android:background="@color/white"
         android:visibility="gone"
         tools:visibility="visible" />
 

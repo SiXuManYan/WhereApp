@@ -14,6 +14,7 @@ import com.blankj.utilcode.util.SizeUtils
 import com.blankj.utilcode.util.StringUtils
 import com.jiechengsheng.city.R
 import com.jiechengsheng.city.api.ErrorResponse
+import com.jiechengsheng.city.api.request.payment.PayUrlGet
 import com.jiechengsheng.city.api.response.bills.BillsOrderDiscount
 import com.jiechengsheng.city.api.response.bills.FieldDetail
 import com.jiechengsheng.city.api.response.hotel.HotelOrderCommitResponse
@@ -21,7 +22,7 @@ import com.jiechengsheng.city.base.BaseEvent
 import com.jiechengsheng.city.base.EventCode
 import com.jiechengsheng.city.base.mvp.BaseMvpActivity
 import com.jiechengsheng.city.features.bills.place.coupon.BillCouponHome
-import com.jiechengsheng.city.features.payment.WebPayActivity
+import com.jiechengsheng.city.features.payment.counter.PayCounterActivity
 import com.jiechengsheng.city.utils.BigDecimalUtil
 import com.jiechengsheng.city.utils.BusinessUtils
 import com.jiechengsheng.city.utils.Constant
@@ -204,8 +205,8 @@ class BillsPlaceOrderActivity : BaseMvpActivity<BillsPlaceOrderPresenter>(), Bil
         val orderIds = ArrayList<Int>()
         val order = response.order
         orderIds.add(order!!.id)
-        WebPayActivity.navigation(this, Constant.PAY_INFO_BILLS, orderIds)
-
+//        WebPayActivity.navigation(this, Constant.PAY_INFO_BILLS, orderIds)
+        PayCounterActivity.navigation(this, PayUrlGet.BILL_PAY, orderIds, totalMoney.toPlainString())
     }
 
     override fun onEventReceived(baseEvent: BaseEvent<*>?) {

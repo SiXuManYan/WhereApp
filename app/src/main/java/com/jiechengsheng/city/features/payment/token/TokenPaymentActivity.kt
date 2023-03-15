@@ -7,6 +7,8 @@ import android.os.Bundle
 import com.jiechengsheng.city.R
 import com.jiechengsheng.city.api.request.payment.PayUrlGet
 import com.jiechengsheng.city.api.response.pay.PayCounterChannelDetail
+import com.jiechengsheng.city.base.BaseEvent
+import com.jiechengsheng.city.base.EventCode
 import com.jiechengsheng.city.base.mvp.BaseMvpActivity
 import com.jiechengsheng.city.features.account.login.LoginActivity
 import com.jiechengsheng.city.features.payment.counter.PayCounterPresenter
@@ -45,6 +47,7 @@ class TokenPaymentActivity : BaseMvpActivity<PayCounterPresenter>(), PayCounterV
     /** 渠道名称 */
     private var channelName = ""
 
+    override fun isStatusDark() = true
 
     override fun getLayoutId() = R.layout.activity_token_payment
 
@@ -130,5 +133,17 @@ class TokenPaymentActivity : BaseMvpActivity<PayCounterPresenter>(), PayCounterV
         PayResultActivity.navigation(this, moduleType, orderIds, amountToPaid)
         finish()
     }
+
+
+
+//    override fun onEventReceived(baseEvent: BaseEvent<*>) {
+//        super.onEventReceived(baseEvent)
+//        when (baseEvent.code) {
+//            EventCode.EVENT_REFRESH_ORDER_LIST -> {
+//                finish()
+//            }
+//            else -> {}
+//        }
+//    }
 
 }

@@ -9,6 +9,7 @@ import com.blankj.utilcode.util.ColorUtils
 import com.blankj.utilcode.util.SizeUtils
 import com.blankj.utilcode.util.ToastUtils
 import com.jiechengsheng.city.R
+import com.jiechengsheng.city.api.request.payment.PayUrlGet
 import com.jiechengsheng.city.api.response.address.AddressResponse
 import com.jiechengsheng.city.api.response.store.StoreOrderCommitData
 import com.jiechengsheng.city.api.response.store.StoreOrderInfoResponse
@@ -16,7 +17,7 @@ import com.jiechengsheng.city.base.BaseEvent
 import com.jiechengsheng.city.base.EventCode
 import com.jiechengsheng.city.base.mvp.BaseMvpActivity
 import com.jiechengsheng.city.features.address.AddressActivity
-import com.jiechengsheng.city.features.payment.WebPayActivity
+import com.jiechengsheng.city.features.payment.counter.PayCounterActivity
 import com.jiechengsheng.city.utils.Constant
 import com.jiechengsheng.city.widget.list.DividerDecoration
 import kotlinx.android.synthetic.main.activity_store_order_commit.*
@@ -150,7 +151,8 @@ class StoreOrderCommitActivity : BaseMvpActivity<StoreOrderCommitPresenter>(), S
 //            putInt(Constant.PARAM_TYPE, Constant.PAY_INFO_ESTORE)
 //        })
 
-        WebPayActivity.navigation(this, Constant.PAY_INFO_ESTORE, orderIds)
+//        WebPayActivity.navigation(this, Constant.PAY_INFO_ESTORE, orderIds)
+        PayCounterActivity.navigation(this, PayUrlGet.MALL, orderIds, totalPrice.toPlainString())
     }
 
 

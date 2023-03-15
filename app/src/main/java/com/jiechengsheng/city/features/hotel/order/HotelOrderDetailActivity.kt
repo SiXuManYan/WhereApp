@@ -10,6 +10,7 @@ import com.blankj.utilcode.util.ResourceUtils
 import com.blankj.utilcode.util.ToastUtils
 import com.jiechengsheng.city.R
 import com.jiechengsheng.city.api.request.hotel.ComplaintRequest
+import com.jiechengsheng.city.api.request.payment.PayUrlGet
 import com.jiechengsheng.city.api.response.hotel.HotelOrderDetail
 import com.jiechengsheng.city.base.BaseEvent
 import com.jiechengsheng.city.base.EventCode
@@ -20,7 +21,7 @@ import com.jiechengsheng.city.features.gourmet.refund.ComplexRefundPresenter
 import com.jiechengsheng.city.features.gourmet.refund.detail.FoodRefundInfoActivity
 import com.jiechengsheng.city.features.gourmet.refund.detail.FoodRefundInfoPresenter
 import com.jiechengsheng.city.features.mall.refund.complaint.ComplaintActivity
-import com.jiechengsheng.city.features.payment.WebPayActivity
+import com.jiechengsheng.city.features.payment.counter.PayCounterActivity
 import com.jiechengsheng.city.utils.BusinessUtils
 import com.jiechengsheng.city.utils.Constant
 import com.jiechengsheng.city.utils.FeaturesUtil
@@ -190,7 +191,11 @@ class HotelOrderDetailActivity : BaseMvpActivity<HotelOrderDetailPresenter>(), H
                                                 putIntegerArrayList(Constant.PARAM_ORDER_IDS, orderIds)
                                                 putInt(Constant.PARAM_TYPE, Constant.PAY_INFO_HOTEL)
                                             })*/
-                        WebPayActivity.navigation(this@HotelOrderDetailActivity, Constant.PAY_INFO_HOTEL, orderIds)
+//                        WebPayActivity.navigation(this@HotelOrderDetailActivity, Constant.PAY_INFO_HOTEL, orderIds)
+                        PayCounterActivity.navigation(this@HotelOrderDetailActivity,
+                            PayUrlGet.HOTEL,
+                            orderIds,
+                            price.toPlainString())
                     }
                 }
 
@@ -310,7 +315,6 @@ class HotelOrderDetailActivity : BaseMvpActivity<HotelOrderDetailPresenter>(), H
     }
 
     private fun viewRefundInfo() = FoodRefundInfoActivity.navigation(this, order_id, FoodRefundInfoPresenter.TYPE_HOTEL)
-
 
 
     override fun onEventReceived(baseEvent: BaseEvent<*>?) {

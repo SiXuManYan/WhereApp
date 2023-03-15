@@ -72,6 +72,7 @@ class PayCounterPresenter(private var view: PayCounterView) : BaseMvpPresenter(v
 
 
     /**
+     *
      * @param paymentMethod 支付方式（一次性支付: ONE_TIME_PAYMENT，令牌支付: TOKENIZED_PAYMENT)
      * @param channelCode 支付渠道编码
      */

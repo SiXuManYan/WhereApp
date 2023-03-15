@@ -12,7 +12,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@drawable/shape_gradient_hotel_detail"
-
         app:backIcon="@drawable/ic_back_white"
         app:backgroundRes="@drawable/shape_gradient_hotel_detail"
         app:middleTitleColor="@color/white_FEFEFE"

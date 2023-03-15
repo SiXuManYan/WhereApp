@@ -844,6 +844,7 @@
         <activity
             android:name=".features.payment.result.PayResultActivity"
             android:configChanges="keyboardHidden|screenSize|orientation" />
+        <activity android:name=".features.payment.web.WebPaymentActivity" />
 
     </application>
 

@@ -4,6 +4,7 @@ import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.view.View
 import com.blankj.utilcode.util.StringUtils
 import com.jiechengsheng.city.R
 import com.jiechengsheng.city.api.network.BaseMvpObserver
@@ -74,11 +75,18 @@ class FoodRefundInfoActivity : BaseMvpActivity<FoodRefundInfoPresenter>(), FoodR
     override fun bindData(response: FoodRefundInfo) {
         // 退款方式
         val refundMethod = response.remit_info
-        refundMethod?.let {
+
+
+        if (refundMethod != null) {
+            refund_method_ll.visibility = View.VISIBLE
             refund_name_tv.text = refundMethod.name
             refund_user_name_tv.text = refundMethod.user_name
             refund_account_tv.text = refundMethod.account
+        } else {
+            // 美食，酒店，账单，退款原路返回。不再显示退款方式字段
+            refund_method_ll.visibility = View.GONE
         }
+
         refund_price_tv.text = StringUtils.getString(R.string.price_unit_format, response.price)
         total_price_tv.text = StringUtils.getString(R.string.price_unit_format, response.total_price)
         time_tv.text = response.cancel_time

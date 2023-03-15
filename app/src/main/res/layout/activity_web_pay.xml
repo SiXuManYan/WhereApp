@@ -12,7 +12,6 @@
         android:id="@+id/jcsTitle"
         app:backIcon="@mipmap/ic_back_delete"
         android:layout_width="match_parent"
-        app:backgroundRes="@mipmap/ic_back_delete"
         android:layout_height="wrap_content"
         app:middleTitle="@string/pay_order_title" />
 

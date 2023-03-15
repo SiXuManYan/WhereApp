@@ -6,6 +6,7 @@ import android.content.ClipData
 import android.content.ClipboardManager
 import android.content.Context
 import android.content.Intent
+import android.graphics.Color
 import android.os.Build
 import android.os.Bundle
 import android.text.Spannable
@@ -1024,9 +1025,11 @@ object BusinessUtils {
             cancel_bt.visibility = View.VISIBLE
             confirm_bt.setText(R.string.confirm_lifted)
             confirm_bt.setBackgroundResource(R.drawable.shape_blue_radius_22)
+            confirm_bt.setTextColor(Color.WHITE)
         } else {
             cancel_bt.visibility = View.GONE
             confirm_bt.setBackgroundResource(R.drawable.stock_blue_radius_22)
+            confirm_bt.setTextColor(ColorUtils.getColor(R.color.blue_377BFF))
         }
 
         cancel_bt.setOnClickListener {

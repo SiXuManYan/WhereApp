@@ -16,14 +16,14 @@ import com.jiechengsheng.city.api.response.pay.PayCounterChannelDetail
  *
  */
 interface PayCounterView : BaseMvpView {
-    fun bindPayCounter(response: MutableList<PayCounterChannel>){}
-    fun bindChannelBalance(response: PayCounterChannelDetail){}
-    fun setBindTokenUrl(authH5Url: String){}
+    fun bindPayCounter(response: MutableList<PayCounterChannel>) {}
+    fun bindChannelBalance(response: PayCounterChannelDetail, channelName: String) {}
+    fun setBindTokenUrl(authH5Url: String) {}
 
     /**
      * 支付完成
      */
-    fun payFinish(redirectUrl: String){}
+    fun payFinish(redirectUrl: String) {}
 
 }
 
@@ -45,10 +45,10 @@ class PayCounterPresenter(private var view: PayCounterView) : BaseMvpPresenter(v
     /**
      * 获取支付渠道余额
      */
-    fun getChannelBalance(channelCode:String) {
+    fun getChannelBalance(channelCode: String, channelName: String) {
         requestApi(mRetrofit.getChannelBalance(channelCode), object : BaseMvpObserver<PayCounterChannelDetail>(view) {
             override fun onSuccess(response: PayCounterChannelDetail) {
-                view.bindChannelBalance(response)
+                view.bindChannelBalance(response, channelName)
             }
         })
     }
@@ -56,7 +56,7 @@ class PayCounterPresenter(private var view: PayCounterView) : BaseMvpPresenter(v
     /**
      * 获取绑定渠道Token 链接
      */
-    fun getBindTokenUrl(channelCode:String) {
+    fun getBindTokenUrl(channelCode: String) {
 
         val apply = PayChannelUnbind().apply {
             channel_code = channelCode
@@ -76,10 +76,10 @@ class PayCounterPresenter(private var view: PayCounterView) : BaseMvpPresenter(v
      * @param paymentMethod 支付方式（一次性支付: ONE_TIME_PAYMENT，令牌支付: TOKENIZED_PAYMENT)
      * @param channelCode 支付渠道编码
      */
-    fun doWherePay(moduleType: String, orderIds: ArrayList<Int> ,channelCode:String ,  paymentMethod:String ) {
+    fun doWherePay(moduleType: String, orderIds: ArrayList<Int>, channelCode: String, paymentMethod: String) {
 
         val apply = PayUrlGet().apply {
-            module =   moduleType
+            module = moduleType
             order_ids = Gson().toJson(orderIds)
 
             payment_method = paymentMethod
@@ -88,7 +88,7 @@ class PayCounterPresenter(private var view: PayCounterView) : BaseMvpPresenter(v
 
 
 
-        requestApi(mRetrofit.doWherePay(apply),object :BaseMvpObserver<PayUrl>(view){
+        requestApi(mRetrofit.doWherePay(apply), object : BaseMvpObserver<PayUrl>(view) {
             override fun onSuccess(response: PayUrl) {
                 view.payFinish(response.redirectUrl)
             }
@@ -96,7 +96,6 @@ class PayCounterPresenter(private var view: PayCounterView) : BaseMvpPresenter(v
 
         })
     }
-
 
 
 }

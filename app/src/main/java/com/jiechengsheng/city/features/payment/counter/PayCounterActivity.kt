@@ -53,6 +53,9 @@ class PayCounterActivity : BaseMvpActivity<PayCounterPresenter>(), PayCounterVie
     private var amountToPaid = ""
 
     private var lastSelectIndex = -1
+
+    private var needRefreshBindStatus = false
+
     private lateinit var mAdapter: PayCounterAdapter
 
     override fun isStatusDark() = true
@@ -136,9 +139,12 @@ class PayCounterActivity : BaseMvpActivity<PayCounterPresenter>(), PayCounterVie
 
         lastSelectIndex = position
         val payCounter = mAdapter.data[position]
+        val channelCode = payCounter.channel_code
+        val channelName = payCounter.title
+
         when (view.id) {
-            R.id.view_balance_tv -> presenter.getChannelBalance(payCounter.channel_code)
-            R.id.to_bind_tv -> presenter.getBindTokenUrl(payCounter.channel_code)
+            R.id.view_balance_tv -> presenter.getChannelBalance(channelCode, channelName)
+            R.id.to_bind_tv -> presenter.getBindTokenUrl(channelCode)
             R.id.item_container_rl -> {
                 if (payCounter.is_tokenized_pay && payCounter.is_auth) {
                     // 令牌支付
@@ -146,16 +152,16 @@ class PayCounterActivity : BaseMvpActivity<PayCounterPresenter>(), PayCounterVie
                         moduleType,
                         orderIds,
                         amountToPaid,
-                        payCounter.title,
-                        payCounter.channel_code)
+                        channelName,
+                        channelCode)
 
                 } else {
                     // h5 支付
-                    WebPaymentActivity.navigation(this,  moduleType,
+                    WebPaymentActivity.navigation(this, moduleType,
                         orderIds,
                         amountToPaid,
-                        payCounter.title,
-                        payCounter.channel_code)
+                        channelName,
+                        channelCode)
 
 
                     finish()
@@ -166,18 +172,28 @@ class PayCounterActivity : BaseMvpActivity<PayCounterPresenter>(), PayCounterVie
         }
     }
 
+
+    override fun onResume() {
+        super.onResume()
+        if (needRefreshBindStatus) {
+            onRefresh()
+            needRefreshBindStatus = false
+        }
+    }
+
     override fun setBindTokenUrl(authH5Url: String) {
         // 绑定令牌支付
         if (authH5Url.isNotBlank()) {
+            needRefreshBindStatus = true
             WebViewActivity.navigation(this, authH5Url)
         }
     }
 
-    override fun bindChannelBalance(response: PayCounterChannelDetail) {
+    override fun bindChannelBalance(response: PayCounterChannelDetail, channelName: String) {
 
         BusinessUtils.showBalance(this,
             title = getString(R.string.check_balance),
-            channelName = response.channel_code,
+            channelName = channelName,
             balanceTitle = getString(R.string.balance),
             balance = response.balance.toPlainString(),
             onCancelClickListener = null,

@@ -15,7 +15,7 @@
         android:layout_height="@dimen/dp_48"
         android:layout_marginStart="@dimen/dp_16"
         android:layout_centerVertical="true"
-        android:scaleType="centerInside"
+        android:scaleType="centerCrop"
         tools:src="@tools:sample/avatars" />
 
 

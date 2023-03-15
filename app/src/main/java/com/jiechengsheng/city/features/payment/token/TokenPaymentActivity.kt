@@ -114,11 +114,11 @@ class TokenPaymentActivity : BaseMvpActivity<PayCounterPresenter>(), PayCounterV
 
     override fun initData() {
         presenter = PayCounterPresenter(this)
-        presenter.getChannelBalance(channelCode)
+        presenter.getChannelBalance(channelCode,channelName)
     }
 
 
-    override fun bindChannelBalance(response: PayCounterChannelDetail) {
+    override fun bindChannelBalance(response: PayCounterChannelDetail,channelName:String) {
         pay_bt.text = response.balance.stripTrailingZeros().toPlainString()
     }
 

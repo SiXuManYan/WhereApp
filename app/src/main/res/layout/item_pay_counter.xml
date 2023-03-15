@@ -17,7 +17,7 @@
         android:layout_width="@dimen/dp_48"
         android:layout_height="@dimen/dp_48"
         android:layout_centerVertical="true"
-        android:scaleType="centerInside"
+        android:scaleType="centerCrop"
         tools:src="@tools:sample/avatars" />
 
 
@@ -71,7 +71,6 @@
             android:id="@+id/support_token_fl"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/dp_8"
             android:visibility="gone"
             tools:visibility="visible">
 
@@ -81,9 +80,11 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:gravity="center_vertical"
+                android:paddingTop="@dimen/dp_8"
                 android:includeFontPadding="false"
                 android:text="@string/check_balance"
                 android:visibility="gone"
+                android:paddingBottom="@dimen/dp_0"
                 app:drawableEndCompat="@mipmap/ic_arrow_right_gray"
                 tools:visibility="visible" />
 
@@ -91,6 +92,8 @@
             <TextView
                 android:id="@+id/to_bind_tv"
                 android:layout_width="wrap_content"
+                android:paddingBottom="@dimen/dp_0"
+                android:paddingTop="@dimen/dp_8"
                 android:layout_height="wrap_content"
                 android:gravity="center_vertical"
                 android:includeFontPadding="false"

@@ -57,16 +57,5 @@ class PayCounterAdapter : BaseQuickAdapter<PayCounterChannel, BaseViewHolder>(R.
         } else {
             check_iv.setImageResource(R.mipmap.ic_un_checked)
         }
-
-
-        view_balance_tv.setOnClickListener {
-
-        }
-
-        to_bind_tv.setOnClickListener {
-
-        }
-
-
     }
 }

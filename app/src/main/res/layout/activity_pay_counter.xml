@@ -83,6 +83,7 @@
                 android:layout_height="wrap_content"
                 android:gravity="center"
                 android:paddingTop="@dimen/dp_20"
+                android:background="?android:attr/selectableItemBackground"
                 android:paddingBottom="@dimen/dp_20"
                 android:text="@string/set_up_tokenized_pay"
                 android:textColor="@color/grey_666666"

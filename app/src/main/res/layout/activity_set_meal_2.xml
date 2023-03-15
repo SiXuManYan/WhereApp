@@ -307,10 +307,10 @@
         <!-- 2022-08-05 隐藏下单和加入购物车-->
         <LinearLayout
             android:layout_width="@dimen/dp_206"
-            android:visibility="gone"
             android:layout_height="@dimen/dp_35"
             android:layout_alignParentEnd="true"
-            android:layout_centerVertical="true">
+            android:layout_centerVertical="true"
+            android:visibility="gone">
 
             <TextView
                 android:id="@+id/buy_after_tv"

@@ -1324,8 +1324,9 @@ public interface RetrofitApi {
      * 酒店订单申请退款
      */
     @HTTP(method = "DELETE", path = "hotelapi/v2/orders/refund/{order_id}", hasBody = true)
-    Observable<JcsResponse<JsonElement>> refundHotelOrder(@Path("order_id") int order_id,
-                                                          @Body RemitId request);
+    Observable<JcsResponse<JsonElement>> refundHotelOrder(@Path("order_id") int order_id
+//                                                          @Body RemitId request
+    );
 
 
     /**
@@ -2070,8 +2071,8 @@ public interface RetrofitApi {
      */
     @HTTP(method = "DELETE", path = "restaurantapi/v2/eat_in/orders/refund/{order_id}", hasBody = true)
     Observable<JcsResponse<JsonElement>> delicacyOrderRefund(
-            @Path("order_id") int order_id,
-            @Body RemitId request
+            @Path("order_id") int order_id
+//            @Body RemitId request
     );
 
 

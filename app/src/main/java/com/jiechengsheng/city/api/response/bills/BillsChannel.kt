@@ -165,7 +165,7 @@ class BillsRecord {
 class BillCancelOrder {
     var order_id = 0
 
-    var remit_id = 0
+//    var remit_id = 0
 }
 
 class BillRecommit {

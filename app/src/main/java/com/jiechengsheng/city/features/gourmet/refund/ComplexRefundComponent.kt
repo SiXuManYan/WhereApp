@@ -38,7 +38,7 @@ class ComplexRefundPresenter(var view: ComplexRefundView) : BaseMvpPresenter(vie
         when (type) {
             TYPE_FOOD -> {
 
-                requestApi(mRetrofit.delicacyOrderRefund(orderId, remitIdBody),
+                requestApi(mRetrofit.delicacyOrderRefund(orderId),
                     object : BaseMvpObserver<JsonElement>(view) {
                         override fun onSuccess(response: JsonElement?) {
                             view.refundSuccess()
@@ -54,7 +54,7 @@ class ComplexRefundPresenter(var view: ComplexRefundView) : BaseMvpPresenter(vie
                 })
             }
             TYPE_HOTEL -> {
-                requestApi(mRetrofit.refundHotelOrder(orderId, remitIdBody), object : BaseMvpObserver<JsonElement>(view) {
+                requestApi(mRetrofit.refundHotelOrder(orderId), object : BaseMvpObserver<JsonElement>(view) {
                     override fun onSuccess(response: JsonElement) {
                         view.refundSuccess()
                     }
@@ -64,10 +64,8 @@ class ComplexRefundPresenter(var view: ComplexRefundView) : BaseMvpPresenter(vie
             TYPE_BILL -> {
                 val apply = BillCancelOrder().apply {
                     order_id = orderId
-                    remit_id = remitId
+//                    remit_id = remitId
                 }
-
-
                 requestApi(mRetrofit.billsCancelOrder(apply), object : BaseMvpObserver<JsonElement>(view) {
                     override fun onSuccess(response: JsonElement) {
                         view.refundSuccess()

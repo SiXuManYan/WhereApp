@@ -1260,7 +1260,7 @@ Gentleman must let go</string>
     <string name="unbind_token_hint_format">%1$s not be used after unbinding</string>
     <string name="payment_button">Confirm Payment</string>
     <string name="payment_confirmation_page">Payment Confirmation</string>
-    <string name="payment_failed">Please re-initiate the payment</string>
+    <string name="payment_failed_desc">Please re-initiate the payment</string>
 
 
 </resources>

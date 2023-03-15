@@ -66,12 +66,17 @@
             tools:text="标题" />
 
     </RelativeLayout>
-
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:layout_marginStart="@dimen/dp_16"
+        android:background="@color/grey_F5F5F5" />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:paddingStart="@dimen/dp_16"
+        android:layout_marginTop="@dimen/dp_20"
         android:paddingEnd="@dimen/dp_16">
 
 

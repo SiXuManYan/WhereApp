@@ -683,12 +683,7 @@
         <activity
             android:name=".features.mall.refund.complaint.ComplaintActivity"
             android:configChanges="keyboardHidden|screenSize|orientation" />
-        <activity
-            android:name=".features.payment.WebPayActivity"
-            android:configChanges="keyboardHidden|screenSize|orientation" />
-        <activity
-            android:name=".features.payment.result.WebPayResultActivity"
-            android:configChanges="keyboardHidden|screenSize|orientation" />
+
         <activity
             android:name=".features.refund.method.RefundMethodActivity"
             android:configChanges="keyboardHidden|screenSize|orientation" />

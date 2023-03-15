@@ -27,7 +27,6 @@ import com.jiechengsheng.city.features.gourmet.takeaway.order.TakeawayGoodDataAd
 import com.jiechengsheng.city.features.gourmet.takeaway.order.TakeawayOrderDetailPresenter
 import com.jiechengsheng.city.features.gourmet.takeaway.order.TakeawayOrderDetailView
 import com.jiechengsheng.city.features.mall.refund.complaint.ComplaintActivity
-import com.jiechengsheng.city.features.payment.WebPayActivity
 import com.jiechengsheng.city.features.payment.counter.PayCounterActivity
 import com.jiechengsheng.city.utils.BusinessUtils
 import com.jiechengsheng.city.utils.Constant

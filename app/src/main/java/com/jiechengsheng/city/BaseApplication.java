@@ -202,6 +202,7 @@ public class BaseApplication extends Application {
      * 详见：https://doc.rongcloud.cn/im/Android/5.X/ui/quick_integration
      */
     private void handleRongCloud() {
+
         // 初始化
         initRongCloud();
 

@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.PagerSnapHelper
 import androidx.recyclerview.widget.RecyclerView
 import com.blankj.utilcode.util.SpanUtils
 import com.blankj.utilcode.util.ToastUtils
+import com.jiechengsheng.city.BuildConfig
 import com.jiechengsheng.city.R
 import com.jiechengsheng.city.api.request.AddCartRequest
 import com.jiechengsheng.city.api.response.gourmet.cart.Products
@@ -73,6 +74,11 @@ class SetMealActivity : BaseMvpActivity<SetMealPresenter>(), SetMealView {
             changeContainerSize(50f, 50f)
             changeMessageCountSize(14f, 14f)
         }
+
+        if (BuildConfig.FLAVOR == "dev"){
+            pay_ll.visibility = View.VISIBLE
+        }
+
     }
 
 

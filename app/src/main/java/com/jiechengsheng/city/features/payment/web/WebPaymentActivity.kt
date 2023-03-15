@@ -9,10 +9,9 @@ import android.webkit.*
 import com.jiechengsheng.city.R
 import com.jiechengsheng.city.api.ErrorResponse
 import com.jiechengsheng.city.api.request.payment.PayUrlGet
-import com.jiechengsheng.city.base.BaseEvent
-import com.jiechengsheng.city.base.EventCode
 import com.jiechengsheng.city.base.mvp.BaseMvpActivity
 import com.jiechengsheng.city.features.account.login.LoginActivity
+import com.jiechengsheng.city.features.main.MainActivity
 import com.jiechengsheng.city.features.payment.counter.PayCounterPresenter
 import com.jiechengsheng.city.features.payment.counter.PayCounterView
 import com.jiechengsheng.city.features.payment.result.PayResultActivity
@@ -178,7 +177,15 @@ class WebPaymentActivity : BaseMvpActivity<PayCounterPresenter>(), PayCounterVie
 
     override fun bindListener() {
         mJcsTitle.setBackIvClickListener {
-            PayResultActivity.navigation(this, moduleType, orderIds, amountToPaid)
+            if (moduleType == PayUrlGet.BILL_PAY) {
+                // 支付账单，跳转至支付结果
+                PayResultActivity.navigation(this, moduleType, orderIds, amountToPaid)
+            } else {
+                // 其他板块，跳转至订单列表
+                startActivityClearTop(MainActivity::class.java, Bundle().apply {
+                    putInt(Constant.PARAM_TAB, 2)
+                })
+            }
             finish()
         }
     }
@@ -202,7 +209,6 @@ class WebPaymentActivity : BaseMvpActivity<PayCounterPresenter>(), PayCounterVie
         empty_view.visibility = View.VISIBLE
         empty_view.showEmptyContainer()
     }
-
 
 
 //    override fun onEventReceived(baseEvent: BaseEvent<*>) {

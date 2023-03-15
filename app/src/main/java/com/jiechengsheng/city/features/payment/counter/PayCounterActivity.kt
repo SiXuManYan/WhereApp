@@ -162,8 +162,6 @@ class PayCounterActivity : BaseMvpActivity<PayCounterPresenter>(), PayCounterVie
                         amountToPaid,
                         channelName,
                         channelCode)
-
-
                     finish()
                 }
 

@@ -4,9 +4,10 @@ import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.view.View
 import com.jiechengsheng.city.R
-import com.jiechengsheng.city.api.ErrorResponse
 import com.jiechengsheng.city.api.request.payment.PayStatus
 import com.jiechengsheng.city.api.request.payment.PayUrlGet
 import com.jiechengsheng.city.base.BaseEvent
@@ -95,7 +96,6 @@ class PayResultActivity : BaseMvpActivity<WebPayResultPresenter>(), WebPayResult
 
         when (moduleType) {
             PayUrlGet.BILL_PAY -> {
-
                 if (languageLocale.language == "zh") {
                     pay_status_title_iv.setImageResource(R.mipmap.ic_paying_bill)
                 } else {
@@ -104,7 +104,6 @@ class PayResultActivity : BaseMvpActivity<WebPayResultPresenter>(), WebPayResult
                 payment_hint.visibility = View.GONE
             }
             else -> {
-
                 if (languageLocale.language == "zh") {
                     pay_status_title_iv.setImageResource(R.mipmap.ic_pay_complete)
                 } else {
@@ -118,7 +117,12 @@ class PayResultActivity : BaseMvpActivity<WebPayResultPresenter>(), WebPayResult
 
     override fun initData() {
         presenter = WebPayResultPresenter(this)
-        presenter.getPayStatus(moduleType, orderIds)
+        showLoadingDialog(false)
+        Handler(Looper.myLooper()!!).postDelayed({
+            dismissLoadingDialog()
+            presenter.getPayStatus(moduleType, orderIds)
+        }, 2000)
+
     }
 
 
@@ -150,7 +154,7 @@ class PayResultActivity : BaseMvpActivity<WebPayResultPresenter>(), WebPayResult
 
     override fun bindPayStatus(response: PayStatus) {
 
-        EventBus.getDefault().post(BaseEvent<Any>(EventCode.EVENT_REFRESH_ORDER_LIST))
+
 
         val payStatus = response.pay_status
 
@@ -191,19 +195,7 @@ class PayResultActivity : BaseMvpActivity<WebPayResultPresenter>(), WebPayResult
         }
 
         // 支付成功
-
-    }
-
-    override fun onError(errorResponse: ErrorResponse?) {
-        super.onError(errorResponse)
         EventBus.getDefault().post(BaseEvent<Any>(EventCode.EVENT_REFRESH_ORDER_LIST))
-        pay_status_title_iv.visibility = View.INVISIBLE
-        payment_hint.visibility = View.INVISIBLE
-        pay_info_iv.setImageResource(R.mipmap.ic_pay_info_error)
-        view_order_tv.visibility = View.GONE
-        error_ll.visibility = View.VISIBLE
-        finish_tv.visibility = View.GONE
-        back_iv.visibility = View.VISIBLE
     }
 
 

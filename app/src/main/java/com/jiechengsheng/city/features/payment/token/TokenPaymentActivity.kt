@@ -119,7 +119,8 @@ class TokenPaymentActivity : BaseMvpActivity<PayCounterPresenter>(), PayCounterV
 
 
     override fun bindChannelBalance(response: PayCounterChannelDetail,channelName:String) {
-        pay_bt.text = response.balance.stripTrailingZeros().toPlainString()
+
+        balance_tv.text = response.balance.stripTrailingZeros().toPlainString()
     }
 
 

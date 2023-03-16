@@ -6,6 +6,7 @@ import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
 import android.view.View
+import androidx.appcompat.app.AlertDialog
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.blankj.utilcode.util.SizeUtils
 import com.chad.library.adapter.base.BaseQuickAdapter
@@ -18,6 +19,7 @@ import com.jiechengsheng.city.base.BaseEvent
 import com.jiechengsheng.city.base.EventCode
 import com.jiechengsheng.city.base.mvp.BaseMvpActivity
 import com.jiechengsheng.city.features.account.login.LoginActivity
+import com.jiechengsheng.city.features.main.MainActivity
 import com.jiechengsheng.city.features.payment.result.PayResultActivity
 import com.jiechengsheng.city.features.payment.token.TokenPaymentActivity
 import com.jiechengsheng.city.features.payment.tokenized.TokenizedActivity
@@ -202,7 +204,28 @@ class PayCounterActivity : BaseMvpActivity<PayCounterPresenter>(), PayCounterVie
 
     override fun bindListener() {
         mJcsTitle.setBackIvClickListener {
-            onBackPressed()
+            AlertDialog.Builder(this,R.style.GrayDialogTheme)
+                .setCancelable(false)
+                .setTitle(R.string.hint)
+                .setMessage(getString(R.string.give_up_payment_hint))
+                .setPositiveButton(R.string.confirm) { dialog, _ ->
+                    dialog.dismiss()
+                    if (moduleType == PayUrlGet.BILL_PAY) {
+                        // 支付账单，跳转至支付结果
+                        PayResultActivity.navigation(this, moduleType, orderIds, amountToPaid)
+                    } else {
+                        // 其他板块，跳转至订单列表
+                        startActivityClearTop(MainActivity::class.java, Bundle().apply {
+                            putInt(Constant.PARAM_TAB, 2)
+                        })
+                    }
+                    finish()
+                }
+                .setNegativeButton(R.string.cancel) { dialog, _ ->
+                    dialog.dismiss()
+                }
+                .create()
+                .show()
         }
 
         view_bind_channel_tv.setOnClickListener {
@@ -235,15 +258,7 @@ class PayCounterActivity : BaseMvpActivity<PayCounterPresenter>(), PayCounterVie
     }
 
 
-    override fun onBackPressed() {
-        // 支付结果页
-        startActivity(PayResultActivity::class.java, Bundle().apply {
-            putString(Constant.PARAM_MODULE_TYPE, moduleType)
-            putString(Constant.PARAM_AMOUNT, amountToPaid)
-            putIntegerArrayList(Constant.PARAM_ORDER_IDS, orderIds)
-        })
-        super.onBackPressed()
-    }
+    override fun onBackPressed() = Unit
 
 
 }

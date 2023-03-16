@@ -6,6 +6,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.webkit.*
+import androidx.appcompat.app.AlertDialog
 import com.jiechengsheng.city.R
 import com.jiechengsheng.city.api.ErrorResponse
 import com.jiechengsheng.city.api.request.payment.PayUrlGet
@@ -210,15 +211,5 @@ class WebPaymentActivity : BaseMvpActivity<PayCounterPresenter>(), PayCounterVie
         empty_view.showEmptyContainer()
     }
 
-
-//    override fun onEventReceived(baseEvent: BaseEvent<*>) {
-//        super.onEventReceived(baseEvent)
-//        when (baseEvent.code) {
-//            EventCode.EVENT_REFRESH_ORDER_LIST -> {
-//                finish()
-//            }
-//            else -> {}
-//        }
-//    }
 
 }

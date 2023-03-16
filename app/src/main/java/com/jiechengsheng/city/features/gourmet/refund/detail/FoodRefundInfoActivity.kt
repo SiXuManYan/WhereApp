@@ -77,7 +77,8 @@ class FoodRefundInfoActivity : BaseMvpActivity<FoodRefundInfoPresenter>(), FoodR
         val refundMethod = response.remit_info
 
 
-        if (refundMethod != null) {
+
+        if (refundMethod != null && type == FoodRefundInfoPresenter.TYPE_TAKEAWAY) {
             refund_method_ll.visibility = View.VISIBLE
             refund_name_tv.text = refundMethod.name
             refund_user_name_tv.text = refundMethod.user_name

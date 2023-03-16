@@ -41,7 +41,13 @@ class ComplexRefundActivity : BaseMvpActivity<ComplexRefundPresenter>(), Complex
 
     companion object {
 
-        fun navigation(context: Context, orderId: Int, refundPrice: String, totalPrice: String, useType: Int = ComplexRefundPresenter.TYPE_FOOD) {
+        fun navigation(
+            context: Context,
+            orderId: Int,
+            refundPrice: String,
+            totalPrice: String,
+            useType: Int = ComplexRefundPresenter.TYPE_FOOD,
+        ) {
 
             val bundle = Bundle().apply {
                 putInt(Constant.PARAM_ORDER_ID, orderId)
@@ -89,6 +95,12 @@ class ComplexRefundActivity : BaseMvpActivity<ComplexRefundPresenter>(), Complex
             total_price_tv.text = StringUtils.getString(R.string.price_unit_format, totalPrice)
 
         }
+
+        if (type == ComplexRefundPresenter.TYPE_TAKEAWAY) {
+            refund_method_ll.visibility = View.VISIBLE
+        } else {
+            refund_method_ll.visibility = View.GONE
+        }
     }
 
     override fun initData() {
@@ -102,7 +114,7 @@ class ComplexRefundActivity : BaseMvpActivity<ComplexRefundPresenter>(), Complex
                 .putExtra(Constant.PARAM_HANDLE_SELECT, true))
         }
         confirm_tv.setOnClickListener {
-            if (remitId == 0) {
+            if (remitId == 0 && type == ComplexRefundPresenter.TYPE_TAKEAWAY) {
                 ToastUtils.showShort(R.string.please_add_refund_methods)
                 return@setOnClickListener
             }

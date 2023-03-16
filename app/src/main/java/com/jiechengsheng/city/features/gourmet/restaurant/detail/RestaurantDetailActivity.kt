@@ -20,6 +20,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.blankj.utilcode.util.SizeUtils
 import com.blankj.utilcode.util.ToastUtils
 import com.google.android.material.bottomsheet.BottomSheetDialog
+import com.jiechengsheng.city.BuildConfig
 import com.jiechengsheng.city.R
 import com.jiechengsheng.city.api.response.gourmet.cart.Products
 import com.jiechengsheng.city.api.response.gourmet.cart.ShoppingCartResponse
@@ -126,9 +127,9 @@ class RestaurantDetailActivity : BaseMvpActivity<RestaurantDetailPresenter>(), R
         initScroll()
         initComment()
         initDish()
-//        if (BuildConfig.FLAVOR == "dev") {
-//            shopping_cart.visibility = View.VISIBLE
-//        }
+        if (BuildConfig.FLAVOR == "dev") {
+            shopping_cart.visibility = View.VISIBLE
+        }
     }
 
 

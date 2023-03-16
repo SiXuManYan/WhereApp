@@ -8,6 +8,7 @@ import android.os.Handler
 import android.os.Looper
 import android.view.View
 import com.jiechengsheng.city.R
+import com.jiechengsheng.city.api.ErrorResponse
 import com.jiechengsheng.city.api.request.payment.PayStatus
 import com.jiechengsheng.city.api.request.payment.PayUrlGet
 import com.jiechengsheng.city.base.BaseEvent
@@ -121,7 +122,7 @@ class PayResultActivity : BaseMvpActivity<WebPayResultPresenter>(), WebPayResult
         Handler(Looper.myLooper()!!).postDelayed({
             dismissLoadingDialog()
             presenter.getPayStatus(moduleType, orderIds)
-        }, 2000)
+        }, 3000)
 
     }
 
@@ -153,9 +154,7 @@ class PayResultActivity : BaseMvpActivity<WebPayResultPresenter>(), WebPayResult
     override fun onBackPressed() = Unit
 
     override fun bindPayStatus(response: PayStatus) {
-
-
-
+        container_ll.visibility = View.VISIBLE
         val payStatus = response.pay_status
 
         if (!payStatus) {
@@ -198,5 +197,9 @@ class PayResultActivity : BaseMvpActivity<WebPayResultPresenter>(), WebPayResult
         EventBus.getDefault().post(BaseEvent<Any>(EventCode.EVENT_REFRESH_ORDER_LIST))
     }
 
+    override fun onError(errorResponse: ErrorResponse?) {
+        super.onError(errorResponse)
+        container_ll.visibility = View.VISIBLE
+    }
 
 }

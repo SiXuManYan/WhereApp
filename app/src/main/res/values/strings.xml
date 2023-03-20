@@ -232,7 +232,7 @@
     <string name="collection_tab_good">商品</string>
     <string name="bind_phone">绑定手机</string>
     <string name="is_client_valid">客户端不存在</string>
-    <string name="is_client_valid_facebook">您未安装Facebook，是否前往安装？</string>
+    <string name="is_client_valid_facebook">您未安装Facebook，是否前往GooglePlay安装？</string>
     <string name="authorization_failed">授权失败</string>
     <string name="authorization_cancel">授权取消</string>
     <string name="mine_footprint_title">我的足迹</string>

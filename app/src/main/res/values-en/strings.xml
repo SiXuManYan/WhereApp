@@ -233,7 +233,7 @@
     <string name="collection_tab_good">Goods</string>
     <string name="bind_phone">Bind phone</string>
     <string name="is_client_valid">Client does not exist</string>
-    <string name="is_client_valid_facebook">Facebook client is not installed. Whether to go to install ?</string>
+    <string name="is_client_valid_facebook">Facebook client is not installed. Whether to go to GooglePlay install ?</string>
     <string name="authorization_failed">Authorization Failed</string>
     <string name="authorization_cancel">Authorization Cancel</string>
     <string name="mine_footprint_title">History</string>

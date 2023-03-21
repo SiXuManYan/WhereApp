@@ -67,7 +67,7 @@ class SplashActivity : BaseMvpActivity<SplashPresenter>(), SplashView {
         point_view.apply {
             commonDrawableResId = R.drawable.shape_point_normal_e7e7e7
             selectedDrawableResId = R.drawable.shape_point_selected_377bff
-            setPointCount(4, 10, 10, 10)
+            setPointCount(4, 12, 12, 12)
             onClickListener = object : OnIndicatorClickListener {
                 override fun onIndicatorClick(index: Int) {
                     pager_vp.setCurrentItem(index, true)

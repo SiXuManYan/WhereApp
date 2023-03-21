@@ -449,6 +449,7 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:background="?android:attr/selectableItemBackground"
+            android:contentDescription="Rewards"
             android:paddingStart="@dimen/dp_8"
             android:paddingEnd="@dimen/dp_8"
             android:scaleType="centerInside"
@@ -468,6 +469,7 @@
 
         <com.jiechengsheng.city.widget.MessageView
             android:id="@+id/message_view"
+            style="@style/messageContentDescription"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="?android:attr/selectableItemBackground"

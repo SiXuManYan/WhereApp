@@ -149,12 +149,12 @@
     </style>
 
     <style name="TopButton">
-        <item name="android:layout_width">wrap_content</item>
-        <item name="android:layout_height">wrap_content</item>
-        <item name="android:paddingLeft">@dimen/dp_15</item>
-        <item name="android:paddingTop">@dimen/dp_12</item>
-        <item name="android:paddingRight">@dimen/dp_15</item>
-        <item name="android:paddingBottom">@dimen/dp_12</item>
+
+        <item name="android:layout_width">@dimen/dp_48</item>
+        <item name="android:layout_height">@dimen/dp_48</item>
+        <item name="android:scaleType">centerInside</item>
+        <item name="contentDescription">@string/back</item>
+
     </style>
 
 
@@ -340,5 +340,22 @@
         <item name="android:statusBarColor">@android:color/transparent</item>
         <item name="android:windowSoftInputMode">adjustResize</item>
     </style>
+
+
+    <style name="backContentDescription">
+        <item name="contentDescription">@string/back</item>
+    </style>
+
+    <style name="deleteContentDescription">
+        <item name="contentDescription">@string/delete</item>
+    </style>
+
+    <style name="filterContentDescription">
+        <item name="contentDescription">@string/filter</item>
+    </style>
+    <style name="messageContentDescription">
+        <item name="contentDescription">@string/message_center</item>
+    </style>
+
 
 </resources>

@@ -45,6 +45,7 @@
             android:id="@+id/filer_iv"
             android:layout_width="@dimen/dp_44"
             android:layout_height="@dimen/dp_44"
+            style="@style/filterContentDescription"
             android:layout_alignParentEnd="true"
             android:scaleType="centerInside"
             android:src="@mipmap/ic_filter_gray" />

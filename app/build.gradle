@@ -108,10 +108,15 @@ android {
         abortOnError false
     }
 
-    android.applicationVariants.all { variant ->
+    applicationVariants.all { variant ->
         variant.outputs.all {
             outputFileName = "Where_v${defaultConfig.versionCode}_(${defaultConfig.versionName})_${releaseTime()}.apk"
         }
+
+        variant.outputs.all {
+            outputFileName = "Where_v${defaultConfig.versionCode}-${defaultConfig.versionName}-${releaseTime()}.aab"
+        }
+
     }
 
     productFlavors {

@@ -5,6 +5,7 @@ import com.jiechengsheng.city.api.network.BaseMvpObserver
 import com.jiechengsheng.city.api.network.BaseMvpPresenter
 import com.jiechengsheng.city.api.network.BaseMvpView
 import com.jiechengsheng.city.api.response.PageResponse
+import com.jiechengsheng.city.api.response.job.CompanyInfo
 import com.jiechengsheng.city.api.response.job.FilterData
 import com.jiechengsheng.city.api.response.job.Job
 
@@ -23,6 +24,9 @@ interface JobHomeView : BaseMvpView {
 
     /** 申请列表、面试列表 */
     fun bindAppliedOrInterviews(toMutableList: MutableList<Job>, lastPage: Boolean){}
+
+    /** 收藏公司列表 */
+    fun bindCompanyCollectionList(toMutableList: MutableList<CompanyInfo>, lastPage: Boolean){}
 }
 
 class JobHomePresenter(private var view: JobHomeView) : BaseMvpPresenter(view) {
@@ -90,6 +94,22 @@ class JobHomePresenter(private var view: JobHomeView) : BaseMvpPresenter(view) {
             }
         })
     }
+
+
+
+    /** 获取公司收藏列表 */
+    fun getCompanyCollectionList(page: Int) {
+        requestApi(mRetrofit.companyCollectionList(page), object : BaseMvpObserver<PageResponse<CompanyInfo>>(view, page) {
+            override fun onSuccess(response: PageResponse<CompanyInfo>) {
+                val isLastPage = response.lastPage == page
+                val data = response.data
+                view.bindCompanyCollectionList(data.toMutableList(), isLastPage)
+            }
+        })
+    }
+
+
+
 
 
     /** 获取投递、面试列表 */

@@ -31,7 +31,6 @@ import kotlinx.android.synthetic.main.activity_company.*
  */
 class CompanyActivity : BaseMvpActivity<CompanyPresenter>(), CompanyView {
 
-    private var jobId = 0
     private var companyId = 0
     private var introduce: String? = ""
     private lateinit var mAdapter: CompanyPhotoAdapter
@@ -58,7 +57,7 @@ class CompanyActivity : BaseMvpActivity<CompanyPresenter>(), CompanyView {
 
     override fun initView() {
         BarUtils.setStatusBarColor(this, Color.WHITE)
-        jobId = intent.getIntExtra(Constant.PARAM_ID, 0)
+        companyId = intent.getIntExtra(Constant.PARAM_ID, 0)
         initPhoto()
     }
 
@@ -92,7 +91,7 @@ class CompanyActivity : BaseMvpActivity<CompanyPresenter>(), CompanyView {
 
     override fun initData() {
         presenter = CompanyPresenter(this)
-        presenter.getCompanyDetail(jobId)
+        presenter.getCompanyDetail(companyId)
     }
 
     override fun bindListener() {

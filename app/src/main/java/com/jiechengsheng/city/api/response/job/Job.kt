@@ -138,6 +138,9 @@ class JobDetail {
 
     var company_info: CompanyInfo? = null
 
+    /** 公司id */
+    var company_id = 0
+
 }
 
 class JobSendCv {
@@ -560,7 +563,11 @@ class CompanyInfo {
     var id = 0
     var company_title = ""
     var logo = ""
+
+    /** 公司类型 */
     var company_type = ""
+
+    /** 人数 */
     var company_size = ""
 
     /** 公司简介 */
@@ -569,6 +576,14 @@ class CompanyInfo {
     var images: ArrayList<String>? = ArrayList()
 
     var website: String? = ""
+
+    /** 职位数量 */
+    var job_count = 0
+
+    /** 是否收藏 */
+    var is_collect = false
+
+
 }
 
 

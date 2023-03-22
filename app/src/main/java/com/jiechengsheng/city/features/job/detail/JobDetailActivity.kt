@@ -43,6 +43,7 @@ class JobDetailActivity : BaseMvpActivity<JobDetailPresenter>(), JobDetailView {
 
 
     var jobId = 0
+    var companyId = 0
     var isCollect = false
 
     /** 添加简历后，刷新本页状态 */
@@ -95,6 +96,7 @@ class JobDetailActivity : BaseMvpActivity<JobDetailPresenter>(), JobDetailView {
     }
 
     override fun bindListener() {
+
         collect_iv.setOnClickListener {
             if (!User.isLogon()) {
                 startActivity(LoginActivity::class.java)
@@ -115,12 +117,13 @@ class JobDetailActivity : BaseMvpActivity<JobDetailPresenter>(), JobDetailView {
         }
 
         company_rv.setOnClickListener {
-            CompanyActivity.navigation(this, jobId)
+            CompanyActivity.navigation(this, companyId)
         }
 
     }
 
     override fun bindDetail(response: JobDetail) {
+        companyId = response.company_id
         job_title_tv.text = response.job_title
         duty_tv.text = response.duty
         job_rq_tv.text = response.requirement
@@ -189,6 +192,8 @@ class JobDetailActivity : BaseMvpActivity<JobDetailPresenter>(), JobDetailView {
         } else {
             ToastUtils.showShort(R.string.cancel_collection_success)
         }
+
+        EventBus.getDefault().post(BaseEvent<Any>(EventCode.EVENT_REFRESH_COLLECTION))
 
     }
 
@@ -265,6 +270,7 @@ interface JobDetailView : BaseMvpView {
 
 
 class JobDetailPresenter(var view: JobDetailView) : BaseMvpPresenter(view) {
+
     fun getData(jobId: Int) {
         requestApi(mRetrofit.jobDetail(jobId, 2), object : BaseMvpObserver<JobDetail>(view) {
             override fun onSuccess(response: JobDetail) {

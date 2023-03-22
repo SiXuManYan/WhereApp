@@ -11,7 +11,7 @@ import com.jiechengsheng.city.base.BaseEvent
 import com.jiechengsheng.city.base.EventCode
 import com.jiechengsheng.city.base.mvp.BaseMvpActivity
 import com.jiechengsheng.city.features.account.login.LoginActivity
-import com.jiechengsheng.city.features.job.collection.JobCollectionFragment
+import com.jiechengsheng.city.features.job.collection.SavedFragment
 import com.jiechengsheng.city.features.job.cv.CvHomeFragment
 import com.jiechengsheng.city.features.job.home.JobHomeFragment
 import com.jiechengsheng.city.features.job.record.JobRecordFragment
@@ -58,7 +58,7 @@ class JobMainActivity : BaseMvpActivity<JobMainPresenter>(), JobMainView {
 
         frList.apply {
             add(JobHomeFragment())
-            add(JobCollectionFragment())
+            add(SavedFragment())
             val record = JobRecordFragment()
             record.arguments = Bundle().apply {
                 putBoolean(Constant.PARAM_FROM_NOTICE, isFromNotice)

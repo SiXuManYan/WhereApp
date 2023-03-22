@@ -1284,5 +1284,8 @@ Gentleman must let go</string>
     <string name="payment_confirmation_page">支付确认页面</string>
     <string name="payment_failed_desc">请您重新发起支付</string>
 
+    <string name="jobs">职位</string>
+    <string name="company">公司</string>
+
 
 </resources>

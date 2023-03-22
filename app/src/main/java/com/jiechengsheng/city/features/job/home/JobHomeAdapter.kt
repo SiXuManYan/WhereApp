@@ -43,6 +43,7 @@ class JobHomeAdapter : BaseMultiItemQuickAdapter<Job, BaseViewHolder>(), LoadMor
 
             val salaryTv = holder.getView<TextView>(R.id.salary_tv)
 
+            // 处理面议薪资
             if (item.salary_type == 4) {
                 salaryTv.visibility = View.GONE
             } else {

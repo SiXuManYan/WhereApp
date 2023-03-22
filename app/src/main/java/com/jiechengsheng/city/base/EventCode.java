@@ -239,4 +239,5 @@ public class EventCode {
      */
     public static final int EVENT_REFRESH_PAY_TOKEN_BIND_STATUS = 1058;
 
+
 }

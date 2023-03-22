@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="?android:attr/selectableItemBackground"
+    android:orientation="vertical"
+    android:padding="@dimen/dp_16">
+
+
+    <ImageView
+        android:id="@+id/company_logo_iv"
+        android:layout_width="@dimen/dp_40"
+        android:layout_height="@dimen/dp_40"
+        android:layout_centerVertical="true"
+        android:layout_marginEnd="@dimen/dp_8"
+        android:scaleType="centerInside"
+        tools:src="@tools:sample/avatars" />
+
+
+    <TextView
+        android:id="@+id/company_name_tv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_toEndOf="@+id/company_logo_iv"
+        android:lineSpacingMultiplier="1.2"
+        android:textColor="@color/black_333333"
+        android:textSize="@dimen/sp_16"
+        android:textStyle="bold"
+        tools:text="dsaasd as dad ad adsad a dad adad a da d da da  as    da da   " />
+
+
+    <TextView
+        android:id="@+id/type_tv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/company_name_tv"
+        android:layout_marginTop="@dimen/dp_4"
+        android:layout_toEndOf="@+id/company_logo_iv"
+        android:textColor="@color/black_333333"
+        android:textSize="@dimen/sp_14"
+        tools:text="互联网 | 20-30人" />
+
+
+</RelativeLayout>

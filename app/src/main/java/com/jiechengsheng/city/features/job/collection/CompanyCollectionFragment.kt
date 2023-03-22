@@ -5,12 +5,13 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.blankj.utilcode.util.ColorUtils
 import com.blankj.utilcode.util.SizeUtils
+import com.chad.library.adapter.base.BaseQuickAdapter
+import com.chad.library.adapter.base.listener.OnItemClickListener
 import com.jiechengsheng.city.R
-import com.jiechengsheng.city.api.response.job.Job
+import com.jiechengsheng.city.api.response.job.CompanyInfo
 import com.jiechengsheng.city.base.BaseEvent
 import com.jiechengsheng.city.base.EventCode
 import com.jiechengsheng.city.base.mvp.BaseMvpFragment
-import com.jiechengsheng.city.features.job.home.JobHomeAdapter
 import com.jiechengsheng.city.features.job.home.JobHomePresenter
 import com.jiechengsheng.city.features.job.home.JobHomeView
 import com.jiechengsheng.city.storage.entity.User
@@ -20,41 +21,39 @@ import com.jiechengsheng.city.widget.list.DividerDecoration
 import kotlinx.android.synthetic.main.fragment_refresh_list.*
 
 /**
- * Created by Wangsw  2022/12/15 11:05.
- * 职位收藏
+ * Created by Wangsw  2023/3/21 15:06.
+ * 公司收藏
  */
-class JobCollectionFragment : BaseMvpFragment<JobHomePresenter>(), JobHomeView, SwipeRefreshLayout.OnRefreshListener {
+class CompanyCollectionFragment : BaseMvpFragment<JobHomePresenter>(), JobHomeView, SwipeRefreshLayout.OnRefreshListener,
+    OnItemClickListener {
 
-    private var page = Constant.DEFAULT_FIRST_PAGE
-    private lateinit var mAdapter: JobHomeAdapter
+
+    private lateinit var mAdapter: CompanyAdapter
     private lateinit var emptyView: EmptyView
+    private var page = Constant.DEFAULT_FIRST_PAGE
 
-    override fun isStatusDark() = true
 
     override fun getLayoutId() = R.layout.fragment_refresh_list
-    override fun initView(view: View?) {
-        initContent()
-    }
 
-    private fun initContent() {
+    override fun initView(view: View?) {
         swipe_layout.setOnRefreshListener(this)
         swipe_layout.setColorSchemeColors(ColorUtils.getColor(R.color.color_1c1380))
+
         emptyView = EmptyView(requireContext()).apply {
             setEmptyImage(R.mipmap.ic_empty_job_collection)
             setEmptyHint(R.string.empty_data_default)
+            addEmptyList(this)
         }
 
-        addEmptyList(emptyView)
-
-        mAdapter = JobHomeAdapter().apply {
+        mAdapter = CompanyAdapter().apply {
             setEmptyView(emptyView)
+            setOnItemClickListener(this@CompanyCollectionFragment)
             loadMoreModule.isEnableLoadMoreIfNotFullPage = true
             loadMoreModule.setOnLoadMoreListener {
                 page++
-                presenter.getJobCollectionList(page)
+                presenter.getCompanyCollectionList(page)
             }
         }
-
 
         val manager = LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
         recycler.apply {
@@ -67,25 +66,22 @@ class JobCollectionFragment : BaseMvpFragment<JobHomePresenter>(), JobHomeView, 
 
     override fun initData() {
         presenter = JobHomePresenter(this)
-
     }
-
-    override fun loadOnVisible() {
-        onRefresh()
-    }
-
 
     override fun bindListener() = Unit
+
+    override fun loadOnVisible() = onRefresh()
 
     override fun onRefresh() {
         if (!User.isLogon()) {
             return
         }
         page = Constant.DEFAULT_FIRST_PAGE
-        presenter.getJobCollectionList(page)
+        presenter.getCompanyCollectionList(page)
     }
 
-    override fun bindJobCollectionList(toMutableList: MutableList<Job>, lastPage: Boolean) {
+
+    override fun bindCompanyCollectionList(toMutableList: MutableList<CompanyInfo>, lastPage: Boolean) {
         if (swipe_layout.isRefreshing) {
             swipe_layout.isRefreshing = false
         }
@@ -113,17 +109,27 @@ class JobCollectionFragment : BaseMvpFragment<JobHomePresenter>(), JobHomeView, 
         }
     }
 
+    override fun onItemClick(adapter: BaseQuickAdapter<*, *>, view: View, position: Int) {
+
+        val companyInfo = mAdapter.data[position]
+
+
+    }
+
+
     override fun onEventReceived(baseEvent: BaseEvent<*>) {
+        super.onEventReceived(baseEvent)
         when (baseEvent.code) {
             EventCode.EVENT_REFRESH_COLLECTION,
-            EventCode.EVENT_LOGIN_SUCCESS -> {
+            EventCode.EVENT_LOGIN_SUCCESS,
+            -> {
                 if (isViewCreated) {
                     onRefresh()
                 }
             }
             else -> {}
         }
-    }
 
+    }
 
 }

@@ -23,7 +23,7 @@ import org.greenrobot.eventbus.ThreadMode
  */
 class JobRecordFragment : BaseFragment() {
 
-     val TAB_TITLES = arrayOf(StringUtils.getString(R.string.job_applied), StringUtils.getString(R.string.job_interviews))
+    val TAB_TITLES = arrayOf(StringUtils.getString(R.string.job_applied), StringUtils.getString(R.string.job_interviews))
 
     private var isFromNotice = false
 
@@ -47,8 +47,8 @@ class JobRecordFragment : BaseFragment() {
     }
 
     override fun initView(view: View?) {
-         arguments?.let {
-             isFromNotice = it.getBoolean(Constant.PARAM_FROM_NOTICE , false)
+        arguments?.let {
+            isFromNotice = it.getBoolean(Constant.PARAM_FROM_NOTICE, false)
         }
 
         pager.offscreenPageLimit = TAB_TITLES.size
@@ -57,7 +57,7 @@ class JobRecordFragment : BaseFragment() {
         tabs_type.setViewPager(pager, TAB_TITLES);
     }
 
-    override fun initData(){
+    override fun initData() {
         if (isFromNotice) {
             tabs_type.currentTab = 1
         }

@@ -2273,10 +2273,18 @@ public interface RetrofitApi {
 
 
     /**
-     * 收藏列表
+     * 职位收藏列表
      */
     @GET("jobapi/v2/resumes/collects")
     Observable<JcsResponse<PageResponse<Job>>> jobCollectionList(
+            @Query("page") int page
+    );
+
+    /**
+     * 公司收藏列表
+     */
+    @GET("jobapi/v2/resumes/company_collects")
+    Observable<JcsResponse<PageResponse<CompanyInfo>>> companyCollectionList(
             @Query("page") int page
     );
 
@@ -2295,6 +2303,7 @@ public interface RetrofitApi {
 
     /**
      * 职位详情
+     * /jobapi/v2/jobs/{job_id}
      */
     @GET("jobapi/v2/jobs/{job_id}")
     Observable<JcsResponse<JobDetail>> jobDetail(
@@ -2497,8 +2506,8 @@ public interface RetrofitApi {
     /**
      * 公司详情
      */
-    @GET("jobapi/v2/jobs/companies/{job_id}")
-    Observable<JcsResponse<CompanyInfo>> companyDetail(@Path("job_id") int job_id);
+    @GET("jobapi/v2/jobs/companies/{company_id}")
+    Observable<JcsResponse<CompanyInfo>> companyDetail(@Path("company_id") int company_id);
 
     /**
      * 公司相册
@@ -2687,7 +2696,6 @@ public interface RetrofitApi {
      */
     @POST("commonapi/v2/payment/account_linking")
     Observable<JcsResponse<PayChannelBindUrl>> getBindTokenUrl(@Body PayChannelUnbind request);
-
 
 
     /**

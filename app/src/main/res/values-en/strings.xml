@@ -1262,5 +1262,8 @@ Gentleman must let go</string>
     <string name="payment_confirmation_page">Payment Confirmation</string>
     <string name="payment_failed_desc">Please re-initiate the payment</string>
 
+    <string name="jobs">Jobs</string>
+    <string name="company">Company</string>
+
 
 </resources>

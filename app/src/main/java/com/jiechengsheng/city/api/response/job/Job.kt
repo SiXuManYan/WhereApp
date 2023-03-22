@@ -590,6 +590,8 @@ class CompanyInfo {
     /** 是否收藏 */
     var is_collect = false
 
+    var company_id = 0
+
 
 }
 

@@ -64,6 +64,7 @@ class JobOpeningsActivity : BaseMvpActivity<JobHomePresenter>(), JobHomeView, Sw
 
     override fun initData() {
         presenter = JobHomePresenter(this)
+        onRefresh()
     }
 
     override fun bindListener() = Unit

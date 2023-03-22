@@ -112,7 +112,7 @@ class CompanyCollectionFragment : BaseMvpFragment<JobHomePresenter>(), JobHomeVi
 
     override fun onItemClick(adapter: BaseQuickAdapter<*, *>, view: View, position: Int) {
         val companyInfo = mAdapter.data[position]
-        CompanyActivity.navigation(requireContext(), companyInfo.id)
+        CompanyActivity.navigation(requireContext(), companyInfo.company_id)
     }
 
 

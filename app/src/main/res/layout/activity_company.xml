@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -20,6 +20,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
+            android:background="?android:attr/selectableItemBackground"
             android:paddingStart="@dimen/dp_15"
             android:paddingTop="@dimen/dp_8"
             android:paddingEnd="@dimen/dp_15"
@@ -47,6 +48,8 @@
 
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
+        android:layout_above="@+id/bottom_v"
+        android:layout_below="@+id/title_rl"
         android:layout_height="match_parent">
 
         <LinearLayout
@@ -323,4 +326,39 @@
 
     </androidx.core.widget.NestedScrollView>
 
-</LinearLayout>
+
+    <View
+        android:id="@+id/bottom_v"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_4"
+        android:layout_above="@+id/bottom_container_rl"
+        android:background="@drawable/shape_navigation_bar_gray" />
+
+    <LinearLayout
+        android:id="@+id/bottom_container_rl"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:background="@color/white"
+        android:gravity="center"
+        android:paddingStart="@dimen/dp_15"
+        android:paddingTop="@dimen/dp_10"
+        android:paddingEnd="@dimen/dp_15"
+        android:paddingBottom="@dimen/dp_10">
+
+
+        <Button
+            android:id="@+id/job_openings_tv"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_44"
+            android:background="@drawable/shape_purple_radius_22"
+            android:gravity="center"
+            android:textAllCaps="false"
+            android:textColor="@color/white"
+            android:textSize="@dimen/sp_17"
+            android:textStyle="bold"
+            tools:text="Job Openings(999)" />
+
+    </LinearLayout>
+
+</RelativeLayout>

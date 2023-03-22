@@ -93,7 +93,7 @@ class Job : MultiItemEntity {
     /**
      * 列表类型
      */
-    var nativeListType = 0
+    var nativeListType = TYPE_COMMON_JOB
 
     override val itemType: Int
         get() = nativeListType

@@ -23,10 +23,12 @@ interface JobHomeView : BaseMvpView {
     fun bindJobCollectionList(toMutableList: MutableList<Job>, lastPage: Boolean) {}
 
     /** 申请列表、面试列表 */
-    fun bindAppliedOrInterviews(toMutableList: MutableList<Job>, lastPage: Boolean){}
+    fun bindAppliedOrInterviews(toMutableList: MutableList<Job>, lastPage: Boolean) {}
 
     /** 收藏公司列表 */
-    fun bindCompanyCollectionList(toMutableList: MutableList<CompanyInfo>, lastPage: Boolean){}
+    fun bindCompanyCollectionList(toMutableList: MutableList<CompanyInfo>, lastPage: Boolean) {}
+
+
 }
 
 class JobHomePresenter(private var view: JobHomeView) : BaseMvpPresenter(view) {
@@ -35,7 +37,7 @@ class JobHomePresenter(private var view: JobHomeView) : BaseMvpPresenter(view) {
     private var gson = Gson()
 
     /** 获取职位列表 */
-    fun getJobList(page: Int, search: String? = null, selectedFilterData: FilterData? = null) {
+    fun getJobList(page: Int, search: String? = null, selectedFilterData: FilterData? = null, companyId: Int? = null) {
 
         var salaryType: Int? = null
         var minSalary: String? = null
@@ -66,7 +68,8 @@ class JobHomePresenter(private var view: JobHomeView) : BaseMvpPresenter(view) {
             areaList,
             companyType,
             educationLevel,
-            experience
+            experience,
+            companyId
 
         ), object : BaseMvpObserver<PageResponse<Job>>(view) {
             override fun onSuccess(response: PageResponse<Job>) {
@@ -96,7 +99,6 @@ class JobHomePresenter(private var view: JobHomeView) : BaseMvpPresenter(view) {
     }
 
 
-
     /** 获取公司收藏列表 */
     fun getCompanyCollectionList(page: Int) {
         requestApi(mRetrofit.companyCollectionList(page), object : BaseMvpObserver<PageResponse<CompanyInfo>>(view, page) {
@@ -107,9 +109,6 @@ class JobHomePresenter(private var view: JobHomeView) : BaseMvpPresenter(view) {
             }
         })
     }
-
-
-
 
 
     /** 获取投递、面试列表 */
@@ -139,8 +138,6 @@ class JobHomePresenter(private var view: JobHomeView) : BaseMvpPresenter(view) {
             }
         })
     }
-
-
 
 
     private fun addTitle(data: MutableList<Job>) {

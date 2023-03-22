@@ -2269,7 +2269,8 @@ public interface RetrofitApi {
             @Query("area") @Nullable String area,
             @Query("company_type") @Nullable String company_type,
             @Query("education_id") @Nullable String education_id,
-            @Query("experience") @Nullable String experience
+            @Query("experience") @Nullable String experience,
+            @Query("company_id") @Nullable Integer company_id
     );
 
 
@@ -2726,6 +2727,12 @@ public interface RetrofitApi {
      */
     @POST("commonapi/v2/payment")
     Observable<JcsResponse<PayUrl>> doWherePay(@Body PayUrlGet request);
+
+
+
+
+
+
 
 
 }

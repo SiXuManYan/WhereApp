@@ -1,4 +1,4 @@
-package com.jiechengsheng.city.features.job.result
+package com.jiechengsheng.city.features.job.open
 
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
@@ -13,52 +13,46 @@ import com.jiechengsheng.city.features.job.home.JobHomeView
 import com.jiechengsheng.city.utils.Constant
 import com.jiechengsheng.city.view.empty.EmptyView
 import com.jiechengsheng.city.widget.list.DividerDecoration
-import kotlinx.android.synthetic.main.activity_job_search_result.*
+import kotlinx.android.synthetic.main.activity_refresh_list.*
 
 /**
- * Created by Wangsw  2022/9/28 10:08.
- * 职位搜素结果
+ * Created by Wangsw  2023/3/22 15:48.
+ * 在招职位列表
  */
-class JobSearchResultActivity : BaseMvpActivity<JobHomePresenter>(), JobHomeView, SwipeRefreshLayout.OnRefreshListener {
+class JobOpeningsActivity : BaseMvpActivity<JobHomePresenter>(), JobHomeView, SwipeRefreshLayout.OnRefreshListener {
 
+    private var companyId = 0
     private var page = Constant.DEFAULT_FIRST_PAGE
     private lateinit var mAdapter: JobHomeAdapter
     private lateinit var emptyView: EmptyView
 
-    private var search: String? = null
-
     override fun isStatusDark() = true
 
-
-    override fun getLayoutId() = R.layout.activity_job_search_result
+    override fun getLayoutId() = R.layout.activity_refresh_list
 
     override fun initView() {
-        search = intent.getStringExtra(Constant.PARAM_NAME)
-        search_tv.text = search
 
-        initContent()
-    }
 
-    private fun initContent() {
+        companyId = intent.getIntExtra(Constant.PARAM_ID, 0)
 
+        mJcsTitle.setMiddleTitle(R.string.job_openings_title)
         swipe_layout.setOnRefreshListener(this)
         emptyView = EmptyView(this)
         emptyView.showEmptyDefault()
         addEmptyList(emptyView)
-
 
         mAdapter = JobHomeAdapter().apply {
             setEmptyView(emptyView)
             loadMoreModule.isEnableLoadMoreIfNotFullPage = true
             loadMoreModule.setOnLoadMoreListener {
                 page++
-                presenter.getJobList(page, search)
+                presenter.getJobList(page, companyId = companyId)
             }
         }
 
 
         val manager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
-        recycler_view.apply {
+        recycler.apply {
             adapter = mAdapter
             layoutManager = manager
             addItemDecoration(DividerDecoration(ColorUtils.getColor(R.color.grey_F5F5F5),
@@ -66,23 +60,19 @@ class JobSearchResultActivity : BaseMvpActivity<JobHomePresenter>(), JobHomeView
                 0,
                 0))
         }
-
     }
 
     override fun initData() {
         presenter = JobHomePresenter(this)
-        onRefresh()
     }
 
-    override fun bindListener() {
-        search_ll.setOnClickListener { finish() }
-    }
-
+    override fun bindListener() = Unit
 
     override fun onRefresh() {
         page = Constant.DEFAULT_FIRST_PAGE
-        presenter.getJobList(page, search)
+        presenter.getJobList(page, companyId = companyId)
     }
+
 
     override fun bindJobList(toMutableList: MutableList<Job>, lastPage: Boolean) {
         if (swipe_layout.isRefreshing) {
@@ -111,7 +101,4 @@ class JobSearchResultActivity : BaseMvpActivity<JobHomePresenter>(), JobHomeView
             }
         }
     }
-
-
-
 }

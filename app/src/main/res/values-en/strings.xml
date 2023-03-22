@@ -1264,6 +1264,8 @@ Gentleman must let go</string>
 
     <string name="jobs">Jobs</string>
     <string name="company">Company</string>
+    <string name="job_openings_format">Job Openings(%1$d)</string>
+    <string name="job_openings_title">Job Openings</string>
 
 
 </resources>

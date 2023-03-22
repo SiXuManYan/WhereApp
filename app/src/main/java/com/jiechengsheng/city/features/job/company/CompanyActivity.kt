@@ -21,6 +21,7 @@ import com.jiechengsheng.city.base.mvp.BaseMvpActivity
 import com.jiechengsheng.city.features.account.login.LoginActivity
 import com.jiechengsheng.city.features.job.company.album.CompanyAlbumActivity
 import com.jiechengsheng.city.features.job.company.info.CompanyInfoActivity
+import com.jiechengsheng.city.features.job.open.JobOpeningsActivity
 import com.jiechengsheng.city.features.media.MediaDetailActivity
 import com.jiechengsheng.city.features.web.WebViewActivity
 import com.jiechengsheng.city.storage.entity.User
@@ -29,10 +30,6 @@ import com.jiechengsheng.city.utils.GlideUtil
 import com.jiechengsheng.city.utils.image.GlideRoundedCornersTransform
 import com.jiechengsheng.city.widget.list.DividerDecoration
 import kotlinx.android.synthetic.main.activity_company.*
-import kotlinx.android.synthetic.main.activity_company.collect_iv
-import kotlinx.android.synthetic.main.activity_company.company_name_tv
-import kotlinx.android.synthetic.main.activity_company.logo_iv
-import kotlinx.android.synthetic.main.activity_job_detail.*
 import org.greenrobot.eventbus.EventBus
 
 /**
@@ -124,6 +121,12 @@ class CompanyActivity : BaseMvpActivity<CompanyPresenter>(), CompanyView {
             presenter.handleCollection(isCollect, companyId)
         }
 
+        job_openings_tv.setOnClickListener {
+            startActivity(JobOpeningsActivity::class.java, Bundle().apply {
+                putInt(Constant.PARAM_ID, companyId)
+            })
+        }
+
     }
 
     private fun viewMore() {
@@ -185,6 +188,8 @@ class CompanyActivity : BaseMvpActivity<CompanyPresenter>(), CompanyView {
 
         isCollect = response.is_collect
         setLikeImage()
+
+        job_openings_tv.text = getString(R.string.job_openings_format, response.job_count)
 
     }
 

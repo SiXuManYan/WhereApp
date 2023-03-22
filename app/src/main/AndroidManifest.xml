@@ -841,6 +841,7 @@
             android:configChanges="keyboardHidden|screenSize|orientation" />
         <activity android:name=".features.payment.web.WebPaymentActivity" />
         <activity android:name=".features.payment.token.TokenPaymentActivity" />
+        <activity android:name=".features.job.open.JobOpeningsActivity" />
 
     </application>
 

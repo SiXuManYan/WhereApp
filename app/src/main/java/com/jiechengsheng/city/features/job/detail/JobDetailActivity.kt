@@ -230,7 +230,6 @@ class JobDetailActivity : BaseMvpActivity<JobDetailPresenter>(), JobDetailView {
 
         collect_iv.setImageResource(
             if (isCollect) {
-
                 R.mipmap.ic_like_red_night
             } else {
                 R.mipmap.ic_like_normal_night
@@ -318,8 +317,6 @@ class JobDetailPresenter(var view: JobDetailView) : BaseMvpPresenter(view) {
                 }
             })
         }
-
-
     }
 
     fun mtjClickHomeJob(jobId: Int) {

@@ -452,6 +452,13 @@ class JobCollection {
     var job_id = 0
 }
 
+/**
+ * 职位收藏、取消收藏
+ */
+class CompanyCollection {
+    var company_id = 0
+}
+
 
 /**
  * 教育背景详情

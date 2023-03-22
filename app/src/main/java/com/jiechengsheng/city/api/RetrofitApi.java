@@ -124,6 +124,7 @@ import com.jiechengsheng.city.api.response.integral.IntegralTag;
 import com.jiechengsheng.city.api.response.job.CheckIsNeedUpdatePdf;
 import com.jiechengsheng.city.api.response.job.CheckResume;
 import com.jiechengsheng.city.api.response.job.CompanyAlbum;
+import com.jiechengsheng.city.api.response.job.CompanyCollection;
 import com.jiechengsheng.city.api.response.job.CompanyInfo;
 import com.jiechengsheng.city.api.response.job.CreateCertificate;
 import com.jiechengsheng.city.api.response.job.CreateJobExperience;
@@ -2437,6 +2438,8 @@ public interface RetrofitApi {
             @Body JobCollection request
     );
 
+
+
     /**
      * 取消收藏职位
      */
@@ -2444,6 +2447,26 @@ public interface RetrofitApi {
     Observable<JcsResponse<JsonElement>> jobDelCollection(
             @Body JobCollection request
     );
+
+
+
+    /**
+     * 收藏公司
+     */
+    @POST("jobapi/v2/resumes/company_collects")
+    Observable<JcsResponse<JsonElement>> companyCollection(
+            @Body CompanyCollection request
+    );
+
+
+    /**
+     * 取消收藏公司
+     */
+    @HTTP(method = "DELETE", path = "jobapi/v2/resumes/company_collects", hasBody = true)
+    Observable<JcsResponse<JsonElement>> companyDelCollection(
+            @Body CompanyCollection request
+    );
+
 
 
     /**

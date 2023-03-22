@@ -12,6 +12,7 @@ import com.jiechengsheng.city.api.response.job.CompanyInfo
 import com.jiechengsheng.city.base.BaseEvent
 import com.jiechengsheng.city.base.EventCode
 import com.jiechengsheng.city.base.mvp.BaseMvpFragment
+import com.jiechengsheng.city.features.job.company.CompanyActivity
 import com.jiechengsheng.city.features.job.home.JobHomePresenter
 import com.jiechengsheng.city.features.job.home.JobHomeView
 import com.jiechengsheng.city.storage.entity.User
@@ -110,10 +111,8 @@ class CompanyCollectionFragment : BaseMvpFragment<JobHomePresenter>(), JobHomeVi
     }
 
     override fun onItemClick(adapter: BaseQuickAdapter<*, *>, view: View, position: Int) {
-
         val companyInfo = mAdapter.data[position]
-
-
+        CompanyActivity.navigation(requireContext(), companyInfo.id)
     }
 
 

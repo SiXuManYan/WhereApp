@@ -113,9 +113,9 @@ android {
             outputFileName = "Where_v${defaultConfig.versionCode}_(${defaultConfig.versionName})_${releaseTime()}.apk"
         }
 
-        variant.outputs.all {
-            outputFileName = "Where_v${defaultConfig.versionCode}-${defaultConfig.versionName}-${releaseTime()}.aab"
-        }
+//        variant.outputs.all {
+//            outputFileName = "Where_v${defaultConfig.versionCode}-${defaultConfig.versionName}-${releaseTime()}.aab"
+//        }
 
     }
 

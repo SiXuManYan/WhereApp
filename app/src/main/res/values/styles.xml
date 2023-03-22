@@ -149,7 +149,6 @@
     </style>
 
     <style name="TopButton">
-
         <item name="android:layout_width">@dimen/dp_48</item>
         <item name="android:layout_height">@dimen/dp_48</item>
         <item name="android:scaleType">centerInside</item>

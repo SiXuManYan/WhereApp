@@ -63,8 +63,7 @@ public class LoginActivity extends BaseMvpActivity<LoginPresenter> implements Lo
             login_type_tv,
             get_verify_tv,
             error_hint_tv,
-            forgot_password_tv,
-            title_tv;
+            forgot_password_tv;
 
     private Button login_tv;
 
@@ -115,7 +114,7 @@ public class LoginActivity extends BaseMvpActivity<LoginPresenter> implements Lo
         }
 
         BarUtils.addMarginTopEqualStatusBarHeight(findViewById(R.id.back_iv));
-        BarUtils.setNavBarColor(this, ColorUtils.getColor(R.color.color_4966C1));
+        BarUtils.setNavBarColor(this, ColorUtils.getColor(R.color.color_002364));
         login_rule_tv = findViewById(R.id.login_rule_tv);
         country_tv = findViewById(R.id.country_tv);
         phone_aet = findViewById(R.id.phone_aet);
@@ -127,7 +126,6 @@ public class LoginActivity extends BaseMvpActivity<LoginPresenter> implements Lo
         error_hint_tv = findViewById(R.id.error_hint_tv);
         forgot_password_tv = findViewById(R.id.forgot_password_tv);
         password_rule_iv = findViewById(R.id.password_rule_iv);
-        title_tv = findViewById(R.id.title_tv);
         rule_check_cb = findViewById(R.id.rule_check_cb);
         clear_phone_iv = findViewById(R.id.clear_phone_iv);
         clear_verify_iv = findViewById(R.id.clear_verify_iv);
@@ -317,13 +315,11 @@ public class LoginActivity extends BaseMvpActivity<LoginPresenter> implements Lo
             login_mode_vs.setDisplayedChild(1);
             login_type_tv.setText(R.string.verify_login);
             forgot_password_tv.setVisibility(View.VISIBLE);
-            title_tv.setText(R.string.login_title_password);
         } else {
             // 切换为验证码登录
             login_mode_vs.setDisplayedChild(0);
             login_type_tv.setText(R.string.password_login);
             forgot_password_tv.setVisibility(View.GONE);
-            title_tv.setText(R.string.register_login);
         }
         mIsVerifyMode = !mIsVerifyMode;
     }

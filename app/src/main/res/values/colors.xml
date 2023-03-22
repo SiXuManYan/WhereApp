@@ -7,6 +7,7 @@
 
     <color name="transparency">#00000000</color>
     <color name="white">#FFFFFF</color>
+    <color name="white_65">#A6FFFFFF</color>
     <color name="black_333333">#333333</color>
     <color name="black_33333360">#99333333</color>
     <color name="black_000000">#000000</color>
@@ -66,6 +67,7 @@
     <color name="color_EC0000">#EC0000</color>
     <color name="color_FF4F4F">#FF4F4F</color>
     <color name="color_4966C1">#4966C1</color>
+    <color name="color_002364">#002364</color>
     <color name="color_yellow_ffcc00">#FFCC00</color>
     <color name="red_f64944">#F64944</color>
     <color name="red_FF4934">#FF4934</color>

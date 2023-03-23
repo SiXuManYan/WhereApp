@@ -20,8 +20,8 @@ android {
         applicationId "com.jiechengsheng.city"
         minSdkVersion 23
         targetSdkVersion 31
-        versionCode 62
-        versionName "0.3.20"
+        versionCode 63
+        versionName "0.3.21"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         multiDexEnabled true
         flavorDimensions "versionCode"
@@ -112,11 +112,6 @@ android {
         variant.outputs.all {
             outputFileName = "Where_v${defaultConfig.versionCode}_(${defaultConfig.versionName})_${releaseTime()}.apk"
         }
-
-        variant.outputs.all {
-            outputFileName = "Where_v${defaultConfig.versionCode}-${defaultConfig.versionName}-${releaseTime()}.aab"
-        }
-
     }
 
     productFlavors {

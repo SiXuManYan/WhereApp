@@ -414,7 +414,7 @@
     <string name="use_agreement_content_12">7.为了实现数据统计功能，我们引入了第三方 Umeng SDK 的[U-App]产品，此产品的隐私策略请参阅：</string>
     <string name="use_agreement_content_13">https://www.umeng.com/page/policy \n\n</string>
 
-    <string name="use_agreement_content_last">8. 上述权限以及摄像头、GPS、相机、相册、麦克风，存储空间、等敏感权限均不会默认或强制开启收集信息，只有经过明示授权才会为实现功能或服务时使用，您均可以拒绝且不影响你继续使用Where。</string>
+    <string name="use_agreement_content_last">7. 上述权限以及摄像头、GPS、相机、相册、麦克风，存储空间、等敏感权限均不会默认或强制开启收集信息，只有经过明示授权才会为实现功能或服务时使用，您均可以拒绝且不影响你继续使用Where。</string>
 
 
     <string name="agree_and_continue">同意并继续</string>
@@ -1283,6 +1283,9 @@ Gentleman must let go</string>
     <string name="payment_button">确定支付</string>
     <string name="payment_confirmation_page">支付确认页面</string>
     <string name="payment_failed_desc">请您重新发起支付</string>
+    <string name="user_agreement">用户协议</string>
+    <string name="disclaimer">免责声明</string>
+    <string name="disclaimer_title">《免责声明》</string>
 
 
 </resources>

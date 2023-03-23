@@ -25,7 +25,9 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:paddingTop="@dimen/dp_0"
+            android:paddingBottom="@dimen/dp_50">
 
             <ImageView
                 android:layout_width="@dimen/dp_90"
@@ -100,33 +102,6 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/dp_25"
                 android:paddingStart="@dimen/dp_15"
-                android:visibility="gone"
-                android:paddingEnd="@dimen/dp_15"
-                android:text="@string/quick_links"
-                android:textColor="@color/black_333333"
-                android:textSize="@dimen/sp_17"
-                android:textStyle="bold" />
-
-
-            <TextView
-                android:id="@+id/home_page_tv"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/dp_12"
-                android:lineSpacingMultiplier="1.2"
-                android:paddingStart="@dimen/dp_15"
-                android:paddingEnd="@dimen/dp_15"
-                android:visibility="gone"
-                android:textColor="@color/grey_666666"
-                android:textSize="@dimen/sp_13"
-                tools:text="Website homepage：https://wte.where.ph/#to-home" />
-
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/dp_25"
-                android:paddingStart="@dimen/dp_15"
                 android:paddingEnd="@dimen/dp_15"
                 android:text="@string/contact_us"
                 android:textColor="@color/black_333333"
@@ -142,9 +117,9 @@
                 android:lineSpacingMultiplier="1.2"
                 android:paddingStart="@dimen/dp_15"
                 android:paddingEnd="@dimen/dp_15"
+                android:text="@string/call_us"
                 android:textColor="@color/grey_666666"
-                android:textSize="@dimen/sp_13"
-                android:text="@string/call_us" />
+                android:textSize="@dimen/sp_13" />
 
 
             <TextView
@@ -155,9 +130,9 @@
                 android:lineSpacingMultiplier="1.2"
                 android:paddingStart="@dimen/dp_15"
                 android:paddingEnd="@dimen/dp_15"
+                android:text="@string/message_us"
                 android:textColor="@color/grey_666666"
-                android:textSize="@dimen/sp_13"
-                android:text="@string/message_us" />
+                android:textSize="@dimen/sp_13" />
 
 
             <TextView
@@ -168,119 +143,80 @@
                 android:lineSpacingMultiplier="1.2"
                 android:paddingStart="@dimen/dp_15"
                 android:paddingEnd="@dimen/dp_15"
+                android:text="@string/email_us"
                 android:textColor="@color/grey_666666"
-                android:textSize="@dimen/sp_13"
-                android:text="@string/email_us" />
+                android:textSize="@dimen/sp_13" />
 
 
-            <LinearLayout
-                android:id="@+id/debug_into_ll"
-                android:layout_marginTop="@dimen/dp_500"
-                android:layout_width="match_parent"
+            <TextView
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:visibility="gone"
-                tools:visibility="visible">
+                android:layout_marginTop="@dimen/dp_25"
+                android:paddingStart="@dimen/dp_15"
+                android:paddingEnd="@dimen/dp_15"
+                android:text="@string/user_agreement"
+                android:textColor="@color/black_333333"
+                android:textSize="@dimen/sp_17"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/user_agreement_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dp_12"
+                android:lineSpacingMultiplier="1.2"
+                android:paddingStart="@dimen/dp_15"
+                android:paddingEnd="@dimen/dp_15"
+                android:text="@string/office_address_home_page_1"
+                android:textColor="@color/grey_666666"
+                android:textSize="@dimen/sp_13" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dp_25"
+                android:paddingStart="@dimen/dp_15"
+                android:paddingEnd="@dimen/dp_15"
+                android:text="@string/privacy_policy"
+                android:textColor="@color/black_333333"
+                android:textSize="@dimen/sp_17"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/privacy_policy_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dp_12"
+                android:lineSpacingMultiplier="1.2"
+                android:paddingStart="@dimen/dp_15"
+                android:paddingEnd="@dimen/dp_15"
+                android:text="@string/office_address_home_page_1"
+                android:textColor="@color/grey_666666"
+                android:textSize="@dimen/sp_13" />
 
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/dp_25"
-                    android:paddingStart="@dimen/dp_15"
-                    android:paddingEnd="@dimen/dp_15"
-                    android:text="调试信息(仅在测试服出现)"
-                    android:textColor="@color/black_333333"
-                    android:textSize="@dimen/sp_17"
-                    android:textStyle="bold" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dp_25"
+                android:paddingStart="@dimen/dp_15"
+                android:paddingEnd="@dimen/dp_15"
+                android:text="@string/disclaimer"
+                android:textColor="@color/black_333333"
+                android:textSize="@dimen/sp_17"
+                android:textStyle="bold" />
 
-                <TextView
-                    android:id="@+id/user_id_tv"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/dp_15"
-                    android:lineSpacingMultiplier="1.2"
-                    android:paddingStart="@dimen/dp_15"
-                    android:paddingEnd="@dimen/dp_15"
-                    android:text="User Id："
-                    android:textColor="@color/grey_666666"
-                    android:textSize="@dimen/sp_13" />
-
-                <TextView
-                    android:id="@+id/user_phone_tv"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/dp_15"
-                    android:lineSpacingMultiplier="1.2"
-                    android:paddingStart="@dimen/dp_15"
-                    android:paddingEnd="@dimen/dp_15"
-                    android:text="User Phone："
-                    android:textColor="@color/grey_666666"
-                    android:textSize="@dimen/sp_13" />
-
-
-                <TextView
-                    android:id="@+id/rong_token_tv"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/dp_15"
-                    android:lineSpacingMultiplier="1.2"
-                    android:paddingStart="@dimen/dp_15"
-                    android:paddingEnd="@dimen/dp_15"
-                    android:text="融云Token："
-                    android:textColor="@color/grey_666666"
-                    android:textSize="@dimen/sp_13" />
-                <TextView
-                    android:id="@+id/rong_uuid_tv"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/dp_15"
-                    android:lineSpacingMultiplier="1.2"
-                    android:paddingStart="@dimen/dp_15"
-                    android:paddingEnd="@dimen/dp_15"
-                    android:text="融云UUID："
-                    android:textColor="@color/grey_666666"
-                    android:textSize="@dimen/sp_13" />
-
-                <TextView
-                    android:id="@+id/push_id_tv"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/dp_15"
-                    android:lineSpacingMultiplier="1.2"
-                    android:paddingStart="@dimen/dp_15"
-                    android:paddingEnd="@dimen/dp_15"
-                    android:text="极光RegistrationId："
-                    android:textColor="@color/grey_666666"
-                    android:textSize="@dimen/sp_13" />
-
-
-                <TextView
-                    android:id="@+id/umeng_channel_tv"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/dp_15"
-                    android:lineSpacingMultiplier="1.2"
-                    android:paddingStart="@dimen/dp_15"
-                    android:paddingEnd="@dimen/dp_15"
-                    android:text="友盟Channel："
-                    android:textColor="@color/grey_666666"
-                    android:textSize="@dimen/sp_13" />
-
-
-                <TextView
-                    android:id="@+id/user_all_tv"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/dp_15"
-                    android:lineSpacingMultiplier="1.2"
-                    android:paddingStart="@dimen/dp_15"
-                    android:paddingEnd="@dimen/dp_15"
-                    android:text="User："
-                    android:textColor="@color/grey_666666"
-                    android:textSize="@dimen/sp_8" />
-
-            </LinearLayout>
+            <TextView
+                android:id="@+id/disclaimer_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dp_12"
+                android:lineSpacingMultiplier="1.2"
+                android:paddingStart="@dimen/dp_15"
+                android:paddingEnd="@dimen/dp_15"
+                android:text="@string/office_address_home_page_1"
+                android:textColor="@color/grey_666666"
+                android:textSize="@dimen/sp_13" />
 
 
         </LinearLayout>

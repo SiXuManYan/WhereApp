@@ -4,8 +4,6 @@ import android.content.DialogInterface
 import android.content.Intent
 import android.graphics.Color
 import android.net.Uri
-import android.os.Handler
-import android.os.Looper
 import android.text.TextPaint
 import android.text.method.LinkMovementMethod
 import android.text.style.ClickableSpan
@@ -164,6 +162,15 @@ class SplashActivity : BaseMvpActivity<SplashPresenter>(), SplashView {
                     ds.isUnderlineText = true
                 }
             })
+            .append(" ")
+            .append(getString(R.string.disclaimer_title))
+            .setClickSpan(object : ClickableSpan() {
+                override fun onClick(widget: View) = WebViewActivity.navigation(this@SplashActivity, FeaturesUtil.getDisclaimer())
+                override fun updateDrawState(ds: TextPaint) {
+                    ds.color = getColor(R.color.blue_4C9EF2)
+                    ds.isUnderlineText = true
+                }
+            })
             .append(getString(R.string.use_agreement_content_2))
             .append(getString(R.string.use_agreement_content_3))
             .setClickSpan(object : ClickableSpan() {
@@ -204,19 +211,6 @@ class SplashActivity : BaseMvpActivity<SplashPresenter>(), SplashView {
             .setClickSpan(object : ClickableSpan() {
                 override fun onClick(widget: View) {
                     WebViewActivity.navigation(this@SplashActivity, "https://www.jiguang.cn/license/privacy")
-                }
-
-                override fun updateDrawState(ds: TextPaint) {
-                    ds.color = getColor(R.color.blue_4C9EF2)
-                    ds.isUnderlineText = true
-                }
-            })
-
-            .append(getString(R.string.use_agreement_content_12))
-            .append(getString(R.string.use_agreement_content_13))
-            .setClickSpan(object : ClickableSpan() {
-                override fun onClick(widget: View) {
-                    WebViewActivity.navigation(this@SplashActivity, "https://www.umeng.com/page/policy")
                 }
 
                 override fun updateDrawState(ds: TextPaint) {

@@ -410,7 +410,7 @@
     <string name="use_agreement_content_13">https://www.umeng.com/page/policy \n\n</string>
 
 
-    <string name="use_agreement_content_last">8. The above permissions and sensitive permissions such as cameras, GPS, cameras, albums, microphones, storage space, etc. will not be enabled by default or forcibly to collect information. Only express authorization will be used for the realization of functions or services. You can refuse and Does not affect your continued use of Where.</string>
+    <string name="use_agreement_content_last">7. The above permissions and sensitive permissions such as cameras, GPS, cameras, albums, microphones, storage space, etc. will not be enabled by default or forcibly to collect information. Only express authorization will be used for the realization of functions or services. You can refuse and Does not affect your continued use of Where.</string>
 
     <string name="agree_and_continue">Agree and continue</string>
     <string name="disagree">Disagree</string>
@@ -1261,6 +1261,8 @@ Gentleman must let go</string>
     <string name="payment_button">Confirm Payment</string>
     <string name="payment_confirmation_page">Payment Confirmation</string>
     <string name="payment_failed_desc">Please re-initiate the payment</string>
-
+    <string name="user_agreement">User Agreement</string>
+    <string name="disclaimer">Disclaimer</string>
+    <string name="disclaimer_title">&#34;Disclaimer&#34;</string>
 
 </resources>

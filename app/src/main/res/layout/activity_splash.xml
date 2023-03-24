@@ -16,9 +16,9 @@
     <androidx.viewpager.widget.ViewPager
         android:id="@+id/pager_vp"
         android:layout_width="match_parent"
-        tools:visibility="visible"
         android:layout_height="match_parent"
-        android:visibility="gone" />
+        android:visibility="gone"
+        tools:visibility="visible" />
 
 
     <com.jiechengsheng.city.widget.pager.IndicatorView2

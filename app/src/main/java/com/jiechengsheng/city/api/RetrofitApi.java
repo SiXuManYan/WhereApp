@@ -2530,7 +2530,7 @@ public interface RetrofitApi {
     /**
      * 公司详情
      */
-    @GET("jobapi/v2/jobs/companies/{company_id}")
+    @GET("jobapi/v2/jobs/collect_companies/{company_id}")
     Observable<JcsResponse<CompanyInfo>> companyDetail(@Path("company_id") int company_id);
 
     /**

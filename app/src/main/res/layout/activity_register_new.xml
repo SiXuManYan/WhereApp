@@ -71,8 +71,8 @@
 
                 <ImageView
                     android:id="@+id/password_rule_iv"
-                    android:layout_width="@dimen/dp_20"
-                    android:layout_height="@dimen/dp_20"
+                    android:layout_width="@dimen/dp_48"
+                    android:layout_height="@dimen/dp_48"
                     android:layout_alignParentEnd="true"
                     android:layout_centerVertical="true"
                     android:scaleType="centerInside"
@@ -121,8 +121,8 @@
 
                 <ImageView
                     android:id="@+id/password_confirm_rule_iv"
-                    android:layout_width="@dimen/dp_20"
-                    android:layout_height="@dimen/dp_20"
+                    android:layout_width="@dimen/dp_48"
+                    android:layout_height="@dimen/dp_48"
                     android:layout_alignParentEnd="true"
                     android:layout_centerVertical="true"
                     android:scaleType="centerInside"

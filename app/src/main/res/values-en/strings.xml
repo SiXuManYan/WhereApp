@@ -204,11 +204,11 @@
     <string name="password_login">Sign in with password</string>
     <string name="verify_login">Sign in with Verification</string>
     <string name="other_login_type">More options</string>
-    <string name="login_rule">The login representative agrees to the \n "User Agreement" and "Privacy Policy"</string>
-    <string name="login_rule_default">The login representative agrees to the </string>
-    <string name="login_rule_keyword_0">\n&#34;User Agreement&#34;</string>
-    <string name="login_rule_default_and">&#160;and the &#160;</string>
-    <string name="login_rule_keyword_1">&#34;Privacy Policy&#34;</string>
+    <string name="login_rule">The login representative agrees to the &lt;User Agreement&gt; and &lt;Privacy Policy&gt; and &lt;Disclaimer&gt;</string>
+    <string name="login_rule_default">The login representative agrees to the&#160;</string>
+    <string name="login_rule_keyword_0">&lt;User Agreement&gt;</string>
+    <string name="login_rule_default_and">&#160;and the&#160;</string>
+    <string name="login_rule_keyword_1">&lt;Privacy Policy&gt;</string>
     <string name="input_password_hint">Please enter 8–16 digits and letters</string>
     <string name="confirm">Confirm</string>
     <string name="philippines_63">Philippines +63</string>
@@ -1289,6 +1289,10 @@ Gentleman must let go</string>
 
     <string name="user_agreement">User Agreement</string>
     <string name="disclaimer">Disclaimer</string>
-    <string name="disclaimer_title">&#34;Disclaimer&#34;</string>
+    <string name="disclaimer_title">&lt;Disclaimer&gt;</string>
+    <string name="agreement_privacy_protection">Agreement Privacy Protection</string>
+    <string name="default_agreement_privacy_protection">I have read and agree to the User Agreement and Privacy Policy and Disclaimer.</string>
+    <string name="agree_and_log_in">Agree And Log In</string>
+    <string name="have_read_and_agree">I have read and agree to the&#160;</string>
 
 </resources>

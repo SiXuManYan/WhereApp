@@ -183,6 +183,8 @@ class IntegralDetailActivity : BaseMvpActivity<IntegralOrderPresenter>(), Integr
             lp.width = ScreenUtils.getScreenWidth() - SizeUtils.dp2px(80f)
             window.attributes = lp
         }
+
+
         cancelTv.setOnClickListener {
             alertDialog.dismiss()
         }

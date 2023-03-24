@@ -5,6 +5,7 @@ import static com.jiechengsheng.city.utils.Constant.PARAM_COUNTRY_CODE;
 import static com.jiechengsheng.city.utils.Constant.PARAM_VERIFY_CODE;
 
 import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.text.Editable;
@@ -13,20 +14,27 @@ import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.text.method.LinkMovementMethod;
 import android.text.style.ClickableSpan;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.CheckedTextView;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.ViewSwitcher;
 
+import androidx.annotation.ColorInt;
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.widget.AppCompatCheckBox;
 import androidx.appcompat.widget.AppCompatEditText;
 
 import com.blankj.utilcode.util.BarUtils;
 import com.blankj.utilcode.util.ClickUtils;
 import com.blankj.utilcode.util.ColorUtils;
+import com.blankj.utilcode.util.ScreenUtils;
+import com.blankj.utilcode.util.SizeUtils;
 import com.blankj.utilcode.util.SpanUtils;
 import com.blankj.utilcode.util.StringUtils;
 import com.blankj.utilcode.util.ToastUtils;
@@ -35,10 +43,10 @@ import com.jiechengsheng.city.api.ErrorResponse;
 import com.jiechengsheng.city.base.BaseEvent;
 import com.jiechengsheng.city.base.EventCode;
 import com.jiechengsheng.city.base.mvp.BaseMvpActivity;
-import com.jiechengsheng.city.features.web.WebViewActivity;
 import com.jiechengsheng.city.features.account.bind.BindPhoneActivity;
 import com.jiechengsheng.city.features.account.password.PasswordResetActivity;
 import com.jiechengsheng.city.features.account.register.RegisterActivity;
+import com.jiechengsheng.city.features.web.WebViewActivity;
 import com.jiechengsheng.city.utils.Constant;
 import com.jiechengsheng.city.utils.FeaturesUtil;
 
@@ -62,7 +70,6 @@ public class LoginActivity extends BaseMvpActivity<LoginPresenter> implements Lo
             country_tv,
             login_type_tv,
             get_verify_tv,
-            error_hint_tv,
             forgot_password_tv;
 
     private Button login_tv;
@@ -123,7 +130,6 @@ public class LoginActivity extends BaseMvpActivity<LoginPresenter> implements Lo
         login_mode_vs = findViewById(R.id.login_mode_vs);
         login_type_tv = findViewById(R.id.login_type_tv);
         get_verify_tv = findViewById(R.id.get_verify_tv);
-        error_hint_tv = findViewById(R.id.error_hint_tv);
         forgot_password_tv = findViewById(R.id.forgot_password_tv);
         password_rule_iv = findViewById(R.id.password_rule_iv);
         rule_check_cb = findViewById(R.id.rule_check_cb);
@@ -136,45 +142,37 @@ public class LoginActivity extends BaseMvpActivity<LoginPresenter> implements Lo
     @Override
     protected void initData() {
         presenter = new LoginPresenter(this);
-        presenter.context  = this;
+        presenter.context = this;
 
 
         // 默认菲律宾前缀
         country_tv.setText(getString(R.string.country_code_format, "63"));
         // 用户协议，隐私政策
-        login_rule_tv.setMovementMethod(LinkMovementMethod.getInstance());
-        String defaultStr = getString(R.string.login_rule_default);
+        handleRule(login_rule_tv, getString(R.string.login_rule_default),Color.WHITE);
+    }
+
+    private void handleRule(TextView textView, String startString,@ColorInt int color) {
+
+        textView.setMovementMethod(LinkMovementMethod.getInstance());
+
         String userAgreement = getString(R.string.login_rule_keyword_0);
         String and = getString(R.string.login_rule_default_and);
         String privacyPolicy = getString(R.string.login_rule_keyword_1);
         String disclaimer = getString(R.string.disclaimer_title);
 
 
-        SpanUtils.with(login_rule_tv)
-                .append(defaultStr)
+        SpanUtils.with(textView)
+                .append(startString)
                 .append(userAgreement)
                 .setClickSpan(new ClickableSpan() {
                     @Override
                     public void onClick(@NonNull View widget) {
-                        WebViewActivity.Companion.navigation(LoginActivity.this, FeaturesUtil.getUserAgreement(),false);
+                        WebViewActivity.Companion.navigation(LoginActivity.this, FeaturesUtil.getUserAgreement(), false);
                     }
 
                     @Override
                     public void updateDrawState(@NonNull TextPaint ds) {
-                        ds.setColor(Color.WHITE);
-                        ds.setUnderlineText(true);
-                    }
-                })
-                .append(disclaimer)
-                .setClickSpan(new ClickableSpan() {
-                    @Override
-                    public void onClick(@NonNull View widget) {
-                        WebViewActivity.Companion.navigation(LoginActivity.this, FeaturesUtil.getDisclaimer(),false);
-                    }
-
-                    @Override
-                    public void updateDrawState(@NonNull TextPaint ds) {
-                        ds.setColor(Color.WHITE);
+                        ds.setColor(color);
                         ds.setUnderlineText(true);
                     }
                 })
@@ -183,17 +181,30 @@ public class LoginActivity extends BaseMvpActivity<LoginPresenter> implements Lo
                 .setClickSpan(new ClickableSpan() {
                     @Override
                     public void onClick(@NonNull View widget) {
-                        WebViewActivity.Companion.navigation(LoginActivity.this, FeaturesUtil.getPrivacyPolicy(),false);
+                        WebViewActivity.Companion.navigation(LoginActivity.this, FeaturesUtil.getPrivacyPolicy(), false);
                     }
 
                     @Override
                     public void updateDrawState(@NonNull TextPaint ds) {
-                        ds.setColor(Color.WHITE);
+                        ds.setColor(color);
                         ds.setUnderlineText(true);
                     }
-                }).create();
+                })
+                .append(and)
+                .append(disclaimer)
+                .setClickSpan(new ClickableSpan() {
+                    @Override
+                    public void onClick(@NonNull View widget) {
+                        WebViewActivity.Companion.navigation(LoginActivity.this, FeaturesUtil.getDisclaimer(), false);
+                    }
 
-
+                    @Override
+                    public void updateDrawState(@NonNull TextPaint ds) {
+                        ds.setColor(color);
+                        ds.setUnderlineText(true);
+                    }
+                })
+                .create();
     }
 
     @Override
@@ -350,11 +361,55 @@ public class LoginActivity extends BaseMvpActivity<LoginPresenter> implements Lo
         new Handler(getMainLooper()).postDelayed(() -> login_tv.setClickable(true), 1000);
 
         if (!rule_check_cb.isChecked()) {
-            error_hint_tv.setText(R.string.agrees_rule_hint);
-            error_hint_tv.setVisibility(View.VISIBLE);
+            // 未同意协议
+            showRuleDialog();
             return;
         }
 
+        realLogin();
+    }
+
+    private void showRuleDialog() {
+
+        String defaultStr = getString(R.string.have_read_and_agree);
+
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        LayoutInflater inflater = LayoutInflater.from(this);
+        View view = inflater.inflate(R.layout.dialog_agreement_privacy, null);
+        TextView content_tv = view.findViewById(R.id.content_tv);
+        TextView agree_tv = view.findViewById(R.id.agree_tv);
+        TextView disagree_tv = view.findViewById(R.id.disagree_tv);
+
+        AlertDialog alertDialog = builder.create();
+        alertDialog.setCancelable(false);
+        alertDialog.show();
+        Window window = alertDialog.getWindow();
+
+        if (window != null) {
+            window.clearFlags(WindowManager.LayoutParams.FLAG_ALT_FOCUSABLE_IM);
+            window.setContentView(view);
+            window.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+
+            // 更改默认宽度
+            WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
+            lp.copyFrom(window.getAttributes());
+            window.setAttributes(lp);
+        }
+
+        handleRule(content_tv, defaultStr,ColorUtils.getColor(R.color.blue_377BFF));
+        agree_tv.setOnClickListener(view1 -> {
+            rule_check_cb.setChecked(true);
+            alertDialog.dismiss();
+            realLogin();
+        });
+        disagree_tv.setOnClickListener(view12 -> {
+            alertDialog.dismiss();
+        });
+
+    }
+
+    private void realLogin() {
         String account = Objects.requireNonNull(phone_aet.getText()).toString().trim();
         String verifyCode = Objects.requireNonNull(verify_code_aet.getText()).toString().trim();
         String password = Objects.requireNonNull(password_aet.getText()).toString().trim();
@@ -414,8 +469,6 @@ public class LoginActivity extends BaseMvpActivity<LoginPresenter> implements Lo
     @Override
     public void onError(ErrorResponse errorResponse) {
         super.onError(errorResponse);
-        error_hint_tv.setText(errorResponse.getErrMsg());
-        error_hint_tv.setVisibility(View.VISIBLE);
     }
 
     @Override
@@ -442,7 +495,7 @@ public class LoginActivity extends BaseMvpActivity<LoginPresenter> implements Lo
 
 
     @Override
-    public void guideToAccountBind(PlatformDb platformData, int loginType ) {
+    public void guideToAccountBind(PlatformDb platformData, int loginType) {
 
         String userName = platformData.getUserName();
         String userId = platformData.getUserId();

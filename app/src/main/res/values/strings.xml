@@ -203,11 +203,11 @@
     <string name="password_login">密码登录</string>
     <string name="verify_login">验证码登录</string>
     <string name="other_login_type">其他登录方式</string>
-    <string name="login_rule">登录代表同意《用户协议》和《隐私政策》</string>
+    <string name="login_rule">登录代表同意&lt;用户协议&gt;和&lt;隐私政策&gt;和&lt;免责声明&gt;</string>
     <string name="login_rule_default">登录代表同意</string>
-    <string name="login_rule_keyword_0">《用户协议》</string>
+    <string name="login_rule_keyword_0">&lt;用户协议&gt;</string>
     <string name="login_rule_default_and">&#160;和&#160;</string>
-    <string name="login_rule_keyword_1">《隐私政策》</string>
+    <string name="login_rule_keyword_1">&lt;隐私政策&gt;</string>
     <string name="input_password_hint">请输入8–16位字母和数字组合</string>
     <string name="confirm">确定</string>
     <string name="philippines_63">菲律宾 +63</string>
@@ -1314,6 +1314,10 @@ Gentleman must let go</string>
 
     <string name="user_agreement">用户协议</string>
     <string name="disclaimer">免责声明</string>
-    <string name="disclaimer_title">《免责声明》</string>
+    <string name="disclaimer_title">&lt;免责声明&gt;</string>
+    <string name="agreement_privacy_protection">用户协议及隐私保护</string>
+    <string name="default_agreement_privacy_protection">已阅读并同意用户协议和隐私政策和免责声明</string>
+    <string name="agree_and_log_in">同意并登录</string>
+    <string name="have_read_and_agree">已阅读并同意&#160;</string>
 
 </resources>

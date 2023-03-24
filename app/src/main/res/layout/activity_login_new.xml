@@ -184,6 +184,7 @@
                         android:layout_centerVertical="true"
                         android:paddingTop="@dimen/dp_5"
                         android:paddingBottom="@dimen/dp_5"
+                        android:textStyle="bold"
                         android:text="@string/get_verify"
                         android:textColor="@color/white_65"
                         android:textSize="@dimen/sp_16" />
@@ -215,7 +216,7 @@
                         android:paddingStart="@dimen/dp_0"
                         android:paddingEnd="@dimen/dp_10"
                         android:textColor="@color/white"
-                        android:textColorHint="@color/white"
+                        android:textColorHint="@color/white_65"
                         android:textSize="@dimen/sp_16"
                         android:textStyle="bold" />
 
@@ -269,21 +270,7 @@
 
             </RelativeLayout>
 
-            <TextView
-                android:id="@+id/error_hint_tv"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/dp_15"
-                android:layout_marginTop="@dimen/dp_10"
-                android:layout_marginEnd="@dimen/dp_15"
-                android:ellipsize="end"
-                android:lineSpacingMultiplier="1.2"
-                android:maxLines="2"
-                android:textColor="@color/color_FF4F4F"
-                android:textSize="@dimen/sp_14"
-                android:visibility="gone"
-                tools:text="xxx"
-                tools:visibility="visible" />
+
 
 
             <Button
@@ -323,6 +310,7 @@
                     android:layout_height="wrap_content"
                     android:checked="true"
                     android:lineSpacingMultiplier="1.2"
+                    android:breakStrategy="simple"
                     android:text="@string/login_rule"
                     android:textColor="@color/white" />
 

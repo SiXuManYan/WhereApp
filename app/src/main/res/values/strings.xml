@@ -414,7 +414,30 @@
     <string name="use_agreement_content_12">7.为了实现数据统计功能，我们引入了第三方 Umeng SDK 的[U-App]产品，此产品的隐私策略请参阅：</string>
     <string name="use_agreement_content_13">https://www.umeng.com/page/policy \n\n</string>
 
-    <string name="use_agreement_content_last">7. 上述权限以及摄像头、GPS、相机、相册、麦克风，存储空间、等敏感权限均不会默认或强制开启收集信息，只有经过明示授权才会为实现功能或服务时使用，您均可以拒绝且不影响你继续使用Where。</string>
+    <string name="use_agreement_content_last">8. 上述权限以及摄像头、GPS、相机、相册、麦克风，存储空间、等敏感权限均不会默认或强制开启收集信息，只有经过明示授权才会为实现功能或服务时使用，您均可以拒绝且不影响你继续使用Where。</string>
+    <string name="use_agreement_content_disclaimer">9. 免责声明\n\n
+Where App 应用（以下简称“本应用”）所提供的信息来自政府公开渠道，旨在为用户提供方便获取政府信息的途径。\n\n
+政府新闻信息来源：\n
+    Where应用传达的政府信息以及新闻信息，与总部位于菲律宾巴丹省的巴丹省新闻办公室政府组织有关，详细信息请访问在
+    </string>
+
+    <string name="personal_information_protection_guidelines_update">尊敬的用户，感谢您信任并使用Where，我们依据相关法律制定了&#160;[用户协议]&#160;[免责声明]&#160;和&#160;[隐私政策]&#160;，请在您点击同意之前，请您仔细阅读并充分理解相关条款。\n\n
+点击同意按钮代表您已同意上述协议及以下约定。\n\n
+1.在仅浏览时，为保障服务所需，我们会申请系统权限收集设备信息、日志信息，用于信息推送。并申请存储权限，用于浏览过程中缓存相关文件以及维护应用内版本升级。\n\n
+2.为了基于您所在位置向你推荐内容、展示信息，我们可能会向您申请位置权限。\n\n
+3.为帮助您在APP中拨打投诉电话或其他咨询热线，我们可能会申请拨打电话权限。该权限不会收集隐私信息，且仅在你使用前述功能时使用。\n\n
+4.为了实现第三方登录以及信息分享功能，我们在使用了第三方 MobTech 的[ShareSdk]产品，此产品的隐私策略条款，请参阅：https://www.mob.com/about/policy。\n\n
+5.为了更好的帮助您解决在使用过程中可能出现的问题，我们使用了第三方 Comm100 [Comm100 Live Chat]产品，此产品的隐私策略请参阅：https://www.comm100.com/platform/security \n\n
+6.为了实现推送功能，我们引入了第三方 Jiguang SDK 的[JPush]产品，此产品的隐私策略请参阅：https://www.jiguang.cn/license/privacy \n\n
+7.上述权限以及摄像头、GPS、相机、相册、麦克风，存储空间、等敏感权限均不会默认或强制开启收集信息，只有经过明示授权才会为实现功能或服务时使用，您均可以拒绝且不影响你继续使用Where。\n\n
+8.免责声明\n\n
+Where App 应用(以下简称 本应用)所提供的信息来自政府公开渠道，旨在为用户提供方便获取政府信息的途径。\n
+政府新闻信息来源: \n\n
+Where应用传达的政府信息以及新闻信息，与总部位于菲律宾巴丹省的巴丹省新闻办公室政府组织有关，详细信息请访问在 https://1bataan.com 网域注册的网址（由菲律宾巴丹省的巴丹省新闻办公室发布)\n\n
+免责声明\n\n
+本应用不保证信息的真实性、准确性、完整性和及时性，用户需自行核实并承担使用风险和损失。本应用不代表政府实体，不承担政府行为责任，不对因使用本应用而引起的任何法律问题承担责任。本应用所有权、运营权和解释权归本应用所有，未经书面许可，不得使用本应用内容。\n\n
+CLOUDTECH ADVERTISING INC.
+    </string>
 
 
     <string name="agree_and_continue">同意并继续</string>
@@ -1286,6 +1309,5 @@ Gentleman must let go</string>
     <string name="user_agreement">用户协议</string>
     <string name="disclaimer">免责声明</string>
     <string name="disclaimer_title">《免责声明》</string>
-
 
 </resources>

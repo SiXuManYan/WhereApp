@@ -168,6 +168,7 @@
     <dimen name="dp_315">315dp</dimen>
     <dimen name="dp_330">330dp</dimen>
     <dimen name="dp_350">350dp</dimen>
+    <dimen name="dp_375">375dp</dimen>
     <dimen name="dp_380">380dp</dimen>
     <dimen name="dp_400">400dp</dimen>
     <dimen name="dp_455">455dp</dimen>

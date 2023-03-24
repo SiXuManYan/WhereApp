@@ -5,7 +5,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white"
-    android:fitsSystemWindows="true"
     android:orientation="vertical">
 
 
@@ -19,14 +18,14 @@
             android:layout_height="match_parent"
             android:background="@color/white"
             android:orientation="vertical"
-            android:paddingTop="@dimen/dp_44"
-            android:paddingBottom="@dimen/dp_44">
+            android:paddingTop="@dimen/dp_0"
+            android:paddingBottom="@dimen/dp_50">
 
 
             <FrameLayout
                 android:id="@+id/media_fl"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/dp_250"
+                android:layout_height="@dimen/dp_375"
                 tools:background="@color/blue_377BFF">
 
                 <androidx.recyclerview.widget.RecyclerView
@@ -260,12 +259,18 @@
     </androidx.core.widget.NestedScrollView>
 
 
+
+    <View
+        android:id="@+id/useView"
+        android:layout_width="match_parent"
+        android:layout_height="24dp" />
+
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/dp_44"
-        android:background="@color/white"
-        android:fitsSystemWindows="true"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/useView"
+        android:background="@color/transparency"
         android:minHeight="?attr/actionBarSize"
         app:contentInsetEnd="@dimen/dp_15"
         app:contentInsetStart="@dimen/dp_15">
@@ -277,8 +282,7 @@
             android:layout_height="@dimen/dp_30"
             android:layout_gravity="start"
             android:scaleType="centerInside"
-            android:src="@mipmap/ic_back_black" />
-
+            android:src="@mipmap/ic_back_light" />
 
         <ImageView
             android:id="@+id/share_iv"
@@ -286,7 +290,7 @@
             android:layout_height="@dimen/dp_30"
             android:layout_gravity="end"
             android:scaleType="centerInside"
-            android:src="@mipmap/ic_share_night" />
+            android:src="@mipmap/ic_share_light" />
 
         <ImageView
             android:id="@+id/like_iv"
@@ -295,7 +299,7 @@
             android:layout_gravity="end"
             android:layout_marginEnd="@dimen/dp_30"
             android:scaleType="centerInside"
-            android:src="@mipmap/ic_like_normal_night" />
+            android:src="@mipmap/ic_like_normal_light" />
 
     </androidx.appcompat.widget.Toolbar>
 

@@ -81,6 +81,8 @@ class MallDetailActivity : BaseMvpActivity<MallDetailPresenter>(), MallDetailVie
 
     private var duration = 0L
 
+    private var isToolbarDark = false
+
     companion object {
 
         fun navigation(context: Context, goodId: Int, couponId: Int? = 0) {
@@ -100,7 +102,7 @@ class MallDetailActivity : BaseMvpActivity<MallDetailPresenter>(), MallDetailVie
         }
     }
 
-    override fun isStatusDark() = true
+    override fun isStatusDark() = isToolbarDark
 
     override fun getLayoutId() = R.layout.activity_mall_good_detail
 
@@ -109,10 +111,38 @@ class MallDetailActivity : BaseMvpActivity<MallDetailPresenter>(), MallDetailVie
         skuDialog = SkuFragment().apply {
             callback = this@MallDetailActivity
         }
+        initScroll()
         initMedia()
         initComment()
         initWeb()
         duration = System.currentTimeMillis()
+    }
+
+    private fun initScroll() {
+        // alpha
+        useView.setBackgroundColor(getColor(R.color.white))
+        toolbar.setBackgroundColor(getColor(R.color.white))
+        useView.background.alpha = 0
+        toolbar.background.alpha = 0
+        scrollView.setOnScrollChangeListener { _, _, y, _, _ ->
+            val headHeight = media_fl.measuredHeight - toolbar.measuredHeight
+            var alpha = (y.toFloat() / headHeight * 255).toInt()
+            if (alpha >= 255) {
+                alpha = 255
+            }
+            if (alpha <= 5) {
+                alpha = 0
+            }
+            isToolbarDark = alpha > 130
+            setLikeImage()
+            setBackImage()
+            setShareImage()
+
+            useView.background.alpha = alpha
+            toolbar.background.alpha = alpha
+
+            changeStatusTextColor()
+        }
     }
 
 
@@ -375,10 +405,40 @@ class MallDetailActivity : BaseMvpActivity<MallDetailPresenter>(), MallDetailVie
     private fun setLikeImage() {
 
         like_iv.setImageResource(
-            if (collect_status == 0) {
-                R.mipmap.ic_like_normal_night
+
+            if (collect_status == 1) {
+                if (isToolbarDark) {
+                    R.mipmap.ic_like_red_night
+                } else {
+                    R.mipmap.ic_like_red_light
+                }
             } else {
-                R.mipmap.ic_like_red_night
+                if (isToolbarDark) {
+                    R.mipmap.ic_like_normal_night
+                } else {
+                    R.mipmap.ic_like_normal_light
+                }
+            }
+        )
+    }
+
+
+    private fun setBackImage() {
+        back_iv.setImageResource(
+            if (isToolbarDark) {
+                R.mipmap.ic_back_black
+            } else {
+                R.mipmap.ic_back_light
+            }
+        )
+    }
+
+    private fun setShareImage() {
+        share_iv.setImageResource(
+            if (isToolbarDark) {
+                R.mipmap.ic_share_night
+            } else {
+                R.mipmap.ic_share_light
             }
         )
     }

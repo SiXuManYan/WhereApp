@@ -144,12 +144,15 @@ public class LoginActivity extends BaseMvpActivity<LoginPresenter> implements Lo
         // 用户协议，隐私政策
         login_rule_tv.setMovementMethod(LinkMovementMethod.getInstance());
         String defaultStr = getString(R.string.login_rule_default);
-        String keyWord0 = getString(R.string.login_rule_keyword_0);
+        String userAgreement = getString(R.string.login_rule_keyword_0);
         String and = getString(R.string.login_rule_default_and);
-        String keyWord1 = getString(R.string.login_rule_keyword_1);
+        String privacyPolicy = getString(R.string.login_rule_keyword_1);
+        String disclaimer = getString(R.string.disclaimer_title);
+
+
         SpanUtils.with(login_rule_tv)
                 .append(defaultStr)
-                .append(keyWord0)
+                .append(userAgreement)
                 .setClickSpan(new ClickableSpan() {
                     @Override
                     public void onClick(@NonNull View widget) {
@@ -162,8 +165,21 @@ public class LoginActivity extends BaseMvpActivity<LoginPresenter> implements Lo
                         ds.setUnderlineText(true);
                     }
                 })
+                .append(disclaimer)
+                .setClickSpan(new ClickableSpan() {
+                    @Override
+                    public void onClick(@NonNull View widget) {
+                        WebViewActivity.Companion.navigation(LoginActivity.this, FeaturesUtil.getDisclaimer(),false);
+                    }
+
+                    @Override
+                    public void updateDrawState(@NonNull TextPaint ds) {
+                        ds.setColor(Color.WHITE);
+                        ds.setUnderlineText(true);
+                    }
+                })
                 .append(and)
-                .append(keyWord1)
+                .append(privacyPolicy)
                 .setClickSpan(new ClickableSpan() {
                     @Override
                     public void onClick(@NonNull View widget) {

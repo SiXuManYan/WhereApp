@@ -1,11 +1,12 @@
 package com.jiechengsheng.city.features.splash
 
+import android.annotation.SuppressLint
 import android.content.DialogInterface
 import android.content.Intent
 import android.graphics.Color
+import android.graphics.Typeface
 import android.net.Uri
-import android.os.Handler
-import android.os.Looper
+import android.text.SpannableStringBuilder
 import android.text.TextPaint
 import android.text.method.LinkMovementMethod
 import android.text.style.ClickableSpan
@@ -22,7 +23,6 @@ import cn.jpush.android.api.JPushInterface
 import com.blankj.utilcode.util.AppUtils
 import com.blankj.utilcode.util.BarUtils
 import com.blankj.utilcode.util.SPUtils
-import com.blankj.utilcode.util.SpanUtils
 import com.jiechengsheng.city.R
 import com.jiechengsheng.city.base.mvp.BaseMvpActivity
 import com.jiechengsheng.city.features.main.MainActivity
@@ -153,79 +153,118 @@ class SplashActivity : BaseMvpActivity<SplashPresenter>(), SplashView {
         splash_container_rl.startAnimation(animation)
     }
 
+    @SuppressLint("SetJavaScriptEnabled")
     private fun initUserAgreement() {
-        val spanUtils = SpanUtils()
-        val builder = spanUtils.append(getString(R.string.use_agreement_content_0))
-            .append(getString(R.string.use_agreement_content_1))
-            .setClickSpan(object : ClickableSpan() {
-                override fun onClick(widget: View) = WebViewActivity.navigation(this@SplashActivity, FeaturesUtil.getUserAgreement())
-                override fun updateDrawState(ds: TextPaint) {
-                    ds.color = getColor(R.color.blue_4C9EF2)
-                    ds.isUnderlineText = true
-                }
-            })
-            .append(getString(R.string.use_agreement_content_2))
-            .append(getString(R.string.use_agreement_content_3))
-            .setClickSpan(object : ClickableSpan() {
-                override fun onClick(widget: View) = WebViewActivity.navigation(this@SplashActivity, FeaturesUtil.getPrivacyPolicy())
 
-                override fun updateDrawState(ds: TextPaint) {
-                    ds.color = getColor(R.color.blue_4C9EF2)
-                    ds.isUnderlineText = true
-                }
-            })
-            .append(getString(R.string.use_agreement_content_4))
-            .append(getString(R.string.use_agreement_content_5))
-            .append(getString(R.string.use_agreement_content_6))
-            .setClickSpan(object : ClickableSpan() {
-                override fun onClick(widget: View) {
-                    WebViewActivity.navigation(this@SplashActivity, "https://www.mob.com/about/policy")
-                }
+        val userAgreement = getString(R.string.user_agreement)
+        val disclaimer = getString(R.string.disclaimer)
+        val privacyPolicy = getString(R.string.privacy_policy)
+        val shareSdkUrl = "https://www.mob.com/about/policy"
+        val comm100Url = "https://www.comm100.com/platform/security"
+        val jpushUrl = "https://www.jiguang.cn/license/privacy"
+        val badanNews = "https://1bataan.com"
 
-                override fun updateDrawState(ds: TextPaint) {
-                    ds.color = getColor(R.color.blue_4C9EF2)
-                    ds.isUnderlineText = true
-                }
-            })
-            .append(getString(R.string.use_agreement_content_8))
-            .append(getString(R.string.use_agreement_content_9))
-            .setClickSpan(object : ClickableSpan() {
-                override fun onClick(widget: View) {
-                    WebViewActivity.navigation(this@SplashActivity, "https://www.comm100.com/platform/security/")
-                }
+        val sb = SpannableStringBuilder(getString(R.string.personal_information_protection_guidelines_update))
 
-                override fun updateDrawState(ds: TextPaint) {
-                    ds.color = getColor(R.color.blue_4C9EF2)
-                    ds.isUnderlineText = true
-                }
-            })
-            .append(getString(R.string.use_agreement_content_10))
-            .append(getString(R.string.use_agreement_content_11))
-            .setClickSpan(object : ClickableSpan() {
-                override fun onClick(widget: View) {
-                    WebViewActivity.navigation(this@SplashActivity, "https://www.jiguang.cn/license/privacy")
-                }
+        // 用户协议
+        sb.setSpan(object : ClickableSpan() {
+            override fun onClick(p0: View) {
+                WebViewActivity.navigation(this@SplashActivity, FeaturesUtil.getUserAgreement())
+            }
 
-                override fun updateDrawState(ds: TextPaint) {
-                    ds.color = getColor(R.color.blue_4C9EF2)
-                    ds.isUnderlineText = true
-                }
-            })
+            override fun updateDrawState(ds: TextPaint) {
+                ds.color = getColor(R.color.blue_4C9EF2)
+                ds.isUnderlineText = true
+            }
 
-            .append(getString(R.string.use_agreement_content_12))
-            .append(getString(R.string.use_agreement_content_13))
-            .setClickSpan(object : ClickableSpan() {
-                override fun onClick(widget: View) {
-                    WebViewActivity.navigation(this@SplashActivity, "https://www.umeng.com/page/policy")
-                }
+        }, sb.indexOf(userAgreement), sb.indexOf(userAgreement) + userAgreement.length,
+            SpannableStringBuilder.SPAN_EXCLUSIVE_EXCLUSIVE)
 
-                override fun updateDrawState(ds: TextPaint) {
-                    ds.color = getColor(R.color.blue_4C9EF2)
-                    ds.isUnderlineText = true
-                }
-            })
-            .append(getString(R.string.use_agreement_content_last))
-            .create()
+        // 免责声明
+        sb.setSpan(object : ClickableSpan() {
+            override fun onClick(p0: View) {
+                WebViewActivity.navigation(this@SplashActivity, FeaturesUtil.getDisclaimer())
+            }
+
+            override fun updateDrawState(ds: TextPaint) {
+                ds.color = getColor(R.color.blue_4C9EF2)
+                ds.isUnderlineText = true
+            }
+
+        }, sb.indexOf(disclaimer), sb.indexOf(disclaimer) + disclaimer.length,
+            SpannableStringBuilder.SPAN_EXCLUSIVE_EXCLUSIVE)
+
+        // 隐私协议
+        sb.setSpan(object : ClickableSpan() {
+            override fun onClick(p0: View) {
+                WebViewActivity.navigation(this@SplashActivity, FeaturesUtil.getPrivacyPolicy())
+            }
+
+            override fun updateDrawState(ds: TextPaint) {
+                ds.color = getColor(R.color.blue_4C9EF2)
+                ds.isUnderlineText = true
+            }
+
+        }, sb.indexOf(privacyPolicy), sb.indexOf(privacyPolicy) + privacyPolicy.length,
+            SpannableStringBuilder.SPAN_EXCLUSIVE_EXCLUSIVE)
+
+        // ShareSdk
+        sb.setSpan(object : ClickableSpan() {
+            override fun onClick(p0: View) {
+                WebViewActivity.navigation(this@SplashActivity, shareSdkUrl)
+            }
+
+            override fun updateDrawState(ds: TextPaint) {
+                ds.color = getColor(R.color.blue_4C9EF2)
+                ds.isUnderlineText = true
+            }
+
+        }, sb.indexOf(shareSdkUrl), sb.indexOf(shareSdkUrl) + shareSdkUrl.length,
+            SpannableStringBuilder.SPAN_EXCLUSIVE_EXCLUSIVE)
+
+        // comm100
+        sb.setSpan(object : ClickableSpan() {
+            override fun onClick(p0: View) {
+                WebViewActivity.navigation(this@SplashActivity, comm100Url)
+            }
+
+            override fun updateDrawState(ds: TextPaint) {
+                ds.color = getColor(R.color.blue_4C9EF2)
+                ds.isUnderlineText = true
+            }
+
+        }, sb.indexOf(comm100Url), sb.indexOf(comm100Url) + comm100Url.length,
+            SpannableStringBuilder.SPAN_EXCLUSIVE_EXCLUSIVE)
+
+        // 极光
+        sb.setSpan(object : ClickableSpan() {
+            override fun onClick(p0: View) {
+                WebViewActivity.navigation(this@SplashActivity, jpushUrl)
+            }
+
+            override fun updateDrawState(ds: TextPaint) {
+                ds.color = getColor(R.color.blue_4C9EF2)
+                ds.isUnderlineText = true
+            }
+
+        }, sb.indexOf(jpushUrl), sb.indexOf(jpushUrl) + jpushUrl.length,
+            SpannableStringBuilder.SPAN_EXCLUSIVE_EXCLUSIVE)
+
+        // 巴丹新闻
+        sb.setSpan(object : ClickableSpan() {
+            override fun onClick(p0: View) {
+                WebViewActivity.navigation(this@SplashActivity, badanNews)
+            }
+
+            override fun updateDrawState(ds: TextPaint) {
+                ds.color = getColor(R.color.blue_4C9EF2)
+                ds.isUnderlineText = true
+            }
+
+        }, sb.indexOf(badanNews), sb.indexOf(badanNews) + badanNews.length,
+            SpannableStringBuilder.SPAN_EXCLUSIVE_EXCLUSIVE)
+
+
         val isAgreeUserAgreement = CacheUtil.isAgreeUserAgreement()
         if (isAgreeUserAgreement) {
             afterAnimation()
@@ -233,7 +272,7 @@ class SplashActivity : BaseMvpActivity<SplashPresenter>(), SplashView {
             val alertDialog = AlertDialog.Builder(this)
                 .setTitle(R.string.tips_0)
                 .setCancelable(false)
-                .setMessage(builder)
+                .setMessage(sb)
                 .setPositiveButton(R.string.agree_and_continue) { dialog: DialogInterface, which: Int ->
                     afterAnimation()
                     dialog.dismiss()
@@ -252,7 +291,10 @@ class SplashActivity : BaseMvpActivity<SplashPresenter>(), SplashView {
                 message.movementMethod = LinkMovementMethod.getInstance()
                 message.setLineSpacing(0f, 1.2f)
                 message.textSize = 14f
+                message.typeface = Typeface.defaultFromStyle(Typeface.BOLD)
             }
+
+
         }
     }
 

@@ -32,12 +32,12 @@ class WebViewActivity : BaseActivity() {
 
     companion object {
 
-        fun navigation(context: Context, url: String?,isFromLogistics :Boolean? = false) {
+        fun navigation(context: Context, url: String?, isFromLogistics: Boolean? = false) {
 
             val bundle = Bundle().apply {
                 putString(Constant.PARAM_URL, url)
                 isFromLogistics?.let {
-                    putBoolean(Constant.PARAM_TYPE ,it)
+                    putBoolean(Constant.PARAM_TYPE, it)
                 }
             }
 
@@ -53,7 +53,7 @@ class WebViewActivity : BaseActivity() {
     }
 
 
-    override fun getLayoutId() =  R.layout.activtiy_webview
+    override fun getLayoutId() = R.layout.activtiy_webview
 
     override fun initView() {
 
@@ -64,10 +64,9 @@ class WebViewActivity : BaseActivity() {
             if (isFromLogistics) {
                 bottom_ll.visibility = View.VISIBLE
                 mJcsTitle.setMiddleTitle(R.string.express_details)
-            }else {
+            } else {
                 bottom_ll.visibility = View.GONE
             }
-
 
 
         }
@@ -104,6 +103,7 @@ class WebViewActivity : BaseActivity() {
             .createAgentWeb()
             .ready()
             .go(url)
+
     }
 
 
@@ -133,9 +133,9 @@ class WebViewActivity : BaseActivity() {
 
 
     override fun onDestroy() {
-        mAgentWeb.webLifeCycle.onDestroy()
-
+        mAgentWeb.clearWebCache()
         super.onDestroy()
+        mAgentWeb.webLifeCycle.onDestroy()
     }
 
 

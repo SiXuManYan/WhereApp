@@ -1,26 +1,27 @@
 package com.jiechengsheng.city.mine.about
 
 import android.text.TextPaint
-import android.text.method.LinkMovementMethod
 import android.text.style.ClickableSpan
 import android.view.View
 import android.widget.TextView
-import cn.jpush.android.api.JPushInterface
 import com.blankj.utilcode.util.SpanUtils
-import com.google.gson.Gson
 import com.jiechengsheng.city.BuildConfig
 import com.jiechengsheng.city.R
 import com.jiechengsheng.city.api.response.feedback.About
 import com.jiechengsheng.city.base.mvp.BaseMvpActivity
 import com.jiechengsheng.city.features.web.WebViewActivity
-import com.jiechengsheng.city.storage.entity.User
-import com.jiechengsheng.city.utils.BusinessUtils.getUmengAppChannel
+import com.jiechengsheng.city.utils.FeaturesUtil
 import kotlinx.android.synthetic.main.activity_about.*
 
 /**
  * Created by Wangsw  2021/2/3 16:48.
  */
 class AboutActivity : BaseMvpActivity<AboutPresenter>(), AboutView {
+
+
+    private lateinit var userAgreementTv: TextView
+    private lateinit var privacyPolicyTv: TextView
+    private lateinit var disclaimerTv: TextView
 
     override fun isStatusDark() = true
 
@@ -32,15 +33,35 @@ class AboutActivity : BaseMvpActivity<AboutPresenter>(), AboutView {
         if (BuildConfig.FLAVOR == "dev") {
             buffer.append("_测试服务器")
         }
-//        buffer.append(" For Special Tablet")
         version_tv.text = getString(R.string.version_format, buffer.toString())
 
-        val spanUtils = SpanUtils()
-        val builder = spanUtils.append(getString(R.string.office_address_home_page_1))
-            .append(getString(R.string.office_address_home_page_2))
+
+        userAgreementTv = findViewById(R.id.user_agreement_tv)
+        privacyPolicyTv = findViewById(R.id.privacy_policy_tv)
+        disclaimerTv = findViewById(R.id.disclaimer_tv)
+
+        handleTerms()
+
+
+    }
+
+
+    /**
+     * 条款声明
+     */
+    private fun handleTerms() {
+
+        // 用户协议
+        val userAgreement = FeaturesUtil.getUserAgreement()
+
+
+
+
+        SpanUtils.with(userAgreementTv).append(getString(R.string.office_address_home_page_1))
+            .append(userAgreement)
             .setClickSpan(object : ClickableSpan() {
                 override fun onClick(widget: View) =
-                    WebViewActivity.navigation(this@AboutActivity, getString(R.string.office_address_home_page_2))
+                    WebViewActivity.navigation(this@AboutActivity, userAgreement)
 
                 override fun updateDrawState(ds: TextPaint) {
                     ds.color = getColor(R.color.blue_377BFF)
@@ -49,39 +70,38 @@ class AboutActivity : BaseMvpActivity<AboutPresenter>(), AboutView {
             })
             .create()
 
-        home_page_tv.movementMethod = LinkMovementMethod.getInstance()
-        home_page_tv.text = builder
+        // 隐私政策
+        val privacyPolicy = FeaturesUtil.getPrivacyPolicy()
 
+        SpanUtils.with(privacyPolicyTv).append(getString(R.string.office_address_home_page_1))
+            .append(privacyPolicy)
+            .setClickSpan(object : ClickableSpan() {
+                override fun onClick(widget: View) =
+                    WebViewActivity.navigation(this@AboutActivity, privacyPolicy)
 
-
-/*
-        if (BuildConfig.FLAVOR == "dev" && BuildConfig.VERSION_NAME.contains("alpha")) {
-            findViewById<View>(R.id.debug_into_ll).visibility = View.VISIBLE
-            val user_id_tv = findViewById<TextView>(R.id.user_id_tv)
-            val user_phone_tv = findViewById<TextView>(R.id.user_phone_tv)
-            val user_all_tv = findViewById<TextView>(R.id.user_all_tv)
-            val rong_uuid_tv = findViewById<TextView>(R.id.rong_uuid_tv)
-            val rong_token_tv = findViewById<TextView>(R.id.rong_token_tv)
-            val push_id_tv = findViewById<TextView>(R.id.push_id_tv)
-            val umeng_channel_tv = findViewById<TextView>(R.id.umeng_channel_tv)
-            if (User.isLogon()) {
-                val instance = User.getInstance()
-                user_id_tv.append(instance.id.toString())
-                user_phone_tv.append(instance.phone)
-                if (instance.rongData != null) {
-                    rong_uuid_tv.append(instance.rongData.uuid)
-                    rong_token_tv.append(instance.rongData.token)
+                override fun updateDrawState(ds: TextPaint) {
+                    ds.color = getColor(R.color.blue_377BFF)
+                    ds.isUnderlineText = false
                 }
-                val gson = Gson()
-                user_all_tv.append(""" ${gson.toJson(instance)} """.trimIndent())
-            } else {
-                user_id_tv.append("未登录")
-            }
-            val registrationID = JPushInterface.getRegistrationID(this)
-            push_id_tv.append(registrationID)
-            umeng_channel_tv.append(getUmengAppChannel())
-        }
-        */
+            })
+            .create()
+
+
+        // 免责声明
+        val disclaimer = FeaturesUtil.getDisclaimer()
+
+        SpanUtils.with(disclaimerTv).append(getString(R.string.office_address_home_page_1))
+            .append(disclaimer)
+            .setClickSpan(object : ClickableSpan() {
+                override fun onClick(widget: View) =
+                    WebViewActivity.navigation(this@AboutActivity, disclaimer)
+
+                override fun updateDrawState(ds: TextPaint) {
+                    ds.color = getColor(R.color.blue_377BFF)
+                    ds.isUnderlineText = false
+                }
+            })
+            .create()
 
 
     }

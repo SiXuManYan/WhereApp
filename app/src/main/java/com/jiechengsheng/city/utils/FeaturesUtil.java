@@ -283,6 +283,13 @@ public class FeaturesUtil {
         return String.format(Html5Url.PRIVACY_POLICY, getLanguage());
     }
 
+    /**
+     * 免责声明
+     */
+    public static String getDisclaimer() {
+        return String.format(Html5Url.DISCLAIMER, getLanguage());
+    }
+
 
     /**
      * 条款和条件

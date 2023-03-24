@@ -19,6 +19,12 @@ public class Html5Url {
     public static final String PRIVACY_POLICY = BuildConfig.SERVER_HOST + "privacy/agreement?lang=%1$s";
 
     /**
+     * 免责声明
+     * http://appapi.wheretech.ph/
+     */
+    public static final String DISCLAIMER = BuildConfig.SERVER_HOST + "disclaimers?lang=%1$s";
+
+    /**
      * 条款和条件
      */
     public static final String CONDITION_AGREEMENT = BuildConfig.SERVER_HOST + "term_condition/agreement?lang=%1$s";

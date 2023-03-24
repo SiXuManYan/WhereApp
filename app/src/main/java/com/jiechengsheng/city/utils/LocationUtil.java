@@ -62,6 +62,7 @@ public class LocationUtil {
     }
 
     public static LocationUtil getInstance() {
+
         if (instance == null) {
             instance = new LocationUtil(Utils.getApp());
         }
@@ -103,8 +104,8 @@ public class LocationUtil {
     private void getLocation() {
         try {
             handleLocation();
-        } catch (Exception e) {
-            e.printStackTrace();
+        } catch (Exception ignored) {
+
         }
     }
 
@@ -251,8 +252,8 @@ public class LocationUtil {
             locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 5000, 10, locationListener);
             location = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
             showLocation();
-        } catch (Exception e) {
-            e.printStackTrace();
+        } catch (Exception ignored) {
+
         }
 
     }

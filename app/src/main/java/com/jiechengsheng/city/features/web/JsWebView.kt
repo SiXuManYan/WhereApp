@@ -53,12 +53,10 @@ open class JsWebView @JvmOverloads constructor(context: Context, attrs: Attribut
             settings.mixedContentMode = WebSettings.MIXED_CONTENT_ALWAYS_ALLOW
         }
         settings.allowFileAccess = false
-        settings.setAppCacheEnabled(false)
         settings.cacheMode = WebSettings.LOAD_NO_CACHE
         settings.javaScriptEnabled = true
         settings.loadWithOverviewMode = true
         settings.blockNetworkImage = false
-        settings.setAppCachePath(appCacheDirName)
 //        settings.layoutAlgorithm = WebSettings.LayoutAlgorithm.SINGLE_COLUMN
 
         //        settings.setUseWideViewPort(true);

@@ -4,18 +4,15 @@ apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
 
-// 极光推送使用
-//apply plugin: 'com.google.gms.google-services'
-//apply plugin: 'com.huawei.agconnect' // 使用华为渠道推送时打开
-
-
 static def releaseTime() {
     return new Date().format("yyyyMMdd", TimeZone.getTimeZone("UTC"))
 }
 
 android {
-    compileSdkVersion 31
-    buildToolsVersion "30.0.3"
+    namespace 'com.jiechengsheng.city'
+    compileSdkVersion 33
+    buildToolsVersion "34.0.0"
+
     defaultConfig {
         applicationId "com.jiechengsheng.city"
         minSdkVersion 23
@@ -26,52 +23,26 @@ android {
         multiDexEnabled true
         flavorDimensions "versionCode"
 
-
         ndk {
-            //选择要添加的对应 cpu 类型的 .so 库。（极光推送使用）
             abiFilters 'armeabi', 'armeabi-v7a', 'arm64-v8a'
-//            ,'x86','x86_64' // x86 模拟器调试需要打开
-            // 还可以添加 'x86', 'x86_64', 'mips', 'mips64'
         }
 
         manifestPlaceholders = [
                 JPUSH_PKGNAME: applicationId,
                 JPUSH_APPKEY : "c1845048016655585610609e",
                 JPUSH_CHANNEL: "default_developer"
-
-                /*
-                若不集成厂商通道，可直接跳过以下配置
-                MEIZU_APPKEY : "MZ-魅族的APPKEY",
-                MEIZU_APPID : "MZ-魅族的APPID",
-                XIAOMI_APPID : "MI-小米的APPID",
-                XIAOMI_APPKEY : "MI-小米的APPKEY",
-                OPPO_APPKEY : "OP-oppo的APPKEY",
-                OPPO_APPID : "OP-oppo的APPID",
-                OPPO_APPSECRET : "OP-oppo的APPSECRET",
-                VIVO_APPKEY : "vivo的APPKEY",
-                VIVO_APPID: "vivo的APPID"
-                HONOR_APPID : "Honor的APP ID"
-                */
         ]
 
-        // 极光推送
-        // 使用 NDK r17 时，可能 Android Studio 的报错
         packagingOptions {
             doNotStrip '*/mips/*.so'
             doNotStrip '*/mips64/*.so'
         }
-
-    }
-
-    dexOptions {
-        incremental true
-        javaMaxHeapSize "4g"
     }
 
     signingConfigs {
         debug { storeFile file("../keystore/debug.keystore") }
         release {
-            storeFile file('../keystore/Where.jks')
+            storeFile file('../keystore/where.jks')
             storePassword "jcs12345678"
             keyAlias "key0"
             keyPassword "jcs12345678"
@@ -98,13 +69,11 @@ android {
     }
 
     kotlinOptions {
-        jvmTarget = JavaVersion.VERSION_1_8
+        jvmTarget = "1.8"
     }
 
-    lintOptions {
+    lint {
         checkReleaseBuilds false
-        // Or, if you prefer, you can continue to check for errors in release builds,
-        // but continue the build even when errors are found:
         abortOnError false
     }
 
@@ -136,7 +105,6 @@ android {
             buildConfigField "String", "UMENG_APP_CHANNEL_DEV", UMENG_APP_CHANNEL_DEV
             buildConfigField "String", "UMENG_APP_CHANNEL_FORMAL", UMENG_APP_CHANNEL_FORMAL
         }
-
     }
 
     sourceSets {
@@ -144,17 +112,13 @@ android {
             jniLibs.srcDirs = ['libs']
         }
     }
-
-//    ndkVersion "21.1.6352462"
-
-
 }
 
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-    implementation 'androidx.appcompat:appcompat:1.3.1'
-    implementation 'androidx.constraintlayout:constraintlayout:2.1.0'
+    implementation 'androidx.appcompat:appcompat:1.4.2'
+    implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
     implementation 'com.github.CymChad:BaseRecyclerViewAdapterHelper:3.0.4'
     implementation 'com.squareup.retrofit2:converter-gson:2.9.0'
     implementation 'com.squareup.retrofit2:retrofit:2.9.0'
@@ -164,35 +128,28 @@ dependencies {
     implementation 'io.reactivex.rxjava2:rxandroid:2.1.1'
     implementation 'com.squareup.okhttp3:okhttp:3.14.9'
     implementation 'com.squareup.okhttp3:logging-interceptor:3.10.0'
-    implementation 'androidx.coordinatorlayout:coordinatorlayout:1.1.0'
+    implementation 'androidx.coordinatorlayout:coordinatorlayout:1.2.0'
     implementation "androidx.swiperefreshlayout:swiperefreshlayout:1.1.0"
-    implementation 'com.google.android.material:material:1.4.0'
-    implementation 'com.google.android.material:material:1.5.0-alpha01'
+    implementation 'com.google.android.material:material:1.6.1'
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test.ext:junit:1.1.3'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
 
     implementation 'pl.droidsonroids.gif:android-gif-drawable:1.2.12'
-    implementation 'com.github.bumptech.glide:glide:4.10.0'
-    annotationProcessor 'com.github.bumptech.glide:compiler:4.10.0'
-    annotationProcessor 'androidx.annotation:annotation:1.2.0'
+    implementation 'com.github.bumptech.glide:glide:4.13.2'
+    kapt 'com.github.bumptech.glide:compiler:4.13.2'
     implementation 'in.srain.cube:ptr-load-more:1.0.6'
     implementation 'com.gongwen:marqueelibrary:1.1.3'
     implementation 'com.makeramen:roundedimageview:2.3.0'
     implementation 'com.squareup.picasso:picasso:2.5.2'
 
-    //拼音
     implementation 'com.belerweb:pinyin4j:2.5.0'
-    //圆形头像
     implementation 'de.hdodenhof:circleimageview:2.1.0'
     implementation 'com.github.promeg:tinypinyin:2.0.3'
-    // GMS
-    implementation 'com.google.android.gms:play-services-maps:17.0.1'
-
-//    地图操作工具类，添加标记等
-    implementation 'com.google.maps.android:android-maps-utils:0.5'
-    implementation 'com.google.android.gms:play-services-location:18.0.0'
-    implementation 'org.greenrobot:eventbus:3.0.0'
+    implementation 'com.google.android.gms:play-services-maps:18.1.0'
+    implementation 'com.google.maps.android:android-maps-utils:3.4.0'
+    implementation 'com.google.android.gms:play-services-location:21.0.1'
+    implementation 'org.greenrobot:eventbus:3.2.0'
     implementation 'androidx.multidex:multidex:2.0.1'
     implementation 'com.nostra13.universalimageloader:universal-image-loader:1.9.4'
     implementation 'com.facebook.rebound:rebound:0.3.8'
@@ -203,81 +160,42 @@ dependencies {
     implementation 'com.github.Jay-Goo:RangeSeekBar:3.0.0'
     implementation 'com.haibin:calendarview:3.7.0'
 
-    //状态栏
     implementation 'com.jaeger.statusbaruitl:library:1.3.2'
     implementation 'net.yslibrary.keyboardvisibilityevent:keyboardvisibilityevent:2.0.0'
 
-    //饺子播放器
     implementation 'cn.jzvd:jiaozivideoplayer:7.6.0'
 
-    // Room db https://developer.android.google.cn/training/data-storage/room#java
-    def room_version = "2.4.1"
+    def room_version = "2.4.3"
     implementation "androidx.room:room-runtime:$room_version"
-    annotationProcessor "androidx.room:room-compiler:$room_version"
     kapt "androidx.room:room-compiler:$room_version"
 
+    implementation 'cn.jiguang.sdk:jpush-google:4.8.5'
+    implementation 'cn.jiguang.sdk:jcore-google:4.0.0'
 
-    // 极光推送核心包(GooglePlay 版)
-    implementation 'cn.jiguang.sdk:jpush-google:4.8.5'  // 此处以JPush 4.8.0 Google Play版本为例
-    implementation 'cn.jiguang.sdk:jcore-google:4.0.0'  // 此处以JCore 3.3.1 Google Play 版本为例。
+    implementation files('libs/visitor-client-v1.0.aar')
 
-    // 极光推送厂商渠道包，逐个申请appKey后，在需要时打开
-//     接入华为厂商
-//    implementation 'com.huawei.hms:push:6.3.0.304'
-//    implementation 'cn.jiguang.sdk.plugin:huawei:4.7.2'// 极光厂商插件版本与接入 JPush 版本保持一致，下同
-//     接入荣耀厂商
-//    implementation 'cn.jiguang.sdk.plugin:honor:4.7.2'
-//     接入 FCM 厂商
-//    implementation 'com.google.firebase:firebase-messaging:23.0.5'
-//    implementation 'cn.jiguang.sdk.plugin:fcm:4.7.2'
-//     接入魅族厂商
-//    implementation 'cn.jiguang.sdk.plugin:meizu:4.7.2'
-//     接入 VIVO 厂商
-//    implementation 'cn.jiguang.sdk.plugin:vivo:4.7.2'
-//     接入 OPPO 厂商
-//    implementation 'cn.jiguang.sdk.plugin:oppo:4.7.2'
-//     接入小米厂商
-//    implementation 'cn.jiguang.sdk.plugin:xiaomi:4.7.2'
-
-    // comm 100
-    implementation(name: 'visitor-client-v1.0', ext: 'aar')
-
-    // 知乎相册选择器
     implementation 'com.zhihu.android:matisse:0.5.3-beta3'
 
-    // rx 权限申请
     implementation 'com.tbruyelle.rxpermissions2:rxpermissions:0.9.5'
 
-    // 融云
-//    implementation 'cn.rongcloud.sdk:im_kit:5.2.3.3'
     implementation 'cn.rongcloud.sdk:im_kit:5.2.4'
 
-    // TabLayout
-//    implementation 'com.flyco.tablayout:FlycoTabLayout_Lib:2.1.2'
     implementation 'io.github.h07000223:flycoTabLayout:3.0.0'
 
+    implementation 'com.github.CarGuo.GSYVideoPlayer:gsyVideoPlayer-java:v8.1.4-jitpack'
+    implementation 'com.github.CarGuo.GSYVideoPlayer:gsyVideoPlayer-armv64:v8.1.4-jitpack'
+    implementation 'com.github.CarGuo.GSYVideoPlayer:gsyVideoPlayer-armv7a:v8.1.4-jitpack'
 
-    // GSY video java
-    implementation 'com.github.CarGuo.GSYVideoPlayer:gsyVideoPlayer-java:v8.1.3-jitpack'
-
-    // GSY video ijk模式的so
-    implementation 'com.github.CarGuo.GSYVideoPlayer:gsyVideoPlayer-armv64:v8.1.3-jitpack'
-    implementation 'com.github.CarGuo.GSYVideoPlayer:gsyVideoPlayer-armv7a:v8.1.3-jitpack'
-
-    // banner
     implementation 'io.github.youth5201314:banner:2.2.2'
 
     implementation 'com.github.MZCretin:ExpandableTextView:v1.6.1-x'
 
-    // https://developer.android.com/jetpack/androidx/releases/navigation
     implementation 'androidx.navigation:navigation-fragment-ktx:2.4.1'
     implementation 'androidx.navigation:navigation-ui-ktx:2.4.1'
 
-    // kotlin
-    implementation 'org.jetbrains.kotlin:kotlin-stdlib-jdk7:1.6.10'
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
 
-    // https://developer.android.com/jetpack/androidx/releases/core#core-1.7.0 ( targetSdkVersion 31)
-    implementation 'androidx.core:core-ktx:1.6.0'
+    implementation 'androidx.core:core-ktx:1.8.0'
 
     implementation 'com.scwang.smart:refresh-layout-kernel:2.0.3'
 
@@ -285,22 +203,12 @@ dependencies {
     implementation 'com.google.maps.android:maps-utils-ktx:2.3.0'
     implementation "biz.laenger.android:vpbs:0.0.6"
 
-    // rv 粘性标签 https://github.com/oubowu/PinnedSectionItemDecoration/blob/master/README-CN.md
     implementation 'com.oushangfeng:PinnedSectionItemDecoration:1.3.2-androidx'
 
-    // 图片压缩
     implementation 'top.zibin:Luban:1.1.8'
 
-    // facebook 深度链接
     implementation 'com.facebook.android:facebook-applinks:[4,5)'
-//    implementation 'com.facebook.android:facebook-android-sdk:[8,9)'
 
-    // 友盟
-//    implementation 'com.umeng.umsdk:common:9.5.1'// 必选
-//    implementation 'com.umeng.umsdk:asms:1.4.1'// 必选
-//    implementation 'com.umeng.umsdk:apm:1.7.0' // 可选错误分析模块国内平台用
-
-    // photoview
     implementation 'com.github.chrisbanes:PhotoView:2.0.0'
 
     implementation 'me.shaohui:bottomdialog:1.1.9'

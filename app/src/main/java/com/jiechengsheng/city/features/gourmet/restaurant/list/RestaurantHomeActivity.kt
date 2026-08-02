@@ -542,8 +542,8 @@ class RestaurantHomeActivity : BaseMvpActivity<RestaurantHomePresenter>(), Resta
 
     }
 
-    override fun onMapReady(googleMap: GoogleMap?) {
-        map = googleMap ?: return
+    override fun onMapReady(googleMap: GoogleMap) {
+        map = googleMap
         map.apply {
 
             // 移动到巴朗牙

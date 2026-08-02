@@ -366,8 +366,8 @@ class GovernmentActivity : BaseMvpActivity<GovernmentPresenter>(), GovernmentVie
         mapFragment?.getMapAsync(this)
     }
 
-    override fun onMapReady(googleMap: GoogleMap?) {
-        map = googleMap ?: return
+    override fun onMapReady(googleMap: GoogleMap) {
+        map = googleMap
 
         map.apply {
 
